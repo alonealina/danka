@@ -1,0 +1,88 @@
+/*==================================================
+スライダーのためのcss
+===================================*/
+.slider {/*横幅94%で左右に余白を持たせて中央寄せ*/
+    width:75%;
+    margin:0 auto;
+}
+
+.slider img {
+    width:100%;/*スライダー内の画像を横幅100%に*/
+    height:auto;
+}
+
+/*slickのJSで書かれるタグ内、スライド左右の余白調整*/
+
+.slider .slick-slide {
+    margin:0 0px;
+}
+
+/*矢印の設定*/
+
+/*戻る、次へ矢印の位置*/
+.slick-prev, 
+.slick-next {
+    position: absolute;/*絶対配置にする*/
+    top: 113%;
+    cursor: pointer;/*マウスカーソルを指マークに*/
+    outline: none;/*クリックをしたら出てくる枠線を消す*/
+    height: 15px;
+    width: 120px;
+    font: normal normal normal 25px/20px Devanagari MT;
+}
+
+@media screen and (min-width: 1300px) {
+    .slick-prev {/*戻る矢印の位置と形状*/
+        left: 73%;
+    }    
+    .slider_catalog .slick-prev {/*戻る矢印の位置と形状*/
+        left: 43%;
+    }    
+    .slider_catalog .slick-next {/*次へ矢印の位置と形状*/
+        right: 30%;
+    }
+}	
+
+@media screen and (max-width: 1299px) {
+    .slick-prev {/*戻る矢印の位置と形状*/
+        left: 60%;
+    }    
+    .slider_catalog .slick-prev {/*戻る矢印の位置と形状*/
+        left: 20%;
+    }
+    .slider_catalog .slick-next {/*次へ矢印の位置と形状*/
+        right: 40%;
+    }
+}
+
+.slick-next {/*次へ矢印の位置と形状*/
+    right: 0%;
+}
+
+
+
+/*ドットナビゲーションの設定*/
+
+.slick-dots {
+    text-align:center;
+    margin:20px 0 0 0;
+}
+
+.slick-dots li {
+    display:inline-block;
+    margin:0 5px;
+}
+
+.slick-dots button {
+    color: transparent;
+    outline: none;
+    width:8px;/*ドットボタンのサイズ*/
+    height:8px;/*ドットボタンのサイズ*/
+    display:block;
+    border-radius:50%;
+    background:#ccc;/*ドットボタンの色*/
+}
+
+.slick-dots .slick-active button{
+    background:#333;/*ドットボタンの現在地表示の色*/
+}
