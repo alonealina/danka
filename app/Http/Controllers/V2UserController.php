@@ -9,7 +9,7 @@ class V2UserController extends Controller
 {
     public function summary(Request $request)
     {
-        return view('summary')->with(BFF::outputDetail($request));
+        return view('summary');
     }
 
     public function history(Request $request)
