@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\V2IndexController;
-use App\Http\Controllers\V2NewAcountController;
 use App\Http\Controllers\V2DemoAcountController;
 use App\Http\Controllers\V2LoginController;
 use App\Http\Controllers\V2ContactController;
@@ -16,15 +16,6 @@ use App\Http\Controllers\V2DepositController;
 
 Route::get('', [V2IndexController::class, 'index'])->name('index');
 
-Route::get('new_acount', [V2NewAcountController::class, 'new_acount'])->name('new_acount');
-Route::post('indi_confirm', [V2NewAcountController::class, 'indi_confirm'])->name('indi_confirm');
-Route::post('corp_confirm', [V2NewAcountController::class, 'corp_confirm'])->name('corp_confirm');
-Route::get('new_acount_complete', [V2NewAcountController::class, 'new_acount_complete'])->name('new_acount_complete');
-
-Route::get('demo_acount', [V2DemoAcountController::class, 'demo_acount'])->name('demo_acount');
-Route::post('demo_confirm', [V2DemoAcountController::class, 'demo_confirm'])->name('demo_confirm');
-Route::get('demo_acount_complete', [V2DemoAcountController::class, 'demo_acount_complete'])->name('demo_acount_complete');
-
 Route::get('login', [V2LoginController::class, 'login'])->name('login');
 Route::post('login_function', [V2LoginController::class, 'login_function'])->name('login_function');
 Route::post('login_function2', [V2LoginController::class, 'login_function2'])->name('login_function2');
@@ -32,17 +23,20 @@ Route::post('login_function2', [V2LoginController::class, 'login_function2'])->n
 Route::get('login2', [V2LoginController::class, 'login2'])->name('login2');
 Route::get('logout', [V2LoginController::class, 'logout'])->name('logout');
 
-Route::get('contact', [V2ContactController::class, 'contact'])->name('contact');
-Route::post('contact_confirm', [V2ContactController::class, 'contact_confirm'])->name('contact_confirm');
-Route::get('contact_complete', [V2ContactController::class, 'contact_complete'])->name('contact_complete');
 
-Route::get('company', [V2CompanyController::class, 'company'])->name('company');
-Route::get('faq', [V2FaqController::class, 'faq'])->name('faq');
 
 
 // 以下ユーザーページ
 Route::get('summary', [V2UserController::class, 'summary'])->name('summary');
 Route::get('history', [V2UserController::class, 'history'])->name('history');
+
+Route::get('admin_regist', [AdminController::class, 'admin_regist'])->name('admin_regist');
+Route::post('admin_store', [AdminController::class, 'admin_store'])->name('admin_store');
+Route::get('admin_list', [AdminController::class, 'admin_list'])->name('admin_list');
+
+
+
+
 
 Route::get('deposit', [V2DepositController::class, 'deposit'])->name('deposit');
 Route::get('crypto_payment', [V2DepositController::class, 'crypto_payment'])->name('crypto_payment');

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\LoginLog;
+use DB;
 
 class V2LoginController extends Controller
 {
@@ -21,8 +23,23 @@ class V2LoginController extends Controller
 
     public function login_function(Request $request)
     {
-        session(['login_id' => 1]);
-        return redirect(route('summary'));
+        $login_log = new LoginLog;
+
+        $request = $request->all();
+        $fill_data = [
+            'login_id' => $request['login_id'],
+        ];
+
+        DB::beginTransaction();
+        try {
+            $login_log->fill($fill_data)->save();
+            DB::commit();
+            session(['login_id' => 1]);
+            return redirect(route('summary'));
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+
     }
 
     public function login_function2(Request $request)

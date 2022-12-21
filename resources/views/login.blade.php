@@ -29,7 +29,7 @@
                     <form id="login_form" name="login_form" action="{{ route('login_function') }}" method="post">
                     @csrf
                         <div class="login_item_name">ログインID</div>
-                        {{ Form::text('name', old('name'), ['class' => 'login_form_text', 'maxlength' => 30, 'placeholder' => '']) }}
+                        {{ Form::text('login_id', old('login_id'), ['class' => 'login_form_text', 'maxlength' => 30, 'placeholder' => '']) }}
                         <div class="login_item_name">パスワード</div>
                         {{ Form::text('password', old('password'), ['class' => 'login_form_text', 'maxlength' => 30, 'placeholder' => '']) }}
 

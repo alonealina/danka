@@ -33,13 +33,82 @@
             <div class="user_content_div header_margin">
                 <div class="user_content_flex">
                     <div class="user_sidebar">
-                        <a href="{{ route('summary') }}" class="user_a @if (strpos($now_route,'summary') !== false) current @endif">口座サマリー</a>
-                        <a href="{{ route('history') }}" class="user_a @if (strpos($now_route,'history') !== false) current @endif">履歴</a>
-                        <a href="{{ route('deposit') }}" class="user_a @if (strpos($now_route,'deposit') !== false || strpos($now_route,'crypto') !== false 
-                            || strpos($now_route,'txid') !== false || strpos($now_route,'payment') !== false || strpos($now_route,'withdraw') !== false ) current @endif">入出金</a>
-                        <a href="{{ route('transfer') }}" class="user_a @if (strpos($now_route,'transfer') !== false) current @endif">資金移動</a>
-                        <a href="{{ route('add_acount') }}" class="user_a @if (strpos($now_route,'add_acount') !== false) current @endif">追加口座</a>
-                        <a href="{{ route('setting') }}" class="user_a @if (strpos($now_route,'setting') !== false) current @endif">設 定</a>
+                        <a href="#!" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif" onclick="clickMenu1();">
+                            檀家管理
+                            @if (strpos($now_route,'summary') !== false) 
+                            <img src="{{ asset('img/down.png') }}" id="down1" class="down_r"><img src="{{ asset('img/up.png') }}" id="up1" class="up_r">
+                            @else
+                            <img src="{{ asset('img/down.png') }}" id="down1" class="down"><img src="{{ asset('img/up.png') }}" id="up1" class="up">
+                            @endif
+                        </a>
+                        <div 
+                        @if (strpos($now_route,'summary') === false) class="menu_none" @endif
+                        id="menu1">
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif">　新規登録</a>
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif">　檀家検索</a>
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif">　檀家編集</a>
+                        </div>
+
+                        <a href="#!" class="menu_a @if (strpos($now_route,'history') !== false) current @endif" onclick="clickMenu2();">
+                            行事
+                            @if (strpos($now_route,'aaa') !== false) 
+                            <img src="{{ asset('img/down.png') }}" id="down2" class="down_r"><img src="{{ asset('img/up.png') }}" id="up2" class="up_r">
+                            @else
+                            <img src="{{ asset('img/down.png') }}" id="down2" class="down"><img src="{{ asset('img/up.png') }}" id="up2" class="up">
+                            @endif
+                        </a>
+                        <div class="menu_none" 
+                        @if (strpos($now_route,'aaa') === false) class="menu_none" @endif
+                        id="menu2">
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　行事一覧</a>
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　新規行事登録</a>
+                        </div>
+
+                        <a href="#!" class="menu_a " onclick="clickMenu3();">
+                            請求/支払い
+                            @if (strpos($now_route,'aaa') !== false) 
+                            <img src="{{ asset('img/down.png') }}" id="down3" class="down_r"><img src="{{ asset('img/up.png') }}" id="up3" class="up_r">
+                            @else
+                            <img src="{{ asset('img/down.png') }}" id="down3" class="down"><img src="{{ asset('img/up.png') }}" id="up3" class="up">
+                            @endif
+                        </a>
+                        <div class="menu_none" id="menu3">
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　一覧</a>
+                        </div>
+
+                        <a href="#!" class="menu_a @if (strpos($now_route,'transfer') !== false) current @endif" onclick="clickMenu4();">
+                            お知らせ発送
+                            @if (strpos($now_route,'aaa') !== false) 
+                            <img src="{{ asset('img/down.png') }}" id="down4" class="down_r"><img src="{{ asset('img/up.png') }}" id="up4" class="up_r">
+                            @else
+                            <img src="{{ asset('img/down.png') }}" id="down4" class="down"><img src="{{ asset('img/up.png') }}" id="up4" class="up">
+                            @endif
+                        </a>
+                        <div class="menu_none" id="menu4">
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　保存済みのお知らせ</a>
+                        </div>
+
+                        <a href="#!" class="menu_a @if (strpos($now_route,'add_acount') !== false) current @endif" onclick="clickMenu5();">
+                            文章作成/編集                            @if (strpos($now_route,'aaa') !== false) 
+                            <img src="{{ asset('img/down.png') }}" id="down5" class="down_r"><img src="{{ asset('img/up.png') }}" id="up5" class="up_r">
+                            @else
+                            <img src="{{ asset('img/down.png') }}" id="down5" class="down"><img src="{{ asset('img/up.png') }}" id="up5" class="up">                            @endif
+
+                        </a>
+                        <div class="menu_none" id="menu5">
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　新規文章作成</a>
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　文章一覧</a>
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　カテゴリ一覧</a>
+                        </div>
+
+                        <a href="#!" class="menu_a @if (strpos($now_route,'setting') !== false) current @endif" onclick="clickMenu6();">
+                            管理者管理<img src="{{ asset('img/down.png') }}" id="down6" class="down"><img src="{{ asset('img/up.png') }}" id="up6" class="up">
+                        </a>
+                        <div class="menu_none" id="menu6">
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　新規追加</a>
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　管理者一覧</a>
+                        </div>
+
                     </div>
                     <div class="@if (strpos($now_route,'history') !== false) history_content @else user_content_main @endif">
                     @yield('content')
