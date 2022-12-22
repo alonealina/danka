@@ -31,7 +31,7 @@
                         <div class="login_item_name">ログインID</div>
                         {{ Form::text('login_id', old('login_id'), ['class' => 'login_form_text', 'maxlength' => 30, 'placeholder' => '']) }}
                         <div class="login_item_name">パスワード</div>
-                        {{ Form::text('password', old('password'), ['class' => 'login_form_text', 'maxlength' => 30, 'placeholder' => '']) }}
+                        <input name="password" type="password" class="login_form_text" maxlength="30">
 
                         <a onclick="clickLoginFormButton()" class="login_btn_a">
                             <div class="login_btn" style="margin-top:30px;">ログイン</div>

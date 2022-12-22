@@ -294,6 +294,14 @@ p {
 .login_log_list {
     height: calc(100% - 50px);
     overflow: scroll;
+    /*スクロールバー非表示（IE・Edge）*/
+    -ms-overflow-style: none;
+    /*スクロールバー非表示（Firefox）*/
+    scrollbar-width: none;
+}
+/*スクロールバー非表示（Chrome・Safari）*/
+.login_log_list::-webkit-scrollbar{
+    display:none;
 }
 .login_log_column {
     font: normal normal normal 16px/24px sans-serif;
