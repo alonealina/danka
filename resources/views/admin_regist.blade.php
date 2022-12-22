@@ -10,6 +10,13 @@
             {{ Form::text('login_id', old('login_id'), ['class' => 'regist_form_text', 'maxlength' => 30, 'placeholder' => '']) }}
         </div>
 
+        @if($errors->has('login_id'))
+        <div class="flex_column">
+            <div class="regist_item_name"></div>
+            <div class="error_message">{{ $errors->first('login_id') }}</div>
+        </div>
+        @endif
+
         <div class="flex_column">
             <div class="regist_item_name">パスワード</div>
             <input name="password" type="password" class="regist_form_text pass_text" maxlength="20">

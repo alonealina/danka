@@ -31,7 +31,7 @@
 
             </header>
             <div class="user_content_div header_margin">
-                <div class="user_content_flex">
+                <div class="content_flex">
                     <div class="user_sidebar">
                         <a href="#!" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif" onclick="clickMenu1();">
                             檀家管理
@@ -57,7 +57,7 @@
                             <img src="{{ asset('img/down.png') }}" id="down2" class="down"><img src="{{ asset('img/up.png') }}" id="up2" class="up">
                             @endif
                         </a>
-                        <div class="menu_none" 
+                        <div
                         @if (strpos($now_route,'aaa') === false) class="menu_none" @endif
                         id="menu2">
                         <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　行事一覧</a>
@@ -101,12 +101,19 @@
                         <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　カテゴリ一覧</a>
                         </div>
 
-                        <a href="#!" class="menu_a @if (strpos($now_route,'setting') !== false) current @endif" onclick="clickMenu6();">
-                            管理者管理<img src="{{ asset('img/down.png') }}" id="down6" class="down"><img src="{{ asset('img/up.png') }}" id="up6" class="up">
+                        <a href="#!" class="menu_a @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) current @endif" onclick="clickMenu6();">
+                            管理者管理
+                            @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) 
+                            <img src="{{ asset('img/down.png') }}" id="down6" class="down_r"><img src="{{ asset('img/up.png') }}" id="up6" class="up_r">
+                            @else
+                            <img src="{{ asset('img/down.png') }}" id="down6" class="down"><img src="{{ asset('img/up.png') }}" id="up6" class="up">
+                            @endif
                         </a>
-                        <div class="menu_none" id="menu6">
-                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　新規追加</a>
-                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　管理者一覧</a>
+                        <div 
+                        @if (strpos($now_route,'admin_regist') === false && strpos($now_route,'admin_list') === false) class="menu_none" @endif
+                        id="menu6">
+                        <a href="{{ route('admin_regist') }}" class="menu_a @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) current @endif">　新規追加</a>
+                        <a href="{{ route('admin_list') }}" class="menu_a @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) current @endif">　管理者一覧</a>
                         </div>
 
                     </div>

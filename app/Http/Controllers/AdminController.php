@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\AdminUser;
 use App\Models\LoginLog;
+use App\Rules\LoginIdCheck;
 use DB;
 
 class AdminController extends Controller
@@ -16,6 +18,16 @@ class AdminController extends Controller
 
     public function admin_store(Request $request)
     {
+        $rules = [
+            'login_id' => ['required', new LoginIdCheck($request['login_id'])],
+        ];
+
+        $messages = [
+            'login_id.required' => 'IDを入力してください',
+        ];
+
+        Validator::make($request->all(), $rules, $messages)->validate();
+
         $admin_user = new AdminUser;
 
         $request = $request->all();
@@ -37,7 +49,21 @@ class AdminController extends Controller
 
     public function admin_list(Request $request)
     {
-        return view('add_acount_complete')->with(BFF::outputDetail($request));
+        $admin_users = DB::select("SELECT user.id AS user_id, user.login_id AS login_id, name, 
+        DATE_FORMAT(user.created_at, '%Y/%m/%d') AS created_at, DATE_FORMAT(max_time, '%Y/%m/%d') AS max_time FROM admin_users user
+        LEFT JOIN (
+          SELECT login_id, MAX(login_time) AS max_time
+          FROM login_log
+          GROUP BY login_id) AS log
+          ON user.login_id = log.login_id
+          ORDER BY user_id;");
+
+        $login_logs = LoginLog::orderBy("login_time", "desc")->get();
+
+        return view('admin_list', [
+            'admin_users' => $admin_users,
+            'login_logs' => $login_logs,
+        ]);
     }
 
 }

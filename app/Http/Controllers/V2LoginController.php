@@ -35,7 +35,7 @@ class V2LoginController extends Controller
             $login_log->fill($fill_data)->save();
             DB::commit();
             session(['login_id' => 1]);
-            return redirect(route('summary'));
+            return redirect(route('admin_regist'));
         } catch (\Exception $e) {
             DB::rollback();
         }

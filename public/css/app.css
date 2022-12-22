@@ -97,7 +97,7 @@ p {
     background: transparent linear-gradient(180deg, #7B7B7B 0%, #9A9999 52%, #626262 100%) 0% 0% no-repeat padding-box;
 }
 
-.user_content_flex {
+.content_flex {
     display: flex;
     width:100%;
 }
@@ -262,7 +262,7 @@ p {
     color: #A62E2E;
 }
 
-#password_error {
+#password_error, #name_error {
     display: none;
 }
 
@@ -277,6 +277,96 @@ p {
     padding: 15px 20px;
 }
 
+.admin_user_list {
+    width: 50%;
+    margin-top: 30px;
+}
+.login_log_list_div {
+    width: 40%;
+    margin-top: 30px;
+    margin-left:5%;
+    background: #EEEEEE 0% 0% no-repeat padding-box;
+    border: 1px solid #707070;
+    border-radius: 10px;
+    padding:20px;
+    height: 60vh;
+}
+.login_log_list {
+    height: calc(100% - 50px);
+    overflow: scroll;
+}
+.login_log_column {
+    font: normal normal normal 16px/24px sans-serif;
+    letter-spacing: 0px;
+    color: #262626;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid;
+}
+
+.admin_user_header, .admin_user_column {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 20px;
+}
+.admin_user_header {
+    font: normal normal bold 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #000000;
+    margin-bottom: 30px;
+}
+.login_log_header {
+    font: normal normal bold 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #000000;
+    margin-bottom: 30px;
+}
+.admin_user_column {
+    font: normal normal normal 16px/24px sans-serif;
+    letter-spacing: 0px;
+    color: #262626;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid;
+}
+.admin_user_id {
+    width:16%;
+}
+.admin_user_name {
+    width:24%;
+}
+.admin_user_date {
+    width:20%;
+}
+.admin_user_btn {
+    width:16%;
+}
+.log_view_btn_a {
+    background: #A84FEB 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    text-align: center;
+    font: normal normal normal 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    width:90%;
+    display: block;
+    padding:5px 0;
+}
+.current_log_btn {
+    background: #2963AB 0% 0% no-repeat padding-box;
+}
+
+.log_view_btn_a:hover {
+    color:#fff;
+}
+
+.log_list {
+    display: none;
+}
+.log_list_current {
+    display: block;
+}
 
 ::placeholder {
     color: #262626;
