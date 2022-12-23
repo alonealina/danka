@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TextController;
+
+
 use App\Http\Controllers\V2IndexController;
 use App\Http\Controllers\V2DemoAcountController;
-use App\Http\Controllers\V2LoginController;
 use App\Http\Controllers\V2ContactController;
 use App\Http\Controllers\V2CompanyController;
 use App\Http\Controllers\V2FaqController;
@@ -16,12 +19,12 @@ use App\Http\Controllers\V2DepositController;
 
 Route::get('', [V2IndexController::class, 'index'])->name('index');
 
-Route::get('login', [V2LoginController::class, 'login'])->name('login');
-Route::post('login_function', [V2LoginController::class, 'login_function'])->name('login_function');
-Route::post('login_function2', [V2LoginController::class, 'login_function2'])->name('login_function2');
+Route::get('login', [LoginController::class, 'login'])->name('login');
+Route::post('login_function', [LoginController::class, 'login_function'])->name('login_function');
+Route::post('login_function2', [LoginController::class, 'login_function2'])->name('login_function2');
 
-Route::get('login2', [V2LoginController::class, 'login2'])->name('login2');
-Route::get('logout', [V2LoginController::class, 'logout'])->name('logout');
+Route::get('login2', [LoginController::class, 'login2'])->name('login2');
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
@@ -29,6 +32,14 @@ Route::get('logout', [V2LoginController::class, 'logout'])->name('logout');
 // 以下ユーザーページ
 Route::get('summary', [V2UserController::class, 'summary'])->name('summary');
 Route::get('history', [V2UserController::class, 'history'])->name('history');
+
+Route::get('text_regist', [TextController::class, 'text_regist'])->name('text_regist');
+Route::post('text_store', [TextController::class, 'text_store'])->name('text_store');
+Route::get('text_list', [TextController::class, 'text_list'])->name('text_list');
+Route::get('text_show/{id}', [TextController::class, 'text_show'])->name('text_show');
+Route::get('text_category_list', [TextController::class, 'text_category_list'])->name('text_category_list');
+Route::post('text_category_store', [TextController::class, 'text_category_store'])->name('text_category_store');
+Route::get('text_category_delete/{id}/', [TextController::class, 'text_category_delete'])->name('text_category_delete');
 
 Route::get('admin_regist', [AdminController::class, 'admin_regist'])->name('admin_regist');
 Route::post('admin_store', [AdminController::class, 'admin_store'])->name('admin_store');

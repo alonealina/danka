@@ -8,7 +8,7 @@ use App\Models\LoginLog;
 use App\Rules\LoginCheck;
 use DB;
 
-class V2LoginController extends Controller
+class LoginController extends Controller
 {
     public function login()
     {

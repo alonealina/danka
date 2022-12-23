@@ -88,20 +88,34 @@
                         <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　保存済みのお知らせ</a>
                         </div>
 
-                        <a href="#!" class="menu_a @if (strpos($now_route,'add_acount') !== false) current @endif" onclick="clickMenu5();">
-                            文章作成/編集                            @if (strpos($now_route,'aaa') !== false) 
+                        <a href="#!" class="menu_a
+                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || 
+                        strpos($now_route,'text_show') !== false) current @endif" onclick="clickMenu5();">
+                            文章作成/編集
+                            @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || 
+                            strpos($now_route,'text_show') !== false)
                             <img src="{{ asset('img/down.png') }}" id="down5" class="down_r"><img src="{{ asset('img/up.png') }}" id="up5" class="up_r">
                             @else
-                            <img src="{{ asset('img/down.png') }}" id="down5" class="down"><img src="{{ asset('img/up.png') }}" id="up5" class="up">                            @endif
-
+                            <img src="{{ asset('img/down.png') }}" id="down5" class="down"><img src="{{ asset('img/up.png') }}" id="up5" class="up">
+                            @endif
                         </a>
-                        <div class="menu_none" id="menu5">
-                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　新規文章作成</a>
-                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　文章一覧</a>
-                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　カテゴリ一覧</a>
+                        <div 
+                        @if (strpos($now_route,'text_category_list') === false && strpos($now_route,'text_list') === false &&
+                        strpos($now_route,'text_show') === false) class="menu_none" @endif
+                        id="menu5">
+                        <a href="{{ route('summary') }}" class="menu_a 
+                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || 
+                        strpos($now_route,'text_show') !== false) current @endif">　新規文章作成</a>
+                        <a href="{{ route('text_list') }}" class="menu_a 
+                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || 
+                        strpos($now_route,'text_show') !== false) current @endif">　文章一覧</a>
+                        <a href="{{ route('text_category_list') }}" class="menu_a 
+                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || 
+                        strpos($now_route,'text_show') !== false) current @endif">　カテゴリ一覧</a>
                         </div>
 
-                        <a href="#!" class="menu_a @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) current @endif" onclick="clickMenu6();">
+                        <a href="#!" class="menu_a
+                        @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) current @endif" onclick="clickMenu6();">
                             管理者管理
                             @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) 
                             <img src="{{ asset('img/down.png') }}" id="down6" class="down_r"><img src="{{ asset('img/up.png') }}" id="up6" class="up_r">
@@ -112,8 +126,10 @@
                         <div 
                         @if (strpos($now_route,'admin_regist') === false && strpos($now_route,'admin_list') === false) class="menu_none" @endif
                         id="menu6">
-                        <a href="{{ route('admin_regist') }}" class="menu_a @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) current @endif">　新規追加</a>
-                        <a href="{{ route('admin_list') }}" class="menu_a @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) current @endif">　管理者一覧</a>
+                        <a href="{{ route('admin_regist') }}" class="menu_a 
+                        @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) current @endif">　新規追加</a>
+                        <a href="{{ route('admin_list') }}" class="menu_a 
+                        @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) current @endif">　管理者一覧</a>
                         </div>
 
                     </div>
