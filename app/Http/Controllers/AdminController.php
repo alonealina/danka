@@ -19,7 +19,7 @@ class AdminController extends Controller
     public function admin_store(Request $request)
     {
         $rules = [
-            'login_id' => ['required', new LoginIdCheck($request['login_id'])],
+            'login_id' => ['required', new LoginIdCheck()],
         ];
 
         $messages = [

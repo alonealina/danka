@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\LoginLog;
+use App\Rules\LoginCheck;
 use DB;
 
 class V2LoginController extends Controller
@@ -23,6 +25,15 @@ class V2LoginController extends Controller
 
     public function login_function(Request $request)
     {
+        $rules = [
+            'login_id' => ['required', new LoginCheck($request['password'])],
+        ];
+        $messages = [
+            'login_id.required' => 'IDを入力してください',
+        ];
+
+        Validator::make($request->all(), $rules, $messages)->validate();
+
         $login_log = new LoginLog;
 
         $request = $request->all();

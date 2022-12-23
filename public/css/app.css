@@ -262,7 +262,7 @@ p {
     color: #A62E2E;
 }
 
-#password_error, #name_error {
+#id_error, #password_error, #name_error {
     display: none;
 }
 

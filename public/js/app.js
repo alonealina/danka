@@ -89,9 +89,28 @@ function clickMenu6() {
 }
 
 function clickLoginFormButton() {
-    if (! document.forms.login_form.reportValidity()) {
-        return false;
+    error_flg = 0;
+    if (login_form.login_id.value == "") {
+        $('#id_error').css( 'display', 'block' );
+        $('.login_id_text').css( 'background', '#FAF1F1' );
+        error_flg = 1;
+    } else {
+        $('#id_error').css( 'display', 'none' );
+        $('.login_id_text').css( 'background', '#F7F7F7' );
     }
-    document.forms.login_form.submit();
+
+    if (login_form.password.value == "") {
+        $('#password_error').css( 'display', 'block' );
+        $('.password_text').css( 'background', '#FAF1F1' );
+        error_flg = 1;
+    } else {
+        $('#password_error').css( 'display', 'none' );
+        $('.password_text').css( 'background', '#F7F7F7' );
+    }
+
+    if (!error_flg) {
+        document.forms.login_form.submit();
+    }
+
 }
 

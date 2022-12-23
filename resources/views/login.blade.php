@@ -29,10 +29,14 @@
                     <form id="login_form" name="login_form" action="{{ route('login_function') }}" method="post">
                     @csrf
                         <div class="login_item_name">ログインID</div>
-                        {{ Form::text('login_id', old('login_id'), ['class' => 'login_form_text', 'maxlength' => 30, 'placeholder' => '']) }}
+                        {{ Form::text('login_id', old('login_id'), ['class' => 'login_form_text login_id_text', 'maxlength' => 30, 'placeholder' => '']) }}
+                        <div class="error_message" id="id_error" style="margin-bottom:20px;">ログインIDを入力してください。</div>
                         <div class="login_item_name">パスワード</div>
-                        <input name="password" type="password" class="login_form_text" maxlength="30">
-
+                        <input name="password" type="password" class="login_form_text password_text" maxlength="30">
+                        <div class="error_message" id="password_error">パスワードを入力してください。</div>
+                        @if($errors->has('login_id'))
+                        <div class="error_message" style="text-align:center;">{!! nl2br($errors->first('login_id')) !!}</div>
+                        @endif
                         <a onclick="clickLoginFormButton()" class="login_btn_a">
                             <div class="login_btn" style="margin-top:30px;">ログイン</div>
                         </a>

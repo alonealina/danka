@@ -6,18 +6,14 @@ use Illuminate\Contracts\Validation\Rule;
 use App\Models\AdminUser;
 class LoginIdCheck implements Rule
 {
-    private $id;
 
-    public function __construct($id)
+    public function __construct()
     {
-        $this->id = $id;
     }
 
-    public function passes($attribute, $value)
+    public function passes($attribute, $login_id)
     {
-        $login_id = $this->id;
-
-        $count = AdminUser::where('login_id', $value)->where('id', '<>', $login_id)->count();
+        $count = AdminUser::where('login_id', $login_id)->count();
         if ($count > 0) {
             return false;
         }
