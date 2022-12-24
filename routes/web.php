@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TextController;
+use App\Http\Controllers\EventController;
 
 
 use App\Http\Controllers\V2IndexController;
@@ -33,10 +34,17 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('summary', [V2UserController::class, 'summary'])->name('summary');
 Route::get('history', [V2UserController::class, 'history'])->name('history');
 
+Route::get('event_list', [EventController::class, 'event_list'])->name('event_list');
+Route::get('event_show/{id}', [EventController::class, 'event_show'])->name('event_show');
+
+
 Route::get('text_regist', [TextController::class, 'text_regist'])->name('text_regist');
 Route::post('text_store', [TextController::class, 'text_store'])->name('text_store');
 Route::get('text_list', [TextController::class, 'text_list'])->name('text_list');
 Route::get('text_show/{id}', [TextController::class, 'text_show'])->name('text_show');
+Route::get('text_edit/{id}', [TextController::class, 'text_edit'])->name('text_edit');
+Route::post('text_update', [TextController::class, 'text_update'])->name('text_update');
+Route::get('text_delete/{id}/', [TextController::class, 'text_delete'])->name('text_delete');
 Route::get('text_category_list', [TextController::class, 'text_category_list'])->name('text_category_list');
 Route::post('text_category_store', [TextController::class, 'text_category_store'])->name('text_category_store');
 Route::get('text_category_delete/{id}/', [TextController::class, 'text_category_delete'])->name('text_category_delete');

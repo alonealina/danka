@@ -9,8 +9,28 @@ use App\Models\TextCategory;
 use App\Rules\TextCategoryCheck;
 use DB;
 
-class TextController extends Controller
+class EventController extends Controller
 {
+    public function event_list(Request $request)
+    {
+        $text_categories = TextCategory::get();
+
+        return view('event_list', [
+            'text_categories' => $text_categories,
+        ]);
+    }
+
+    public function event_show($id)
+    {
+        $category = TextCategory::find($id);
+
+        return view('text_show', [
+            'category' => $category,
+
+        ]);
+    }
+
+
     public function text_regist(Request $request)
     {
         $text_categories = TextCategory::get();
@@ -104,15 +124,6 @@ class TextController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
         }
-    }
-
-    public function text_category_list(Request $request)
-    {
-        $text_categories = TextCategory::get();
-
-        return view('text_category_list', [
-            'text_categories' => $text_categories,
-        ]);
     }
 
     public function text_category_store(Request $request)

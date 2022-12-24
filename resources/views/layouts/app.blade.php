@@ -89,10 +89,10 @@
                         </div>
 
                         <a href="#!" class="menu_a
-                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || 
+                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || strpos($now_route,'text_edit') !== false || 
                         strpos($now_route,'text_show') !== false || strpos($now_route,'text_regist') !== false) current @endif" onclick="clickMenu5();">
                             文章作成/編集
-                            @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || 
+                            @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || strpos($now_route,'text_edit') !== false || 
                             strpos($now_route,'text_show') !== false || strpos($now_route,'text_regist') !== false)
                             <img src="{{ asset('img/down.png') }}" id="down5" class="down_r"><img src="{{ asset('img/up.png') }}" id="up5" class="up_r">
                             @else
@@ -100,17 +100,17 @@
                             @endif
                         </a>
                         <div 
-                        @if (strpos($now_route,'text_category_list') === false && strpos($now_route,'text_list') === false &&
+                        @if (strpos($now_route,'text_category_list') === false && strpos($now_route,'text_list') === false && strpos($now_route,'text_edit') === false &&
                         strpos($now_route,'text_show') === false && strpos($now_route,'text_regist') === false) class="menu_none" @endif
                         id="menu5">
                         <a href="{{ route('text_regist') }}" class="menu_a 
-                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || 
+                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || strpos($now_route,'text_edit') !== false || 
                         strpos($now_route,'text_show') !== false || strpos($now_route,'text_regist') !== false) current @endif">　新規文章作成</a>
                         <a href="{{ route('text_list') }}" class="menu_a 
-                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || 
+                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || strpos($now_route,'text_edit') !== false || 
                         strpos($now_route,'text_show') !== false || strpos($now_route,'text_regist') !== false) current @endif">　文章一覧</a>
                         <a href="{{ route('text_category_list') }}" class="menu_a 
-                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || 
+                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || strpos($now_route,'text_edit') !== false || 
                         strpos($now_route,'text_show') !== false || strpos($now_route,'text_regist') !== false) current @endif">　カテゴリ一覧</a>
                         </div>
 

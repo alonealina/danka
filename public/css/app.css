@@ -264,8 +264,10 @@ p {
     letter-spacing: 0px;
     color: #FFFFFF;
     display: block;
-    padding:5px 20px;
+    padding: 5px;
     line-height: 26px;
+    width: 100px;
+    height: 36px;
 }
 .delete_btn_a {
     background: #A62E2E 0% 0% no-repeat padding-box;
@@ -275,8 +277,10 @@ p {
     letter-spacing: 0px;
     color: #FFFFFF;
     display: block;
-    padding:5px 20px;
+    padding: 5px;
     line-height: 26px;
+    width: 100px;
+    height: 36px;
 }
 .view_btn_a {
     background: #A84FEB;
@@ -367,14 +371,31 @@ p {
     display: block;
     padding: 5px 0;
 }
-.text_content {
+.text_title {
     font: normal normal normal 18px/25px sans-serif;
     letter-spacing: 0px;
     color: #000000;
     margin-bottom: 20px;
 }
+.text_content {
+    font: normal normal normal 18px/25px sans-serif;
+    letter-spacing: 0px;
+    color: #000000;
+    width: calc(100% - 120px);
+    max-height: 125px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+}
 .flex_column {
     display: flex;
+    margin:10px 0;
+    width:100%;
+}
+.flex_column_space {
+    display: flex;
+    justify-content: space-between;
     margin:10px 0;
     width:100%;
 }
