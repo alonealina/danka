@@ -298,7 +298,7 @@ p {
     font: normal normal bold 14px/21px sans-serif;
     letter-spacing: 0px;
     color: #000000;
-    margin: 20px 0;
+    margin: 60px 0 10px;
     padding-left: 50px;
 }
 .category_list {
@@ -425,9 +425,17 @@ p {
     color: #A62E2E;
 }
 
-#id_error, #password_error, #name_error {
+#id_error, #password_error, #name_error, #max_error, #place_error {
     display: none;
 }
+
+.event_btn_list {
+    display: flex;
+    justify-content: space-between;
+    width:320px;
+}
+
+
 
 .form_text {
     font: normal normal normal 20px/30px Arial;
@@ -629,6 +637,3 @@ li {
     display: none;
 }
 
-#menu2, #menu3 ,#menu4 {
-    display: none;
-}

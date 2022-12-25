@@ -22,7 +22,7 @@
         @foreach($text_categories as $category)
         <div class="text_list_column">
             <div class="">{{ $category->name }}</div>
-            <a href="" class="view_btn_a">表示</a>
+            <a href="{{ route('event_show', $category->id) }}" class="view_btn_a">表示</a>
         </div>
         @endforeach
     </div>

@@ -39,7 +39,7 @@
 
         <div class="flex_column" id="name_error">
             <div class="regist_item_name"></div>
-            <div class="error_message" id="name_error_text">パスワードが一致しません。</div>
+            <div class="error_message" id="name_error_text">名前を入力してください</div>
         </div>
 
         <a onclick="clickAdminStoreButton()" class="login_btn_a">

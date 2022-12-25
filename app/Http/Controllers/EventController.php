@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Text;
 use App\Models\TextCategory;
+use App\Models\EventDate;
 use App\Rules\TextCategoryCheck;
 use DB;
 
@@ -20,14 +21,48 @@ class EventController extends Controller
         ]);
     }
 
-    public function event_show($id)
+    public function event_show($category_id)
+    {
+        $category = TextCategory::find($category_id);
+        $event_dates = EventDate::where('category_id', $category_id)->get();
+
+        return view('event_show', [
+            'category' => $category,
+            'event_dates' => $event_dates,
+
+        ]);
+    }
+
+    public function event_add($id)
     {
         $category = TextCategory::find($id);
 
-        return view('text_show', [
+        return view('event_add', [
             'category' => $category,
 
         ]);
+    }
+
+    public function event_store(Request $request)
+    {
+        $event_date = new EventDate;
+
+        $request = $request->all();
+        $fill_data = [
+            'category_id' => $request['category_id'],
+            'date' => $request['date'],
+            'place' => $request['place'],
+            'max' => $request['max'],
+        ];
+
+        DB::beginTransaction();
+        try {
+            $event_date->fill($fill_data)->save();
+            DB::commit();
+            return redirect()->route('event_show', $request['category_id'])->with('message', '行事予定日の登録が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
     }
 
 
