@@ -26,10 +26,12 @@ class EventController extends Controller
     {
         $category = TextCategory::find($category_id);
         $event_dates = EventDate::where('category_id', $category_id)->get();
+        $event_books = EventBook::select(DB::raw('date_id, COUNT(date_id) AS date_id_count'))->groupBy('date_id')->get();
 
         return view('event_show', [
             'category' => $category,
             'event_dates' => $event_dates,
+            'event_books' => $event_books,
 
         ]);
     }
@@ -66,6 +68,20 @@ class EventController extends Controller
         }
     }
 
+    public function event_book_show($date_id)
+    {
+        $event_date = EventDate::find($date_id);
+        $category = TextCategory::find($event_date->category_id);
+        $event_books = EventBook::where('date_id', $date_id)->get();
+
+        return view('event_book_show', [
+            'event_date' => $event_date,
+            'category' => $category,
+            'event_books' => $event_books,
+        ]);
+    }
+
+
     public function event_book_regist($id)
     {
 
@@ -73,8 +89,8 @@ class EventController extends Controller
         $category = TextCategory::find($event_date->category_id);
 
         return view('event_book_regist', [
-            'category' => $category,
             'event_date' => $event_date,
+            'category' => $category,
         ]);
     }
 

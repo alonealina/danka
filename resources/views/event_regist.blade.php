@@ -37,7 +37,7 @@
 </div>
 
 
-<script src="{{ asset('js/event_add.js') }}"></script>
+<script src="{{ asset('js/event_regist.js') }}"></script>
 
 @endsection
 
