@@ -111,7 +111,7 @@ class EventController extends Controller
             $event_book->fill($fill_data)->save();
             DB::commit();
             // return redirect()->route('event_show', $request['category_id'])->with('message', '予約追加が完了いたしました。');
-            return redirect()->route('event_show', $request['date_id'])->with('message', '予約追加が完了いたしました。');
+            return redirect()->route('event_book_show', $request['date_id'])->with('message', '予約追加が完了いたしました。');
         } catch (\Exception $e) {
             DB::rollback();
         }
