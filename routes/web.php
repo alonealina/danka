@@ -5,9 +5,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TextController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\IndexController;
 
 
-use App\Http\Controllers\V2IndexController;
 use App\Http\Controllers\V2DemoAcountController;
 use App\Http\Controllers\V2ContactController;
 use App\Http\Controllers\V2CompanyController;

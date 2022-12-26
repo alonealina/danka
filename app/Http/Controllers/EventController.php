@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Text;
 use App\Models\TextCategory;
 use App\Models\EventDate;
+use App\Models\EventBook;
 use App\Rules\TextCategoryCheck;
 use DB;
 
