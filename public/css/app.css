@@ -425,7 +425,7 @@ p {
     color: #A62E2E;
 }
 
-#id_error, #password_error, #name_error, #max_error, #place_error {
+#id_error, #password_error, #name_error, #max_error, #place_error, #tel_error, #name_kana_error {
     display: none;
 }
 
@@ -435,6 +435,14 @@ p {
     width:320px;
 }
 
+.event_book_flex {
+    display: flex;
+    width:100%;
+}
+
+.event_book_div {
+    width: 500px;
+}
 
 
 .form_text {

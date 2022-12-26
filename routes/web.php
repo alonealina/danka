@@ -36,8 +36,10 @@ Route::get('history', [V2UserController::class, 'history'])->name('history');
 
 Route::get('event_list', [EventController::class, 'event_list'])->name('event_list');
 Route::get('event_show/{id}', [EventController::class, 'event_show'])->name('event_show');
-Route::get('event_add/{id}', [EventController::class, 'event_add'])->name('event_add');
+Route::get('event_regist/{id}', [EventController::class, 'event_regist'])->name('event_regist');
 Route::post('event_store', [EventController::class, 'event_store'])->name('event_store');
+Route::get('event_book_regist/{id}', [EventController::class, 'event_book_regist'])->name('event_book_regist');
+Route::post('event_book_store', [EventController::class, 'event_book_store'])->name('event_book_store');
 
 
 Route::get('text_regist', [TextController::class, 'text_regist'])->name('text_regist');

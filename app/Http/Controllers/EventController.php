@@ -34,11 +34,11 @@ class EventController extends Controller
         ]);
     }
 
-    public function event_add($id)
+    public function event_regist($id)
     {
         $category = TextCategory::find($id);
 
-        return view('event_add', [
+        return view('event_regist', [
             'category' => $category,
 
         ]);
@@ -66,141 +66,40 @@ class EventController extends Controller
         }
     }
 
-
-    public function text_regist(Request $request)
+    public function event_book_regist($id)
     {
-        $text_categories = TextCategory::get();
 
-        return view('text_regist', [
-            'text_categories' => $text_categories,
-        ]);
-    }
+        $event_date = EventDate::find($id);
+        $category = TextCategory::find($event_date->category_id);
 
-    public function text_store(Request $request)
-    {
-        $text = new Text;
-
-        $request = $request->all();
-        $fill_data = [
-            'category_id' => $request['category_id'],
-            'title' => $request['title'],
-            'content' => $request['content'],
-        ];
-
-        DB::beginTransaction();
-        try {
-            $text->fill($fill_data)->save();
-            DB::commit();
-            return redirect()->to('text_list')->with('message', '文章の登録が完了いたしました。');
-        } catch (\Exception $e) {
-            DB::rollback();
-        }
-    }
-
-    public function text_list(Request $request)
-    {
-        $text_categories = TextCategory::get();
-
-        return view('text_list', [
-            'text_categories' => $text_categories,
-        ]);
-    }
-
-    public function text_show($category_id)
-    {
-        $category = TextCategory::find($category_id);
-        $text_list = Text::where('category_id', $category_id)->get();
-
-        return view('text_show', [
+        return view('event_book_regist', [
             'category' => $category,
-            'text_list' => $text_list,
-
+            'event_date' => $event_date,
         ]);
     }
 
-    public function text_edit($id)
+    public function event_book_store(Request $request)
     {
-        $text_categories = TextCategory::get();
-        $text = Text::find($id);
-
-        return view('text_edit', [
-            'text_categories' => $text_categories,
-            'text' => $text,
-        ]);
-    }
-
-    public function text_update(Request $request)
-    {
-        $request = $request->all();
-        $text = Text::find($request['id']);
-
-        $fill_data = [
-            'category_id' => $request['category_id'],
-            'title' => $request['title'],
-            'content' => $request['content'],
-        ];
-
-        DB::beginTransaction();
-        try {
-            $text->update($fill_data);
-            DB::commit();
-            return redirect()->to('text_list')->with('message', '文章の編集が完了いたしました。');
-        } catch (\Exception $e) {
-            DB::rollback();
-        }
-    }
-
-    public function text_delete($id)
-    {
-        DB::beginTransaction();
-        try {
-            Text::where('id', $id)->delete();
-            DB::commit();
-            return redirect()->route('text_list')->with('message', '文章を削除しました');
-        } catch (\Exception $e) {
-            DB::rollback();
-        }
-    }
-
-    public function text_category_store(Request $request)
-    {
-        $rules = [
-            'name' => ['required', new TextCategoryCheck()],
-        ];
-
-        $messages = [
-            'name.required' => 'IDを入力してください',
-        ];
-
-        Validator::make($request->all(), $rules, $messages)->validate();
-
-        $text_category = new TextCategory;
+        $event_book = new EventBook();
 
         $request = $request->all();
         $fill_data = [
+            'date_id' => $request['date_id'],
             'name' => $request['name'],
+            'name_kana' => $request['name_kana'],
+            'tel' => $request['tel'],
         ];
 
         DB::beginTransaction();
         try {
-            $text_category->fill($fill_data)->save();
+            $event_book->fill($fill_data)->save();
             DB::commit();
-            return redirect()->to('text_category_list')->with('message', 'カテゴリの登録が完了いたしました。');
+            // return redirect()->route('event_show', $request['category_id'])->with('message', '予約追加が完了いたしました。');
+            return redirect()->route('event_show', $request['date_id'])->with('message', '予約追加が完了いたしました。');
         } catch (\Exception $e) {
             DB::rollback();
         }
     }
 
-    public function text_category_delete($id)
-    {
-        DB::beginTransaction();
-        try {
-            TextCategory::where('id', $id)->delete();
-            DB::commit();
-            return redirect()->route('text_category_list')->with('message', 'カテゴリを削除しました');
-        } catch (\Exception $e) {
-            DB::rollback();
-        }
-    }
 
 }
