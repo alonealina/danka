@@ -18,7 +18,7 @@ use App\Http\Controllers\V2AddAcountController;
 use App\Http\Controllers\V2DepositController;
 
 
-Route::get('', [V2IndexController::class, 'index'])->name('index');
+Route::get('', [IndexController::class, 'index'])->name('index');
 
 Route::get('login', [LoginController::class, 'login'])->name('login');
 Route::post('login_function', [LoginController::class, 'login_function'])->name('login_function');
