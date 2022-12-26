@@ -22,7 +22,7 @@
             <div class="book_item_content">{{ $event_books->count() }}</div>
         </div>
         @if($event_date->max > $event_books->count())
-        <a href="{{ route('event_book_regist', $category->id) }}" class="book_add_btn_a">予約追加</a>
+        <a href="{{ route('event_book_regist', $event_date->id) }}" class="book_add_btn_a">予約追加</a>
         @endif
     </div>
     
