@@ -11,10 +11,19 @@
         <div class="text_list_column">
             <div class="">{{ $event_date->date }}</div>
             <div class="event_btn_list">
+                @if($event_date->max > $event_date->date_id_count && $event_date->date >= date('Y-m-d'))
                 <a href="{{ route('event_book_regist', $event_date->id) }}" class="add_btn_a">予約追加</a>
+                @else
+                <div class="dummy_btn_div"></div>
+                @endif
                 <a href="{{ route('event_book_show', $event_date->id) }}" class="view_btn_a" style="width:100px;">表示</a>
-
-                <div class="delete_btn_a">終了</div>
+                @if($event_date->date < date('Y-m-d'))
+                <div class="gray_btn_a">終了済</div>
+                @elseif($event_date->max > $event_date->date_id_count)
+                <div class="delete_btn_a">予約受付中</div>
+                @else
+                <div class="gray_btn_a">予約終了</div>
+                @endif
             </div>
         </div>
         @endforeach

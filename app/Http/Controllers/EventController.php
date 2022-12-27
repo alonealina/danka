@@ -25,14 +25,19 @@ class EventController extends Controller
     public function event_show($category_id)
     {
         $category = TextCategory::find($category_id);
-        $event_dates = EventDate::where('category_id', $category_id)->get();
-        $event_books = EventBook::select(DB::raw('date_id, COUNT(date_id) AS date_id_count'))->groupBy('date_id')->get();
+        $event_dates = DB::select('SELECT event_date.id as id, date, max, date_id_count
+        FROM event_date
+        LEFT JOIN (
+        SELECT date_id , COUNT(date_id) AS date_id_count
+        FROM event_book
+        GROUP BY date_id) as event_book
+        ON id = event_book.date_id
+        WHERE category_id = ?
+        ORDER BY date DESC', [$category_id]);
 
         return view('event_show', [
             'category' => $category,
             'event_dates' => $event_dates,
-            'event_books' => $event_books,
-
         ]);
     }
 
@@ -110,7 +115,6 @@ class EventController extends Controller
         try {
             $event_book->fill($fill_data)->save();
             DB::commit();
-            // return redirect()->route('event_show', $request['category_id'])->with('message', '予約追加が完了いたしました。');
             return redirect()->route('event_book_show', $request['date_id'])->with('message', '予約追加が完了いたしました。');
         } catch (\Exception $e) {
             DB::rollback();
