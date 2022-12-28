@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TextController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\IndexController;
@@ -42,6 +44,17 @@ Route::get('event_book_show/{id}', [EventController::class, 'event_book_show'])-
 Route::get('event_book_regist/{id}', [EventController::class, 'event_book_regist'])->name('event_book_regist');
 Route::post('event_book_store', [EventController::class, 'event_book_store'])->name('event_book_store');
 
+Route::get('unclaimed_list', [PaymentController::class, 'unclaimed_list'])->name('unclaimed_list');
+Route::get('unpaid_list', [PaymentController::class, 'unpaid_list'])->name('unpaid_list');
+Route::get('paid_list', [PaymentController::class, 'paid_list'])->name('paid_list');
+
+Route::get('notice_regist', [NoticeController::class, 'notice_regist'])->name('notice_regist');
+Route::post('notice_store', [NoticeController::class, 'notice_store'])->name('notice_store');
+Route::get('notice_list', [NoticeController::class, 'notice_list'])->name('notice_list');
+Route::get('notice_show/{id}', [NoticeController::class, 'notice_show'])->name('notice_show');
+Route::get('notice_edit/{id}', [NoticeController::class, 'notice_edit'])->name('notice_edit');
+Route::post('notice_update', [NoticeController::class, 'notice_update'])->name('notice_update');
+Route::get('notice_delete/{id}/', [NoticeController::class, 'notice_delete'])->name('notice_delete');
 
 Route::get('text_regist', [TextController::class, 'text_regist'])->name('text_regist');
 Route::post('text_store', [TextController::class, 'text_store'])->name('text_store');

@@ -81,11 +81,11 @@
                             @endif
                         </a>
                         <div class="menu_none" id="menu3">
-                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　一覧</a>
+                        <a href="{{ route('unclaimed_list') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　一覧</a>
                         </div>
 
                         <a href="#!" class="menu_a @if (strpos($now_route,'transfer') !== false) current @endif" onclick="clickMenu4();">
-                            お知らせ発送
+                            お知らせ
                             @if (strpos($now_route,'aaa') !== false) 
                             <img src="{{ asset('img/down.png') }}" id="down4" class="down_r"><img src="{{ asset('img/up.png') }}" id="up4" class="up_r">
                             @else
@@ -93,6 +93,7 @@
                             @endif
                         </a>
                         <div class="menu_none" id="menu4">
+                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　お知らせ発送</a>
                         <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　保存済みのお知らせ</a>
                         </div>
 

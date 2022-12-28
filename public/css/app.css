@@ -249,7 +249,62 @@ p {
     margin:auto;
     padding-top: 20px;
 }
-
+.payment_list_header {
+    display: flex;
+    justify-content: space-between;
+    font: normal normal bold 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #000000;
+    margin: 60px 0 10px;
+    padding-left: 50px;
+}
+.payment_id {
+    width:15%;
+}
+.payment_name {
+    width:15%;
+}
+.payment_num {
+    width:12%;
+}
+.payment_tel {
+    width:15%;
+}
+.payment_type {
+    width:12%;
+}
+.payment_price {
+    width:10%;
+}
+.payment_btn {
+    width:20%;
+}
+.payment_list_column {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-left: 50px;
+    font: normal normal normal 16px/24px sans-serif;
+    letter-spacing: 0px;
+    color: #262626;
+    margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid;
+    align-items: end;
+}
+.paid_btn_a {
+    background: #2963AB;
+    border-radius: 4px;
+    text-align: center;
+    font: normal normal normal 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    display: block;
+    width:70%;
+    margin: auto;
+    padding: 5px 20px;
+    line-height: 26px;
+}
 .category_name_text {
     width:400px;
     padding:5px 15px;
@@ -454,6 +509,30 @@ p {
 #id_error, #password_error, #name_error, #max_error, #place_error, #tel_error, #name_kana_error {
     display: none;
 }
+
+.payment_btn_list {
+    width: 270px;
+    display: flex;
+    border: 1px solid #707070;
+    color: #000000;
+    font: normal normal normal 16px/16px sans-serif;
+    margin: 30px 0;
+}
+.payment_btn_div {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    width:90px;
+    text-align: center;
+    padding: 8px 0;
+}
+.payment_btn_a {
+    background: #EEEEEE 0% 0% no-repeat padding-box;
+    display: block;
+    width:90px;
+    text-align: center;
+    padding: 8px 0;
+
+}
+
 
 .event_btn_list {
     display: flex;
