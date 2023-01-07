@@ -44,7 +44,7 @@
                         <div 
                         @if (strpos($now_route,'summary') === false) class="menu_none" @endif
                         id="menu1">
-                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif">　新規登録</a>
+                        <a href="{{ route('danka_regist') }}" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif">　新規登録</a>
                         <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif">　檀家検索</a>
                         <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif">　檀家編集</a>
                         </div>

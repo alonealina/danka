@@ -244,6 +244,45 @@ p {
     margin:20px 0 50px;
 }
 
+.danka_regist_div {
+    width: 100%;
+    padding: 20px 50px;
+    margin: 20px 0 50px;
+    display: flex;
+    justify-content: space-between;
+}
+.danka_form_div {
+    width:45%;
+}
+
+.danka_column {
+    width:100%;
+    margin:10px 0;
+    display: flex;
+}
+.danka_regist_name {
+    font: normal normal normal 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #000000;
+    width: 120px;
+    padding-top: 6px;
+}
+.danka_form_text {
+    width: calc(100% - 120px);
+    padding: 5px 5px;
+    font: normal normal normal 14px/21px sans-serif;
+}
+.danka_checkbox {
+    margin-right: 10px;
+    accent-color: #A84FEB;
+}
+.danka_label {
+    margin-right:40px;
+    margin-bottom: 0;
+    font: normal normal normal 14px/21px sans-serif;
+}
+
+
 .text_category_list_div {
     width: 90%;
     margin:auto;

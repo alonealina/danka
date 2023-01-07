@@ -7,6 +7,7 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TextController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\DankaController;
 use App\Http\Controllers\IndexController;
 
 
@@ -35,6 +36,9 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 // 以下ユーザーページ
 Route::get('summary', [V2UserController::class, 'summary'])->name('summary');
 Route::get('history', [V2UserController::class, 'history'])->name('history');
+
+Route::get('danka_regist', [DankaController::class, 'danka_regist'])->name('danka_regist');
+Route::post('danka_store', [DankaController::class, 'danka_store'])->name('danka_store');
 
 Route::get('event_list', [EventController::class, 'event_list'])->name('event_list');
 Route::get('event_show/{id}', [EventController::class, 'event_show'])->name('event_show');
