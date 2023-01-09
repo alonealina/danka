@@ -72,16 +72,24 @@
                         strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false) current @endif">　新規行事登録</a>
                         </div>
 
-                        <a href="#!" class="menu_a " onclick="clickMenu3();">
+                        <a href="#!" class="menu_a 
+                        @if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false)
+                        current @endif" onclick="clickMenu3();">
                             請求/支払い
-                            @if (strpos($now_route,'aaa') !== false) 
+                            @if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false) 
                             <img src="{{ asset('img/down.png') }}" id="down3" class="down_r"><img src="{{ asset('img/up.png') }}" id="up3" class="up_r">
                             @else
                             <img src="{{ asset('img/down.png') }}" id="down3" class="down"><img src="{{ asset('img/up.png') }}" id="up3" class="up">
                             @endif
                         </a>
-                        <div class="menu_none" id="menu3">
-                        <a href="{{ route('unclaimed_list') }}" class="menu_a @if (strpos($now_route,'aaa') !== false) current @endif">　一覧</a>
+                        <div 
+                        @if (strpos($now_route,'unclaimed_list') === false && strpos($now_route,'unpaid_list') === false && strpos($now_route,'paid_list') === false)
+                        class="menu_none"
+                        @endif
+                        id="menu3">
+                        <a href="{{ route('unclaimed_list') }}" class="menu_a
+                        @if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false)
+                        current @endif">　一覧</a>
                         </div>
 
                         <a href="#!" class="menu_a @if (strpos($now_route,'transfer') !== false) current @endif" onclick="clickMenu4();">
@@ -142,7 +150,7 @@
                         </div>
 
                     </div>
-                    <div class="@if (strpos($now_route,'history') !== false) history_content @else user_content_main @endif">
+                    <div class="@if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false) paid_list_main @else user_content_main @endif">
                     @yield('content')
                     </div>
                 </div>
