@@ -126,9 +126,6 @@
                         <a href="{{ route('text_list') }}" class="menu_a 
                         @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || strpos($now_route,'text_edit') !== false || 
                         strpos($now_route,'text_show') !== false || strpos($now_route,'text_regist') !== false) current @endif">　文章一覧</a>
-                        <a href="{{ route('text_category_list') }}" class="menu_a 
-                        @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || strpos($now_route,'text_edit') !== false || 
-                        strpos($now_route,'text_show') !== false || strpos($now_route,'text_regist') !== false) current @endif">　カテゴリ一覧</a>
                         </div>
 
                         <a href="#!" class="menu_a
@@ -148,6 +145,9 @@
                         <a href="{{ route('admin_list') }}" class="menu_a 
                         @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) current @endif">　管理者一覧</a>
                         </div>
+
+                        <a href="{{ route('category_list') }}" class="menu_a 
+                        @if (strpos($now_route,'category_list') !== false) current @endif">カテゴリ一覧</a>
 
                     </div>
                     <div class="@if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false) paid_list_main 

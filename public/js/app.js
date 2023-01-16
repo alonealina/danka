@@ -88,6 +88,21 @@ function clickMenu6() {
     }
 }
 
+function clickMenu7() {
+    if ($('#menu7').css('display') == 'none') {
+        // 非表示の場合の処理
+        $('#menu7').css( 'display', 'block' );
+        $('#up7').css( 'display', 'block' );
+        $('#down7').css( 'display', 'none' );
+    } else {
+        // 表示されている場合の処理
+        $('#menu7').css( 'display', 'none' );
+        $('#up7').css( 'display', 'none' );
+        $('#down7').css( 'display', 'block' );
+        
+    }
+}
+
 function clickLoginFormButton() {
     error_flg = 0;
     if (login_form.login_id.value == "") {

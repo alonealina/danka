@@ -407,9 +407,9 @@ p {
     color: #FFFFFF;
     display: block;
     padding: 5px;
-    line-height: 26px;
-    width: 100px;
-    height: 36px;
+    line-height: 16px;
+    width: 80px;
+    height: 24px;
 }
 .gray_btn_a {
     background: #707070 0% 0% no-repeat padding-box;
@@ -444,7 +444,7 @@ p {
     padding-left: 50px;
 }
 .category_list {
-    height: calc(100vh - 500px);
+    height: calc(100vh - 480px);
     overflow-y: scroll;
     /*スクロールバー非表示（IE・Edge）*/
     -ms-overflow-style: 10px;
