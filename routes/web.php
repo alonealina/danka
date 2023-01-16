@@ -74,6 +74,7 @@ Route::get('text_category_delete/{id}/', [TextController::class, 'text_category_
 Route::get('admin_regist', [AdminController::class, 'admin_regist'])->name('admin_regist');
 Route::post('admin_store', [AdminController::class, 'admin_store'])->name('admin_store');
 Route::get('admin_list', [AdminController::class, 'admin_list'])->name('admin_list');
+Route::get('admin_delete/{id}/', [AdminController::class, 'admin_delete'])->name('admin_delete');
 
 
 

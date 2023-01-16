@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content_title">管理者一覧</div>
-
+<div class="admin_list_message">{{ session('message') }}</div>
 <div class="content_flex">
     <div class="admin_user_list">
         <div class="admin_user_header">
@@ -10,6 +10,7 @@
             <div class="admin_user_name">名前</div>
             <div class="admin_user_date">追加日</div>
             <div class="admin_user_date">最終ログイン</div>
+            <div class="admin_user_btn"></div>
             <div class="admin_user_btn"></div>
         </div>
         @foreach($admin_users as $user)
@@ -24,6 +25,9 @@
                 @else
                 <a href="#!" id="log_btn_{{ $user->user_id }}" onclick="clickLogButton({{ $user->user_id }})" class="log_view_btn_a">表示</a>
                 @endif
+            </div>
+            <div class="admin_user_btn">
+                <a href="{{ route('admin_delete', $user->user_id) }}" onclick="return confirm('本当に削除しますか？')" class="user_delete_btn_a">削除</a>
             </div>
         </div>
         @endforeach

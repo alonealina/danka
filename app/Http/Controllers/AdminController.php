@@ -66,4 +66,17 @@ class AdminController extends Controller
         ]);
     }
 
+    public function admin_delete($id)
+    {
+        DB::beginTransaction();
+        try {
+            $user = AdminUser::find($id);
+            AdminUser::where('id', $id)->delete();
+            DB::commit();
+            return redirect()->route('admin_list')->with('message', $user->login_id .' '. $user->name . ' を削除しました');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
 }

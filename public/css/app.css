@@ -464,6 +464,9 @@ p {
 .category_list_message {
     color: blue;
 }
+.admin_list_message {
+    color: #A62E2E;
+}
 .text_list_column {
     display: flex;
     justify-content: space-between;
@@ -673,7 +676,7 @@ p {
 }
 
 .admin_user_list {
-    width: 50%;
+    width: 55%;
     margin-top: 30px;
 }
 .login_log_list_div {
@@ -686,9 +689,41 @@ p {
     padding:20px;
     height: 60vh;
 }
+@media screen and (min-width: 1431px) {
+    .admin_user_list {
+        width: 55%;
+    }
+    .login_log_list_div {
+        width: 40%;
+    }
+    .login_log_column {
+        margin-right: 30px;
+        font: normal normal normal 16px/24px sans-serif;
+    }
+    .admin_user_column {
+        font: normal normal normal 16px/24px sans-serif;
+    }
+}
+@media screen and (max-width: 1430px) {
+    .admin_user_list {
+        width: calc(100% - 230px);
+    }
+    .login_log_list_div {
+        width: 200px;
+    }
+    .login_log_column {
+        margin-right: 10px;
+        font: normal normal normal 12px/24px sans-serif;
+    }
+    .admin_user_column {
+        font: normal normal normal 12px/24px sans-serif;
+    }
+}
+
+
 .login_log_list {
     height: calc(100% - 50px);
-    overflow: scroll;
+    overflow-y: scroll;
     /*スクロールバー非表示（IE・Edge）*/
     -ms-overflow-style: none;
     /*スクロールバー非表示（Firefox）*/
@@ -696,15 +731,22 @@ p {
 }
 /*スクロールバー非表示（Chrome・Safari）*/
 .login_log_list::-webkit-scrollbar{
-    display:none;
+    width: 10px;
 }
+.login_log_list::-webkit-scrollbar-track{
+    background-color: #ccc;
+}
+.login_log_list::-webkit-scrollbar-thumb{
+    background-color: #17585d;
+}
+
 .login_log_column {
-    font: normal normal normal 16px/24px sans-serif;
     letter-spacing: 0px;
     color: #262626;
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px solid;
+    display: inline;
 }
 
 .admin_user_header, .admin_user_column {
@@ -726,7 +768,6 @@ p {
     margin-bottom: 30px;
 }
 .admin_user_column {
-    font: normal normal normal 16px/24px sans-serif;
     letter-spacing: 0px;
     color: #262626;
     margin-bottom: 10px;
@@ -737,13 +778,24 @@ p {
     width:16%;
 }
 .admin_user_name {
-    width:24%;
-}
-.admin_user_date {
     width:20%;
 }
-.admin_user_btn {
+.admin_user_date {
     width:16%;
+}
+.admin_user_btn {
+    width:70px;
+}
+.user_delete_btn_a {
+    background: #A62E2E 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    text-align: center;
+    font: normal normal normal 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    width:90%;
+    display: block;
+    padding:5px 0;
 }
 .log_view_btn_a {
     background: #A84FEB 0% 0% no-repeat padding-box;
@@ -768,7 +820,9 @@ p {
     display: none;
 }
 .log_list_current {
-    display: block;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 ::placeholder {

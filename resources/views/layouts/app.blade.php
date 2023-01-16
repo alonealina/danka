@@ -150,7 +150,9 @@
                         </div>
 
                     </div>
-                    <div class="@if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false) paid_list_main @else user_content_main @endif">
+                    <div class="@if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false) paid_list_main 
+                        @elseif (strpos($now_route,'admin_list') !== false) paid_list_main
+                        @else user_content_main @endif">
                     @yield('content')
                     </div>
                 </div>
