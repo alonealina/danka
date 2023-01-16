@@ -7,22 +7,19 @@
     <div class="danka_regist_div">
         <div class="danka_form_div">
             <div class="danka_column">
-                <div class="danka_regist_name">カルテナンバー</div>
-                {{ Form::text('chart_no', old('chart_no'), ['id' => 'chart_no', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'カルテナンバー']) }}
-            </div>
-            <div class="danka_column">
-                <div class="danka_regist_name">施主名</div>
+                <div class="danka_regist_name">施主名 <span class="require_mark">※</span></div>
                 {{ Form::text('name', old('name'), ['id' => 'name', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '姓　名']) }}
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">フリガナ</div>
+                <div class="danka_regist_name">フリガナ <span class="require_mark">※</span></div>
                 {{ Form::text('name_kana', old('name_kana'), ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'セイ　メイ']) }}
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">カテゴリ</div>
+                <div class="danka_regist_name">性別</div>
                 <select name="gender" class="select_category" style="width: 50px;">
                     <option value="m">男</option>
                     <option value="f">女</option>
+                    <option value="o">その他</option>
                 </select>
             </div>
             <div class="danka_column">
@@ -37,16 +34,20 @@
                 <div class="danka_regist_name">メールアドレス</div>
                 {{ Form::text('mail', old('mail'), ['class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
             </div>
+            <div class="danka_column">
+                <div class="danka_regist_name">特記事項</div>
+                {{ Form::text('notices', old('notices'), ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
+            </div>
         </div>
 
         <div class="danka_form_div">
             <div class="danka_column">
-                <div class="danka_regist_name">郵便番号</div>
+                <div class="danka_regist_name">郵便番号 <span class="require_mark">※</span></div>
                 {{ Form::text('zip', old('zip'), ['id' => 'zip', 'class' => 'danka_form_text', 'maxlength' => 7, 'placeholder' => '0000000', 'style' => 'width: 180px',
                         'onkeyup' => "AjaxZip3.zip2addr(this, '', 'pref', 'city')"]) }}
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">都道府県</div>
+                <div class="danka_regist_name">都道府県 <span class="require_mark">※</span></div>
                 <select name="pref" class="select_category" style="width: 180px" id="pref">
                     <option value="">選択してください</option>
                     @foreach (config('const.Prefs') as $name)
@@ -56,11 +57,11 @@
                 </select>
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">市区町村</div>
+                <div class="danka_regist_name">市区町村 <span class="require_mark">※</span></div>
                 {{ Form::text('city', old('city'), ['id' => 'city', 'class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">番地</div>
+                <div class="danka_regist_name">番地 <span class="require_mark">※</span></div>
                 {{ Form::text('address', old('address'), ['id' => 'address', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
@@ -72,20 +73,88 @@
                 {{ Form::text('introducer', old('introducer'), ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">特記事項</div>
-                {{ Form::text('notices', old('notices'), ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
-            </div>
-            <div class="danka_column">
                 <input type="checkbox" id="segaki_flg" name="segaki_flg" class="danka_checkbox" value="1">
                 <label for="segaki_flg" class="danka_label">施餓鬼</label>
                 <input type="checkbox" id="star_flg" name="star_flg" class="danka_checkbox" value="1">
                 <label for="star_flg" class="danka_label">星祭り</label>
-                <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1">
-                <label for="kaiki_flg" class="danka_label">回忌</label>
             </div>
         </div>
-
     </div>
+
+    <div class="danka_other_div">
+        <div class="danka_other_tab">
+            <a href="#!" id="hikuyousya" onclick="clickHikuyousya()" class="danka_tab danka_current">被供養者</a>
+            <a href="#!" id="family" onclick="clickFamily()" class="danka_tab">家族情報</a>
+            <div class="danka_space"></div>
+        </div>
+        <div class="danka_other_content">
+            <input type="checkbox" id="hikuyousya_flg" name="hikuyousya_flg" class="danka_checkbox" value="1">
+            <label for="hikuyousya_flg" class="danka_label">登録する</label>
+            <div class="hikuyousya_form" id="hikuyousya_form">
+                <div class="hikuyousya_type">
+                    <div class="danka_column">
+                        <div class="danka_regist_name2" style="width: 50px;">種別</div>
+                        <select name="type" class="select_category" style="width: 80px;">
+                            <option value="故人">故人</option>
+                            <option value="ペット">ペット</option>
+                            <option value="水子">水子</option>
+                            <option value="先祖">先祖</option>
+                            <option value="生前">生前</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="hikuyousya_type">
+                    <div class="danka_column">
+                        <div class="danka_regist_name2">俗名 <span class="require_mark">※</span></div>
+                        {{ Form::text('common_name', old('common_name'), ['id' => 'common_name', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => '俗名']) }}
+                    </div>
+                    <div class="danka_column">
+                        <div class="danka_regist_name2">フリガナ <span class="require_mark">※</span></div>
+                        {{ Form::text('common_kana', old('common_kana'), ['id' => 'common_kana', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'フリガナ']) }}
+                    </div>
+                    <div class="danka_column">
+                        <div class="danka_regist_name2">戒名</div>
+                        {{ Form::text('posthumous', old('posthumous'), ['class' => 'danka_form_text2', 'maxlength' => 50, 'placeholder' => '戒名']) }}
+                    </div>
+                    <div class="danka_column">
+                        <div class="danka_regist_name2">性別</div>
+                        <select name="gender_h" class="select_category" style="width: 50px;">
+                            <option value="m">男</option>
+                            <option value="f">女</option>
+                            <option value="o">その他</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="hikuyousya_date">
+                    <div class="danka_column">
+                        <div class="danka_regist_name2">命日</div>
+                        {{ Form::date('meinichi', old('meinichi'), ['class' => 'danka_form_text2', 'id' => 'meinichi', 'placeholder' => '', 'style' => 'width: 110px;']) }}
+                        　<input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1">
+                        {{ Form::text('kaiki', old('kaiki'), ['class' => 'danka_form_text2', 'id' => 'kaiki_year', 'maxlength' => 2, 'style' => 'width: 30px;', 'disabled']) }}
+                        <div class="danka_regist_name2" style="width: 70px;">周忌/回忌</div>
+                    </div>
+                    <div class="danka_column">
+                        <div class="danka_regist_name2">行年</div>
+                        {{ Form::text('gyonen', old('gyonen'), ['id' => 'gyonen', 'class' => 'danka_form_text2', 'maxlength' => 3, 'placeholder' => '1～150']) }}
+                    </div>
+                    <div class="danka_column">
+                        <div class="danka_regist_name2">位牌番号</div>
+                        {{ Form::text('ihai_no', old('ihai_no'), ['class' => 'danka_form_text2', 'maxlength' => 4, 'placeholder' => '0000']) }}
+                    </div>
+                    <div class="danka_column">
+                        <div class="danka_regist_name2">特記事項</div>
+                        {{ Form::text('column', old('column'), ['class' => 'danka_form_text2', 'maxlength' => 100, 'placeholder' => '']) }}
+                    </div>
+                </div>
+
+
+            
+            </div>
+        </div>
+    </div>
+
     <a href="#!" onclick="clickTextStoreButton()" class="text_store_btn_a">作成</a>
 </form>
 <script src="{{ asset('js/danka_regist.js') }}"></script>

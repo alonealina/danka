@@ -24,6 +24,11 @@ footer {
     background: transparent linear-gradient(180deg, #212121 0%, #454545 49%, #212121 100%) 0% 0% no-repeat padding-box;
 }
 
+.require_mark {
+    font: normal normal normal 10px/10px Hiragino Kaku Gothic Pro;
+    color: #FF6A4B;
+}
+
 .header_pc {
     display: flex;
     width:100%;
@@ -256,11 +261,61 @@ p {
 
 .danka_regist_div {
     width: 100%;
-    padding: 20px 50px;
-    margin: 20px 0 50px;
+    padding: 20px 0;
+    margin: 20px 0;
     display: flex;
     justify-content: space-between;
 }
+.danka_other_div {
+    width: 100%;
+    margin: 20px 0;
+    border:1px solid;
+    font: normal normal normal 14px/20px Arial;
+}
+.danka_other_tab {
+    width:100%;
+    display: flex;
+    background: #EEEEEE 0% 0% no-repeat padding-box;
+}
+.danka_tab {
+    display: block;
+    border-bottom: 1px solid #707070;
+    border-right: 1px solid #707070;
+    padding: 3px 0;
+    width: 100px;
+    text-align: center;
+}
+.danka_current {
+    border-bottom: none!important;
+    background: #fff!important;
+    font-weight: bold;
+}
+.danka_space {
+    width:calc(100% - 200px);
+    border-bottom: 1px solid #707070;
+}
+.danka_other_content {
+    padding: 15px;
+    height: 220px;
+}
+.danka_other_content > input[type="checkbox"]:not(:checked) ~ #hikuyousya_form {
+    height: 0px;
+    overflow: hidden;
+}
+.danka_other_content > input[type="checkbox"]:checked ~ #hikuyousya_form {
+    display:flex;
+    justify-content: space-between;
+}
+.hikuyousya_type {
+    
+}
+.hikuyousya_name {
+    
+}
+.hikuyousya_date {
+    
+}
+
 .danka_form_div {
     width:45%;
 }
@@ -277,10 +332,22 @@ p {
     width: 120px;
     padding-top: 6px;
 }
+.danka_regist_name2 {
+    font: normal normal normal 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #000000;
+    width: 80px;
+    padding-top: 6px;
+}
 .danka_form_text {
     width: calc(100% - 120px);
-    padding: 5px 5px;
-    font: normal normal normal 14px/21px sans-serif;
+    padding: 2px 5px;
+    font: normal normal normal 12px/16px sans-serif;
+}
+.danka_form_text2 {
+    width: 200px;
+    padding: 2px 5px;
+    font: normal normal normal 12px/16px sans-serif;
 }
 .danka_checkbox {
     margin-right: 10px;
@@ -490,7 +557,7 @@ p {
 }
 .select_category {
     font: normal normal normal 14px/21px sans-serif;
-    padding:5px;
+    padding:2px;
     width: 300px;
 }
 .text_title_text {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Danka;
+use App\Models\Hikuyousya;
 use App\Models\TextCategory;
 use App\Models\DankaDate;
 use App\Models\DankaBook;
@@ -52,7 +53,6 @@ class DankaController extends Controller
 
         $request = $request->all();
         $fill_data = [
-            'chart_no' => $request['chart_no'],
             'name' => $request['name'],
             'name_kana' => $request['name_kana'],
             'gender' => $request['gender'],
@@ -74,8 +74,29 @@ class DankaController extends Controller
         DB::beginTransaction();
         try {
             $danka->fill($fill_data)->save();
+            $danka_id = $danka->id;
+
+            if ($request['hikuyousya_flg']) {
+                $fill_data = [
+                    'danka_id' => $danka_id,
+                    'type' => $request['type'],
+                    'common_name' => $request['common_name'],
+                    'common_kana' => $request['common_kana'],
+                    'posthumous' => $request['posthumous'],
+                    'gender_h' => $request['gender_h'],
+                    'meinichi' => $request['meinichi'],
+                    'gyonen' => $request['gyonen'],
+                    'ihai_no' => $request['ihai_no'],
+                    'column' => $request['column'],
+                    'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
+                ];
+        
+                $hikuyousya = new Hikuyousya();
+                $hikuyousya->fill($fill_data)->save();
+            }
+            
             DB::commit();
-            return redirect()->route('danka_regist')->with('message', '行事予定日の登録が完了いたしました。');
+            return redirect()->route('danka_regist')->with('message', '檀家の登録が完了いたしました。');
         } catch (\Exception $e) {
             DB::rollback();
         }
