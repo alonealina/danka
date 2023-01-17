@@ -1,11 +1,17 @@
 function clickHikuyousya() {
     $('#hikuyousya').addClass('danka_current');
     $('#family').removeClass('danka_current');
+    $('.danka_other_content').show();
+    $('.danka_family_content').hide();
+
 }
 
 function clickFamily() {
     $('#hikuyousya').removeClass('danka_current');
     $('#family').addClass('danka_current');
+    $('.danka_other_content').hide();
+    $('.danka_family_content').show();
+
 }
 
 window.addEventListener('DOMContentLoaded', function(){
@@ -108,7 +114,7 @@ function clickTextStoreButton() {
         $('#address').css( 'background', '#fff' );
     }
 
-    if (danka_store_form.hikuyousya_flg.value == "1") {
+    if (document.getElementById('hikuyousya_flg').checked) {
         if (danka_store_form.common_name.value == "") {
             $('#common_name').css( 'background', '#FAF1F1' );
             error_flg = 1;
@@ -140,3 +146,9 @@ function clickTextStoreButton() {
 
 }
 
+
+
+function clickAddButton() {
+    $('#family_item').clone(true).appendTo('#family_form');
+
+};

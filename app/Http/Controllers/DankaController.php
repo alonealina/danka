@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Danka;
 use App\Models\Hikuyousya;
+use App\Models\Family;
 use App\Models\TextCategory;
 use App\Models\DankaDate;
 use App\Models\DankaBook;
@@ -76,7 +77,7 @@ class DankaController extends Controller
             $danka->fill($fill_data)->save();
             $danka_id = $danka->id;
 
-            if ($request['hikuyousya_flg']) {
+            if (isset($request['hikuyousya_flg'])) {
                 $fill_data = [
                     'danka_id' => $danka_id,
                     'type' => $request['type'],
@@ -94,6 +95,24 @@ class DankaController extends Controller
                 $hikuyousya = new Hikuyousya();
                 $hikuyousya->fill($fill_data)->save();
             }
+
+            $family_len = count($request['family_name']);
+            for ($i = 0; $i < $family_len; $i++) {
+                if(isset($request['family_name'][$i]) && isset($request['family_kana'][$i])) {
+                    $fill_data = [
+                        'danka_id' => $danka_id,
+                        'name' => $request['family_name'][$i],
+                        'name_kana' => $request['family_kana'][$i],
+                        'relationship' => isset($request['relationship'][$i]) ? $request['relationship'][$i] : '',
+                        'tel' => isset($request['family_tel'][$i]) ? $request['family_tel'][$i] : '',
+                    ];
+
+                    $family = new Family();
+                    $family->fill($fill_data)->save();
+                }
+            }
+
+
             
             DB::commit();
             return redirect()->route('danka_regist')->with('message', '檀家の登録が完了いたしました。');

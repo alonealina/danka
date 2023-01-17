@@ -294,7 +294,7 @@ p {
     width:calc(100% - 200px);
     border-bottom: 1px solid #707070;
 }
-.danka_other_content {
+.danka_other_content, .danka_family_content {
     padding: 15px;
     height: 220px;
 }
@@ -315,6 +315,38 @@ p {
 .hikuyousya_date {
     
 }
+.family_item {
+    display: flex;
+    justify-content: space-between;
+}
+.family_column {
+    margin: 10px 0;
+    display: flex;
+}
+.danka_family_content {
+    overflow-y: scroll;
+    /*スクロールバー非表示（IE・Edge）*/
+    -ms-overflow-style: 10px;
+    /*スクロールバー非表示（Firefox）*/
+    scrollbar-width: 10px;
+}
+/*スクロールバー非表示（Chrome・Safari）*/
+.danka_family_content::-webkit-scrollbar{
+    width: 10px;
+}
+.danka_family_content::-webkit-scrollbar-track{
+    background-color: #ccc;
+}
+.danka_family_content::-webkit-scrollbar-thumb{
+    background-color: #17585d;
+}
+.family_add_btn {
+    background: #707070;
+    color: #fff;
+    padding: 5px;
+}
+
+
 
 .danka_form_div {
     width:45%;
