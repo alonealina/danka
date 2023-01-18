@@ -40,6 +40,11 @@ Route::get('history', [V2UserController::class, 'history'])->name('history');
 
 Route::get('danka_regist', [DankaController::class, 'danka_regist'])->name('danka_regist');
 Route::post('danka_store', [DankaController::class, 'danka_store'])->name('danka_store');
+Route::get('danka_search', [DankaController::class, 'danka_search'])->name('danka_search');
+Route::get('hikuyousya_search', [DankaController::class, 'hikuyousya_search'])->name('hikuyousya_search');
+
+
+
 
 Route::get('event_list', [EventController::class, 'event_list'])->name('event_list');
 Route::get('event_show/{id}', [EventController::class, 'event_show'])->name('event_show');

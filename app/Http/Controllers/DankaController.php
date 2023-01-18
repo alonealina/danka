@@ -15,34 +15,6 @@ use DB;
 
 class DankaController extends Controller
 {
-    public function danka_list(Request $request)
-    {
-        $text_categories = TextCategory::get();
-
-        return view('danka_list', [
-            'text_categories' => $text_categories,
-        ]);
-    }
-
-    public function danka_show($category_id)
-    {
-        $category = TextCategory::find($category_id);
-        $danka_dates = DB::select('SELECT danka_date.id as id, date, max, date_id_count
-        FROM danka_date
-        LEFT JOIN (
-        SELECT date_id , COUNT(date_id) AS date_id_count
-        FROM danka_book
-        GROUP BY date_id) as danka_book
-        ON id = danka_book.date_id
-        WHERE category_id = ?
-        ORDER BY date DESC', [$category_id]);
-
-        return view('danka_show', [
-            'category' => $category,
-            'danka_dates' => $danka_dates,
-        ]);
-    }
-
     public function danka_regist()
     {
         return view('danka_regist');
@@ -121,52 +93,276 @@ class DankaController extends Controller
         }
     }
 
-    public function danka_book_show($date_id)
+    public function danka_search(Request $request)
     {
-        $danka_date = DankaDate::find($date_id);
-        $category = TextCategory::find($danka_date->category_id);
-        $danka_books = DankaBook::where('date_id', $date_id)->get();
+        $filter_array = $request->all();
+        $id = isset($filter_array['id']) ? $filter_array['id'] : null;
+        $name = isset($filter_array['name']) ? $filter_array['name'] : null;
+        $name_kana = isset($filter_array['name_kana']) ? $filter_array['name_kana'] : null;
+        $tel = isset($filter_array['tel']) ? $filter_array['tel'] : null;
+        $mail = isset($filter_array['mail']) ? $filter_array['mail'] : null;
+        $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
+        $area = isset($filter_array['area']) ? $filter_array['area'] : null;
+        $zip = isset($filter_array['zip']) ? $filter_array['zip'] : null;
+        $pref = isset($filter_array['pref']) ? $filter_array['pref'] : null;
+        $address = isset($filter_array['address']) ? $filter_array['address'] : null;
+        $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
+        $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
 
-        return view('danka_book_show', [
-            'danka_date' => $danka_date,
-            'category' => $category,
-            'danka_books' => $danka_books,
-        ]);
-    }
+        $query = Danka::select('*');
 
-
-    public function danka_book_regist($id)
-    {
-
-        $danka_date = DankaDate::find($id);
-        $category = TextCategory::find($danka_date->category_id);
-
-        return view('danka_book_regist', [
-            'danka_date' => $danka_date,
-            'category' => $category,
-        ]);
-    }
-
-    public function danka_book_store(Request $request)
-    {
-        $danka_book = new DankaBook();
-
-        $request = $request->all();
-        $fill_data = [
-            'date_id' => $request['date_id'],
-            'name' => $request['name'],
-            'name_kana' => $request['name_kana'],
-            'tel' => $request['tel'],
-        ];
-
-        DB::beginTransaction();
-        try {
-            $danka_book->fill($fill_data)->save();
-            DB::commit();
-            return redirect()->route('danka_book_show', $request['date_id'])->with('message', '予約追加が完了いたしました。');
-        } catch (\Exception $e) {
-            DB::rollback();
+        if (!empty($id)) {
+            $query->where('login_id', 'like', "%$id%");
         }
+
+        if (!empty($name)) {
+            $query->where('name', 'like', "%$name%");
+        }
+
+        if (!empty($name_kana)) {
+            $query->where('name_kana', 'like', "%$name_kana%");
+        }
+
+        if (!empty($tel)) {
+            $query->where(function ($query) use ($tel) {
+                $query->orwhere('tel', 'like', "%$tel%")->orwhere('mobile', 'like', "%$tel%");
+            });
+        }
+
+        if (!empty($mail)) {
+            $query->where('mail', 'like', "%$mail%");
+        }
+
+        if (!empty($name)) {
+            $query->where('name', 'like', "%$name%");
+        }
+
+        if (!empty($zip)) {
+            $query->where('zip', 'like', "%$zip%");
+        }
+
+        if (!empty($area)) {
+            $query->where(function ($query) use ($area) {
+                if ($area == "北海道") {
+                    $query->orwhere('pref', 'like', "%北海道%");
+                } elseif ($area == "東北") {
+                    $query->orwhere('pref', 'like', "%青森県%")->orwhere('pref', 'like', "%岩手県%")->orwhere('pref', 'like', "%宮城県%")->orwhere('pref', 'like', "%秋田県%")
+                    ->orwhere('pref', 'like', "%山形県%")->orwhere('pref', 'like', "%福島県%");
+                } elseif ($area == "関東") {
+                    $query->orwhere('pref', 'like', "%茨城県%")->orwhere('pref', 'like', "%栃木県%")->orwhere('pref', 'like', "%群馬県%")->orwhere('pref', 'like', "%埼玉県%")
+                    ->orwhere('pref', 'like', "%千葉県%")->orwhere('pref', 'like', "%東京都%")->orwhere('pref', 'like', "%神奈川県%");
+                } elseif ($area == "中部") {
+                    $query->orwhere('pref', 'like', "%新潟県%")->orwhere('pref', 'like', "%富山県%")->orwhere('pref', 'like', "%石川県%")->orwhere('pref', 'like', "%福井県%")
+                    ->orwhere('pref', 'like', "%山梨県%")->orwhere('pref', 'like', "%長野県%")->orwhere('pref', 'like', "%岐阜県%")
+                    ->orwhere('pref', 'like', "%静岡県%")->orwhere('pref', 'like', "%愛知県%");
+                } elseif ($area == "近畿") {
+                    $query->orwhere('pref', 'like', "%三重県%")->orwhere('pref', 'like', "%滋賀県%")->orwhere('pref', 'like', "%京都府%")->orwhere('pref', 'like', "%大阪府%")
+                    ->orwhere('pref', 'like', "%兵庫県%")->orwhere('pref', 'like', "%奈良県%")->orwhere('pref', 'like', "%和歌山県%");
+                } elseif ($area == "中国") {
+                    $query->orwhere('pref', 'like', "%鳥取県%")->orwhere('pref', 'like', "%島根県%")->orwhere('pref', 'like', "%岡山県%")
+                    ->orwhere('pref', 'like', "%広島県%")->orwhere('pref', 'like', "%山口県%");
+                } elseif ($area == "四国") {
+                    $query->orwhere('pref', 'like', "%徳島県%")->orwhere('pref', 'like', "%香川県%")->orwhere('pref', 'like', "%愛媛県%")->orwhere('pref', 'like', "%高知県%");
+                } elseif ($area == "九州") {
+                    $query->orwhere('pref', 'like', "%福岡県%")->orwhere('pref', 'like', "%佐賀県%")->orwhere('pref', 'like', "%長崎県%")->orwhere('pref', 'like', "%熊本県%")
+                    ->orwhere('pref', 'like', "%大分県%")->orwhere('pref', 'like', "%宮崎県%")->orwhere('pref', 'like', "%鹿児島県%")->orwhere('pref', 'like', "%沖縄県%");
+                } 
+            });
+        }
+
+        if (!empty($pref)) {
+            $query->where('zip', 'like', "%$pref%");
+        }
+
+        if (!empty($address)) {
+            $query->where(function ($query) use ($address) {
+                $query->orwhere('city', 'like', "%$address%")->orwhere('address', 'like', "%$address%")->orwhere('building', 'like', "%$address%");
+            });
+        }
+
+        if (!empty($freeword)) {
+            $freeword = mb_convert_kana($freeword, 's');
+            $word_list = explode(" ", $freeword);
+            $query->where(function ($query) use ($word_list) {
+                foreach ($word_list as $word) {
+                    if (!empty($word)) {
+                        $query->orwhere('notices', 'like', "%$word%")->orwhere('pref', 'like', "%$word%");
+                    }
+                }
+            });
+        }
+
+        if (isset($segaki_flg)) {
+            $query->where('segaki_flg', '1');
+        }
+
+        if (isset($star_flg)) {
+            $query->where('star_flg', '1');
+        }
+
+
+
+
+        $number = \Request::get('number');
+        if (isset($number)) {
+            $danka_list = $query->orderBy('id')->paginate($number)
+            ->appends(["number" => $number]);
+        } else {
+            $danka_list = $query->orderBy('id')->paginate(5);
+        }
+
+        return view('danka_search', [
+            'danka_list' => $danka_list,
+
+            'id' => $id,
+            'name' => $name,
+            'name_kana' => $name_kana,
+            'tel' => $tel,
+            'mail' => $mail,
+            'freeword' => $freeword,
+            'area' => $area,
+            'zip' => $zip,
+            'pref' => $pref,
+            'address' => $address,
+            'segaki_flg' => $segaki_flg,
+            'star_flg' => $star_flg,
+        ]);
+    }
+
+    public function hikuyousya_search(Request $request)
+    {
+        $filter_array = $request->all();
+        $id = isset($filter_array['id']) ? $filter_array['id'] : null;
+        $name = isset($filter_array['name']) ? $filter_array['name'] : null;
+        $name_kana = isset($filter_array['name_kana']) ? $filter_array['name_kana'] : null;
+        $tel = isset($filter_array['tel']) ? $filter_array['tel'] : null;
+        $mail = isset($filter_array['mail']) ? $filter_array['mail'] : null;
+        $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
+        $area = isset($filter_array['area']) ? $filter_array['area'] : null;
+        $zip = isset($filter_array['zip']) ? $filter_array['zip'] : null;
+        $pref = isset($filter_array['pref']) ? $filter_array['pref'] : null;
+        $address = isset($filter_array['address']) ? $filter_array['address'] : null;
+        $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
+        $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
+
+        $query = Danka::select('*');
+
+        if (!empty($id)) {
+            $query->where('login_id', 'like', "%$id%");
+        }
+
+        if (!empty($name)) {
+            $query->where('name', 'like', "%$name%");
+        }
+
+        if (!empty($name_kana)) {
+            $query->where('name_kana', 'like', "%$name_kana%");
+        }
+
+        if (!empty($tel)) {
+            $query->where(function ($query) use ($tel) {
+                $query->orwhere('tel', 'like', "%$tel%")->orwhere('mobile', 'like', "%$tel%");
+            });
+        }
+
+        if (!empty($mail)) {
+            $query->where('mail', 'like', "%$mail%");
+        }
+
+        if (!empty($name)) {
+            $query->where('name', 'like', "%$name%");
+        }
+
+        if (!empty($zip)) {
+            $query->where('zip', 'like', "%$zip%");
+        }
+
+        if (!empty($area)) {
+            $query->where(function ($query) use ($area) {
+                if ($area == "北海道") {
+                    $query->orwhere('pref', 'like', "%北海道%");
+                } elseif ($area == "東北") {
+                    $query->orwhere('pref', 'like', "%青森県%")->orwhere('pref', 'like', "%岩手県%")->orwhere('pref', 'like', "%宮城県%")->orwhere('pref', 'like', "%秋田県%")
+                    ->orwhere('pref', 'like', "%山形県%")->orwhere('pref', 'like', "%福島県%");
+                } elseif ($area == "関東") {
+                    $query->orwhere('pref', 'like', "%茨城県%")->orwhere('pref', 'like', "%栃木県%")->orwhere('pref', 'like', "%群馬県%")->orwhere('pref', 'like', "%埼玉県%")
+                    ->orwhere('pref', 'like', "%千葉県%")->orwhere('pref', 'like', "%東京都%")->orwhere('pref', 'like', "%神奈川県%");
+                } elseif ($area == "中部") {
+                    $query->orwhere('pref', 'like', "%新潟県%")->orwhere('pref', 'like', "%富山県%")->orwhere('pref', 'like', "%石川県%")->orwhere('pref', 'like', "%福井県%")
+                    ->orwhere('pref', 'like', "%山梨県%")->orwhere('pref', 'like', "%長野県%")->orwhere('pref', 'like', "%岐阜県%")
+                    ->orwhere('pref', 'like', "%静岡県%")->orwhere('pref', 'like', "%愛知県%");
+                } elseif ($area == "近畿") {
+                    $query->orwhere('pref', 'like', "%三重県%")->orwhere('pref', 'like', "%滋賀県%")->orwhere('pref', 'like', "%京都府%")->orwhere('pref', 'like', "%大阪府%")
+                    ->orwhere('pref', 'like', "%兵庫県%")->orwhere('pref', 'like', "%奈良県%")->orwhere('pref', 'like', "%和歌山県%");
+                } elseif ($area == "中国") {
+                    $query->orwhere('pref', 'like', "%鳥取県%")->orwhere('pref', 'like', "%島根県%")->orwhere('pref', 'like', "%岡山県%")
+                    ->orwhere('pref', 'like', "%広島県%")->orwhere('pref', 'like', "%山口県%");
+                } elseif ($area == "四国") {
+                    $query->orwhere('pref', 'like', "%徳島県%")->orwhere('pref', 'like', "%香川県%")->orwhere('pref', 'like', "%愛媛県%")->orwhere('pref', 'like', "%高知県%");
+                } elseif ($area == "九州") {
+                    $query->orwhere('pref', 'like', "%福岡県%")->orwhere('pref', 'like', "%佐賀県%")->orwhere('pref', 'like', "%長崎県%")->orwhere('pref', 'like', "%熊本県%")
+                    ->orwhere('pref', 'like', "%大分県%")->orwhere('pref', 'like', "%宮崎県%")->orwhere('pref', 'like', "%鹿児島県%")->orwhere('pref', 'like', "%沖縄県%");
+                } 
+            });
+        }
+
+        if (!empty($pref)) {
+            $query->where('zip', 'like', "%$pref%");
+        }
+
+        if (!empty($address)) {
+            $query->where(function ($query) use ($address) {
+                $query->orwhere('city', 'like', "%$address%")->orwhere('address', 'like', "%$address%")->orwhere('building', 'like', "%$address%");
+            });
+        }
+
+        if (!empty($freeword)) {
+            $freeword = mb_convert_kana($freeword, 's');
+            $word_list = explode(" ", $freeword);
+            $query->where(function ($query) use ($word_list) {
+                foreach ($word_list as $word) {
+                    if (!empty($word)) {
+                        $query->orwhere('notices', 'like', "%$word%")->orwhere('pref', 'like', "%$word%");
+                    }
+                }
+            });
+        }
+
+        if (isset($segaki_flg)) {
+            $query->where('segaki_flg', '1');
+        }
+
+        if (isset($star_flg)) {
+            $query->where('star_flg', '1');
+        }
+
+
+
+
+        $number = \Request::get('number');
+        if (isset($number)) {
+            $danka_list = $query->orderBy('id')->paginate($number)
+            ->appends(["number" => $number]);
+        } else {
+            $danka_list = $query->orderBy('id')->paginate(5);
+        }
+
+        return view('danka_search', [
+            'danka_list' => $danka_list,
+
+            'id' => $id,
+            'name' => $name,
+            'name_kana' => $name_kana,
+            'tel' => $tel,
+            'mail' => $mail,
+            'freeword' => $freeword,
+            'area' => $area,
+            'zip' => $zip,
+            'pref' => $pref,
+            'address' => $address,
+            'segaki_flg' => $segaki_flg,
+            'star_flg' => $star_flg,
+        ]);
     }
 
 

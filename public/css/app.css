@@ -135,7 +135,7 @@ p {
     font: normal normal bold 18px/30px Arial;
     letter-spacing: -0.18px;
     color: #262626;
-    padding: 50px 150px 90px 40px;
+    padding: 50px 40px;
     width: calc(100vw - 200px);
 }
 .paid_list_main {
@@ -354,7 +354,7 @@ p {
 
 .danka_column {
     width:100%;
-    margin:10px 0;
+    margin:8px 0;
     display: flex;
 }
 .danka_regist_name {
@@ -389,6 +389,80 @@ p {
     margin-right:40px;
     margin-bottom: 0;
     font: normal normal normal 14px/21px sans-serif;
+}
+
+.danka_search_div {
+    width: 100%;
+    padding: 20px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    background: #EEEEEE 0% 0% no-repeat padding-box;
+    border: 1px solid #707070;
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+.search_btn_list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.search_result_div {
+    height: 350px;
+    font:normal normal normal 14px/18px sans-serif;
+    overflow-y: scroll;
+    /*スクロールバー非表示（IE・Edge）*/
+    -ms-overflow-style: none;
+    /*スクロールバー非表示（Firefox）*/
+    scrollbar-width: none;
+}
+/*スクロールバー非表示（Chrome・Safari）*/
+.search_result_div::-webkit-scrollbar{
+    width: 10px;
+}
+.search_result_div::-webkit-scrollbar-track{
+    background-color: #ccc;
+}
+.search_result_div::-webkit-scrollbar-thumb{
+    background-color: #17585d;
+}
+.search_view_btn_a {
+    background: #2963AB;
+    border-radius: 4px;
+    text-align: center;
+    font: normal normal normal 12px/16px sans-serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    display: block;
+    width: 70px;
+    margin: auto;
+    padding: 2px 0;
+    line-height: 24px;
+}
+
+.search_btn_a {
+    background: #A84FEB 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    text-align: center;
+    font: normal normal normal 12px/16px sans-serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    width: 90px;
+    margin: 0 10px;
+    display: block;
+    padding: 5px 0;
+}
+.clear_btn_a {
+    background: #707070 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    text-align: center;
+    font: normal normal normal 12px/16px sans-serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    width: 90px;
+    margin: 0 10px;
+    display: block;
+    padding: 5px 0;
 }
 
 
@@ -444,7 +518,7 @@ p {
     justify-content: space-between;
     width: 100%;
     padding-left: 20px;
-    font: normal normal normal 16px/24px sans-serif;
+    font: normal normal normal 14px/18px sans-serif;
     letter-spacing: 0px;
     color: #262626;
     margin-top: 10px;
@@ -588,7 +662,7 @@ p {
     padding-top: 6px;
 }
 .select_category {
-    font: normal normal normal 14px/21px sans-serif;
+    font: normal normal normal 12px/16px sans-serif;
     padding:2px;
     width: 300px;
 }
@@ -1012,5 +1086,44 @@ li {
 
 .menu_none {
     display: none;
+}
+
+
+/*以下ページネーションについて*/
+
+.paginationWrap {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font: normal normal bold 14px/18px Arial;
+}
+
+.paginationWrap ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+.paginationWrap ul.pagination li {
+    display: inline;
+    margin-right: 4px;
+}
+
+.paginationWrap ul.pagination li a {
+    color: #2f3859;
+    padding: 6px 10px;
+    text-decoration: none;
+}
+
+.paginationWrap ul.pagination li a.active {
+    background-color: #EDEDED;
+    border-radius: 5px;
+    width: 38px;
+    height: 38px;
+}
+
+.paginationWrap ul.pagination li a:hover:not(.active) {
+    background-color: #e1e7f0;
+    border-radius: 5px;
 }
 
