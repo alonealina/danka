@@ -382,5 +382,8 @@ class DankaController extends Controller
         ]);
     }
 
-
+    public function db_test()
+    {
+        return view('db_test');
+    }
 }

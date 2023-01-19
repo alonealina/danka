@@ -42,6 +42,7 @@ Route::get('danka_regist', [DankaController::class, 'danka_regist'])->name('dank
 Route::post('danka_store', [DankaController::class, 'danka_store'])->name('danka_store');
 Route::get('danka_search', [DankaController::class, 'danka_search'])->name('danka_search');
 Route::get('hikuyousya_search', [DankaController::class, 'hikuyousya_search'])->name('hikuyousya_search');
+Route::get('db_test', [DankaController::class, 'db_test'])->name('db_test');
 
 
 
