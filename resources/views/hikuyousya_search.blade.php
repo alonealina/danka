@@ -8,23 +8,37 @@
         <div class="danka_form_div">
             <div class="danka_column">
                 <div class="danka_regist_name">カルテナンバー</div>
-                {{ Form::text('id', $id, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+                {{ Form::text('danka_id', $danka_id, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">施主名</div>
                 {{ Form::text('name', $name, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">フリガナ</div>
+                <div class="danka_regist_name">フリガナ(施主名)</div>
                 {{ Form::text('name_kana', $name_kana, ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">電話番号</div>
-                {{ Form::text('tel', $tel, ['id' => 'tel', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
+                <div class="danka_regist_name">種別</div>
+                <select name="type" class="select_category" style="width: 80px;">
+                    <option value="故人" @if($type == '故人') selected @endif >故人</option>
+                    <option value="ペット" @if($type == 'ペット') selected @endif >ペット</option>
+                    <option value="水子" @if($type == '水子') selected @endif >水子</option>
+                    <option value="先祖" @if($type == '先祖') selected @endif >先祖</option>
+                    <option value="生前" @if($type == '生前') selected @endif >生前</option>
+                </select>
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">メールアドレス</div>
-                {{ Form::text('mail', $mail, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
+                <div class="danka_regist_name">俗名</div>
+                {{ Form::text('common_name', $common_name, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+            </div>
+            <div class="danka_column">
+                <div class="danka_regist_name">フリガナ(俗名)</div>
+                {{ Form::text('common_kana', $common_kana, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+            </div>
+            <div class="danka_column">
+                <div class="danka_regist_name">戒名</div>
+                {{ Form::text('posthumous', $posthumous, ['class' => 'danka_form_text', 'maxlength' => 50, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリーワード</div>

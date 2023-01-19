@@ -42,6 +42,7 @@ class DankaController extends Controller
             'segaki_flg' => isset($request['segaki_flg']) ? $request['segaki_flg'] : 0,
             'star_flg' => isset($request['star_flg']) ? $request['star_flg'] : 0,
             'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
+            'yakushiji_flg' => isset($request['yakushiji_flg']) ? $request['yakushiji_flg'] : 0,
         ];
 
         DB::beginTransaction();
@@ -58,6 +59,8 @@ class DankaController extends Controller
                     'posthumous' => $request['posthumous'],
                     'gender_h' => $request['gender_h'],
                     'meinichi' => $request['meinichi'],
+                    'nokotsubi' => $request['nokotsubi'],
+                    'konryubi' => $request['konryubi'],
                     'gyonen' => $request['gyonen'],
                     'ihai_no' => $request['ihai_no'],
                     'column' => $request['column'],
@@ -349,7 +352,7 @@ class DankaController extends Controller
             $danka_list = $query->orderBy('id')->paginate(5);
         }
 
-        return view('danka_search', [
+        return view('hikuyousya_search', [
             'danka_list' => $danka_list,
 
             'id' => $id,
