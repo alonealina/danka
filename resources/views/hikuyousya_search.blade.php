@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content_title">檀家検索</div>
+<div class="content_title">被供養者検索</div>
 <form id="form" name="search_form" action="{{ route('danka_search') }}" method="get">
 @csrf
     <div class="danka_search_div">
@@ -37,9 +37,9 @@
                 <div class="danka_regist_name">地域</div>
                 <select name="area" class="select_category" style="width: 180px" id="area">
                     <option value="">----</option>
-                    @foreach (config('const.Areas') as $area_name)
-                    <option value="{{ $area_name }}"
-                        @if($area == $area_name) selected @endif >{{ $area_name }}</option>
+                    @foreach (config('const.Areas') as $name)
+                    <option value="{{ $name }}"
+                        @if($area == $name) selected @endif >{{ $name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -53,9 +53,9 @@
                 <div class="danka_regist_name">都道府県</div>
                 <select name="pref" class="select_category" style="width: 180px" id="pref">
                     <option value="">----</option>
-                    @foreach (config('const.Prefs') as $pref_name)
-                    <option value="{{ $pref_name }}"
-                        @if($pref == $pref_name) selected @endif >{{ $pref_name }}</option>
+                    @foreach (config('const.Areas') as $name)
+                    <option value="{{ $name }}"
+                        @if($pref == $name) selected @endif >{{ $name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -80,9 +80,8 @@
     </div>
 
     <div class="paginationWrap">
-        <div class="pagination_div">
+        <div class="">
             表示件数　
-            @include('item.danka_number')　　
             {{ $danka_list->total() }}件が該当しました
             {{ $danka_list->appends(request()->query())->links('pagination::default') }}
     
@@ -93,6 +92,7 @@
         <div class="payment_list_header" style="margin:0;">
             <div class="payment_id">カルテナンバー</div>
             <div class="payment_name">施主名</div>
+            <div class="payment_num">識別番号</div>
             <div class="payment_tel">電話番号</div>
             <div class="payment_address">住所</div>
             <div class="payment_btn"></div>
@@ -102,7 +102,8 @@
         <div class="payment_list_column">
             <div class="payment_id">{{ $danka->id }}</div>
             <div class="payment_name">{{ $danka->name }}</div>
-            <div class="payment_tel">{{ $danka->tel }}</div>
+            <div class="payment_num">111-1111</div>
+            <div class="payment_tel">090-583-5083</div>
             <div class="payment_address">{{ $danka->pref }}</div>
             <div class="payment_btn"><a href="" class="search_view_btn_a">表示</a></div>
         </div>

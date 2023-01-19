@@ -464,6 +464,9 @@ p {
     display: block;
     padding: 5px 0;
 }
+.pagination_div {
+    display: flex;
+}
 
 
 .text_category_list_div {

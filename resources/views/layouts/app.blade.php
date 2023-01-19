@@ -44,9 +44,9 @@
                         <div 
                         @if (strpos($now_route,'summary') === false) class="menu_none" @endif
                         id="menu1">
-                        <a href="{{ route('danka_regist') }}" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif">　新規登録</a>
-                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif">　檀家検索</a>
-                        <a href="{{ route('summary') }}" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif">　檀家編集</a>
+                        <a href="{{ route('danka_regist') }}" class="menu_a @if (strpos($now_route,'danka_regist') !== false) current @endif">　新規登録</a>
+                        <a href="{{ route('danka_search') }}" class="menu_a @if (strpos($now_route,'danka_search') !== false) current @endif">　檀家検索</a>
+                        <a href="{{ route('hikuyousya_search') }}" class="menu_a @if (strpos($now_route,'hikuyousya_search') !== false) current @endif">　被供養者検索</a>
                         </div>
 
                         <a href="#!" class="menu_a 

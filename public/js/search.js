@@ -1,7 +1,7 @@
 
 
 function clickSearchButton() {
-    document.forms.danka_search_form.submit();
+    document.forms.search_form.submit();
 }
 
 function clickClearButton() {
@@ -20,3 +20,8 @@ function clickClearButton() {
         }
     });
 }
+
+selected = document.getElementById("change_number");
+selected.onchange = function() {
+window.location.href = selected.value;
+};

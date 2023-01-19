@@ -112,7 +112,7 @@ class DankaController extends Controller
         $query = Danka::select('*');
 
         if (!empty($id)) {
-            $query->where('login_id', 'like', "%$id%");
+            $query->where('id', 'like', "%$id%");
         }
 
         if (!empty($name)) {
@@ -209,6 +209,7 @@ class DankaController extends Controller
             ->appends(["number" => $number]);
         } else {
             $danka_list = $query->orderBy('id')->paginate(5);
+            $number = 5;
         }
 
         return view('danka_search', [
@@ -226,6 +227,7 @@ class DankaController extends Controller
             'address' => $address,
             'segaki_flg' => $segaki_flg,
             'star_flg' => $star_flg,
+            'number' => $number,
         ]);
     }
 
@@ -248,7 +250,7 @@ class DankaController extends Controller
         $query = Danka::select('*');
 
         if (!empty($id)) {
-            $query->where('login_id', 'like', "%$id%");
+            $query->where('id', 'like', "%$id%");
         }
 
         if (!empty($name)) {
