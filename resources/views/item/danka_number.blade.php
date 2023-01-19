@@ -1,22 +1,6 @@
 <div class="number_select">
     <select class="" name="sort" id="change_number">
         <option value="{{ route('danka_search', [
-            'number' => '5',
-            'id' => $id,
-            'name' => $name,
-            'name_kana' => $name_kana,
-            'tel' => $tel,
-            'mail' => $mail,
-            'freeword' => $freeword,
-            'area' => $area,
-            'zip' => $zip,
-            'pref' => $pref,
-            'address' => $address,
-            'segaki_flg' => $segaki_flg,
-            'star_flg' => $star_flg,
-            ]) }}"
-        @if($number == "5") selected @endif>5件</option>
-        <option value="{{ route('danka_search', [
             'number' => '10',
             'id' => $id,
             'name' => $name,

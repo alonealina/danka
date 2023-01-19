@@ -92,14 +92,15 @@
         </div>
     </div>
 
+    <div class="payment_list_header" style="margin:0;">
+        <div class="payment_id">カルテナンバー</div>
+        <div class="payment_name">施主名</div>
+        <div class="payment_tel">電話番号</div>
+        <div class="payment_address">住所</div>
+        <div class="payment_btn"></div>
+    </div>
+
     <div class="search_result_div">
-        <div class="payment_list_header" style="margin:0;">
-            <div class="payment_id">カルテナンバー</div>
-            <div class="payment_name">施主名</div>
-            <div class="payment_tel">電話番号</div>
-            <div class="payment_address">住所</div>
-            <div class="payment_btn"></div>
-        </div>
 
         @foreach ($danka_list as $danka)
         <div class="payment_list_column">

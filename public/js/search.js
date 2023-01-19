@@ -12,9 +12,9 @@ function clickClearButton() {
             this.checked = false;
         }
         //checkboxまたはradioボタン以外の時
-        else if (this.type == 'select') {
+        else if (this.type == 'select' && this.id != 'change_number') {
             this.selected = false;
-        } else {
+        } else if (this.id != 'change_number') {
           // val値を空にする
           $(this).val('');
         }

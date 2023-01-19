@@ -17,7 +17,12 @@ class DankaController extends Controller
 {
     public function danka_regist()
     {
-        return view('danka_regist');
+        $ihai_max = intval(Hikuyousya::max('ihai_no'));
+        $ihai_next = str_pad($ihai_max + 1, 4, 0, STR_PAD_LEFT);
+
+        return view('danka_regist', [
+            'ihai_next' => $ihai_next,
+        ]);
     }
 
     public function danka_store(Request $request)
@@ -62,7 +67,7 @@ class DankaController extends Controller
                     'nokotsubi' => $request['nokotsubi'],
                     'konryubi' => $request['konryubi'],
                     'gyonen' => $request['gyonen'],
-                    'ihai_no' => $request['ihai_no'],
+                    'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
                     'column' => $request['column'],
                     'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
                 ];
@@ -137,10 +142,6 @@ class DankaController extends Controller
             $query->where('mail', 'like', "%$mail%");
         }
 
-        if (!empty($name)) {
-            $query->where('name', 'like', "%$name%");
-        }
-
         if (!empty($zip)) {
             $query->where('zip', 'like', "%$zip%");
         }
@@ -175,7 +176,7 @@ class DankaController extends Controller
         }
 
         if (!empty($pref)) {
-            $query->where('zip', 'like', "%$pref%");
+            $query->where('pref', 'like', "%$pref%");
         }
 
         if (!empty($address)) {
@@ -215,7 +216,7 @@ class DankaController extends Controller
             $danka_list = $query->orderBy('id')->paginate($number)
             ->appends(["number" => $number]);
         } else {
-            $danka_list = $query->orderBy('id')->paginate(5);
+            $danka_list = $query->orderBy('id')->paginate(10);
             $number = 5;
         }
 
@@ -242,24 +243,29 @@ class DankaController extends Controller
     public function hikuyousya_search(Request $request)
     {
         $filter_array = $request->all();
-        $id = isset($filter_array['id']) ? $filter_array['id'] : null;
+        $danka_id = isset($filter_array['danka_id']) ? $filter_array['danka_id'] : null;
         $name = isset($filter_array['name']) ? $filter_array['name'] : null;
         $name_kana = isset($filter_array['name_kana']) ? $filter_array['name_kana'] : null;
-        $tel = isset($filter_array['tel']) ? $filter_array['tel'] : null;
-        $mail = isset($filter_array['mail']) ? $filter_array['mail'] : null;
+        $type = isset($filter_array['type']) ? $filter_array['type'] : null;
+        $common_name = isset($filter_array['common_name']) ? $filter_array['common_name'] : null;
+        $common_kana = isset($filter_array['common_kana']) ? $filter_array['common_kana'] : null;
+        $posthumous = isset($filter_array['posthumous']) ? $filter_array['posthumous'] : null;
         $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
-        $area = isset($filter_array['area']) ? $filter_array['area'] : null;
-        $zip = isset($filter_array['zip']) ? $filter_array['zip'] : null;
-        $pref = isset($filter_array['pref']) ? $filter_array['pref'] : null;
-        $address = isset($filter_array['address']) ? $filter_array['address'] : null;
-        $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
-        $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
-        $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
+        $meinichi_before = isset($filter_array['meinichi_before']) ? $filter_array['meinichi_before'] : null;
+        $meinichi_after = isset($filter_array['meinichi_after']) ? $filter_array['meinichi_after'] : null;
+        $kaiki_before = isset($filter_array['kaiki_before']) ? $filter_array['kaiki_before'] : null;
+        $kaiki_after = isset($filter_array['kaiki_after']) ? $filter_array['kaiki_after'] : null;
+        $ihai_no = isset($filter_array['ihai_no']) ? $filter_array['ihai_no'] : null;
+        $ihai_flg = isset($filter_array['ihai_flg']) ? $filter_array['ihai_flg'] : null;
+        $konryu_flg = isset($filter_array['konryu_flg']) ? $filter_array['konryu_flg'] : null;
+        $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
 
-        $query = Danka::select('*');
+        $query = Danka::select('*')->select('hikuyousya.id as id')->selectRaw("
+        TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
+        ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
-        if (!empty($id)) {
-            $query->where('id', 'like', "%$id%");
+        if (!empty($danka_id)) {
+            $query->where('danka_id', 'like', "%$danka_id%");
         }
 
         if (!empty($name)) {
@@ -270,51 +276,20 @@ class DankaController extends Controller
             $query->where('name_kana', 'like', "%$name_kana%");
         }
 
-        if (!empty($tel)) {
-            $query->where(function ($query) use ($tel) {
-                $query->orwhere('tel', 'like', "%$tel%")->orwhere('mobile', 'like', "%$tel%");
-            });
+        if (!empty($type)) {
+            $query->where('type', $type);
         }
 
-        if (!empty($mail)) {
-            $query->where('mail', 'like', "%$mail%");
+        if (!empty($common_name)) {
+            $query->where('common_name', 'like', "%$common_name%");
         }
 
-        if (!empty($name)) {
-            $query->where('name', 'like', "%$name%");
+        if (!empty($common_kana)) {
+            $query->where('common_kana', 'like', "%$common_kana%");
         }
 
-        if (!empty($zip)) {
-            $query->where('zip', 'like', "%$zip%");
-        }
-
-        if (!empty($area)) {
-            $query->where(function ($query) use ($area) {
-                if ($area == "北海道") {
-                    $query->orwhere('pref', 'like', "%北海道%");
-                } elseif ($area == "東北") {
-                    $query->orwhere('pref', 'like', "%青森県%")->orwhere('pref', 'like', "%岩手県%")->orwhere('pref', 'like', "%宮城県%")->orwhere('pref', 'like', "%秋田県%")
-                    ->orwhere('pref', 'like', "%山形県%")->orwhere('pref', 'like', "%福島県%");
-                } elseif ($area == "関東") {
-                    $query->orwhere('pref', 'like', "%茨城県%")->orwhere('pref', 'like', "%栃木県%")->orwhere('pref', 'like', "%群馬県%")->orwhere('pref', 'like', "%埼玉県%")
-                    ->orwhere('pref', 'like', "%千葉県%")->orwhere('pref', 'like', "%東京都%")->orwhere('pref', 'like', "%神奈川県%");
-                } elseif ($area == "中部") {
-                    $query->orwhere('pref', 'like', "%新潟県%")->orwhere('pref', 'like', "%富山県%")->orwhere('pref', 'like', "%石川県%")->orwhere('pref', 'like', "%福井県%")
-                    ->orwhere('pref', 'like', "%山梨県%")->orwhere('pref', 'like', "%長野県%")->orwhere('pref', 'like', "%岐阜県%")
-                    ->orwhere('pref', 'like', "%静岡県%")->orwhere('pref', 'like', "%愛知県%");
-                } elseif ($area == "近畿") {
-                    $query->orwhere('pref', 'like', "%三重県%")->orwhere('pref', 'like', "%滋賀県%")->orwhere('pref', 'like', "%京都府%")->orwhere('pref', 'like', "%大阪府%")
-                    ->orwhere('pref', 'like', "%兵庫県%")->orwhere('pref', 'like', "%奈良県%")->orwhere('pref', 'like', "%和歌山県%");
-                } elseif ($area == "中国") {
-                    $query->orwhere('pref', 'like', "%鳥取県%")->orwhere('pref', 'like', "%島根県%")->orwhere('pref', 'like', "%岡山県%")
-                    ->orwhere('pref', 'like', "%広島県%")->orwhere('pref', 'like', "%山口県%");
-                } elseif ($area == "四国") {
-                    $query->orwhere('pref', 'like', "%徳島県%")->orwhere('pref', 'like', "%香川県%")->orwhere('pref', 'like', "%愛媛県%")->orwhere('pref', 'like', "%高知県%");
-                } elseif ($area == "九州") {
-                    $query->orwhere('pref', 'like', "%福岡県%")->orwhere('pref', 'like', "%佐賀県%")->orwhere('pref', 'like', "%長崎県%")->orwhere('pref', 'like', "%熊本県%")
-                    ->orwhere('pref', 'like', "%大分県%")->orwhere('pref', 'like', "%宮崎県%")->orwhere('pref', 'like', "%鹿児島県%")->orwhere('pref', 'like', "%沖縄県%");
-                } 
-            });
+        if (!empty($posthumous)) {
+            $query->where('posthumous', 'like', "%$posthumous%");
         }
 
         if (!empty($pref)) {
@@ -333,51 +308,77 @@ class DankaController extends Controller
             $query->where(function ($query) use ($word_list) {
                 foreach ($word_list as $word) {
                     if (!empty($word)) {
-                        $query->orwhere('notices', 'like', "%$word%")->orwhere('pref', 'like', "%$word%");
+                        $query->orwhere('column', 'like', "%$word%");
                     }
                 }
             });
         }
 
-        if (isset($segaki_flg)) {
-            $query->where('segaki_flg', '1');
+        if (!empty($meinichi_before)) {
+            $query->whereDate('meinichi', '>=', $meinichi_before);
+        }
+        if (!empty($meinichi_after)) {
+            $query->whereDate('meinichi', '<=', $meinichi_after);
         }
 
-        if (isset($star_flg)) {
-            $query->where('star_flg', '1');
+        if (isset($ihai_flg)) {
+            $query->where('ihai_no', 'not like', '0000');
         }
 
-        if (isset($yakushiji_flg)) {
-            $query->where('yakushiji_flg', '1');
+        if (isset($konryu_flg)) {
+            $query->whereNotNull('konryubi');
         }
 
+        if (isset($kaiki_flg)) {
+            $query->where('kaiki_flg', '1');
+        }
 
+        if (!empty($kaiki_before)) {
+            $kaiki_before_tmp = $kaiki_before == 1 ? 0 : $kaiki_before - 2;
+            $query->having('kaiki', '>=', $kaiki_before_tmp);
+        }
+        if (!empty($kaiki_after)) {
+            $kaiki_after_tmp = $kaiki_after == 1 ? 0 : $kaiki_after - 2;
+            $query->having('kaiki', '<=', $kaiki_after_tmp);
+        }
 
+        $ids = $query->get()->pluck('id');
+        $query = Danka::select('*')->selectRaw("
+        TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
+        ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->whereIn('hikuyousya.id', $ids);
 
         $number = \Request::get('number');
         if (isset($number)) {
-            $danka_list = $query->orderBy('id')->paginate($number)
+            $danka_list = $query->orderBy('danka_id')->paginate($number)
             ->appends(["number" => $number]);
         } else {
-            $danka_list = $query->orderBy('id')->paginate(5);
+            $danka_list = $query->orderBy('danka_id')->paginate(10);
         }
+
+
+
+
 
         return view('hikuyousya_search', [
             'danka_list' => $danka_list,
 
-            'id' => $id,
+            'danka_id' => $danka_id,
             'name' => $name,
             'name_kana' => $name_kana,
-            'tel' => $tel,
-            'mail' => $mail,
+            'type' => $type,
+            'common_name' => $common_name,
+            'common_kana' => $common_kana,
+            'posthumous' => $posthumous,
             'freeword' => $freeword,
-            'area' => $area,
-            'zip' => $zip,
-            'pref' => $pref,
-            'address' => $address,
-            'segaki_flg' => $segaki_flg,
-            'star_flg' => $star_flg,
-            'yakushiji_flg' => $yakushiji_flg,
+            'meinichi_before' => $meinichi_before,
+            'meinichi_after' => $meinichi_after,
+            'kaiki_before' => $kaiki_before,
+            'kaiki_after' => $kaiki_after,
+            'ihai_no' => $ihai_no,
+            'ihai_flg' => $ihai_flg,
+            'konryu_flg' => $konryu_flg,
+            'kaiki_flg' => $kaiki_flg,
+            'number' => $number,
         ]);
     }
 

@@ -94,7 +94,7 @@
             <input type="checkbox" id="hikuyousya_flg" name="hikuyousya_flg" class="danka_checkbox" value="1">
             <label for="hikuyousya_flg" class="danka_label">登録する</label>
             <div class="hikuyousya_form" id="hikuyousya_form">
-                <div class="hikuyousya_type">
+                <div class="">
                     <div class="danka_column">
                         <div class="danka_regist_name2">種別</div>
                         <select name="type" class="select_category" style="width: 80px;">
@@ -124,7 +124,7 @@
 
                 </div>
 
-                <div class="hikuyousya_type">
+                <div class="">
                     <div class="danka_column">
                         <div class="danka_regist_name2">戒名</div>
                         {{ Form::text('posthumous', old('posthumous'), ['class' => 'danka_form_text2', 'maxlength' => 50, 'style' => 'width: 300px;', 'placeholder' => '戒名']) }}
@@ -147,18 +147,22 @@
 
                 </div>
 
-                <div class="hikuyousya_date">
+                <div class="">
                     <div class="danka_column">
-                        <div class="danka_regist_name2">納骨日</div>
+                        <div class="danka_regist_name2" style="width: 100px;">納骨日</div>
                         {{ Form::date('nokotsubi', old('nokotsubi'), ['class' => 'danka_form_text2', 'id' => 'nokotsubi', 'placeholder' => '', 'style' => 'width: 110px;']) }}
                     </div>
                     <div class="danka_column">
-                        <div class="danka_regist_name2">建立日</div>
+                        <div class="danka_regist_name2" style="width: 100px;">建立日</div>
                         {{ Form::date('konryubi', old('konryubi'), ['class' => 'danka_form_text2', 'id' => 'konryubi', 'placeholder' => '', 'style' => 'width: 110px;']) }}
                     </div>
                     <div class="danka_column">
-                        <div class="danka_regist_name2">位牌番号</div>
-                        {{ Form::text('ihai_no', old('ihai_no'), ['class' => 'danka_form_text2', 'maxlength' => 4, 'style' => 'width: 70px;', 'placeholder' => '0000']) }}
+                        <div class="danka_regist_name2" style="width: 100px;">
+                            <input type="checkbox" id="ihai_flg" name="ihai_flg" class="" value="1">
+                            <label for="ihai_flg" class="danka_label" style="margin-right: 0;">位牌番号</label>
+                        </div>
+
+                        {{ Form::text('ihai_no', $ihai_next, ['class' => 'danka_form_text2', 'maxlength' => 4, 'style' => 'width: 70px;', 'readonly' => 'readonly']) }}
                     </div>
 
                 </div>

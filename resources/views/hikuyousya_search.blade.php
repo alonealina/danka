@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="content_title">被供養者検索</div>
-<form id="form" name="search_form" action="{{ route('danka_search') }}" method="get">
+<form id="form" name="search_form" action="{{ route('hikuyousya_search') }}" method="get">
 @csrf
     <div class="danka_search_div">
         <div class="danka_form_div">
@@ -21,6 +21,7 @@
             <div class="danka_column">
                 <div class="danka_regist_name">種別</div>
                 <select name="type" class="select_category" style="width: 80px;">
+                    <option value="">----</option>
                     <option value="故人" @if($type == '故人') selected @endif >故人</option>
                     <option value="ペット" @if($type == 'ペット') selected @endif >ペット</option>
                     <option value="水子" @if($type == '水子') selected @endif >水子</option>
@@ -47,44 +48,47 @@
         </div>
 
         <div class="danka_form_div">
+        <div class="danka_column">
+                <div class="danka_regist_name">命日</div>
+                {{ Form::date('meinichi_before', $meinichi_before, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
+                {{ Form::date('meinichi_after', $meinichi_after, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}
+
+            </div>
+
             <div class="danka_column">
-                <div class="danka_regist_name">地域</div>
-                <select name="area" class="select_category" style="width: 180px" id="area">
+                <div class="danka_regist_name">回忌</div>
+                <select name="kaiki_before" class="select_category" style="width: 80px;">
                     <option value="">----</option>
-                    @foreach (config('const.Areas') as $name)
-                    <option value="{{ $name }}"
-                        @if($area == $name) selected @endif >{{ $name }}</option>
-                    @endforeach
+                    <option value="1" @if($kaiki_before == '1') selected @endif >1</option>
+                    @for ($i = 3; $i <= 50; $i++)
+                    <option value="{{ $i }}" @if($kaiki_before == $i) selected @endif >{{ $i }}</option>
+                    @endfor
+                </select>　～　
+                <select name="kaiki_after" class="select_category" style="width: 80px;">
+                    <option value="">----</option>
+                    <option value="1" @if($kaiki_after == '1') selected @endif >1</option>
+                    @for ($i = 3; $i <= 50; $i++)
+                    <option value="{{ $i }}" @if($kaiki_after == $i) selected @endif >{{ $i }}</option>
+                    @endfor
                 </select>
             </div>
 
             <div class="danka_column">
-                <div class="danka_regist_name">郵便番号</div>
-                {{ Form::text('zip', $zip, ['id' => 'zip', 'class' => 'danka_form_text', 'maxlength' => 7, 'placeholder' => '0000000', 'style' => 'width: 180px',
-                        'onkeyup' => "AjaxZip3.zip2addr(this, '', 'pref', 'address')"]) }}
-            </div>
-            <div class="danka_column">
-                <div class="danka_regist_name">都道府県</div>
-                <select name="pref" class="select_category" style="width: 180px" id="pref">
-                    <option value="">----</option>
-                    @foreach (config('const.Areas') as $name)
-                    <option value="{{ $name }}"
-                        @if($pref == $name) selected @endif >{{ $name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="danka_column">
-                <div class="danka_regist_name">住所</div>
-                {{ Form::text('address', $address, ['id' => 'city', 'class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
+                <div class="danka_regist_name">位牌番号</div>
+                {{ Form::text('ihai_no', $ihai_no, ['class' => 'danka_form_text', 'maxlength' => 4, 'placeholder' => '']) }}
             </div>
 
+
             <div class="danka_column">
-                <input type="checkbox" id="segaki_flg" name="segaki_flg" class="danka_checkbox" value="1"
-                @if(isset($segaki_flg)) checked @endif>
-                <label for="segaki_flg" class="danka_label">施餓鬼</label>
-                <input type="checkbox" id="star_flg" name="star_flg" class="danka_checkbox" value="1"
-                @if(isset($star_flg)) checked @endif>
-                <label for="star_flg" class="danka_label">星祭り</label>
+                <input type="checkbox" id="ihai_flg" name="ihai_flg" class="danka_checkbox" value="1"
+                @if(isset($ihai_flg)) checked @endif>
+                <label for="ihai_flg" class="danka_label">位牌</label>
+                <input type="checkbox" id="konryu_flg" name="konryu_flg" class="danka_checkbox" value="1"
+                @if(isset($konryu_flg)) checked @endif>
+                <label for="konryu_flg" class="danka_label">納骨</label>
+                <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
+                @if(isset($kaiki_flg)) checked @endif>
+                <label for="kaiki_flg" class="danka_label">回忌</label>
             </div>
         </div>
         <div class="search_btn_list">
@@ -94,32 +98,49 @@
     </div>
 
     <div class="paginationWrap">
-        <div class="">
+        <div class="pagination_div">
             表示件数　
+            @include('item.hikuyousya_number')　　
             {{ $danka_list->total() }}件が該当しました
             {{ $danka_list->appends(request()->query())->links('pagination::default') }}
     
         </div>
     </div>
-
-    <div class="search_result_div">
-        <div class="payment_list_header" style="margin:0;">
-            <div class="payment_id">カルテナンバー</div>
-            <div class="payment_name">施主名</div>
-            <div class="payment_num">識別番号</div>
-            <div class="payment_tel">電話番号</div>
-            <div class="payment_address">住所</div>
-            <div class="payment_btn"></div>
+    <div class="payment_list_header" style="margin:0;">
+            <div class="hikuyousya_id">カルテナンバー</div>
+            <div class="hikuyousya_name">施主名</div>
+            <div class="hikuyousya_type">種別</div>
+            <div class="hikuyousya_zokumyo">俗名</div>
+            <div class="hikuyousya_zokumyo">フリガナ</div>
+            <div class="hikuyousya_kaimyo">戒名</div>
+            <div class="hikuyousya_gender">性別</div>
+            <div class="hikuyousya_date">命日</div>
+            <div class="hikuyousya_kaiki">回忌</div>
+            <div class="hikuyousya_kaiki">行年</div>
+            <div class="hikuyousya_ihai">位牌番号</div>
+            <div class="hikuyousya_date">建立日</div>
+            <div class="hikuyousya_kaimyo">特記事項</div>
+            <div class="hikuyousya_btn"></div>
         </div>
+
+    <div class="search_result_div" style="height: 240px;">
 
         @foreach ($danka_list as $danka)
         <div class="payment_list_column">
-            <div class="payment_id">{{ $danka->id }}</div>
-            <div class="payment_name">{{ $danka->name }}</div>
-            <div class="payment_num">111-1111</div>
-            <div class="payment_tel">090-583-5083</div>
-            <div class="payment_address">{{ $danka->pref }}</div>
-            <div class="payment_btn"><a href="" class="search_view_btn_a">表示</a></div>
+            <div class="hikuyousya_id">{{ $danka->danka_id }}</div>
+            <div class="hikuyousya_name">{{ $danka->name }}</div>
+            <div class="hikuyousya_type">{{ $danka->type }}</div>
+            <div class="hikuyousya_zokumyo">{{ $danka->common_name }}</div>
+            <div class="hikuyousya_zokumyo">{{ $danka->common_kana }}</div>
+            <div class="hikuyousya_kaimyo">{{ $danka->posthumous }}</div>
+            <div class="hikuyousya_gender">@if($danka->gender_h == 'm') 男 @elseif($danka->gender_h == 'f') 女 @else その他 @endif</div>
+            <div class="hikuyousya_date">{{ $danka->meinichi }}</div>
+            <div class="hikuyousya_kaiki">@if($danka->kaiki <= 0) 1 @else {{ $danka->kaiki + 2 }} @endif</div>
+            <div class="hikuyousya_kaiki">{{ $danka->gyonen }}</div>
+            <div class="hikuyousya_ihai">{{ $danka->ihai_no }}</div>
+            <div class="hikuyousya_date">{{ $danka->konryubi }}</div>
+            <div class="hikuyousya_kaimyo">{{ $danka->column }}</div>
+            <div class="hikuyousya_btn"><a href="" class="search_view_btn_a">表示</a></div>
         </div>
 
 
