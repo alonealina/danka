@@ -111,6 +111,7 @@ class DankaController extends Controller
         $address = isset($filter_array['address']) ? $filter_array['address'] : null;
         $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
         $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
+        $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
 
         $query = Danka::select('*');
 
@@ -203,6 +204,9 @@ class DankaController extends Controller
             $query->where('star_flg', '1');
         }
 
+        if (isset($yakushiji_flg)) {
+            $query->where('yakushiji_flg', '1');
+        }
 
 
 
@@ -230,6 +234,7 @@ class DankaController extends Controller
             'address' => $address,
             'segaki_flg' => $segaki_flg,
             'star_flg' => $star_flg,
+            'yakushiji_flg' => $yakushiji_flg,
             'number' => $number,
         ]);
     }
@@ -249,6 +254,7 @@ class DankaController extends Controller
         $address = isset($filter_array['address']) ? $filter_array['address'] : null;
         $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
         $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
+        $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
 
         $query = Danka::select('*');
 
@@ -339,6 +345,10 @@ class DankaController extends Controller
 
         if (isset($star_flg)) {
             $query->where('star_flg', '1');
+        }
+
+        if (isset($yakushiji_flg)) {
+            $query->where('yakushiji_flg', '1');
         }
 
 
@@ -367,6 +377,7 @@ class DankaController extends Controller
             'address' => $address,
             'segaki_flg' => $segaki_flg,
             'star_flg' => $star_flg,
+            'yakushiji_flg' => $yakushiji_flg,
         ]);
     }
 
