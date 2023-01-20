@@ -144,16 +144,5 @@ class TextController extends Controller
         }
     }
 
-    public function text_category_delete($id)
-    {
-        DB::beginTransaction();
-        try {
-            TextCategory::where('id', $id)->delete();
-            DB::commit();
-            return redirect()->route('text_category_list')->with('message', 'カテゴリを削除しました');
-        } catch (\Exception $e) {
-            DB::rollback();
-        }
-    }
 
 }

@@ -89,11 +89,12 @@ Route::post('text_update', [TextController::class, 'text_update'])->name('text_u
 Route::get('text_delete/{id}/', [TextController::class, 'text_delete'])->name('text_delete');
 Route::get('text_category_list', [TextController::class, 'text_category_list'])->name('text_category_list');
 Route::post('text_category_store', [TextController::class, 'text_category_store'])->name('text_category_store');
-Route::get('text_category_delete/{id}/', [TextController::class, 'text_category_delete'])->name('text_category_delete');
 
 Route::get('category_list', [CategoryController::class, 'category_list'])->name('category_list');
 Route::post('category_store', [CategoryController::class, 'category_store'])->name('category_store');
-Route::get('category_delete/{id}/', [CategoryController::class, 'category_delete'])->name('category_delete');
+Route::get('shipment_category_delete/{id}/', [CategoryController::class, 'shipment_category_delete'])->name('shipment_category_delete');
+Route::get('item_category_delete/{id}/', [CategoryController::class, 'item_category_delete'])->name('item_category_delete');
+Route::get('text_category_delete/{id}/', [CategoryController::class, 'text_category_delete'])->name('text_category_delete');
 
 Route::get('admin_regist', [AdminController::class, 'admin_regist'])->name('admin_regist');
 Route::post('admin_store', [AdminController::class, 'admin_store'])->name('admin_store');

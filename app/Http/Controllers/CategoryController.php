@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\ShipmentCategory;
 use App\Models\ItemCategory;
 use App\Models\TextCategory;
+use App\Rules\ShipmentCategoryCheck;
+use App\Rules\ItemCategoryCheck;
 use App\Rules\TextCategoryCheck;
 use DB;
 
@@ -28,9 +30,19 @@ class CategoryController extends Controller
 
     public function category_store(Request $request)
     {
-        $rules = [
-            'name' => ['required', new TextCategoryCheck()],
-        ];
+        $type = $request['type'];
+
+        if ($type == "発送物") {
+            $rules = ['name' => ['required', new ShipmentCategoryCheck()]];
+            $category = new ShipmentCategory();
+
+        } elseif ($type == "商品") {
+            $rules = ['name' => ['required', new ItemCategoryCheck()]];
+            $category = new ItemCategory();
+        } else {
+            $rules = ['name' => ['required', new TextCategoryCheck()]];
+            $category = new TextCategory;
+        }
 
         $messages = [
             'name.required' => 'カテゴリ名を入力してください',
@@ -38,7 +50,6 @@ class CategoryController extends Controller
 
         Validator::make($request->all(), $rules, $messages)->validate();
 
-        $text_category = new TextCategory;
 
         $request = $request->all();
         $fill_data = [
@@ -47,7 +58,7 @@ class CategoryController extends Controller
 
         DB::beginTransaction();
         try {
-            $text_category->fill($fill_data)->save();
+            $category->fill($fill_data)->save();
             DB::commit();
             return redirect()->to('category_list')->with('message', 'カテゴリの登録が完了いたしました');
         } catch (\Exception $e) {

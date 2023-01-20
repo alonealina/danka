@@ -17,7 +17,7 @@
         </div>
         <div class="error_message" id="name_error" style="text-align: right;">カテゴリ名を入力してください。</div>
         @if($errors->has('name'))
-        <div class="error_message check_error">{{ $errors->first('name') }}</div>
+        <div class="error_message check_error" style="text-align: right;">{{ $errors->first('name') }}</div>
         @endif
     </form>
     <div class="payment_btn_list">
@@ -56,7 +56,7 @@
             <div class="text_list_column">
                 <div class="">{{ $category->name }}</div>
                 @if($category->id > 9)
-                <a href="text_delete/{{ $category->id }}" onclick="return confirm('本当に削除しますか？')" class="delete_btn_a">削除</a>
+                <a href="text_category_delete/{{ $category->id }}" onclick="return confirm('本当に削除しますか？')" class="delete_btn_a">削除</a>
                 @endif
             </div>
             @endforeach
