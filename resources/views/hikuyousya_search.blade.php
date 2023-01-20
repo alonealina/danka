@@ -107,21 +107,21 @@
         </div>
     </div>
     <div class="payment_list_header" style="margin:0;">
-            <div class="hikuyousya_id">カルテナンバー</div>
-            <div class="hikuyousya_name">施主名</div>
-            <div class="hikuyousya_type">種別</div>
-            <div class="hikuyousya_zokumyo">俗名</div>
-            <div class="hikuyousya_zokumyo">フリガナ</div>
-            <div class="hikuyousya_kaimyo">戒名</div>
-            <div class="hikuyousya_gender">性別</div>
-            <div class="hikuyousya_date">命日</div>
-            <div class="hikuyousya_kaiki">回忌</div>
-            <div class="hikuyousya_kaiki">行年</div>
-            <div class="hikuyousya_ihai">位牌番号</div>
-            <div class="hikuyousya_date">建立日</div>
-            <div class="hikuyousya_kaimyo">特記事項</div>
-            <div class="hikuyousya_btn"></div>
-        </div>
+        <div class="hikuyousya_id">カルテナンバー</div>
+        <div class="hikuyousya_name">施主名</div>
+        <div class="hikuyousya_type">種別</div>
+        <div class="hikuyousya_zokumyo">俗名</div>
+        <div class="hikuyousya_zokumyo">フリガナ</div>
+        <div class="hikuyousya_kaimyo">戒名</div>
+        <div class="hikuyousya_gender">性別</div>
+        <div class="hikuyousya_date">命日</div>
+        <div class="hikuyousya_kaiki">回忌</div>
+        <div class="hikuyousya_kaiki">行年</div>
+        <div class="hikuyousya_ihai">位牌番号</div>
+        <div class="hikuyousya_date">建立日</div>
+        <div class="hikuyousya_kaimyo">特記事項</div>
+        <div class="hikuyousya_btn"></div>
+    </div>
 
     <div class="search_result_div" style="height: 240px;">
 
@@ -140,7 +140,7 @@
             <div class="hikuyousya_ihai">{{ $danka->ihai_no }}</div>
             <div class="hikuyousya_date">{{ $danka->konryubi }}</div>
             <div class="hikuyousya_kaimyo">{{ $danka->column }}</div>
-            <div class="hikuyousya_btn"><a href="" class="search_view_btn_a">表示</a></div>
+            <div class="hikuyousya_btn"><a href="{{ route('danka_detail', $danka->danka_id) }}" class="search_view_btn_a">表示</a></div>
         </div>
 
 

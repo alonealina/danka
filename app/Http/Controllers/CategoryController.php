@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\ShipmentCategory;
+use App\Models\ItemCategory;
 use App\Models\TextCategory;
 use App\Rules\TextCategoryCheck;
 use DB;
@@ -13,9 +15,13 @@ class CategoryController extends Controller
 
     public function category_list(Request $request)
     {
+        $shipment_categories = ShipmentCategory::get();
+        $item_categories = ItemCategory::get();
         $text_categories = TextCategory::get();
 
-        return view('text_category_list', [
+        return view('category_list', [
+            'shipment_categories' => $shipment_categories,
+            'item_categories' => $item_categories,
             'text_categories' => $text_categories,
         ]);
     }
@@ -49,13 +55,37 @@ class CategoryController extends Controller
         }
     }
 
-    public function category_delete($id)
+    public function shipment_category_delete($id)
+    {
+        DB::beginTransaction();
+        try {
+            ShipmentCategory::where('id', $id)->delete();
+            DB::commit();
+            return redirect()->route('category_list')->with('message', '発送物カテゴリを削除しました');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
+    public function item_category_delete($id)
+    {
+        DB::beginTransaction();
+        try {
+            ItemCategory::where('id', $id)->delete();
+            DB::commit();
+            return redirect()->route('category_list')->with('message', '商品カテゴリを削除しました');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
+    public function text_category_delete($id)
     {
         DB::beginTransaction();
         try {
             TextCategory::where('id', $id)->delete();
             DB::commit();
-            return redirect()->route('category_list')->with('message', 'カテゴリを削除しました');
+            return redirect()->route('category_list')->with('message', '行事カテゴリを削除しました');
         } catch (\Exception $e) {
             DB::rollback();
         }

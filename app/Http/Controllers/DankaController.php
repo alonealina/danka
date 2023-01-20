@@ -101,6 +101,54 @@ class DankaController extends Controller
         }
     }
 
+    public function danka_edit($id)
+    {
+        $danka = Danka::find($id);
+
+        return view('danka_edit', [
+            'danka' => $danka,
+        ]);
+    }
+
+    public function danka_update(Request $request)
+    {
+
+        $request = $request->all();
+        $id = $request['id'];
+        $danka = Danka::find($id);
+
+        $fill_data = [
+            'id' => $id,
+            'name' => $request['name'],
+            'name_kana' => $request['name_kana'],
+            'gender' => $request['gender'],
+            'tel' => $request['tel'],
+            'mobile' => $request['mobile'],
+            'mail' => $request['mail'],
+            'zip' => $request['zip'],
+            'pref' => $request['pref'],
+            'city' => $request['city'],
+            'address' => $request['address'],
+            'building' => $request['building'],
+            'introducer' => $request['introducer'],
+            'notices' => $request['notices'],
+            'segaki_flg' => isset($request['segaki_flg']) ? $request['segaki_flg'] : 0,
+            'star_flg' => isset($request['star_flg']) ? $request['star_flg'] : 0,
+            'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
+            'yakushiji_flg' => isset($request['yakushiji_flg']) ? $request['yakushiji_flg'] : 0,
+        ];
+
+        DB::beginTransaction();
+        try {
+            $danka->fill($fill_data)->update();
+
+            DB::commit();
+            return redirect()->route('danka_detail', $id)->with('message', '檀家の編集が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
     public function danka_search(Request $request)
     {
         $filter_array = $request->all();
@@ -381,6 +429,25 @@ class DankaController extends Controller
             'number' => $number,
         ]);
     }
+
+    public function danka_detail($id)
+    {
+        $danka = Danka::find($id);
+        $hikuyousya_list = Hikuyousya::where('danka_id', $id)->get();
+        $family_list = Family::where('danka_id', $id)->get();
+
+        return view('danka_detail', [
+            'danka' => $danka,
+            'hikuyousya_list' => $hikuyousya_list,
+            'family_list' => $family_list,
+        ]);
+    }
+
+
+
+
+
+
 
     public function db_test()
     {

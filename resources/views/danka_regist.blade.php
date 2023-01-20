@@ -17,7 +17,7 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">性別</div>
-                <select name="gender" class="select_category" style="width: 50px;">
+                <select name="gender" class="select_category" style="width: 80px;">
                     <option value="m">男</option>
                     <option value="f">女</option>
                     <option value="o">その他</option>
