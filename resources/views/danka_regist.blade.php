@@ -190,10 +190,6 @@
                     <div class="danka_regist_name2">電話番号</div>
                     {{ Form::text('family_tel[]', old('family_tel'), ['id' => 'family_tel', 'class' => 'danka_form_text2', 'maxlength' => 15, 'placeholder' => '09011112222']) }}
                 </div>
-
-
-
-
             </div>
         </div>
     </div>

@@ -149,6 +149,7 @@ function clickTextStoreButton() {
 
 
 function clickAddButton() {
-    $('#family_item').clone(true).appendTo('#family_form');
-
+    var clone = $('#family_item').clone(true);
+    clone.find('input[type="text"]').val('');
+    clone.appendTo('#family_form');
 };

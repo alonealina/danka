@@ -81,8 +81,8 @@
     </div>
     <div class="danka_column">
         <a href="{{ route('danka_edit', $danka->id) }}" class="create_btn_a">檀家編集</a>
-        <a href="" class="create_btn_a">被供養者追加</a>
-        <a href="" class="create_btn_a">家族情報追加</a>
+        <a href="{{ route('hikuyousya_regist', $danka->id) }}" class="create_btn_a">被供養者追加</a>
+        <a href="{{ route('family_regist', $danka->id) }}" class="create_btn_a">家族情報追加</a>
     </div>
 
     <div class="danka_other_div">
@@ -121,7 +121,7 @@
                     <div class="hikuyousya_ihai">{{ $hikuyousya->ihai_no }}</div>
                     <div class="hikuyousya_date">{{ $hikuyousya->konryubi }}</div>
                     <div class="hikuyousya_kaimyo_view">{{ $hikuyousya->column }}</div>
-                    <div class="hikuyousya_btn"><a href="{{ route('danka_detail', $hikuyousya->danka_id) }}" class="search_view_btn_a">編集</a></div>
+                    <div class="hikuyousya_btn"><a href="{{ route('hikuyousya_edit', $hikuyousya->id) }}" class="search_view_btn_a">編集</a></div>
                 </div>
                 @endforeach
             </div>
@@ -146,7 +146,7 @@
                         <div class="family_view_item">{{ $family->relationship }}</div>
                         <div class="family_view_item">{{ $family->tel }}</div>
                     </div>
-                    <div class="hikuyousya_btn"><a href="{{ route('danka_detail', $family->danka_id) }}" class="search_view_btn_a">編集</a></div>
+                    <div class="hikuyousya_btn"><a href="{{ route('family_edit', $family->id) }}" class="search_view_btn_a">編集</a></div>
                 </div>
                 @endforeach
             </div>

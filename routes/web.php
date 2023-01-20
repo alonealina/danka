@@ -45,7 +45,14 @@ Route::get('hikuyousya_search', [DankaController::class, 'hikuyousya_search'])->
 Route::get('danka_detail/{id}', [DankaController::class, 'danka_detail'])->name('danka_detail');
 Route::get('danka_edit/{id}', [DankaController::class, 'danka_edit'])->name('danka_edit');
 Route::post('danka_update', [DankaController::class, 'danka_update'])->name('danka_update');
-
+Route::get('hikuyousya_regist/{danka_id}', [DankaController::class, 'hikuyousya_regist'])->name('hikuyousya_regist');
+Route::post('hikuyousya_store', [DankaController::class, 'hikuyousya_store'])->name('hikuyousya_store');
+Route::get('hikuyousya_edit/{hikuyousya_id}', [DankaController::class, 'hikuyousya_edit'])->name('hikuyousya_edit');
+Route::post('hikuyousya_update', [DankaController::class, 'hikuyousya_update'])->name('hikuyousya_update');
+Route::get('family_regist/{danka_id}', [DankaController::class, 'family_regist'])->name('family_regist');
+Route::post('family_store', [DankaController::class, 'family_store'])->name('family_store');
+Route::get('family_edit/{family_id}', [DankaController::class, 'family_edit'])->name('family_edit');
+Route::post('family_update', [DankaController::class, 'family_update'])->name('family_update');
 
 
 Route::get('db_test', [DankaController::class, 'db_test'])->name('db_test');

@@ -149,6 +149,172 @@ class DankaController extends Controller
         }
     }
 
+    public function hikuyousya_regist($danka_id)
+    {
+        $ihai_max = intval(Hikuyousya::max('ihai_no'));
+        $ihai_next = str_pad($ihai_max + 1, 4, 0, STR_PAD_LEFT);
+
+        return view('hikuyousya_regist', [
+            'danka_id' => $danka_id,
+            'ihai_next' => $ihai_next,
+        ]);
+    }
+
+    public function hikuyousya_store(Request $request)
+    {
+        $request = $request->all();
+
+        DB::beginTransaction();
+        try {
+            $fill_data = [
+                'danka_id' => $request['danka_id'],
+                'type' => $request['type'],
+                'common_name' => $request['common_name'],
+                'common_kana' => $request['common_kana'],
+                'posthumous' => $request['posthumous'],
+                'gender_h' => $request['gender_h'],
+                'meinichi' => $request['meinichi'],
+                'nokotsubi' => $request['nokotsubi'],
+                'konryubi' => $request['konryubi'],
+                'gyonen' => $request['gyonen'],
+                'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
+                'column' => $request['column'],
+                'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
+            ];
+
+            $hikuyousya = new Hikuyousya();
+            $hikuyousya->fill($fill_data)->save();
+            
+            DB::commit();
+            return redirect()->route('danka_detail', $request['danka_id'])->with('message', '被供養者の登録が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
+    public function hikuyousya_edit($hikuyousya_id)
+    {
+        $hikuyousya = Hikuyousya::find($hikuyousya_id);
+        $ihai_no = $hikuyousya->ihai_no;
+
+        if ($ihai_no == "0000") {
+            $ihai_max = intval(Hikuyousya::max('ihai_no'));
+            $ihai_no = str_pad($ihai_max + 1, 4, 0, STR_PAD_LEFT);
+        }
+
+        return view('hikuyousya_edit', [
+            'hikuyousya' => $hikuyousya,
+            'ihai_no' => $ihai_no,
+        ]);
+    }
+
+    public function hikuyousya_update(Request $request)
+    {
+        $request = $request->all();
+        $hikuyousya_id = $request['hikuyousya_id'];
+
+        DB::beginTransaction();
+        try {
+            $fill_data = [
+                'type' => $request['type'],
+                'common_name' => $request['common_name'],
+                'common_kana' => $request['common_kana'],
+                'posthumous' => $request['posthumous'],
+                'gender_h' => $request['gender_h'],
+                'meinichi' => $request['meinichi'],
+                'nokotsubi' => $request['nokotsubi'],
+                'konryubi' => $request['konryubi'],
+                'gyonen' => $request['gyonen'],
+                'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
+                'column' => $request['column'],
+                'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
+            ];
+
+            $hikuyousya = Hikuyousya::find($hikuyousya_id);
+
+            $hikuyousya->fill($fill_data)->update();
+            
+            DB::commit();
+            return redirect()->route('danka_detail', $request['danka_id'])->with('message', '被供養者の編集が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
+
+    public function family_regist($danka_id)
+    {
+        return view('family_regist', [
+            'danka_id' => $danka_id,
+        ]);
+    }
+
+    public function family_store(Request $request)
+    {
+        $request = $request->all();
+
+        DB::beginTransaction();
+        try {
+
+            $family_len = count($request['family_name']);
+            for ($i = 0; $i < $family_len; $i++) {
+                if(isset($request['family_name'][$i]) && isset($request['family_kana'][$i])) {
+                    $fill_data = [
+                        'danka_id' => $request['danka_id'],
+                        'name' => $request['family_name'][$i],
+                        'name_kana' => $request['family_kana'][$i],
+                        'relationship' => isset($request['relationship'][$i]) ? $request['relationship'][$i] : '',
+                        'tel' => isset($request['family_tel'][$i]) ? $request['family_tel'][$i] : '',
+                    ];
+
+                    $family = new Family();
+                    $family->fill($fill_data)->save();
+                }
+            }
+
+            
+            DB::commit();
+            return redirect()->route('danka_detail', $request['danka_id'])->with('message', '家族の登録が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
+    public function family_edit($family_id)
+    {
+        $family = Family::find($family_id);
+
+        return view('family_edit', [
+            'family' => $family,
+        ]);
+    }
+
+    public function family_update(Request $request)
+    {
+        $request = $request->all();
+        $family_id = $request['family_id'];
+
+        DB::beginTransaction();
+        try {
+            $fill_data = [
+                'name' => $request['name'],
+                'name_kana' => $request['name_kana'],
+                'relationship' => $request['relationship'],
+                'tel' => $request['tel'],
+            ];
+
+            $family = Family::find($family_id);
+
+            $family->fill($fill_data)->update();
+            
+            DB::commit();
+            return redirect()->route('danka_detail', $request['danka_id'])->with('message', '家族の編集が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
+
     public function danka_search(Request $request)
     {
         $filter_array = $request->all();

@@ -315,6 +315,11 @@ p {
 .hikuyousya_date {
     
 }
+.hikuyousya_regist_form {
+    display:flex;
+    justify-content: space-between;
+}
+
 .family_item {
     display: flex;
     justify-content: space-between;
