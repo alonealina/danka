@@ -6,7 +6,7 @@
 <div class="payment_btn_list">
     <div class="payment_btn_div">未請求</div>
     <a href="{{ route('unpaid_list') }}" class="payment_btn_a" style="border-left: 1px solid;border-right: 1px solid;">未払い</a>
-    <a href="{{ route('paid_list') }}" class="payment_btn_a">支払い済</a>
+    <a href="{{ route('paid_list') }}" class="payment_btn_a">支払済</a>
 </div>
 
 <div class="payment_list_header">

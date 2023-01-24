@@ -668,7 +668,20 @@ p {
     line-height: 24px;
     border: 1px solid #A84FEB;
 }
-
+.payment_btn_div {
+    width:100px;
+    font: normal normal bold 14px/18px sans-serif;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    text-align: center;
+    padding:5px 0;
+}
+.payment_btn_a {
+    width:100px;
+    font: normal normal normal 14px/18px sans-serif;
+    background: #EEEEEE 0% 0% no-repeat padding-box;
+    text-align: center;
+    padding:5px 0;
+}
 
 .text_category_list_div {
     width: 90%;

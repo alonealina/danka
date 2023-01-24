@@ -4,6 +4,7 @@
 <div class="content_title">取引一覧</div>
 <form id="form" name="search_form" action="{{ route('deal_list') }}" method="get">
 @csrf
+{{ Form::hidden('type', $type) }}
     <div class="danka_search_div">
         <div class="danka_form_div">
             <div class="danka_column">
@@ -61,6 +62,7 @@
 
     <div class="paginationWrap">
         <div class="pagination_div">
+            @include('item.deal_type')
             表示件数　
             @include('item.deal_number')　　
             {{ $deal_list->total() }}件が該当しました
@@ -89,16 +91,16 @@
             <div class="deal_name">{{ $deal->name_kana }}</div>
             <div class="deal_tel">{{ $deal->tel }}</div>
             <div class="deal_item">{{ $deal->detail }}</div>
-            <div class="deal_price">{{ number_format($deal->quantity * $deal->price) }}</div>
+            <div class="deal_price">{{ number_format($deal->total) }}</div>
             <div class="deal_date">{{ $deal->payment_date }}</div>
             <div class="deal_date">{{ $deal->created_at->format('Y-m-d') }}</div>
             <div class="deal_btn">
                 @if ($deal->state == "未払い")
-                <a href="{{ route('danka_detail', $deal->id) }}" class="payment_white_btn_a">送付待ちへ</a>
-                <a href="{{ route('danka_detail', $deal->id) }}" class="payment_blue_btn_a">支払済へ</a>
+                <a href="{{ route('unclaimed_update', $deal->deal_detail_id) }}" class="payment_white_btn_a">送付待ちへ</a>
+                <a href="{{ route('paid_update', $deal->deal_detail_id) }}" class="payment_blue_btn_a">支払済へ</a>
                 <a href="{{ route('danka_detail', $deal->id) }}" class="payment_view_btn_a">表示</a>
                 @else
-                <a href="{{ route('danka_detail', $deal->id) }}" class="payment_red_btn_a">未払いへ</a>
+                <a href="{{ route('unpaid_update', $deal->deal_detail_id) }}" class="payment_red_btn_a">未払いへ</a>
                 <a href="{{ route('danka_detail', $deal->id) }}" class="payment_view_btn_a">表示</a>
                 @endif
             </div>

@@ -12,6 +12,7 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'type' => $type,
             ]) }}"
         @if($number == "10") selected @endif>10件</option>
         <option value="{{ route('deal_list',  [
@@ -26,6 +27,7 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'type' => $type,
             ]) }}"
         @if($number == "30") selected @endif>30件</option>
         <option value="{{ route('deal_list',  [
@@ -40,6 +42,7 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'type' => $type,
             ]) }}"
         @if($number == "50") selected @endif>50件</option>
         <option value="{{ route('deal_list',  [
@@ -54,6 +57,7 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'type' => $type,
             ]) }}"
         @if($number == "100") selected @endif>100件</option>
         <option value="{{ route('deal_list',  [
@@ -68,6 +72,7 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'type' => $type,
             ]) }}"
         @if($number == "300") selected @endif>300件</option>
         <option value="{{ route('deal_list',  [
@@ -82,6 +87,7 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'type' => $type,
             ]) }}"
         @if($number == "500") selected @endif>500件</option>
     </select>

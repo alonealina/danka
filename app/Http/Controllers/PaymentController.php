@@ -29,10 +29,54 @@ class PaymentController extends Controller
         $payment_after = isset($filter_array['payment_after']) ? $filter_array['payment_after'] : null;
         $price_min = isset($filter_array['price_min']) ? $filter_array['price_min'] : null;
         $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
-        $tel = isset($filter_array['tel']) ? $filter_array['tel'] : null;
+        $type = isset($filter_array['type']) ? $filter_array['type'] : null;
 
-        $query = Deal::select('deal.id as id', 'name', 'name_kana', 'tel', 'detail', 'deal_detail.price as price', 'quantity', 'state', 'payment_date', 'deal.created_at as created_at')
+        $query = Deal::select('deal.id as id','deal_detail.id as deal_detail_id', 'name', 'name_kana', 'tel', 'detail', 'total', 'quantity', 'state', 'payment_date', 'deal.created_at as created_at')
             ->join('danka', 'danka.id', '=', 'deal.danka_id')->join('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id');
+
+        if (!empty($name)) {
+            $query->where('name', 'like', "%$name%");
+        }
+
+        if (!empty($name_kana)) {
+            $query->where('name_kana', 'like', "%$name_kana%");
+        }
+    
+        if (!empty($tel)) {
+            $query->where(function ($query) use ($tel) {
+                $query->orwhere('tel', 'like', "%$tel%")->orwhere('mobile', 'like', "%$tel%");
+            });
+        }
+
+        if (!empty($created_at_before)) {
+            $query->whereDate('deal.created_at', '>=', $created_at_before);
+        }
+        if (!empty($created_at_after)) {
+            $query->whereDate('deal.created_at', '<=', $created_at_after);
+        }
+
+        if (!empty($payment_before)) {
+            $query->whereDate('payment_date', '>=', $payment_before);
+        }
+        if (!empty($payment_after)) {
+            $query->whereDate('payment_date', '<=', $payment_after);
+        }
+
+        if (!empty($item_id)) {
+            $query->where('item_id', $item_id);
+        }
+
+        if (!empty($price_min)) {
+            $query->where('total', '>=', $price_min);
+        }
+
+        if (!empty($price_max)) {
+            $query->where('total', '<=', $price_max);
+        }
+
+        if (!empty($type)) {
+            $query->where('state', $type);
+        }
 
 
 
@@ -60,35 +104,69 @@ class PaymentController extends Controller
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'type' => $type,
             'number' => $number,
         ]);
     }
 
-    public function unclaimed_list(Request $request)
+    public function unclaimed_update($id)
     {
-        $text_categories = TextCategory::get();
+        $deal_detail = DealDetail::find($id);
 
-        return view('unclaimed_list', [
-            'text_categories' => $text_categories,
-        ]);
+        DB::beginTransaction();
+        try {
+            $fill_data = [
+                'state' => '送付待ち',
+            ];
+
+            $deal_detail->fill($fill_data)->update();
+            
+            DB::commit();
+            return redirect()->route('deal_list')->with('message', 'ステータスを変更しました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+
     }
 
-    public function unpaid_list(Request $request)
+    public function unpaid_update($id)
     {
-        $text_categories = TextCategory::get();
+        $deal_detail = DealDetail::find($id);
 
-        return view('unpaid_list', [
-            'text_categories' => $text_categories,
-        ]);
+        DB::beginTransaction();
+        try {
+            $fill_data = [
+                'state' => '未払い',
+                'payment_date' => null,
+            ];
+
+            $deal_detail->fill($fill_data)->update();
+            
+            DB::commit();
+            return redirect()->route('deal_list')->with('message', 'ステータスを変更しました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
     }
 
-    public function paid_list(Request $request)
+    public function paid_update($id)
     {
-        $text_categories = TextCategory::get();
+        $deal_detail = DealDetail::find($id);
+        $date = date('Y-m-d');
+        DB::beginTransaction();
+        try {
+            $fill_data = [
+                'state' => '支払済',
+                'payment_date' => $date,
+            ];
 
-        return view('paid_list', [
-            'text_categories' => $text_categories,
-        ]);
+            $deal_detail->fill($fill_data)->update();
+            
+            DB::commit();
+            return redirect()->route('deal_list')->with('message', 'ステータスを変更しました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
     }
 
     public function deal_regist(Request $request)
@@ -167,6 +245,7 @@ class PaymentController extends Controller
                     'item_id' => $request['item_id'][$i],
                     'quantity' => $request['quantity'][$i],
                     'price' => $request['price'][$i],
+                    'total' => $request['quantity'][$i] * $request['price'][$i],
                     'hikuyousya_id' => isset($request['hikuyousya_id'][$i]) ? $request['hikuyousya_id'][$i] : '0',
                     'remark' => isset($request['remark'][$i]) ? $request['remark'][$i] : '',
                 ];

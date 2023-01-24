@@ -90,7 +90,7 @@
                         <a href="{{ route('deal_regist') }}" class="menu_a
                         @if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false)
                         current @endif">　取引作成</a>
-                        <a href="{{ route('unclaimed_list') }}" class="menu_a
+                        <a href="{{ route('deal_list') }}" class="menu_a
                         @if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false)
                         current @endif">　取引一覧</a>
                         <a href="{{ route('item_list') }}" class="menu_a
