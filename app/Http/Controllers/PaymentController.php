@@ -7,6 +7,7 @@ use App\Models\Hikuyousya;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Deal;
+use App\Models\DealDetail;
 use App\Models\Item;
 use App\Models\ItemCategory;
 use App\Models\TextCategory;
@@ -15,6 +16,54 @@ use DB;
 
 class PaymentController extends Controller
 {
+    public function deal_list(Request $request)
+    {
+        $filter_array = $request->all();
+        $name = isset($filter_array['name']) ? $filter_array['name'] : null;
+        $name_kana = isset($filter_array['name_kana']) ? $filter_array['name_kana'] : null;
+        $tel = isset($filter_array['tel']) ? $filter_array['tel'] : null;
+        $item_id = isset($filter_array['item_id']) ? $filter_array['item_id'] : null;
+        $created_at_before = isset($filter_array['created_at_before']) ? $filter_array['created_at_before'] : null;
+        $created_at_after = isset($filter_array['created_at_after']) ? $filter_array['created_at_after'] : null;
+        $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;
+        $payment_after = isset($filter_array['payment_after']) ? $filter_array['payment_after'] : null;
+        $price_min = isset($filter_array['price_min']) ? $filter_array['price_min'] : null;
+        $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
+        $tel = isset($filter_array['tel']) ? $filter_array['tel'] : null;
+
+        $query = Deal::select('deal.id as id', 'name', 'name_kana', 'tel', 'detail', 'deal_detail.price as price', 'quantity', 'state', 'payment_date', 'deal.created_at as created_at')
+            ->join('danka', 'danka.id', '=', 'deal.danka_id')->join('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id');
+
+
+
+        $number = \Request::get('number');
+        if (isset($number)) {
+            $deal_list = $query->orderBy('deal.id')->paginate($number)
+            ->appends(["number" => $number]);
+        } else {
+            $deal_list = $query->orderBy('deal.id')->paginate(10);
+        }
+
+        $item_list = Item::select('item.id as id', 'name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')->orderBy('item_category.id')->get();
+
+        return view('deal_list', [
+            'deal_list' => $deal_list,
+            'item_list' => $item_list,
+
+            'name' => $name,
+            'name_kana' => $name_kana,
+            'tel' => $tel,
+            'item_id' => $item_id,
+            'created_at_before' => $created_at_before,
+            'created_at_after' => $created_at_after,
+            'payment_before' => $payment_before,
+            'payment_after' => $payment_after,
+            'price_min' => $price_min,
+            'price_max' => $price_max,
+            'number' => $number,
+        ]);
+    }
+
     public function unclaimed_list(Request $request)
     {
         $text_categories = TextCategory::get();
@@ -103,13 +152,18 @@ class PaymentController extends Controller
 
         DB::beginTransaction();
         try {
-            
+            $deal = new Deal();
+            $fill_data = [
+                'danka_id' => $danka_id,
+                'payment_method' => $payment_method,
+            ];
+            $deal->fill($fill_data)->save();
+            $danka_id = $deal->id;
+
             $item_len = count($request['item_id']);
             for ($i = 0; $i < $item_len; $i++) {
-
                 $fill_data = [
-                    'danka_id' => $danka_id,
-                    'payment_method' => $payment_method,
+                    'deal_id' => $danka_id,
                     'item_id' => $request['item_id'][$i],
                     'quantity' => $request['quantity'][$i],
                     'price' => $request['price'][$i],
@@ -117,8 +171,8 @@ class PaymentController extends Controller
                     'remark' => isset($request['remark'][$i]) ? $request['remark'][$i] : '',
                 ];
 
-                $deal = new Deal();
-                $deal->fill($fill_data)->save();
+                $deal_detail = new DealDetail();
+                $deal_detail->fill($fill_data)->save();
             }
 
             DB::commit();

@@ -72,6 +72,8 @@ Route::get('unclaimed_list', [PaymentController::class, 'unclaimed_list'])->name
 Route::get('unpaid_list', [PaymentController::class, 'unpaid_list'])->name('unpaid_list');
 Route::get('paid_list', [PaymentController::class, 'paid_list'])->name('paid_list');
 
+Route::get('deal_list', [PaymentController::class, 'deal_list'])->name('deal_list');
+
 Route::get('deal_regist', [PaymentController::class, 'deal_regist'])->name('deal_regist');
 Route::post('deal_confirm', [PaymentController::class, 'deal_confirm'])->name('deal_confirm');
 Route::post('deal_store', [PaymentController::class, 'deal_store'])->name('deal_store');

@@ -48,11 +48,10 @@
         </div>
 
         <div class="danka_form_div">
-        <div class="danka_column">
+            <div class="danka_column">
                 <div class="danka_regist_name">命日</div>
                 {{ Form::date('meinichi_before', $meinichi_before, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
                 {{ Form::date('meinichi_after', $meinichi_after, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}
-
             </div>
 
             <div class="danka_column">
