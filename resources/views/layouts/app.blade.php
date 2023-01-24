@@ -87,9 +87,15 @@
                         class="menu_none"
                         @endif
                         id="menu3">
+                        <a href="{{ route('deal_regist') }}" class="menu_a
+                        @if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false)
+                        current @endif">　取引作成</a>
                         <a href="{{ route('unclaimed_list') }}" class="menu_a
                         @if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false)
-                        current @endif">　一覧</a>
+                        current @endif">　取引一覧</a>
+                        <a href="{{ route('item_list') }}" class="menu_a
+                        @if (strpos($now_route,'item_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false)
+                        current @endif">　商品一覧</a>
                         </div>
 
                         <a href="#!" class="menu_a @if (strpos($now_route,'transfer') !== false) current @endif" onclick="clickMenu4();">

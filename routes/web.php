@@ -72,6 +72,17 @@ Route::get('unclaimed_list', [PaymentController::class, 'unclaimed_list'])->name
 Route::get('unpaid_list', [PaymentController::class, 'unpaid_list'])->name('unpaid_list');
 Route::get('paid_list', [PaymentController::class, 'paid_list'])->name('paid_list');
 
+Route::get('deal_regist', [PaymentController::class, 'deal_regist'])->name('deal_regist');
+Route::post('deal_confirm', [PaymentController::class, 'deal_confirm'])->name('deal_confirm');
+Route::post('deal_store', [PaymentController::class, 'deal_store'])->name('deal_store');
+
+
+Route::get('item_list', [PaymentController::class, 'item_list'])->name('item_list');
+Route::post('item_store', [PaymentController::class, 'item_store'])->name('item_store');
+Route::get('item_edit/{id}', [PaymentController::class, 'item_edit'])->name('item_edit');
+Route::post('item_update', [PaymentController::class, 'item_update'])->name('item_update');
+Route::get('item_delete/{id}', [PaymentController::class, 'item_delete'])->name('item_delete');
+
 Route::get('notice_regist', [NoticeController::class, 'notice_regist'])->name('notice_regist');
 Route::post('notice_store', [NoticeController::class, 'notice_store'])->name('notice_store');
 Route::get('notice_list', [NoticeController::class, 'notice_list'])->name('notice_list');

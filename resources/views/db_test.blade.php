@@ -20,6 +20,24 @@
                 <div class="danka_regist_name">フリガナ</div>
                 <div class="" id="kana"></div>
             </div>
+            <div class="danka_column">
+                <div class="danka_regist_name">フリガナ</div>
+                <div class="" id="kana"></div>
+            </div>
+        </div>
+        <div class="danka_form_div">
+            <div class="danka_column">
+                <div class="danka_regist_name">郵便番号</div>
+                <div class="" id="zip"></div>
+            </div>
+            <div class="danka_column">
+                <div class="danka_regist_name">住所</div>
+                <div class="" id="address"></div>
+            </div>
+            <div class="danka_column">
+                <div class="danka_regist_name">フリガナ</div>
+                <div class="" id="kana"></div>
+            </div>
         </div>
     </div>
 

@@ -324,6 +324,11 @@ p {
     display: flex;
     justify-content: space-between;
 }
+.deal_item_column {
+    display: flex;
+    justify-content: space-between;
+    margin:8px 0;
+}
 .family_column {
     margin: 10px 0;
     display: flex;
@@ -355,7 +360,42 @@ p {
     padding: 5px;
 }
 
-
+.item_add_btn {
+    background: #707070;
+    color: #fff;
+    padding: 5px;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    text-align: center;
+}
+.item_other {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+.item_header {
+    width: 100%;
+    display: flex;
+    background: #EEEEEE 0% 0% no-repeat padding-box;
+    justify-content: space-between;
+    padding:5px 25px 5px 15px;
+}
+.deal_item_detail {
+    width:20%;
+}
+.deal_item_num {
+    width:5%;
+}
+.deal_item_price {
+    width:7%;
+}
+.deal_item_zokumyo {
+    width:20%;
+}
+.deal_item_remark {
+    width:35%;
+}
 
 .danka_form_div {
     width:45%;
@@ -373,6 +413,12 @@ p {
     color: #000000;
     width: 120px;
     padding-top: 6px;
+}
+.deal_regist_name {
+    font: normal normal normal 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #000000;
+    width: 120px;
 }
 .danka_regist_name2 {
     font: normal normal normal 14px/21px sans-serif;
@@ -603,6 +649,10 @@ p {
     display: flex;
     width: 50%;
 }
+.item_view_column {
+    display: flex;
+    width: 65%;
+}
 .family_view_item {
     width:25%;
 }
@@ -638,6 +688,16 @@ p {
     font: normal normal normal 14px/21px sans-serif;
     margin-right:10px;
 }
+.item_name_text {
+    width:200px;
+    padding:5px 15px;
+    font: normal normal normal 14px/21px sans-serif;
+    margin-right:10px;
+}
+.item_btn_list {
+    width: 200px;
+    display: flex;
+}
 .add_btn_a {
     background: #2963AB 0% 0% no-repeat padding-box;
     border-radius: 4px;
@@ -650,6 +710,20 @@ p {
     line-height: 26px;
     width: 100px;
     height: 36px;
+}
+.edit_btn_a {
+    background: #A84FEB 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    text-align: center;
+    font: normal normal normal 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    display: block;
+    padding: 5px;
+    line-height: 16px;
+    width: 80px;
+    height: 24px;
+    margin: 0 10px;
 }
 .delete_btn_a {
     background: #A62E2E 0% 0% no-repeat padding-box;
@@ -836,7 +910,7 @@ p {
     color: #A62E2E;
 }
 
-#id_error, #password_error, #name_error, #max_error, #place_error, #tel_error, #name_kana_error {
+#id_error, #password_error, #name_error, #max_error, #place_error, #tel_error, #name_kana_error, #detail_error, #price_error {
     display: none;
 }
 
