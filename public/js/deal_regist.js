@@ -56,6 +56,9 @@ function clickAddButton() {
 
   var clone = $('#item-1').clone(true);
   clone.find('input[type="text"]').val('');
+  clone.find('select[name="item_id[]"]').val('1');
+  clone.find('select[name="quantity[]"]').val('1');
+  clone.find('select[name="zokumyo[]"]').val('');
 
 
   clone.attr('id', id_val);

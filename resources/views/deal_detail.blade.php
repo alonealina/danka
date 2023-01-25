@@ -23,7 +23,7 @@
             </div>
             <div class="danka_column">
                 <div class="deal_regist_name">決済方法</div>
-                {{ $payment_method }}{{ Form::hidden('payment_method', $payment_method) }}
+                {{ $deal->payment_method }}
             </div>
         </div>
         <div class="danka_form_div">
@@ -57,15 +57,15 @@
         <div id="item_form" class="danka_family_content" style="height: 300px;">
             @foreach ($item_list as $item)
             <div id="item-1" class="deal_item_column">
-                <div class="deal_item_detail">{{ $item['item_name'] }}{{ Form::hidden('item_id[]', $item['item_id']) }}</div>
-                <div class="deal_item_num">{{ $item['quantity'] }}{{ Form::hidden('quantity[]', $item['quantity']) }}</div>
-                <div class="deal_item_price">{{ number_format($item['price']) }}{{ Form::hidden('price[]', $item['price']) }}</div>
+                <div class="deal_item_detail">{{ $item['item_name'] }}</div>
+                <div class="deal_item_num">{{ $item['quantity'] }}</div>
+                <div class="deal_item_price">{{ number_format($item['price']) }}</div>
                 <div class="deal_item_price">{{ number_format($item['total']) }}</div>
-                <div class="deal_item_zokumyo">{{ $item['zokumyo'] }}{{ Form::hidden('hikuyousya_id[]', $item['hikuyousya_id']) }}</div>
-                <div class="deal_item_zokumyo">{{ $item['kaimyo'] }}{{ Form::hidden('remark[]', $item['remark']) }}</div>
+                <div class="deal_item_zokumyo">{{ $item['zokumyo'] }}</div>
+                <div class="deal_item_zokumyo">{{ $item['kaimyo'] }}</div>
                 <div class="deal_item_date">{{ $item['meinichi'] }}</div>
                 <div class="deal_item_kaiki">{{ $item['gyonen'] }}</div>
-                <div class="deal_item_kaiki">@if($item['kaiki'] <= 0) 1 @else {{ $item['kaiki'] + 2 }} @endif</div>
+                <div class="deal_item_kaiki">@if($item['kaiki'] == 'なし') なし @elseif($item['kaiki'] <= 0) 1 @else {{ $item['kaiki'] + 2 }} @endif</div>
             </div>
             <div id="item-1" class="deal_item_column">
                 　備考：{{ $item['remark'] }}
@@ -81,7 +81,11 @@
         </div>
     </div>
 
-    <a href="#!" onclick="clickTextStoreButton()" class="text_store_btn_a">作成</a>
+    <div class="search_btn_list">
+        <a href="{{ route('deal_edit', $deal->id) }}" class="text_store_btn_a" style="margin:0 10px;">編集</a>
+        <a href="{{ route('deal_delete', $deal->id) }}" onclick="return confirm('本当に削除しますか？')" class="text_delete_btn_a" style="margin:0 10px;">削除</a>
+
+    </div>
 
 </form>
 <script src="{{ asset('js/deal_regist.js') }}"></script>

@@ -3,9 +3,10 @@
 @section('content')
 <div class="content_title">取引確認</div>
 <div class="admin_list_message">{{ session('message') }}</div>
-<form id="admin_store_form" name="danka_store_form" action="{{ route('deal_store') }}" method="post">
+<form id="admin_store_form" name="danka_store_form" action="{{ route('deal_update') }}" method="post">
 @csrf
-{{ Form::hidden('danka_id', $danka->id) }}
+{{ Form::hidden('deal_id', $deal_id) }}
+
     <div class="danka_regist_div">
         <div class="danka_form_div">
             <div class="danka_column">
@@ -23,7 +24,7 @@
             </div>
             <div class="danka_column">
                 <div class="deal_regist_name">決済方法</div>
-                {{ $payment_method }}{{ Form::hidden('payment_method', $payment_method) }}
+                {{ $payment_method }}
             </div>
         </div>
         <div class="danka_form_div">
@@ -56,6 +57,8 @@
         </div>
         <div id="item_form" class="danka_family_content" style="height: 300px;">
             @foreach ($item_list as $item)
+            {{ Form::hidden('state[]', $item['state']) }}
+            {{ Form::hidden('payment_date[]', $item['payment_date']) }}
             <div id="item-1" class="deal_item_column">
                 <div class="deal_item_detail">{{ $item['item_name'] }}{{ Form::hidden('item_id[]', $item['item_id']) }}</div>
                 <div class="deal_item_num">{{ $item['quantity'] }}{{ Form::hidden('quantity[]', $item['quantity']) }}</div>

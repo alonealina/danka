@@ -194,7 +194,9 @@ class PaymentController extends Controller
         for ($i = 0; $i < count($item_id); $i++) {
             $item = Item::select('name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')->where('item.id', $item_id[$i])->first();
             if (isset($zokumyo_id[$i])) {
-                $hikuyousya = Hikuyousya::where('id', $zokumyo_id[$i])->first();
+                $hikuyousya = Hikuyousya::select('*')->selectRaw("
+                TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
+                ")->where('id', $zokumyo_id[$i])->first();
             }
             $item_list[] = [
                 'item_id' => $item_id[$i],
@@ -205,6 +207,9 @@ class PaymentController extends Controller
                 'total' => isset($price[$i]) ? $price[$i] * $quantity[$i] : $item->price * $quantity[$i],
                 'zokumyo' => isset($zokumyo_id[$i]) ? $hikuyousya->common_name : 'なし',
                 'kaimyo' => isset($zokumyo_id[$i]) ? $hikuyousya->posthumous : 'なし',
+                'meinichi' => isset($zokumyo_id[$i]) ? $hikuyousya->meinichi : 'なし',
+                'gyonen' => isset($zokumyo_id[$i]) ? $hikuyousya->gyonen : 'なし',
+                'kaiki' => isset($zokumyo_id[$i]) ? $hikuyousya->kaiki : 'なし',
                 'remark' => isset($remark[$i]) ? $remark[$i] : '',
             ];
         }
@@ -216,6 +221,122 @@ class PaymentController extends Controller
 
         return view('deal_confirm', [
             'danka' => $danka,
+            'payment_method' => $payment_method,
+            'item_list' => $item_list,
+            'total' => $total,
+        ]);
+    }
+
+    public function deal_detail($id)
+    {
+        $deal = Deal::find($id);
+        $danka = Danka::find($deal->danka_id);
+        $deal_detail_list = DealDetail::where('deal_id', $id)->get();
+
+        $item_list = [];
+        foreach ($deal_detail_list as $deal_detail) {
+            $item = Item::select('name', 'detail')->join('item_category', 'item_category.id', '=', 'item.category_id')
+                ->where('item.id', $deal_detail->item_id)->first();
+            if ($deal_detail->hikuyousya_id != 0) {
+                $hikuyousya = Hikuyousya::select('*')->selectRaw("
+                TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
+                ")->where('id', $deal_detail->hikuyousya_id)->first();
+            }
+            $item_list[] = [
+                'item_name' => $item->name . '：'. $item->detail,
+                'quantity' => $deal_detail->quantity,
+                'price' => $deal_detail->price,
+                'total' => $deal_detail->total,
+                'zokumyo' => $deal_detail->hikuyousya_id != 0 ? $hikuyousya->common_name : 'なし',
+                'kaimyo' => $deal_detail->hikuyousya_id != 0 ? $hikuyousya->posthumous : 'なし',
+                'meinichi' => $deal_detail->hikuyousya_id != 0 ? $hikuyousya->meinichi : 'なし',
+                'gyonen' => $deal_detail->hikuyousya_id != 0 ? $hikuyousya->gyonen : 'なし',
+                'kaiki' => $deal_detail->hikuyousya_id != 0 ? $hikuyousya->kaiki : 'なし',
+                'remark' => $deal_detail->remark,
+            ];
+        }
+
+        $total = 0;
+        foreach ($item_list as $item) {
+            $total += $item['total'];
+        }
+
+        return view('deal_detail', [
+            'deal' => $deal,
+            'danka' => $danka,
+            'item_list' => $item_list,
+            'total' => $total,
+        ]);
+    }
+
+    public function deal_edit($id)
+    {
+        $item_list = Item::select('item.id as id', 'name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')->orderBy('item_category.id')->get();
+
+        $deal = Deal::find($id);
+        $danka = Danka::find($deal->danka_id);
+        $deal_detail_list = DealDetail::where('deal_id', $id)->get();
+        $hikuyousya_list = Hikuyousya::where('danka_id', $deal->danka_id)->get();
+
+        return view('deal_edit', [
+            'deal' => $deal,
+            'danka' => $danka,
+            'item_list' => $item_list,
+            'deal_detail_list' => $deal_detail_list,
+            'hikuyousya_list' => $hikuyousya_list,
+            'payment_method' => $deal->payment_method,
+        ]);
+    }
+
+    public function deal_edit_confirm(Request $request)
+    {
+        $request = $request->all();
+        $danka_id = $request['danka_id'];
+        $deal_id = $request['deal_id'];
+        $payment_method = $request['payment_method'];
+        $item_id = $request['item_id'];
+        $quantity = $request['quantity'];
+        $price = $request['price'];
+        $zokumyo_id = $request['zokumyo'];
+        $remark = $request['remark'];
+        $state = $request['state'];
+        $payment_date = $request['payment_date'];
+
+        $danka = Danka::find($danka_id);
+        $item_list = [];
+        for ($i = 0; $i < count($item_id); $i++) {
+            $item = Item::select('name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')->where('item.id', $item_id[$i])->first();
+            if (isset($zokumyo_id[$i])) {
+                $hikuyousya = Hikuyousya::select('*')->selectRaw("
+                TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
+                ")->where('id', $zokumyo_id[$i])->first();
+            }
+            $item_list[] = [
+                'item_id' => $item_id[$i],
+                'hikuyousya_id' => $zokumyo_id[$i],
+                'item_name' => $item->name . '：'. $item->detail,
+                'quantity' => $quantity[$i],
+                'price' => isset($price[$i]) ? $price[$i] : $item->price,
+                'total' => isset($price[$i]) ? $price[$i] * $quantity[$i] : $item->price * $quantity[$i],
+                'zokumyo' => isset($zokumyo_id[$i]) ? $hikuyousya->common_name : 'なし',
+                'kaimyo' => isset($zokumyo_id[$i]) ? $hikuyousya->posthumous : 'なし',
+                'meinichi' => isset($zokumyo_id[$i]) ? $hikuyousya->meinichi : 'なし',
+                'gyonen' => isset($zokumyo_id[$i]) ? $hikuyousya->gyonen : 'なし',
+                'kaiki' => isset($zokumyo_id[$i]) ? $hikuyousya->kaiki : 'なし',
+                'remark' => isset($remark[$i]) ? $remark[$i] : '',
+                'state' => $state[$i],
+                'payment_date' => isset($payment_date[$i]) ? $payment_date[$i] : null,
+            ];
+        }
+
+        $total = 0;
+        foreach ($item_list as $item) {
+            $total += $item['total'];
+        }
+
+        return view('deal_edit_confirm', [
+            'danka' => $danka,
+            'deal_id' => $deal_id,
             'payment_method' => $payment_method,
             'item_list' => $item_list,
             'total' => $total,
@@ -255,7 +376,42 @@ class PaymentController extends Controller
             }
 
             DB::commit();
-            return redirect()->to('item_list')->with('message', '取引の作成が完了いたしました');
+            return redirect()->to('deal_list')->with('message', '取引を作成いたしました');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
+    public function deal_update(Request $request)
+    {
+        $request = $request->all();
+        $deal_id = $request['deal_id'];
+
+        DB::beginTransaction();
+        try {
+            DealDetail::where('deal_id', $deal_id)->delete();
+
+            $item_len = count($request['item_id']);
+            for ($i = 0; $i < $item_len; $i++) {
+                $fill_data = [
+                    'deal_id' => $deal_id,
+                    'item_id' => $request['item_id'][$i],
+                    'quantity' => $request['quantity'][$i],
+                    'price' => $request['price'][$i],
+                    'total' => $request['quantity'][$i] * $request['price'][$i],
+                    'hikuyousya_id' => isset($request['hikuyousya_id'][$i]) ? $request['hikuyousya_id'][$i] : '0',
+                    'remark' => isset($request['remark'][$i]) ? $request['remark'][$i] : '',
+                    'state' => $request['state'][$i],
+                    'payment_date' => isset($request['payment_date'][$i]) ? $request['payment_date'][$i] : null,
+    
+                ];
+
+                $deal_detail = new DealDetail();
+                $deal_detail->fill($fill_data)->save();
+            }
+
+            DB::commit();
+            return redirect()->to('deal_list')->with('message', '取引の更新が完了いたしました');
         } catch (\Exception $e) {
             DB::rollback();
         }
@@ -336,6 +492,19 @@ class PaymentController extends Controller
             
             DB::commit();
             return redirect()->route('item_list')->with('message', '商品の編集が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
+    public function deal_delete($id)
+    {
+        DB::beginTransaction();
+        try {
+            Deal::where('id', $id)->delete();
+            DealDetail::where('deal_id', $id)->delete();
+            DB::commit();
+            return redirect()->route('deal_list')->with('message', '取引を削除しました');
         } catch (\Exception $e) {
             DB::rollback();
         }

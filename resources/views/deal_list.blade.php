@@ -60,6 +60,8 @@
         </div>
     </div>
 
+    <div class="category_list_message">{{ session('message') }}</div>
+    
     <div class="paginationWrap">
         <div class="pagination_div">
             @include('item.deal_type')
@@ -98,10 +100,10 @@
                 @if ($deal->state == "未払い")
                 <a href="{{ route('unclaimed_update', $deal->deal_detail_id) }}" class="payment_white_btn_a">送付待ちへ</a>
                 <a href="{{ route('paid_update', $deal->deal_detail_id) }}" class="payment_blue_btn_a">支払済へ</a>
-                <a href="{{ route('danka_detail', $deal->id) }}" class="payment_view_btn_a">表示</a>
+                <a href="{{ route('deal_detail', $deal->id) }}" class="payment_view_btn_a">表示</a>
                 @else
                 <a href="{{ route('unpaid_update', $deal->deal_detail_id) }}" class="payment_red_btn_a">未払いへ</a>
-                <a href="{{ route('danka_detail', $deal->id) }}" class="payment_view_btn_a">表示</a>
+                <a href="{{ route('deal_detail', $deal->id) }}" class="payment_view_btn_a">表示</a>
                 @endif
             </div>
         </div>

@@ -76,6 +76,13 @@ Route::get('deal_list', [PaymentController::class, 'deal_list'])->name('deal_lis
 Route::get('unclaimed_update/{id}', [PaymentController::class, 'unclaimed_update'])->name('unclaimed_update');
 Route::get('unpaid_update/{id}', [PaymentController::class, 'unpaid_update'])->name('unpaid_update');
 Route::get('paid_update/{id}', [PaymentController::class, 'paid_update'])->name('paid_update');
+Route::get('deal_detail/{id}', [PaymentController::class, 'deal_detail'])->name('deal_detail');
+Route::get('deal_edit/{id}', [PaymentController::class, 'deal_edit'])->name('deal_edit');
+Route::post('deal_edit_confirm', [PaymentController::class, 'deal_edit_confirm'])->name('deal_edit_confirm');
+Route::post('deal_update', [PaymentController::class, 'deal_update'])->name('deal_update');
+Route::get('deal_delete/{id}', [PaymentController::class, 'deal_delete'])->name('deal_delete');
+
+
 
 Route::get('deal_regist', [PaymentController::class, 'deal_regist'])->name('deal_regist');
 Route::post('deal_confirm', [PaymentController::class, 'deal_confirm'])->name('deal_confirm');
