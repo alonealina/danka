@@ -51,12 +51,13 @@
             <div class="deal_item_price">単価</div>
             <div class="deal_item_zokumyo">俗名</div>
             <div class="deal_item_remark">備考</div>
+            <div class="dummy_minus_btn_div"></div>
         </div>
         <div id="item_form" class="danka_family_content" style="height: 300px;">
             @foreach($deal_detail_list as $deal_detail)
             {{ Form::hidden('state[]', $deal_detail->state) }}
             {{ Form::hidden('payment_date[]', $deal_detail->payment_date) }}
-            <div id="item-1" class="deal_item_column">
+            <div id="item-{{ $deal_detail->id }}" class="deal_item_column">
                 <div class="deal_item_detail">
                     <select name="item_id[]" class="select_category select_item" style="width: 100%;">
                     @foreach ($item_list as $item)
@@ -88,6 +89,7 @@
                 <div class="deal_item_remark">
                     {{ Form::text('remark[]', $deal_detail->remark, ['id' => 'remark', 'class' => 'danka_form_text2', 'maxlength' => 100, 'placeholder' => '', 'style' => 'width:100%']) }}
                 </div>
+                <a href="#!" class="item_add_btn minus_btn">―</a>
             </div>
             @endforeach
         </div>
@@ -101,7 +103,7 @@
     <a href="#!" onclick="clickTextStoreButton()" class="text_store_btn_a">確認画面へ</a>
 
 </form>
-<script src="{{ asset('js/deal_regist.js') }}"></script>
+<script src="{{ asset('js/deal_update.js') }}"></script>
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 @endsection
 

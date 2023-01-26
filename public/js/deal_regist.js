@@ -51,15 +51,32 @@ window.addEventListener('DOMContentLoaded',function(){
 });
 
 function clickAddButton() {
-  var cnt = $(".deal_item_column").length + 1;
-  var id_val = 'item-' + cnt;
+
+  var max_id = 0;
+  let item_array = document.querySelectorAll("[id^='item-']");
+  item_array.forEach(item => {
+    var item_id = Number(item.id.replace('item-', ''));
+    if (max_id < item_id) {
+      max_id = item_id;
+    }
+  });
+  next_id = max_id + 1;
+
+  var id_val = 'item-' + next_id;
 
   var clone = $('#item-1').clone(true);
   clone.find('input[type="text"]').val('');
   clone.find('select[name="item_id[]"]').val('1');
   clone.find('select[name="quantity[]"]').val('1');
   clone.find('select[name="zokumyo[]"]').val('');
+  clone.find('.dummy_minus_btn_div').remove();
 
+  var newElement = document.createElement("a"); // p要素作成
+  var newContent = document.createTextNode("―"); // テキストノードを作成
+  newElement.appendChild(newContent); // p要素にテキストノードを追加
+  newElement.setAttribute("href","#!"); // p要素にidを設定
+  newElement.setAttribute("class","item_add_btn minus_btn"); // p要素にidを設定
+  clone.append(newElement);
 
   clone.attr('id', id_val);
 
@@ -70,4 +87,13 @@ function clickAddButton() {
 
 function clickTextStoreButton() {
   document.forms.danka_store_form.submit();
-}
+};
+
+window.addEventListener('DOMContentLoaded', function() {
+  $('#item_form').on('click','.minus_btn',function() {
+    let id = $(this).parent().attr('id');
+    var cnt = $(".minus_btn").length;
+    document.getElementById(id).remove();
+  });
+});
+

@@ -54,6 +54,7 @@
             <div class="deal_item_price">単価</div>
             <div class="deal_item_zokumyo">俗名</div>
             <div class="deal_item_remark">備考</div>
+            <div class="dummy_minus_btn_div"></div>
         </div>
         <div id="item_form" class="danka_family_content" style="height: 300px;">
             <div id="item-1" class="deal_item_column">
@@ -87,6 +88,7 @@
                 <div class="deal_item_remark">
                     {{ Form::text('remark[]', old('remark'), ['id' => 'remark', 'class' => 'danka_form_text2', 'maxlength' => 100, 'placeholder' => '', 'style' => 'width:100%']) }}
                 </div>
+                <div class="dummy_minus_btn_div"></div>
             </div>
         </div>
         <div class="item_other">

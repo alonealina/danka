@@ -359,6 +359,12 @@ p {
     color: #fff;
     padding: 5px;
 }
+#item-1 .minus_btn {
+    display: none;
+}
+.dummy_minus_btn_div {
+    width:30px;
+}
 
 .item_add_btn {
     background: #707070;
