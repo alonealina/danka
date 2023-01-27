@@ -731,6 +731,8 @@ p {
 }
 .danka_payment_price {
     width:12%;
+    padding-right: 10px;
+    text-align: right;
 }
 .payment_id {
     width:12%;
