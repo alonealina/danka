@@ -63,6 +63,7 @@ Route::get('db_test', [DankaController::class, 'db_test'])->name('db_test');
 Route::get('event_list', [EventController::class, 'event_list'])->name('event_list');
 Route::get('event_show/{id}', [EventController::class, 'event_show'])->name('event_show');
 Route::get('event_regist/{id}', [EventController::class, 'event_regist'])->name('event_regist');
+Route::post('event_regist_search', [EventController::class, 'event_regist_search'])->name('event_regist_search');
 Route::post('event_store', [EventController::class, 'event_store'])->name('event_store');
 Route::get('event_book_show/{id}', [EventController::class, 'event_book_show'])->name('event_book_show');
 Route::get('event_book_regist/{id}', [EventController::class, 'event_book_regist'])->name('event_book_regist');

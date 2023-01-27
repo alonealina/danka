@@ -873,6 +873,19 @@ p {
     width: 80px;
     height: 24px;
 }
+.delete_btn_100 {
+    background: #A62E2E 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+    text-align: center;
+    font: normal normal normal 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    display: block;
+    padding: 5px;
+    line-height: 26px;
+    width: 100px;
+    height: 36px;
+}
 .gray_btn_a {
     background: #707070 0% 0% no-repeat padding-box;
     border-radius: 4px;
@@ -896,6 +909,19 @@ p {
     display: block;
     padding:5px 20px;
     line-height: 26px;
+}
+.view_btn_100 {
+    background: #A84FEB;
+    border-radius: 4px;
+    text-align: center;
+    font: normal normal normal 14px/21px sans-serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    display: block;
+    padding: 5px;
+    line-height: 26px;
+    width: 100px;
+    height: 36px;
 }
 
 .category_list_header {
@@ -1082,7 +1108,10 @@ p {
     font-weight: bold;
 }
 
-
+.event_view_column {
+    display: flex;
+    width: 50%;
+}
 .event_btn_list {
     display: flex;
     justify-content: space-between;
