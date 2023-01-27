@@ -716,6 +716,12 @@ p {
     justify-content: space-between;
     border-bottom: solid 1px;
     height: 28px;
+    margin-top:10px;
+}
+.payment_flex_list {
+    display:flex;
+    justify-content:space-between;
+    flex-wrap: wrap;
 }
 .danka_payment_date {
     width:15%;

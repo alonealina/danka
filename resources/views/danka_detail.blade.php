@@ -169,16 +169,18 @@
                     <div class="danka_payment_price">金額</div>
                 </div>
             </div>
-            <div class="search_result_div" style="height: 240px; padding-left:20px; display:flex; justify-content:space-between;">
-                @foreach ($payment_list as $payment)
-                <div class="payment_view_column">
-                    <div class="danka_payment_date">{{ $payment->created_at->format('Y-m-d') }}</div>
-                    <div class="danka_payment_date">{{ $payment->payment_date }}</div>
-                    <div class="danka_payment_other">{{ $payment->name }}</div>
-                    <div class="danka_payment_other">{{ $payment->detail }}</div>
-                    <div class="danka_payment_price">{{ number_format($payment->total) }}</div>
+            <div class="search_result_div" style="height: 223px; padding-left:20px; ">
+                <div class="payment_flex_list">
+                    @foreach ($payment_list as $payment)
+                    <div class="payment_view_column">
+                        <div class="danka_payment_date">{{ $payment->created_at->format('Y-m-d') }}</div>
+                        <div class="danka_payment_date">{{ $payment->payment_date }}</div>
+                        <div class="danka_payment_other">{{ $payment->name }}</div>
+                        <div class="danka_payment_other">{{ $payment->detail }}</div>
+                        <div class="danka_payment_price">{{ number_format($payment->total) }}</div>
+                    </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
 
 
