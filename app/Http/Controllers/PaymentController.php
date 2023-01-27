@@ -82,10 +82,10 @@ class PaymentController extends Controller
 
         $number = \Request::get('number');
         if (isset($number)) {
-            $deal_list = $query->orderBy('deal.id')->paginate($number)
+            $deal_list = $query->orderBy('deal.id')->orderBy('deal_detail.id')->paginate($number)
             ->appends(["number" => $number]);
         } else {
-            $deal_list = $query->orderBy('deal.id')->paginate(10);
+            $deal_list = $query->orderBy('deal.id')->orderBy('deal_detail.id')->paginate(10);
         }
 
         $item_list = Item::select('item.id as id', 'name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')->orderBy('item_category.id')->get();
@@ -324,7 +324,7 @@ class PaymentController extends Controller
                 'gyonen' => isset($zokumyo_id[$i]) ? $hikuyousya->gyonen : 'なし',
                 'kaiki' => isset($zokumyo_id[$i]) ? $hikuyousya->kaiki : 'なし',
                 'remark' => isset($remark[$i]) ? $remark[$i] : '',
-                'state' => $state[$i],
+                'state' => isset($state[$i]) ? $state[$i] : '未払い',
                 'payment_date' => isset($payment_date[$i]) ? $payment_date[$i] : null,
             ];
         }
@@ -401,7 +401,7 @@ class PaymentController extends Controller
                     'total' => $request['quantity'][$i] * $request['price'][$i],
                     'hikuyousya_id' => isset($request['hikuyousya_id'][$i]) ? $request['hikuyousya_id'][$i] : '0',
                     'remark' => isset($request['remark'][$i]) ? $request['remark'][$i] : '',
-                    'state' => $request['state'][$i],
+                    'state' => isset($request['state'][$i]) ? $request['state'][$i] : null,
                     'payment_date' => isset($request['payment_date'][$i]) ? $request['payment_date'][$i] : null,
     
                 ];

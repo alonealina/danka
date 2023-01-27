@@ -7,7 +7,7 @@
 
     <div class="category_list_header">行事名</div>
     <div class="category_list_message">{{ session('message') }}</div>
-    <div class="category_list">
+    <div class="category_list" style="height: calc(100vh - 350px);">
         @foreach($text_categories as $category)
         <div class="text_list_column">
             <div class="">{{ $category->name }}</div>

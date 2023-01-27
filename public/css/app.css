@@ -710,6 +710,22 @@ p {
     padding-left: 20px;
     padding-right: 10px;
 }
+.payment_view_column {
+    width:47%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 1px;
+    height: 28px;
+}
+.danka_payment_date {
+    width:15%;
+}
+.danka_payment_other {
+    width:25%;
+}
+.danka_payment_price {
+    width:12%;
+}
 .payment_id {
     width:12%;
 }

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Danka;
 use App\Models\Hikuyousya;
 use App\Models\Family;
-use App\Models\TextCategory;
+use App\Models\DealDetail;
 use App\Models\DankaDate;
 use App\Models\DankaBook;
 use App\Rules\TextCategoryCheck;
@@ -601,11 +601,16 @@ class DankaController extends Controller
         $danka = Danka::find($id);
         $hikuyousya_list = Hikuyousya::where('danka_id', $id)->get();
         $family_list = Family::where('danka_id', $id)->get();
+        $payment_list = DealDetail::select('deal.created_at as created_at', 'payment_date', 'detail', 'item_category.name as name', 'total')
+        ->join('deal', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id')
+        ->join('item_category', 'item.category_id', '=', 'item_category.id')->where('danka_id', $id)->where('state', '支払済')->orderBy('payment_date', 'desc')->get();
+
 
         return view('danka_detail', [
             'danka' => $danka,
             'hikuyousya_list' => $hikuyousya_list,
             'family_list' => $family_list,
+            'payment_list' => $payment_list,
         ]);
     }
 
