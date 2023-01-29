@@ -26,7 +26,7 @@ class EventController extends Controller
     public function event_show($category_id)
     {
         $category = TextCategory::find($category_id);
-        $event_dates = DB::select('SELECT event_date.id as id, event_date.created_at as created_at, name, date_id_count
+        $event_dates = DB::select('SELECT event_date.id as id, event_date.created_at as created_at, name, danka_count
         FROM event_date
         LEFT JOIN (
         SELECT date_id , COUNT(date_id) AS date_id_count
@@ -70,7 +70,7 @@ class EventController extends Controller
         $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
 
         $category_id = $filter_array['category_id'];
-        $event_name = $filter_array['name'];
+        $event_name = $filter_array['event_name'];
         $category_name = TextCategory::find($category_id)->name;
 
         $item_categories = ItemCategory::get();
@@ -79,6 +79,38 @@ class EventController extends Controller
         TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
         ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
+
+
+
+
+        if (!empty($meinichi_before)) {
+            $query->whereDate('meinichi', '>=', $meinichi_before);
+        }
+        if (!empty($meinichi_after)) {
+            $query->whereDate('meinichi', '<=', $meinichi_after);
+        }
+
+        if (isset($segaki_flg)) {
+            $query->where('segaki_flg', '1');
+        }
+
+        if (isset($star_flg)) {
+            $query->where('star_flg', '1');
+        }
+
+        if (isset($yakushiji_flg)) {
+            $query->where('yakushiji_flg', '1');
+        }
+
+        if (!empty($kaiki_before)) {
+            $kaiki_before_tmp = $kaiki_before == 1 ? 0 : $kaiki_before - 2;
+            $query->having('kaiki', '>=', $kaiki_before_tmp);
+        }
+        if (!empty($kaiki_after)) {
+            $kaiki_after_tmp = $kaiki_after == 1 ? 0 : $kaiki_after - 2;
+            $query->having('kaiki', '<=', $kaiki_after_tmp);
+        }
+
         $ids = $query->get()->pluck('id');
         $query = Danka::select('danka.id as id', 'danka.name as name', 'common_name', 
             'posthumous', 'meinichi')
@@ -86,6 +118,7 @@ class EventController extends Controller
             ->selectRaw("MAX(payment_date) AS payment_date")
         ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->leftJoin('deal_detail', 'hikuyousya.id', '=', 'hikuyousya_id')
         ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id')
+        // ->where('item_id', '1')
         ->groupBy('danka.id', 'hikuyousya.id', 'danka.name', 'common_name', 'posthumous', 'meinichi')->whereIn('hikuyousya.id', $ids);
 
         $number = \Request::get('number');
@@ -96,7 +129,7 @@ class EventController extends Controller
             $danka_list = $query->orderBy('danka_id')->paginate(10);
         }
 
-
+        $danka_count = count($danka_list);
 
         return view('event_regist_search', [
             'category_id' => $category_id,
@@ -118,6 +151,7 @@ class EventController extends Controller
             'item_categories' => $item_categories,
             'item_category_id' => $item_category_id,
             'danka_list' => $danka_list,
+            'danka_count' => $danka_count,
 
         ]);
     }
@@ -129,16 +163,15 @@ class EventController extends Controller
         $request = $request->all();
         $fill_data = [
             'category_id' => $request['category_id'],
-            'date' => $request['date'],
-            'place' => $request['place'],
-            'max' => $request['max'],
+            'name' => $request['event_name'],
+            'danka_count' => $request['danka_count'],
         ];
 
         DB::beginTransaction();
         try {
             $event_date->fill($fill_data)->save();
             DB::commit();
-            return redirect()->route('event_show', $request['category_id'])->with('message', '行事予定日の登録が完了いたしました。');
+            return redirect()->route('event_show', $request['category_id'])->with('message', '行事の登録が完了いたしました。');
         } catch (\Exception $e) {
             DB::rollback();
         }

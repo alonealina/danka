@@ -9,7 +9,7 @@
     {{ Form::hidden('category_id', $category->id) }}
         <div class="flex_column">
             <div class="regist_item_name">行事名</div>
-            {{ Form::text('name', old('name'), ['class' => 'regist_form_text place_text', 'maxlength' => 30, 'placeholder' => '']) }}
+            {{ Form::text('event_name', old('event_name'), ['class' => 'regist_form_text place_text', 'maxlength' => 30, 'placeholder' => '']) }}
         </div>
 
 

@@ -19,8 +19,8 @@
         <div class="payment_list_column">
             <div class="event_view_column">
                 <div class="family_view_item">{{ $event_date->name }}</div>
-                <div class="family_view_item">{{ $event_date->name }}</div>
-                <div class="family_view_item">{{ $event_date->name }}</div>
+                <div class="family_view_item">{{ $event_date->created_at }}</div>
+                <div class="family_view_item">{{ $event_date->danka_count }}</div>
             </div>
             <div class="event_btn_list">
                 <a href="{{ route('item_edit', $event_date->id) }}" class="gray_btn_a">発送待ち</a>
