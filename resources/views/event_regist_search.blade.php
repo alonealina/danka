@@ -13,8 +13,13 @@
     <div class="danka_form_div">
         <div class="danka_column">
             <div class="danka_regist_name">命日</div>
-            {{ Form::date('meinichi_before', $meinichi_before, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
-            {{ Form::date('meinichi_after', $meinichi_after, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}
+            <select name="meinichi_month" class="select_category" style="width: 50px;">
+                <option value="">----</option>
+                @for ($i = 1; $i <= 12; $i++)
+                <option value="{{ $i }}" @if($meinichi_month == $i) selected @endif >{{ $i }}</option>
+                @endfor
+            </select>
+            <div class="yen_text"> 月</div>
         </div>
 
         <div class="danka_column">

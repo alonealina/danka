@@ -54,8 +54,7 @@ class EventController extends Controller
     public function event_regist_search(Request $request)
     {
         $filter_array = $request->all();
-        $meinichi_before = isset($filter_array['meinichi_before']) ? $filter_array['meinichi_before'] : null;
-        $meinichi_after = isset($filter_array['meinichi_after']) ? $filter_array['meinichi_after'] : null;
+        $meinichi_month = isset($filter_array['meinichi_month']) ? $filter_array['meinichi_month'] : null;
         $kaiki_before = isset($filter_array['kaiki_before']) ? $filter_array['kaiki_before'] : null;
         $kaiki_after = isset($filter_array['kaiki_after']) ? $filter_array['kaiki_after'] : null;
         $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;
@@ -83,12 +82,20 @@ class EventController extends Controller
 
 
 
-        if (!empty($meinichi_before)) {
-            $query->whereDate('meinichi', '>=', $meinichi_before);
+        // if (!empty($meinichi_before)) {
+        //     $query->whereDate('meinichi', '>=', $meinichi_before);
+        // }
+        // if (!empty($meinichi_after)) {
+        //     $query->whereDate('meinichi', '<=', $meinichi_after);
+        // }
+
+        if (isset($meinichi_month)) {
+            $meinichi_month = str_pad($meinichi_month, 2, 0, STR_PAD_LEFT);
+            $query->whereRaw("DATE_FORMAT(meinichi, '%m') = ?", [$meinichi_month]);
         }
-        if (!empty($meinichi_after)) {
-            $query->whereDate('meinichi', '<=', $meinichi_after);
-        }
+
+
+
 
         if (isset($segaki_flg)) {
             $query->where('segaki_flg', '1');
@@ -135,8 +142,7 @@ class EventController extends Controller
             'category_id' => $category_id,
             'event_name' => $event_name,
             'category_name' => $category_name,
-            'meinichi_before' => $meinichi_before,
-            'meinichi_after' => $meinichi_after,
+            'meinichi_month' => $meinichi_month,
             'kaiki_before' => $kaiki_before,
             'kaiki_after' => $kaiki_after,
             'payment_before' => $payment_before,
