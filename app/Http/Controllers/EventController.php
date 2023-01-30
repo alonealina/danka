@@ -79,23 +79,10 @@ class EventController extends Controller
         ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
 
-
-
-
-        // if (!empty($meinichi_before)) {
-        //     $query->whereDate('meinichi', '>=', $meinichi_before);
-        // }
-        // if (!empty($meinichi_after)) {
-        //     $query->whereDate('meinichi', '<=', $meinichi_after);
-        // }
-
         if (isset($meinichi_month)) {
             $meinichi_month = str_pad($meinichi_month, 2, 0, STR_PAD_LEFT);
             $query->whereRaw("DATE_FORMAT(meinichi, '%m') = ?", [$meinichi_month]);
         }
-
-
-
 
         if (isset($segaki_flg)) {
             $query->where('segaki_flg', '1');
@@ -109,6 +96,10 @@ class EventController extends Controller
             $query->where('yakushiji_flg', '1');
         }
 
+        if (isset($kaiki_flg)) {
+            $query->where('kaiki_flg', '1');
+        }
+
         if (!empty($kaiki_before)) {
             $kaiki_before_tmp = $kaiki_before == 1 ? 0 : $kaiki_before - 2;
             $query->having('kaiki', '>=', $kaiki_before_tmp);
@@ -118,15 +109,35 @@ class EventController extends Controller
             $query->having('kaiki', '<=', $kaiki_after_tmp);
         }
 
-        $ids = $query->get()->pluck('id');
+        $hikuyousya_ids = $query->get()->pluck('id');
+
         $query = Danka::select('danka.id as id', 'danka.name as name', 'common_name', 
-            'posthumous', 'meinichi')
+            'posthumous', 'meinichi', 'item_category.name as category_name', 'payment_date', 'hikuyousya.id as hikuyousya_id', 'total')
             ->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
-            ->selectRaw("MAX(payment_date) AS payment_date")
         ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->leftJoin('deal_detail', 'hikuyousya.id', '=', 'hikuyousya_id')
         ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id')
-        // ->where('item_id', '1')
-        ->groupBy('danka.id', 'hikuyousya.id', 'danka.name', 'common_name', 'posthumous', 'meinichi')->whereIn('hikuyousya.id', $ids);
+        ->whereIn('hikuyousya.id', $hikuyousya_ids);
+
+        if (isset($item_category_id)) {
+            $query->where('item.category_id', $item_category_id);
+        }
+
+        if (!empty($payment_before)) {
+            $query->whereDate('payment_date', '>=', $payment_before);
+        }
+        if (!empty($payment_after)) {
+            $query->whereDate('payment_date', '<=', $payment_after);
+        }
+
+        if (!empty($price_min)) {
+            $query->where('total', '>=', $price_min);
+        }
+        if (!empty($price_max)) {
+            $query->where('total', '<=', $price_max);
+        }
+
+        $hikuyousya_ids = $query->pluck('hikuyousya_id');
+        $hikuyousya_count = count(array_unique($hikuyousya_ids->toArray()));
 
         $number = \Request::get('number');
         if (isset($number)) {
@@ -136,7 +147,11 @@ class EventController extends Controller
             $danka_list = $query->orderBy('danka_id')->paginate(10);
         }
 
-        $danka_count = count($danka_list);
+
+        $danka_count = Danka::select('danka_id')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
+        ->whereIn('hikuyousya.id', $hikuyousya_ids)->groupBy('danka_id')->get()->count();
+
+
 
         return view('event_regist_search', [
             'category_id' => $category_id,
@@ -156,9 +171,11 @@ class EventController extends Controller
             'freeword' => $freeword,
             'item_categories' => $item_categories,
             'item_category_id' => $item_category_id,
-            'danka_list' => $danka_list,
+            'hikuyousya_count' => $hikuyousya_count,
             'danka_count' => $danka_count,
+            'number' => $number,
 
+            'danka_list' => $danka_list,
         ]);
     }
 

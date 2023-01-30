@@ -11,6 +11,7 @@
 {{ Form::hidden('danka_count', $danka_count) }}
 <div class="danka_search_div">
     <div class="danka_form_div">
+        @if($category_id == 1)
         <div class="danka_column">
             <div class="danka_regist_name">命日</div>
             <select name="meinichi_month" class="select_category" style="width: 50px;">
@@ -39,7 +40,7 @@
                 @endfor
             </select>
         </div>
-
+        @endif
         <div class="danka_column">
             <input type="checkbox" id="segaki_flg" name="segaki_flg" class="danka_checkbox" value="1"
             @if(isset($segaki_flg)) checked @endif>
@@ -69,8 +70,8 @@
         </div>
 
         <div class="danka_column">
-            <div class="danka_regist_name">商品</div>
-            <select name="area" class="select_category" style="width: 400px" id="area">
+            <div class="danka_regist_name">商品カテゴリー</div>
+            <select name="item_category_id" class="select_category" style="width: 400px" id="">
                 <option value="">----</option>
                 @foreach ($item_categories as $item_category)
                 <option value="{{ $item_category->id }}"
@@ -97,7 +98,8 @@
 <div class="paginationWrap">
     <div class="pagination_div">
         表示件数　
-        {{ $danka_list->total() }}件が該当しました
+        @include('item.event_regist_number')　　
+        {{ $danka_list->total()}}件 （被供養者{{ $hikuyousya_count }}人　施主{{ $danka_count }}人）が該当しました　
         {{ $danka_list->appends(request()->query())->links('pagination::default') }}
 
     </div>
@@ -118,9 +120,9 @@
         <div class="hikuyousya_kaimyo">戒名</div>
         <div class="hikuyousya_date">命日</div>
         <div class="hikuyousya_kaiki">回忌</div>
-        <div class="hikuyousya_date">最終支払日</div>
-        <div class="hikuyousya_date">建立日</div>
-        <div class="hikuyousya_kaimyo">特記事項</div>
+        <div class="hikuyousya_date">支払日</div>
+        <div class="hikuyousya_kaimyo">商品カテゴリー</div>
+        <div class="hikuyousya_date">金額</div>
         <div class="hikuyousya_btn"></div>
     </div>
 
@@ -135,8 +137,8 @@
             <div class="hikuyousya_date">{{ $danka->meinichi }}</div>
             <div class="hikuyousya_kaiki">@if($danka->kaiki <= 0) 1 @else {{ $danka->kaiki + 2 }} @endif</div>
             <div class="hikuyousya_date">{{ $danka->payment_date }}</div>
-            <div class="hikuyousya_date">{{ $danka->konryubi }}</div>
-            <div class="hikuyousya_kaimyo">{{ $danka->column }}</div>
+            <div class="hikuyousya_kaimyo">{{ $danka->category_name }}</div>
+            <div class="hikuyousya_date">@if($danka->total > 0) {{ number_format($danka->total) }} @endif</div>
             <div class="hikuyousya_btn"><a href="" class="search_view_btn_a">表示</a></div>
         </div>
         @endforeach

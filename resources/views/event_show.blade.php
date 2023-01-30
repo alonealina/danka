@@ -19,7 +19,7 @@
         <div class="payment_list_column">
             <div class="event_view_column">
                 <div class="family_view_item">{{ $event_date->name }}</div>
-                <div class="family_view_item">{{ $event_date->created_at }}</div>
+                <div class="family_view_item">{{ substr($event_date->created_at, 0, 10) }}</div>
                 <div class="family_view_item">{{ $event_date->danka_count }}</div>
             </div>
             <div class="event_btn_list">

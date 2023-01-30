@@ -1116,6 +1116,7 @@ p {
     display: flex;
     justify-content: space-between;
     width:320px;
+    margin-right: 10px;
 }
 
 .event_book_flex {
