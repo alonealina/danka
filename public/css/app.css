@@ -578,6 +578,12 @@ p {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.hikuyousya_address {
+    width:18%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .hikuyousya_kaimyo_view {
     width:12%;
 }

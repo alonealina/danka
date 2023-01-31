@@ -44,8 +44,8 @@ class DankaController extends Controller
             'building' => $request['building'],
             'introducer' => $request['introducer'],
             'notices' => $request['notices'],
-            'segaki_flg' => isset($request['segaki_flg']) ? $request['segaki_flg'] : 0,
-            'star_flg' => isset($request['star_flg']) ? $request['star_flg'] : 0,
+            'segaki_flg' => 1,
+            'star_flg' => 1,
             'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
             'yakushiji_flg' => isset($request['yakushiji_flg']) ? $request['yakushiji_flg'] : 0,
         ];
