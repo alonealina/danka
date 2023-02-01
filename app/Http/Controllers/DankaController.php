@@ -486,6 +486,8 @@ class DankaController extends Controller
         $common_kana = isset($filter_array['common_kana']) ? $filter_array['common_kana'] : null;
         $posthumous = isset($filter_array['posthumous']) ? $filter_array['posthumous'] : null;
         $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
+        $nokotsubi_before = isset($filter_array['nokotsubi_before']) ? $filter_array['nokotsubi_before'] : null;
+        $nokotsubi_after = isset($filter_array['nokotsubi_after']) ? $filter_array['nokotsubi_after'] : null;
         $meinichi_before = isset($filter_array['meinichi_before']) ? $filter_array['meinichi_before'] : null;
         $meinichi_after = isset($filter_array['meinichi_after']) ? $filter_array['meinichi_after'] : null;
         $kaiki_before = isset($filter_array['kaiki_before']) ? $filter_array['kaiki_before'] : null;
@@ -549,6 +551,13 @@ class DankaController extends Controller
             });
         }
 
+        if (!empty($nokotsubi_before)) {
+            $query->whereDate('nokotsubi', '>=', $nokotsubi_before);
+        }
+        if (!empty($nokotsubi_after)) {
+            $query->whereDate('nokotsubi', '<=', $nokotsubi_after);
+        }
+
         if (!empty($meinichi_before)) {
             $query->whereDate('meinichi', '>=', $meinichi_before);
         }
@@ -605,6 +614,8 @@ class DankaController extends Controller
             'common_kana' => $common_kana,
             'posthumous' => $posthumous,
             'freeword' => $freeword,
+            'nokotsubi_before' => $nokotsubi_before,
+            'nokotsubi_after' => $nokotsubi_after,
             'meinichi_before' => $meinichi_before,
             'meinichi_after' => $meinichi_after,
             'kaiki_before' => $kaiki_before,
