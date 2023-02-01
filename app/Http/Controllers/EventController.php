@@ -219,25 +219,15 @@ class EventController extends Controller
             ->join('deal', 'danka.id', '=', 'deal.danka_id')->leftJoin('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')
             ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id');
 
-            if (isset($segaki_flg)) {
-                $query->where('segaki_flg', '1');
-            }
-
-            if (isset($star_flg)) {
-                $query->where('star_flg', '1');
-            }
-
-            if (isset($yakushiji_flg)) {
-                $query->where('yakushiji_flg', '1');
-            }
-
             if ($category_id != 3 && isset($item_category_id)) {
                 $query->where('item.category_id', $item_category_id);
             }
 
             //星祭り処理
             if (isset($payment_flg) && $payment_flg == 'off') {
-                $query_tmp = $query;
+                $query_tmp = Danka::select('danka.id as id')
+                    ->join('deal', 'danka.id', '=', 'deal.danka_id')->leftJoin('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')
+                    ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id');
                 if (!empty($payment_before)) {
                     $query_tmp->whereDate('payment_date', '>=', $payment_before);
                 }
@@ -246,6 +236,7 @@ class EventController extends Controller
                 }
                 $query_tmp->where('item.category_id', 3);
                 $not_danka_ids = array_unique($query_tmp->get()->pluck('id')->toArray());
+
                 $query->whereNotIn('danka.id', $not_danka_ids);
             } else {
                 if (!empty($payment_before)) {
@@ -257,6 +248,18 @@ class EventController extends Controller
                 if ($category_id == 3) {
                     $query->where('item.category_id', 3);
                 }
+            }
+
+            if (isset($segaki_flg)) {
+                $query->where('segaki_flg', '1');
+            }
+
+            if (isset($star_flg)) {
+                $query->where('star_flg', '1');
+            }
+
+            if (isset($yakushiji_flg)) {
+                $query->where('yakushiji_flg', '1');
             }
 
             if (!empty($event_date_id)) {

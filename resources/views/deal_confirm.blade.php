@@ -6,13 +6,17 @@
 <form id="admin_store_form" name="danka_store_form" action="{{ route('deal_store') }}" method="post">
 @csrf
 {{ Form::hidden('danka_id', $danka->id) }}
+{{ Form::hidden('deal_no', $deal_no) }}
     <div class="danka_regist_div">
         <div class="danka_form_div">
+            <div class="danka_column">
+                <div class="deal_regist_name">取引番号</div>
+                {{ $deal_no }}
+            </div>
             <div class="danka_column">
                 <div class="deal_regist_name">カルテナンバー</div>
                 {{ $danka->id }}
             </div>
-
             <div class="danka_column">
                 <div class="deal_regist_name">施主名</div>
                 <div class="" id="name">{{ $danka->name }}</div>
@@ -20,10 +24,6 @@
             <div class="danka_column">
                 <div class="deal_regist_name">フリガナ</div>
                 <div class="" id="kana">{{ $danka->name_kana }}</div>
-            </div>
-            <div class="danka_column">
-                <div class="deal_regist_name">決済方法</div>
-                {{ $payment_method }}{{ Form::hidden('payment_method', $payment_method) }}
             </div>
         </div>
         <div class="danka_form_div">
@@ -39,6 +39,11 @@
                 <div class="deal_regist_name">電話番号</div>
                 <div class="" id="tel">{{ $danka->tel }}</div>
             </div>
+            <div class="danka_column">
+                <div class="deal_regist_name">決済方法</div>
+                {{ $payment_method }}{{ Form::hidden('payment_method', $payment_method) }}
+            </div>
+
         </div>
     </div>
 

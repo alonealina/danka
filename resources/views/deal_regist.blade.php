@@ -5,6 +5,7 @@
 <div class="admin_list_message">{{ session('message') }}</div>
 <form id="admin_store_form" name="danka_store_form" action="{{ route('deal_confirm') }}" method="post">
 @csrf
+{{ Form::hidden('deal_no', $next_deal_no) }}
     <div class="danka_regist_div">
         <div class="danka_form_div">
             <div class="danka_column">

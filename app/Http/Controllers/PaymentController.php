@@ -197,6 +197,7 @@ class PaymentController extends Controller
         $price = $request['price'];
         $zokumyo_id = $request['zokumyo'];
         $remark = $request['remark'];
+        $deal_no = $request['deal_no'];
 
         $danka = Danka::find($danka_id);
         $item_list = [];
@@ -233,6 +234,7 @@ class PaymentController extends Controller
             'payment_method' => $payment_method,
             'item_list' => $item_list,
             'total' => $total,
+            'deal_no' => $deal_no,
         ]);
     }
 
@@ -355,6 +357,7 @@ class PaymentController extends Controller
     public function deal_store(Request $request)
     {
         $request = $request->all();
+        $deal_no = $request['deal_no'];
         $danka_id = $request['danka_id'];
         $payment_method = $request['payment_method'];
 
@@ -362,6 +365,7 @@ class PaymentController extends Controller
         try {
             $deal = new Deal();
             $fill_data = [
+                'deal_no' => $deal_no,
                 'danka_id' => $danka_id,
                 'payment_method' => $payment_method,
             ];
