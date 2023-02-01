@@ -8,6 +8,11 @@
     <div class="danka_regist_div">
         <div class="danka_form_div">
             <div class="danka_column">
+                <div class="danka_regist_name">取引番号</div>
+                <div class="">{{ $next_deal_no }}</div>
+            </div>
+
+            <div class="danka_column">
                 <div class="danka_regist_name">カルテナンバー</div>
                 {{ Form::text('danka_id', old('danka_id'), ['id' => 'id_input', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
             </div>
@@ -19,16 +24,6 @@
             <div class="danka_column">
                 <div class="danka_regist_name">フリガナ</div>
                 <div class="" id="kana"></div>
-            </div>
-            <div class="danka_column">
-                <div class="danka_regist_name">決済方法</div>
-                <select name="payment_method" class="select_category">
-                    <option value="現金書留">現金書留</option>
-                    <option value="銀行振込">銀行振込</option>
-                    <option value="クレジット">クレジット</option>
-                    <option value="コード決済">コード決済</option>
-                    <option value="電子決済">電子決済</option>
-                </select>
             </div>
         </div>
         <div class="danka_form_div">
@@ -44,6 +39,17 @@
                 <div class="danka_regist_name">電話番号</div>
                 <div class="" id="tel"></div>
             </div>
+            <div class="danka_column">
+                <div class="danka_regist_name">決済方法</div>
+                <select name="payment_method" class="select_category">
+                    <option value="現金書留">現金書留</option>
+                    <option value="銀行振込">銀行振込</option>
+                    <option value="クレジット">クレジット</option>
+                    <option value="コード決済">コード決済</option>
+                    <option value="電子決済">電子決済</option>
+                </select>
+            </div>
+
         </div>
     </div>
 

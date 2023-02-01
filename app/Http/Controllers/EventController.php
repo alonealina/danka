@@ -231,30 +231,31 @@ class EventController extends Controller
                 $query->where('yakushiji_flg', '1');
             }
 
-            if ($category_id == 3) {
-                $query->where('item.category_id', 3);
-            } else {
-                if (isset($item_category_id)) {
-                    $query->where('item.category_id', $item_category_id);
-                }
+            if ($category_id != 3 && isset($item_category_id)) {
+                $query->where('item.category_id', $item_category_id);
             }
 
+            //星祭り処理
             if (isset($payment_flg) && $payment_flg == 'off') {
-                $query->where(function ($query) use ($payment_before, $payment_after) {
-                    if (!empty($payment_before)) {
-                        $query->orWhereDate('payment_date', '<', $payment_before);
-                    }
-                    if (!empty($payment_after)) {
-                        $query->orWhereDate('payment_date', '>', $payment_after);
-                    }
-                    $query->orWhereNull('payment_date');
-                });
+                $query_tmp = $query;
+                if (!empty($payment_before)) {
+                    $query_tmp->whereDate('payment_date', '>=', $payment_before);
+                }
+                if (!empty($payment_after)) {
+                    $query_tmp->whereDate('payment_date', '<=', $payment_after);
+                }
+                $query_tmp->where('item.category_id', 3);
+                $not_danka_ids = array_unique($query_tmp->get()->pluck('danka_id')->toArray());
+                $query->whereNotIn('danka.id', $not_danka_ids);
             } else {
                 if (!empty($payment_before)) {
                     $query->whereDate('payment_date', '>=', $payment_before);
                 }
                 if (!empty($payment_after)) {
                     $query->whereDate('payment_date', '<=', $payment_after);
+                }
+                if ($category_id == 3) {
+                    $query->where('item.category_id', 3);
                 }
             }
 

@@ -172,8 +172,14 @@ class PaymentController extends Controller
     public function deal_regist(Request $request)
     {
         $item_list = Item::select('item.id as id', 'name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')->orderBy('item_category.id')->get();
-        
-        $next_deal_no = 
+        $current_year = date('Y');
+        $max_deal_no = Deal::where('deal_no', 'like', "$current_year%")->max('deal_no');
+        if (isset($max_deal_no)) {
+            $next_deal_no = $max_deal_no + 1;
+        } else {
+            $next_deal_no = $current_year . '000001';
+        }
+
 
         return view('deal_regist', [
             'item_list' => $item_list,
