@@ -50,11 +50,21 @@
                         　<input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1">
                         {{ Form::text('kaiki', $hikuyousya->kaiki, ['class' => 'danka_form_text2', 'id' => 'kaiki_year', 'maxlength' => 2, 'style' => 'width: 30px;', 'disabled']) }}
                         <div class="danka_regist_name2" style="width: 70px;">周忌/回忌</div>
+                        <div class="danka_regist_name2" style="margin-left: 50px; width: 40px;">行年</div>
+                        {{ Form::text('gyonen', $hikuyousya->gyonen, ['id' => 'gyonen', 'class' => 'danka_form_text2', 'style' => 'width: 70px;', 'maxlength' => 3, 'placeholder' => '1～150']) }}
+
                     </div>
                     <div class="danka_column">
-                        <div class="danka_regist_name2">行年</div>
-                        {{ Form::text('gyonen', $hikuyousya->gyonen, ['id' => 'gyonen', 'class' => 'danka_form_text2', 'style' => 'width: 70px;', 'maxlength' => 3, 'placeholder' => '1～150']) }}
+                        <div class="danka_regist_name2">建立日</div>
+                        {{ Form::date('konryubi', $hikuyousya->konryubi, ['class' => 'danka_form_text2', 'id' => 'konryubi', 'placeholder' => '', 'style' => 'width: 110px;']) }}
+                        <div class="danka_regist_name2" style="width: 100px; margin-left: 70px;">
+                            <input type="checkbox" id="ihai_flg" name="ihai_flg" class="" value="1" @if($hikuyousya->ihai_no != '0000') checked @endif>
+                            <label for="ihai_flg" class="danka_label" style="margin-right: 0;">位牌番号</label>
+                        </div>
+
+                        {{ Form::text('ihai_no', $ihai_no, ['class' => 'danka_form_text2', 'maxlength' => 4, 'style' => 'width: 70px;', 'readonly' => 'readonly']) }}
                     </div>
+
                     <div class="danka_column">
                         <div class="danka_regist_name2">特記事項</div>
                         {{ Form::text('column', $hikuyousya->column, ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '']) }}
@@ -68,17 +78,19 @@
                         {{ Form::date('nokotsubi', $hikuyousya->nokotsubi, ['class' => 'danka_form_text2', 'id' => 'nokotsubi', 'placeholder' => '', 'style' => 'width: 110px;']) }}
                     </div>
                     <div class="danka_column">
-                        <div class="danka_regist_name2" style="width: 100px;">建立日</div>
-                        {{ Form::date('konryubi', $hikuyousya->konryubi, ['class' => 'danka_form_text2', 'id' => 'konryubi', 'placeholder' => '', 'style' => 'width: 110px;']) }}
+                        <div class="danka_regist_name2" style="width: 100px;">納骨移動日</div>
+                        {{ Form::date('nokotsuidobi', $hikuyousya->nokotsuidobi, ['class' => 'danka_form_text2', 'id' => 'nokotsuidobi', 'placeholder' => '', 'style' => 'width: 110px;']) }}
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2" style="width: 100px;">
-                            <input type="checkbox" id="ihai_flg" name="ihai_flg" class="" value="1" @if($hikuyousya->ihai_no != '0000') checked @endif>
-                            <label for="ihai_flg" class="danka_label" style="margin-right: 0;">位牌番号</label>
+                            <input type="checkbox" id="nokotsu_flg" name="nokotsu_flg" class="" value="1" @if($hikuyousya->nokotsu_no != '000000' && isset($hikuyousya->nokotsu_no)) checked @endif>
+                            <label for="nokotsu_flg" class="danka_label" style="margin-right: 0;">納骨番号</label>
                         </div>
 
-                        {{ Form::text('ihai_no', $ihai_no, ['class' => 'danka_form_text2', 'maxlength' => 4, 'style' => 'width: 70px;', 'readonly' => 'readonly']) }}
+                        {{ Form::text('nokotsu_no', $nokotsu_no, ['class' => 'danka_form_text2', 'maxlength' => 6, 'style' => 'width: 70px;', 'readonly' => 'readonly']) }}
+
                     </div>
+
 
                 </div>
 

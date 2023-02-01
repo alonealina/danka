@@ -20,8 +20,12 @@ class DankaController extends Controller
         $ihai_max = intval(Hikuyousya::max('ihai_no'));
         $ihai_next = str_pad($ihai_max + 1, 4, 0, STR_PAD_LEFT);
 
+        $nokotsu_max = intval(Hikuyousya::max('nokotsu_no'));
+        $nokotsu_next = str_pad($nokotsu_max + 1, 6, 0, STR_PAD_LEFT);
+
         return view('danka_regist', [
             'ihai_next' => $ihai_next,
+            'nokotsu_next' => $nokotsu_next,
         ]);
     }
 
@@ -65,6 +69,8 @@ class DankaController extends Controller
                     'gender_h' => $request['gender_h'],
                     'meinichi' => $request['meinichi'],
                     'nokotsubi' => $request['nokotsubi'],
+                    'nokotsuidobi' => $request['nokotsuidobi'],
+                    'nokotsu_no' => isset($request['nokotsu_flg']) ? $request['nokotsu_no'] : "000000",
                     'konryubi' => $request['konryubi'],
                     'gyonen' => $request['gyonen'],
                     'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
@@ -154,9 +160,13 @@ class DankaController extends Controller
         $ihai_max = intval(Hikuyousya::max('ihai_no'));
         $ihai_next = str_pad($ihai_max + 1, 4, 0, STR_PAD_LEFT);
 
+        $nokotsu_max = intval(Hikuyousya::max('nokotsu_no'));
+        $nokotsu_next = str_pad($nokotsu_max + 1, 6, 0, STR_PAD_LEFT);
+
         return view('hikuyousya_regist', [
             'danka_id' => $danka_id,
             'ihai_next' => $ihai_next,
+            'nokotsu_next' => $nokotsu_next,
         ]);
     }
 
@@ -175,6 +185,8 @@ class DankaController extends Controller
                 'gender_h' => $request['gender_h'],
                 'meinichi' => $request['meinichi'],
                 'nokotsubi' => $request['nokotsubi'],
+                'nokotsuidobi' => $request['nokotsuidobi'],
+                'nokotsu_no' => isset($request['nokotsu_flg']) ? $request['nokotsu_no'] : "000000",
                 'konryubi' => $request['konryubi'],
                 'gyonen' => $request['gyonen'],
                 'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
@@ -196,15 +208,22 @@ class DankaController extends Controller
     {
         $hikuyousya = Hikuyousya::find($hikuyousya_id);
         $ihai_no = $hikuyousya->ihai_no;
+        $nokotsu_no = $hikuyousya->nokotsu_no;
 
         if ($ihai_no == "0000") {
             $ihai_max = intval(Hikuyousya::max('ihai_no'));
             $ihai_no = str_pad($ihai_max + 1, 4, 0, STR_PAD_LEFT);
         }
 
+        if ($nokotsu_no == "000000" || empty($nokotsu_no)) {
+            $nokotsu_max = intval(Hikuyousya::max('nokotsu_no'));
+            $nokotsu_no = str_pad($nokotsu_max + 1, 6, 0, STR_PAD_LEFT);
+        }
+
         return view('hikuyousya_edit', [
             'hikuyousya' => $hikuyousya,
             'ihai_no' => $ihai_no,
+            'nokotsu_no' => $nokotsu_no,
         ]);
     }
 
@@ -223,6 +242,8 @@ class DankaController extends Controller
                 'gender_h' => $request['gender_h'],
                 'meinichi' => $request['meinichi'],
                 'nokotsubi' => $request['nokotsubi'],
+                'nokotsuidobi' => $request['nokotsuidobi'],
+                'nokotsu_no' => isset($request['nokotsu_flg']) ? $request['nokotsu_no'] : "000000",
                 'konryubi' => $request['konryubi'],
                 'gyonen' => $request['gyonen'],
                 'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",

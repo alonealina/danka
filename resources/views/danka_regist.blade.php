@@ -157,6 +157,19 @@
                         <div class="danka_regist_name2" style="width: 100px;">納骨日</div>
                         {{ Form::date('nokotsubi', old('nokotsubi'), ['class' => 'danka_form_text2', 'id' => 'nokotsubi', 'placeholder' => '', 'style' => 'width: 110px;']) }}
                     </div>
+                    <div class="danka_column">
+                        <div class="danka_regist_name2" style="width: 100px;">納骨移動日</div>
+                        {{ Form::date('nokotsuidobi', old('nokotsuidobi'), ['class' => 'danka_form_text2', 'id' => 'nokotsuidobi', 'placeholder' => '', 'style' => 'width: 110px;']) }}
+                    </div>
+                    <div class="danka_column">
+                        <div class="danka_regist_name2" style="width: 100px;">
+                            <input type="checkbox" id="nokotsu_flg" name="nokotsu_flg" class="" value="1">
+                            <label for="nokotsu_flg" class="danka_label" style="margin-right: 0;">納骨番号</label>
+                        </div>
+
+                        {{ Form::text('nokotsu_no', $nokotsu_next, ['class' => 'danka_form_text2', 'maxlength' => 6, 'style' => 'width: 70px;', 'readonly' => 'readonly']) }}
+
+                    </div>
 
                 </div>
 
