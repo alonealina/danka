@@ -197,7 +197,6 @@ class EventController extends Controller
             $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;
             $payment_after = isset($filter_array['payment_after']) ? $filter_array['payment_after'] : null;
             $payment_flg = isset($filter_array['payment_flg']) ? $filter_array['payment_flg'] : null;
-            $list_before = isset($filter_array['list_before']) ? $filter_array['list_before'] : null;
             $price_min = isset($filter_array['price_min']) ? $filter_array['price_min'] : null;
             $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
             $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
@@ -206,6 +205,8 @@ class EventController extends Controller
             $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
             $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
+            $event_date_id = isset($filter_array['event_date_id']) ? $filter_array['event_date_id'] : null;
+            $event_date_flg = isset($filter_array['event_date_flg']) ? $filter_array['event_date_flg'] : null;
 
 
             $event_name = $filter_array['event_name'];
@@ -251,7 +252,6 @@ class EventController extends Controller
                 }
             }
 
-
             if (isset($payment_flg) && $payment_flg == 'off') {
                 $query->where(function ($query) use ($payment_before, $payment_after) {
                     if (!empty($payment_before)) {
@@ -271,22 +271,27 @@ class EventController extends Controller
                 }
             }
 
-            if (!empty($list_before)) {
+            if (!empty($event_date_id)) {
                 $list_query = Danka::select('danka.id as danka_id')
                     ->leftJoin('event_send_list', 'event_send_list.danka_id', '=', 'danka.id')
                     ->leftJoin('event_date', 'event_send_list.event_date_id', '=', 'event_date.id')
-                    ->leftJoin('text_category', 'event_date.category_id', '=', 'text_category.id')
-                    ->where('event_date.category_id', 3)->whereDate('event_date.created_at', '>=', $list_before);
+                    ->where('event_date.category_id', 3)->where('event_date.id', $event_date_id);
                 $danka_ids = array_unique($list_query->get()->pluck('danka_id')->toArray());
+
+                $list_created_at = EventDate::find($event_date_id)->created_at;
 
                 $list_query = Danka::select('danka.id as danka_id')
                     ->leftJoin('deal', 'deal.danka_id', '=', 'danka.id')
                     ->leftJoin('deal_detail', 'deal_detail.deal_id', '=', 'deal.id')
-                    ->where('deal_detail.item_id', 3)->whereDate('deal_detail.payment_date', '>=', $list_before)
+                    ->where('deal_detail.item_id', 3)->whereDate('deal_detail.payment_date', '>=', $list_created_at)
                     ->whereIn('danka.id', $danka_ids);
-                $list_not_danka_ids = array_unique($list_query->get()->pluck('danka_id')->toArray());
+                $payment_danka_ids = array_unique($list_query->get()->pluck('danka_id')->toArray());
 
-                $query->whereNotIn('danka.id', $list_not_danka_ids);
+                if ($event_date_flg == 'off') {
+                    $query->whereNotIn('danka.id', $payment_danka_ids);
+                } else {
+                    $query->whereIn('danka.id', $payment_danka_ids);
+                }
             }
 
             if (!empty($price_min)) {
@@ -324,6 +329,7 @@ class EventController extends Controller
             $danka_count = $danka_id_list->count();
             $danka_id_list = array_unique($danka_id_list->pluck('danka_id')->toArray());
             $danka_id_list = implode(",", array_unique($danka_id_list));
+            $event_date_list = EventDate::where('category_id', 3)->get();
 
             return view('event_regist_search', [
                 'category_id' => $category_id,
@@ -332,7 +338,8 @@ class EventController extends Controller
                 'payment_before' => $payment_before,
                 'payment_after' => $payment_after,
                 'payment_flg' => $payment_flg,
-                'list_before' => $list_before,
+                'event_date_id' => $event_date_id,
+                'event_date_flg' => $event_date_flg,
                 'price_min' => $price_min,
                 'price_max' => $price_max,
                 'segaki_flg' => $segaki_flg,
@@ -347,6 +354,7 @@ class EventController extends Controller
                 'number' => $number,
                 'danka_list' => $danka_list,
                 'danka_id_list' => $danka_id_list,
+                'event_date_list' => $event_date_list,
             ]);
 
 

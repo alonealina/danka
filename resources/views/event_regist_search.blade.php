@@ -62,10 +62,18 @@
 
         @if($category_id == 3)
         <div class="danka_column">
-            <div class="danka_regist_name">リスト作成日</div>
-            {{ Form::date('list_before', $list_before, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
-            <div class="danka_regist_name" style="width: 110px;">{{ date("Y-m-d") }}</div>
-            <div class="danka_regist_name" style="width: 200px;">　取引実績　無</div>
+            <div class="danka_regist_name">リスト名</div>
+            <select name="event_date_id" class="select_category" style="width: 261px" id="">
+                <option value="">----</option>
+                @foreach ($event_date_list as $event_date)
+                <option value="{{ $event_date->id }}"
+                    @if($event_date_id == $event_date->id) selected @endif >{{ $event_date->name }}</option>
+                @endforeach
+            </select>
+            <div class="danka_regist_name" style="width: 200px;">　取引実績　
+                <input type="radio" name="event_date_flg" value="on" checked>　有　
+                <input type="radio" name="event_date_flg" value="off" @if($event_date_flg == 'off') checked @endif>　無
+            </div>
         </div>
         @endif
 
