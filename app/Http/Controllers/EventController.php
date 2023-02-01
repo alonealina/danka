@@ -202,7 +202,6 @@ class EventController extends Controller
             $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
             $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
             $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
-            $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
             $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
             $event_date_id = isset($filter_array['event_date_id']) ? $filter_array['event_date_id'] : null;
@@ -214,8 +213,11 @@ class EventController extends Controller
 
             $item_categories = ItemCategory::get();
 
-            $query = Danka::select('*')->select('hikuyousya.id as id')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
-
+            // 檀家情報・取引・商品結合
+            $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
+                'pref', 'city', 'address', 'building', 'item_category.name as category_name', 'payment_date', 'total')
+            ->join('deal', 'danka.id', '=', 'deal.danka_id')->leftJoin('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')
+            ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id');
 
             if (isset($segaki_flg)) {
                 $query->where('segaki_flg', '1');
@@ -228,21 +230,6 @@ class EventController extends Controller
             if (isset($yakushiji_flg)) {
                 $query->where('yakushiji_flg', '1');
             }
-
-            if (isset($kaiki_flg)) {
-                $query->where('kaiki_flg', '1');
-            }
-
-
-            $hikuyousya_ids = $query->get()->pluck('id');
-
-            $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
-                'pref', 'city', 'address', 'building', 'item_category.name as category_name', 'payment_date', 'hikuyousya.id as hikuyousya_id', 'total')
-            ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->leftJoin('deal_detail', 'hikuyousya.id', '=', 'hikuyousya_id')
-            ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id')
-
-            ->whereIn('hikuyousya.id', $hikuyousya_ids);
-
 
             if ($category_id == 3) {
                 $query->where('item.category_id', 3);
@@ -307,14 +294,14 @@ class EventController extends Controller
                 $query->where(function ($query) use ($word_list) {
                     foreach ($word_list as $word) {
                         if (!empty($word)) {
-                            $query->orwhere('column', 'like', "%$word%");
+                            $query->orwhere('pref', 'like', "%$word%");
                         }
                     }
                 });
             }
 
-            $hikuyousya_ids = $query->pluck('hikuyousya_id');
-            $hikuyousya_count = count(array_unique($hikuyousya_ids->toArray()));
+            $danka_id_list = $query->pluck('danka.id');
+            $danka_count = count(array_unique($danka_id_list->toArray()));
 
             $number = \Request::get('number');
             if (isset($number)) {
@@ -324,11 +311,6 @@ class EventController extends Controller
                 $danka_list = $query->orderBy('danka_id')->paginate(10);
             }
 
-            $danka_id_list = Danka::select('danka_id')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
-            ->whereIn('hikuyousya.id', $hikuyousya_ids)->groupBy('danka_id')->get();
-            $danka_count = $danka_id_list->count();
-            $danka_id_list = array_unique($danka_id_list->pluck('danka_id')->toArray());
-            $danka_id_list = implode(",", array_unique($danka_id_list));
             $event_date_list = EventDate::where('category_id', 3)->get();
 
             return view('event_regist_search', [
@@ -345,11 +327,9 @@ class EventController extends Controller
                 'segaki_flg' => $segaki_flg,
                 'star_flg' => $star_flg,
                 'yakushiji_flg' => $yakushiji_flg,
-                'kaiki_flg' => $kaiki_flg,
                 'freeword' => $freeword,
                 'item_categories' => $item_categories,
                 'item_category_id' => $item_category_id,
-                'hikuyousya_count' => $hikuyousya_count,
                 'danka_count' => $danka_count,
                 'number' => $number,
                 'danka_list' => $danka_list,

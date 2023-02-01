@@ -149,7 +149,9 @@
         @else
 
         @endif
-        {{ $danka_list->total()}}件 （被供養者{{ $hikuyousya_count }}人　施主{{ $danka_count }}人）が該当しました　
+        {{ $danka_list->total()}}件 （
+        @if($category_id == 1) 被供養者{{ $hikuyousya_count }}人　@endif
+        施主{{ $danka_count }}人）が該当しました　
         {{ $danka_list->appends(request()->query())->links('pagination::default') }}
 
     </div>
