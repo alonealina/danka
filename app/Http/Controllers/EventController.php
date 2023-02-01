@@ -245,7 +245,7 @@ class EventController extends Controller
                     $query_tmp->whereDate('payment_date', '<=', $payment_after);
                 }
                 $query_tmp->where('item.category_id', 3);
-                $not_danka_ids = array_unique($query_tmp->get()->pluck('danka_id')->toArray());
+                $not_danka_ids = array_unique($query_tmp->get()->pluck('id')->toArray());
                 $query->whereNotIn('danka.id', $not_danka_ids);
             } else {
                 if (!empty($payment_before)) {
