@@ -311,6 +311,7 @@ class EventController extends Controller
                 $danka_list = $query->orderBy('danka_id')->paginate(10);
             }
 
+            $danka_id_list = implode(",", array_unique($danka_id_list->toArray()));
             $event_date_list = EventDate::where('category_id', 3)->get();
 
             return view('event_regist_search', [

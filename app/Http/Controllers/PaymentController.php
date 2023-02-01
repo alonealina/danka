@@ -172,9 +172,12 @@ class PaymentController extends Controller
     public function deal_regist(Request $request)
     {
         $item_list = Item::select('item.id as id', 'name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')->orderBy('item_category.id')->get();
+        
+        $next_deal_no = 
 
         return view('deal_regist', [
             'item_list' => $item_list,
+            'next_deal_no' => $next_deal_no,
         ]);
     }
 
