@@ -87,7 +87,7 @@
 
         @foreach ($deal_list as $deal)
         <div class="payment_list_column">
-            <div class="deal_id">{{ $deal->id }}</div>
+            <div class="deal_id">{{ $deal->deal_no }}</div>
             <div class="deal_name">{{ $deal->name }}</div>
             <div class="deal_name">{{ $deal->name_kana }}</div>
             <div class="deal_tel">{{ $deal->tel }}</div>
