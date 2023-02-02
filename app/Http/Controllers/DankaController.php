@@ -206,7 +206,7 @@ class DankaController extends Controller
 
     public function hikuyousya_edit($hikuyousya_id)
     {
-        $hikuyousya = Hikuyousya::find($hikuyousya_id);
+        $hikuyousya = Hikuyousya::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")->find($hikuyousya_id);
         $ihai_no = $hikuyousya->ihai_no;
         $nokotsu_no = $hikuyousya->nokotsu_no;
 
@@ -220,10 +220,15 @@ class DankaController extends Controller
             $nokotsu_no = str_pad($nokotsu_max + 1, 6, 0, STR_PAD_LEFT);
         }
 
+        $kaiki = 1;
+        if ($hikuyousya->kaiki > 0) {
+            $kaiki = $hikuyousya->kaiki + 2;
+        }
         return view('hikuyousya_edit', [
             'hikuyousya' => $hikuyousya,
             'ihai_no' => $ihai_no,
             'nokotsu_no' => $nokotsu_no,
+            'kaiki' => $kaiki,
         ]);
     }
 
