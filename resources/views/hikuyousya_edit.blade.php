@@ -13,11 +13,11 @@
                     <div class="danka_column">
                         <div class="danka_regist_name2">種別</div>
                         <select name="type" class="select_category" style="width: 80px;">
-                            <option value="故人">故人</option>
-                            <option value="ペット">ペット</option>
-                            <option value="水子">水子</option>
-                            <option value="先祖">先祖</option>
-                            <option value="生前">生前</option>
+                            <option value="故人" @if($hikuyousya->type == '故人') selected @endif>故人</option>
+                            <option value="ペット" @if($hikuyousya->type == 'ペット') selected @endif>ペット</option>
+                            <option value="水子" @if($hikuyousya->type == '水子') selected @endif>水子</option>
+                            <option value="先祖" @if($hikuyousya->type == '先祖') selected @endif>先祖</option>
+                            <option value="生前" @if($hikuyousya->type == '生前') selected @endif>生前</option>
                         </select>
                     </div>
                     <div class="danka_column">

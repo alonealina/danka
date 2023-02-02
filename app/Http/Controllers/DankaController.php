@@ -448,10 +448,10 @@ class DankaController extends Controller
 
         $number = \Request::get('number');
         if (isset($number)) {
-            $danka_list = $query->orderBy('id')->paginate($number)
+            $danka_list = $query->orderBy('id', 'desc')->paginate($number)
             ->appends(["number" => $number]);
         } else {
-            $danka_list = $query->orderBy('id')->paginate(10);
+            $danka_list = $query->orderBy('id', 'desc')->paginate(10);
             $number = 5;
         }
 
@@ -567,6 +567,10 @@ class DankaController extends Controller
 
         if (isset($ihai_flg)) {
             $query->where('ihai_no', 'not like', '0000');
+        }
+
+        if (isset($ihai_no)) {
+            $query->where('ihai_no', $ihai_no);
         }
 
         if (isset($konryu_flg)) {
