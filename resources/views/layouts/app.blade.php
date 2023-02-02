@@ -33,48 +33,91 @@
             <div class="user_content_div header_margin">
                 <div class="content_flex">
                     <div class="user_sidebar">
-                        <a href="#!" class="menu_a @if (strpos($now_route,'summary') !== false) current @endif" onclick="clickMenu1();">
+                        <!-- 檀家管理 -->
+                        <a href="#!" class="menu_a @if (strpos($now_route,'danka_regist') !== false || strpos($now_route,'danka_search') !== false ||
+                            strpos($now_route,'hikuyousya_search') !== false || strpos($now_route,'danka_detail') !== false || 
+                            strpos($now_route,'danka_edit') !== false || strpos($now_route,'hikuyousya_regist') !== false || 
+                            strpos($now_route,'hikuyousya_edit') !== false || strpos($now_route,'family_regist') !== false || 
+                            strpos($now_route,'family_edit') !== false) current @endif" onclick="clickMenu1();">
                             檀家管理
-                            @if (strpos($now_route,'summary') !== false) 
+                            @if (strpos($now_route,'danka_regist') !== false || strpos($now_route,'danka_search') !== false ||
+                            strpos($now_route,'hikuyousya_search') !== false || strpos($now_route,'danka_detail') !== false || 
+                            strpos($now_route,'danka_edit') !== false || strpos($now_route,'hikuyousya_regist') !== false || 
+                            strpos($now_route,'hikuyousya_edit') !== false || strpos($now_route,'family_regist') !== false || 
+                            strpos($now_route,'family_edit') !== false)
                             <img src="{{ asset('img/down.png') }}" id="down1" class="down_r"><img src="{{ asset('img/up.png') }}" id="up1" class="up_r">
                             @else
                             <img src="{{ asset('img/down.png') }}" id="down1" class="down"><img src="{{ asset('img/up.png') }}" id="up1" class="up">
                             @endif
                         </a>
                         <div 
-                        @if (strpos($now_route,'summary') === false) class="menu_none" @endif
+                        @if (strpos($now_route,'danka_regist') === false && strpos($now_route,'danka_search') === false && 
+                        strpos($now_route,'hikuyousya_search') === false && strpos($now_route,'danka_detail') === false &&
+                        strpos($now_route,'danka_edit') === false && strpos($now_route,'hikuyousya_regist') === false && 
+                        strpos($now_route,'hikuyousya_edit') === false && strpos($now_route,'family_regist') === false && 
+                        strpos($now_route,'family_edit') === false)
+                        class="menu_none" @endif
                         id="menu1">
-                        <a href="{{ route('danka_regist') }}" class="menu_a @if (strpos($now_route,'danka_regist') !== false) current @endif">　新規登録</a>
-                        <a href="{{ route('danka_search') }}" class="menu_a @if (strpos($now_route,'danka_search') !== false) current @endif">　檀家検索</a>
-                        <a href="{{ route('hikuyousya_search') }}" class="menu_a @if (strpos($now_route,'hikuyousya_search') !== false) current @endif">　被供養者検索</a>
+                        <a href="{{ route('danka_regist') }}" class="menu_a
+                            @if (strpos($now_route,'danka_regist') !== false || strpos($now_route,'danka_search') !== false ||
+                            strpos($now_route,'hikuyousya_search') !== false || strpos($now_route,'danka_detail') !== false || 
+                            strpos($now_route,'danka_edit') !== false || strpos($now_route,'hikuyousya_regist') !== false || 
+                            strpos($now_route,'hikuyousya_edit') !== false || strpos($now_route,'family_regist') !== false || 
+                            strpos($now_route,'family_edit') !== false) current @endif">　新規登録</a>
+                        <a href="{{ route('danka_search') }}" class="menu_a
+                            @if (strpos($now_route,'danka_regist') !== false || strpos($now_route,'danka_search') !== false ||
+                            strpos($now_route,'hikuyousya_search') !== false || strpos($now_route,'danka_detail') !== false || 
+                            strpos($now_route,'danka_edit') !== false || strpos($now_route,'hikuyousya_regist') !== false || 
+                            strpos($now_route,'hikuyousya_edit') !== false || strpos($now_route,'family_regist') !== false || 
+                            strpos($now_route,'family_edit') !== false) current @endif">　檀家検索</a>
+                        <a href="{{ route('hikuyousya_search') }}" class="menu_a
+                            @if (strpos($now_route,'danka_regist') !== false || strpos($now_route,'danka_search') !== false ||
+                            strpos($now_route,'hikuyousya_search') !== false || strpos($now_route,'danka_detail') !== false || 
+                            strpos($now_route,'danka_edit') !== false || strpos($now_route,'hikuyousya_regist') !== false || 
+                            strpos($now_route,'hikuyousya_edit') !== false || strpos($now_route,'family_regist') !== false || 
+                            strpos($now_route,'family_edit') !== false) current @endif">　被供養者検索</a>
                         </div>
 
-                        <a href="#!" class="menu_a 
-                        @if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false)
-                        current @endif" onclick="clickMenu3();">
+                        <!-- 請求/支払い -->
+                        <a href="#!" class="menu_a @if (strpos($now_route,'deal_list') !== false || strpos($now_route,'deal_detail') !== false ||
+                            strpos($now_route,'deal_edit') !== false || strpos($now_route,'deal_edit_confirm') !== false || 
+                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false || 
+                            strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif" onclick="clickMenu3();">
                             請求/支払い
-                            @if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false) 
+                            @if (strpos($now_route,'deal_list') !== false || strpos($now_route,'deal_detail') !== false ||
+                            strpos($now_route,'deal_edit') !== false || strpos($now_route,'deal_edit_confirm') !== false || 
+                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false || 
+                            strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) 
                             <img src="{{ asset('img/down.png') }}" id="down3" class="down_r"><img src="{{ asset('img/up.png') }}" id="up3" class="up_r">
                             @else
                             <img src="{{ asset('img/down.png') }}" id="down3" class="down"><img src="{{ asset('img/up.png') }}" id="up3" class="up">
                             @endif
                         </a>
                         <div 
-                        @if (strpos($now_route,'unclaimed_list') === false && strpos($now_route,'unpaid_list') === false && strpos($now_route,'paid_list') === false)
-                        class="menu_none"
-                        @endif
+                        @if (strpos($now_route,'deal_list') === false && strpos($now_route,'deal_detail') === false && 
+                        strpos($now_route,'deal_edit') === false && strpos($now_route,'deal_edit_confirm') === false &&
+                        strpos($now_route,'deal_regist') === false && strpos($now_route,'deal_confirm') === false && 
+                        strpos($now_route,'item_list') === false && strpos($now_route,'item_edit') === false)
+                        class="menu_none" @endif
                         id="menu3">
                         <a href="{{ route('deal_regist') }}" class="menu_a
-                        @if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false)
-                        current @endif">　取引作成</a>
+                        @if (strpos($now_route,'deal_list') !== false || strpos($now_route,'deal_detail') !== false ||
+                            strpos($now_route,'deal_edit') !== false || strpos($now_route,'deal_edit_confirm') !== false || 
+                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false || 
+                            strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif">　取引作成</a>
                         <a href="{{ route('deal_list') }}" class="menu_a
-                        @if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false)
-                        current @endif">　取引一覧</a>
+                        @if (strpos($now_route,'deal_list') !== false || strpos($now_route,'deal_detail') !== false ||
+                            strpos($now_route,'deal_edit') !== false || strpos($now_route,'deal_edit_confirm') !== false || 
+                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false || 
+                            strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif">　取引一覧</a>
                         <a href="{{ route('item_list') }}" class="menu_a
-                        @if (strpos($now_route,'item_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false)
-                        current @endif">　商品一覧</a>
+                        @if (strpos($now_route,'deal_list') !== false || strpos($now_route,'deal_detail') !== false ||
+                            strpos($now_route,'deal_edit') !== false || strpos($now_route,'deal_edit_confirm') !== false || 
+                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false || 
+                            strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif">　商品一覧</a>
                         </div>
 
+                        <!-- 行事 -->
                         <a href="#!" class="menu_a 
                         @if (strpos($now_route,'event_list') !== false || strpos($now_route,'event_show') !== false || strpos($now_route,'event_regist') !== false || 
                         strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false) current @endif" onclick="clickMenu2();">
@@ -98,6 +141,7 @@
                         strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false) current @endif">　発送物一覧</a>
                         </div>
 
+                        <!-- 文章作成/編集 -->
                         <a href="#!" class="menu_a
                         @if (strpos($now_route,'text_category_list') !== false || strpos($now_route,'text_list') !== false || strpos($now_route,'text_edit') !== false || 
                         strpos($now_route,'text_show') !== false || strpos($now_route,'text_regist') !== false) current @endif" onclick="clickMenu5();">
@@ -121,6 +165,7 @@
                         strpos($now_route,'text_show') !== false || strpos($now_route,'text_regist') !== false) current @endif">　文章一覧</a>
                         </div>
 
+                        <!-- 管理者管理 -->
                         <a href="#!" class="menu_a
                         @if (strpos($now_route,'admin_regist') !== false || strpos($now_route,'admin_list') !== false) current @endif" onclick="clickMenu6();">
                             管理者管理

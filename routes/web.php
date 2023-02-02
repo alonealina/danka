@@ -12,16 +12,6 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CategoryController;
 
 
-use App\Http\Controllers\V2DemoAcountController;
-use App\Http\Controllers\V2ContactController;
-use App\Http\Controllers\V2CompanyController;
-use App\Http\Controllers\V2FaqController;
-use App\Http\Controllers\V2UserController;
-use App\Http\Controllers\V2TransferController;
-use App\Http\Controllers\V2AddAcountController;
-use App\Http\Controllers\V2DepositController;
-
-
 Route::get('', [IndexController::class, 'index'])->name('index');
 
 Route::get('login', [LoginController::class, 'login'])->name('login');
@@ -32,11 +22,7 @@ Route::get('login2', [LoginController::class, 'login2'])->name('login2');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 
-
-
 // 以下ユーザーページ
-Route::get('summary', [V2UserController::class, 'summary'])->name('summary');
-Route::get('history', [V2UserController::class, 'history'])->name('history');
 
 Route::get('danka_regist', [DankaController::class, 'danka_regist'])->name('danka_regist');
 Route::post('danka_store', [DankaController::class, 'danka_store'])->name('danka_store');
@@ -60,19 +46,6 @@ Route::get('db_test', [DankaController::class, 'db_test'])->name('db_test');
 
 
 
-Route::get('event_list', [EventController::class, 'event_list'])->name('event_list');
-Route::get('event_show/{id}', [EventController::class, 'event_show'])->name('event_show');
-Route::get('event_regist/{id}', [EventController::class, 'event_regist'])->name('event_regist');
-Route::get('event_regist_search', [EventController::class, 'event_regist_search'])->name('event_regist_search');
-Route::post('event_regist_search', [EventController::class, 'event_regist_search'])->name('event_regist_search');
-Route::post('event_store', [EventController::class, 'event_store'])->name('event_store');
-Route::get('event_book_show/{id}', [EventController::class, 'event_book_show'])->name('event_book_show');
-Route::get('event_book_regist/{id}', [EventController::class, 'event_book_regist'])->name('event_book_regist');
-Route::post('event_book_store', [EventController::class, 'event_book_store'])->name('event_book_store');
-
-Route::get('unclaimed_list', [PaymentController::class, 'unclaimed_list'])->name('unclaimed_list');
-Route::get('unpaid_list', [PaymentController::class, 'unpaid_list'])->name('unpaid_list');
-Route::get('paid_list', [PaymentController::class, 'paid_list'])->name('paid_list');
 
 Route::get('deal_list', [PaymentController::class, 'deal_list'])->name('deal_list');
 Route::get('unclaimed_update/{id}/{type}/', [PaymentController::class, 'unclaimed_update'])->name('unclaimed_update');
@@ -84,18 +57,27 @@ Route::post('deal_edit_confirm', [PaymentController::class, 'deal_edit_confirm']
 Route::post('deal_update', [PaymentController::class, 'deal_update'])->name('deal_update');
 Route::get('deal_delete/{id}', [PaymentController::class, 'deal_delete'])->name('deal_delete');
 
-
-
 Route::get('deal_regist', [PaymentController::class, 'deal_regist'])->name('deal_regist');
 Route::post('deal_confirm', [PaymentController::class, 'deal_confirm'])->name('deal_confirm');
 Route::post('deal_store', [PaymentController::class, 'deal_store'])->name('deal_store');
-
 
 Route::get('item_list', [PaymentController::class, 'item_list'])->name('item_list');
 Route::post('item_store', [PaymentController::class, 'item_store'])->name('item_store');
 Route::get('item_edit/{id}', [PaymentController::class, 'item_edit'])->name('item_edit');
 Route::post('item_update', [PaymentController::class, 'item_update'])->name('item_update');
 Route::get('item_delete/{id}', [PaymentController::class, 'item_delete'])->name('item_delete');
+
+
+Route::get('event_list', [EventController::class, 'event_list'])->name('event_list');
+Route::get('event_show/{id}', [EventController::class, 'event_show'])->name('event_show');
+Route::get('event_regist/{id}', [EventController::class, 'event_regist'])->name('event_regist');
+Route::get('event_regist_search', [EventController::class, 'event_regist_search'])->name('event_regist_search');
+Route::post('event_regist_search', [EventController::class, 'event_regist_search'])->name('event_regist_search');
+Route::post('event_store', [EventController::class, 'event_store'])->name('event_store');
+Route::get('event_book_show/{id}', [EventController::class, 'event_book_show'])->name('event_book_show');
+Route::get('event_book_regist/{id}', [EventController::class, 'event_book_regist'])->name('event_book_regist');
+Route::post('event_book_store', [EventController::class, 'event_book_store'])->name('event_book_store');
+
 
 Route::get('notice_regist', [NoticeController::class, 'notice_regist'])->name('notice_regist');
 Route::post('notice_store', [NoticeController::class, 'notice_store'])->name('notice_store');
@@ -129,29 +111,3 @@ Route::get('admin_delete/{id}/', [AdminController::class, 'admin_delete'])->name
 
 
 
-
-Route::get('deposit', [V2DepositController::class, 'deposit'])->name('deposit');
-Route::get('crypto_payment', [V2DepositController::class, 'crypto_payment'])->name('crypto_payment');
-Route::post('crypto_payment_confirm', [V2DepositController::class, 'crypto_payment_confirm'])->name('crypto_payment_confirm');
-Route::get('txid', [V2DepositController::class, 'txid'])->name('txid');
-Route::post('txid_confirm', [V2DepositController::class, 'txid_confirm'])->name('txid_confirm');
-Route::get('payment_complete', [V2DepositController::class, 'payment_complete'])->name('payment_complete');
-Route::get('withdraw', [V2DepositController::class, 'withdraw'])->name('withdraw');
-Route::post('bank_withdraw_confirm', [V2DepositController::class, 'bank_withdraw_confirm'])->name('bank_withdraw_confirm');
-Route::post('crypto_withdraw_confirm', [V2DepositController::class, 'crypto_withdraw_confirm'])->name('crypto_withdraw_confirm');
-Route::get('withdraw_complete', [V2DepositController::class, 'withdraw_complete'])->name('withdraw_complete');
-
-
-Route::get('transfer', [V2TransferController::class, 'transfer'])->name('transfer');
-Route::post('transfer_confirm', [V2TransferController::class, 'transfer_confirm'])->name('transfer_confirm');
-Route::get('transfer_complete', [V2TransferController::class, 'transfer_complete'])->name('transfer_complete');
-
-Route::get('add_acount', [V2AddAcountController::class, 'add_acount'])->name('add_acount');
-Route::post('add_confirm', [V2AddAcountController::class, 'add_confirm'])->name('add_confirm');
-Route::get('add_acount_complete', [V2AddAcountController::class, 'add_acount_complete'])->name('add_acount_complete');
-
-Route::get('setting', [V2UserController::class, 'setting'])->name('setting');
-Route::get('setting2', [V2UserController::class, 'setting2'])->name('setting2');
-
-Route::get('activate_2fa', [V2UserController::class, 'activate_2fa'])->name('activate_2fa');
-Route::get('inactivate_2fa', [V2UserController::class, 'inactivate_2fa'])->name('inactivate_2fa');
