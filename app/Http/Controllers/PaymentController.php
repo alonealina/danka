@@ -91,6 +91,14 @@ class PaymentController extends Controller
             $query->orderBy('deal_no', 'desc');
         }
 
+        $sum_query = clone $query;
+        $sum_query = $sum_query->get();
+        $sum_price = 0;
+        foreach($sum_query as $item) {
+            $sum_price += $item->total;
+        }
+
+
         $number = \Request::get('number');
         if (isset($number)) {
             $deal_list = $query->paginate($number)
@@ -117,6 +125,8 @@ class PaymentController extends Controller
             'price_max' => $price_max,
             'type' => $type,
             'number' => $number,
+
+            'sum_price' => $sum_price,
         ]);
     }
 

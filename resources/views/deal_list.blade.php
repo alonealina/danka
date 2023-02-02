@@ -69,6 +69,7 @@
             @include('item.deal_number')　　
             {{ $deal_list->total() }}件が該当しました
             {{ $deal_list->appends(request()->query())->links('pagination::default') }}
+            　　合計金額　{{ number_format($sum_price) }} 円
         </div>
     </div>
 
