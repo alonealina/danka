@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content_title">行事予定日一覧</div>
+<div class="content_title">行事リスト一覧</div>
 <div class="text_show_title" style="margin: 20px 0;">{{ $category->name }}</div>
 <a href="{{ route('event_regist', $category->id) }}" class="add_btn_a" style="margin-bottom:20px;">新規追加</a>
 <div class="text_category_list_div" style="padding:0;">

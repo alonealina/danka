@@ -60,7 +60,8 @@
                 @endfor
             </select>
         </div>
-        @else
+        @endif
+
         <div class="danka_column">
             <div class="danka_regist_name">支払い履歴</div>
             {{ Form::date('payment_before', $payment_before, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
@@ -74,7 +75,6 @@
             @endif
             </div>
         </div>
-        @endif
 
 
 
@@ -130,16 +130,22 @@
         </div>
 
         <div class="danka_column">
-            @if($category_id != 3)
-            <input type="checkbox" id="segaki_flg" name="segaki_flg" class="danka_checkbox" value="1"
-            @if(isset($segaki_flg)) checked @endif>
-            <label for="segaki_flg" class="danka_label">施餓鬼</label>
-            <input type="checkbox" id="star_flg" name="star_flg" class="danka_checkbox" value="1"
-            @if(isset($star_flg)) checked @endif>
-            <label for="star_flg" class="danka_label">星祭り</label>
-            <input type="checkbox" id="yakushiji_flg" name="yakushiji_flg" class="danka_checkbox" value="1"
-            @if(isset($yakushiji_flg)) checked @endif>
-            <label for="yakushiji_flg" class="danka_label">薬師寺霊園</label>
+            @if($category_id != 3 && $category_id != 1)
+                @if($category_id != 1 && $category_id != 2 && $category_id != 6)
+                <input type="checkbox" id="segaki_flg" name="segaki_flg" class="danka_checkbox" value="1"
+                @if(isset($segaki_flg)) checked @endif>
+                <label for="segaki_flg" class="danka_label">施餓鬼</label>
+                <input type="checkbox" id="star_flg" name="star_flg" class="danka_checkbox" value="1"
+                @if(isset($star_flg)) checked @endif>
+                <label for="star_flg" class="danka_label">星祭り</label>
+                <input type="checkbox" id="yakushiji_flg" name="yakushiji_flg" class="danka_checkbox" value="1"
+                @if(isset($yakushiji_flg)) checked @endif>
+                <label for="yakushiji_flg" class="danka_label">薬師寺霊園</label>
+                <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
+                @if(isset($kaiki_flg)) checked @endif>
+                <label for="kaiki_flg" class="danka_label">回忌</label>
+                @endif
+            @elseif($category_id == 1)
             <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
             @if(isset($kaiki_flg)) checked @endif>
             <label for="kaiki_flg" class="danka_label">回忌</label>
@@ -194,6 +200,7 @@
         <div class="hikuyousya_kaimyo">戒名</div>
         <div class="hikuyousya_date">命日</div>
         <div class="hikuyousya_kaiki">回忌</div>
+        <div class="hikuyousya_kaiki"></div>
         <div class="hikuyousya_date">支払日</div>
         <div class="hikuyousya_kaimyo">商品カテゴリー</div>
         <div class="hikuyousya_date">金額</div>
@@ -209,6 +216,7 @@
             <div class="hikuyousya_kaimyo">{{ $danka->posthumous }}</div>
             <div class="hikuyousya_date">{{ $danka->meinichi }}</div>
             <div class="hikuyousya_kaiki">@if($danka->kaiki <= 0) 1 @else {{ $danka->kaiki + 2 }} @endif</div>
+            <div class="hikuyousya_kaiki">@if($danka->kaiki_flg) 〇 @endif</div>
             <div class="hikuyousya_date">{{ $danka->payment_date }}</div>
             <div class="hikuyousya_kaimyo">{{ $danka->category_name }}</div>
             <div class="hikuyousya_date">@if($danka->total > 0) {{ number_format($danka->total) }} @endif</div>

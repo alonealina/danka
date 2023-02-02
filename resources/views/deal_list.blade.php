@@ -78,8 +78,8 @@
         <div class="deal_name">フリガナ</div>
         <div class="deal_tel">電話番号</div>
         <div class="deal_price">金額</div>
-        <div class="deal_date">支払い確認</div>
         <div class="deal_date">作成日</div>
+        <div class="deal_date">支払い確認日</div>
         <div class="deal_btn"></div>
     </div>
 
@@ -92,8 +92,8 @@
             <div class="deal_name">{{ $deal->name_kana }}</div>
             <div class="deal_tel">{{ $deal->tel }}</div>
             <div class="deal_price">{{ number_format($deal->total) }}</div>
-            <div class="deal_date">{{ $deal->payment_date }}</div>
             <div class="deal_date">{{ $deal->created_at->format('Y-m-d') }}</div>
+            <div class="deal_date">{{ $deal->payment_date }}</div>
             <div class="deal_btn">
                 @if ($deal->state == "未払い")
                 <a href="{{ route('unclaimed_update', ['id' => $deal->id, 'type' => $type]) }}" class="payment_white_btn_a">送付待ちへ</a>

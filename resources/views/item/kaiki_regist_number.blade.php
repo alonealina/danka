@@ -21,6 +21,8 @@
             'item_category_id' => $item_category_id,
             'hikuyousya_count' => $hikuyousya_count,
             'danka_count' => $danka_count,
+            'category_id' => $category_id,
+            'event_name' => $event_name,
             ]) }}"
         @if($number == "10") selected @endif>10件</option>
         <option value="{{ route('event_regist_search',  [
@@ -44,6 +46,8 @@
             'item_category_id' => $item_category_id,
             'hikuyousya_count' => $hikuyousya_count,
             'danka_count' => $danka_count,
+            'category_id' => $category_id,
+            'event_name' => $event_name,
             ]) }}"
         @if($number == "30") selected @endif>30件</option>
         <option value="{{ route('event_regist_search',  [
@@ -67,6 +71,8 @@
             'item_category_id' => $item_category_id,
             'hikuyousya_count' => $hikuyousya_count,
             'danka_count' => $danka_count,
+            'category_id' => $category_id,
+            'event_name' => $event_name,
             ]) }}"
         @if($number == "50") selected @endif>50件</option>
         <option value="{{ route('event_regist_search',  [
@@ -90,6 +96,8 @@
             'item_category_id' => $item_category_id,
             'hikuyousya_count' => $hikuyousya_count,
             'danka_count' => $danka_count,
+            'category_id' => $category_id,
+            'event_name' => $event_name,
             ]) }}"
         @if($number == "100") selected @endif>100件</option>
         <option value="{{ route('event_regist_search',  [
@@ -113,6 +121,8 @@
             'item_category_id' => $item_category_id,
             'hikuyousya_count' => $hikuyousya_count,
             'danka_count' => $danka_count,
+            'category_id' => $category_id,
+            'event_name' => $event_name,
             ]) }}"
         @if($number == "300") selected @endif>300件</option>
         <option value="{{ route('event_regist_search',  [
@@ -136,6 +146,8 @@
             'item_category_id' => $item_category_id,
             'hikuyousya_count' => $hikuyousya_count,
             'danka_count' => $danka_count,
+            'category_id' => $category_id,
+            'event_name' => $event_name,
             ]) }}"
         @if($number == "500") selected @endif>500件</option>
     </select>

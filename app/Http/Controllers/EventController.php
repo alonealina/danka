@@ -72,8 +72,7 @@ class EventController extends Controller
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
             $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
 
-
-            $event_name = $filter_array['event_name'];
+            $event_name = isset($filter_array['event_name']) ? $filter_array['event_name'] : null;
             $category_name = TextCategory::find($category_id)->name;
 
             $item_categories = ItemCategory::get();
@@ -116,9 +115,10 @@ class EventController extends Controller
             $hikuyousya_ids = $query->get()->pluck('id');
 
             $query = Danka::select('danka.id as id', 'danka.name as name', 'common_name', 
-                'posthumous', 'meinichi', 'item_category.name as category_name', 'payment_date', 'hikuyousya.id as hikuyousya_id', 'total')
+                'posthumous', 'meinichi', 'item_category.name as category_name', 'hikuyousya.id as hikuyousya_id', 'total', 'payment_date', 'kaiki_flg')
                 ->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
             ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->leftJoin('deal_detail', 'hikuyousya.id', '=', 'hikuyousya_id')
+            ->leftJoin('deal', 'deal.id', '=', 'deal_detail.deal_id')
             ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id')
             ->whereIn('hikuyousya.id', $hikuyousya_ids);
 
@@ -157,10 +157,10 @@ class EventController extends Controller
 
             $number = \Request::get('number');
             if (isset($number)) {
-                $danka_list = $query->orderBy('danka_id')->paginate($number)
+                $danka_list = $query->orderBy('danka.id')->paginate($number)
                 ->appends(["number" => $number]);
             } else {
-                $danka_list = $query->orderBy('danka_id')->paginate(10);
+                $danka_list = $query->orderBy('danka.id')->paginate(10);
             }
 
             $danka_id_list = Danka::select('danka_id')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
