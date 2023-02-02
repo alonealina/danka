@@ -31,7 +31,7 @@ class PaymentController extends Controller
         $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
         $type = isset($filter_array['type']) ? $filter_array['type'] : null;
 
-        $query = Deal::select('deal.id as id','deal_detail.id as detail_id', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at as created_at')
+        $query = Deal::select('deal.id as id', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at as created_at')
             ->selectRaw('SUM(total) AS total')
             ->join('danka', 'danka.id', '=', 'deal.danka_id')->join('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id')
             ->groupBy('deal.id', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at');
@@ -84,10 +84,10 @@ class PaymentController extends Controller
 
         $number = \Request::get('number');
         if (isset($number)) {
-            $deal_list = $query->orderBy('deal.id')->orderBy('deal_detail.id')->paginate($number)
+            $deal_list = $query->orderBy('deal.id')->paginate($number)
             ->appends(["number" => $number]);
         } else {
-            $deal_list = $query->orderBy('deal.id')->orderBy('deal_detail.id')->paginate(10);
+            $deal_list = $query->orderBy('deal.id')->paginate(10);
         }
 
         $item_list = Item::select('item.id as id', 'name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')->orderBy('item_category.id')->get();
