@@ -5,7 +5,7 @@
 
 <div class="text_category_list_div">
 
-    <div class="category_list_header">行事名</div>
+    <div class="category_list_header">カテゴリー</div>
     <div class="category_list_message">{{ session('message') }}</div>
     <div class="category_list" style="height: calc(100vh - 350px);">
         @foreach($text_categories as $category)

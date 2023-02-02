@@ -1,8 +1,10 @@
 <div class="payment_btn_list" style="margin:0 20px 0 0; width:350px;">
-    @if (empty($type))
+    @if ($type == "すべて")
     <div class="payment_btn_div">すべて</div>
     @else
-    <a href="{{ route('deal_list') }}"
+    <a href="{{ route('deal_list', [
+            'type' => 'すべて',
+            ]) }}"
             class="payment_btn_a">すべて</a>
     @endif
 

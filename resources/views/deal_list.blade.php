@@ -35,7 +35,7 @@
             </div>
 
             <div class="danka_column">
-                <div class="danka_regist_name">商品</div>
+                <div class="danka_regist_name">商品カテゴリー</div>
                 <select name="item_category_id" class="select_category" style="width: 400px" id="area">
                     <option value="">----</option>
                     @foreach ($item_list as $item)
@@ -96,12 +96,12 @@
             <div class="deal_date">{{ $deal->created_at->format('Y-m-d') }}</div>
             <div class="deal_btn">
                 @if ($deal->state == "未払い")
-                <a href="{{ route('unclaimed_update', $deal->id) }}" class="payment_white_btn_a">送付待ちへ</a>
-                <a href="{{ route('paid_update', $deal->id) }}" class="payment_blue_btn_a">支払済へ</a>
-                <a href="{{ route('deal_detail', $deal->id) }}" class="payment_view_btn_a">表示</a>
+                <a href="{{ route('unclaimed_update', ['id' => $deal->id, 'type' => $type]) }}" class="payment_white_btn_a">送付待ちへ</a>
+                <a href="{{ route('paid_update', ['id' => $deal->id, 'type' => $type]) }}" class="payment_blue_btn_a">支払済へ</a>
+                <a href="{{ route('deal_detail', ['id' => $deal->id, 'type' => $type]) }}" class="payment_view_btn_a">表示</a>
                 @else
-                <a href="{{ route('unpaid_update', $deal->id) }}" class="payment_red_btn_a">未払いへ</a>
-                <a href="{{ route('deal_detail', $deal->id) }}" class="payment_view_btn_a">表示</a>
+                <a href="{{ route('unpaid_update', ['id' => $deal->id, 'type' => $type]) }}" class="payment_red_btn_a">未払いへ</a>
+                <a href="{{ route('deal_detail', ['id' => $deal->id, 'type' => $type]) }}" class="payment_view_btn_a">表示</a>
                 @endif
             </div>
         </div>

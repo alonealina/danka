@@ -69,6 +69,11 @@ class PaymentController extends Controller
         }
 
         if (!empty($type)) {
+            if ($type != 'すべて') {
+                $query->where('state', $type);
+            }
+        } else {
+            $type = '未払い';
             $query->where('state', $type);
         }
 
@@ -111,7 +116,7 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function unclaimed_update($id)
+    public function unclaimed_update($id, $type)
     {
         $deal = Deal::find($id);
 
@@ -124,14 +129,14 @@ class PaymentController extends Controller
             $deal->fill($fill_data)->update();
             
             DB::commit();
-            return redirect()->route('deal_list')->with('message', 'ステータスを変更しました。');
+            return redirect()->route('deal_list',['type' => $type])->with('message', 'ステータスを変更しました。');
         } catch (\Exception $e) {
             DB::rollback();
         }
 
     }
 
-    public function unpaid_update($id)
+    public function unpaid_update($id, $type)
     {
         $deal = Deal::find($id);
 
@@ -145,13 +150,13 @@ class PaymentController extends Controller
             $deal->fill($fill_data)->update();
             
             DB::commit();
-            return redirect()->route('deal_list')->with('message', 'ステータスを変更しました。');
+            return redirect()->route('deal_list',['type' => $type])->with('message', 'ステータスを変更しました。');
         } catch (\Exception $e) {
             DB::rollback();
         }
     }
 
-    public function paid_update($id)
+    public function paid_update($id, $type)
     {
         $deal = Deal::find($id);
         $date = date('Y-m-d');
@@ -165,7 +170,7 @@ class PaymentController extends Controller
             $deal->fill($fill_data)->update();
             
             DB::commit();
-            return redirect()->route('deal_list')->with('message', 'ステータスを変更しました。');
+            return redirect()->route('deal_list',['type' => $type])->with('message', 'ステータスを変更しました。');
         } catch (\Exception $e) {
             DB::rollback();
         }
