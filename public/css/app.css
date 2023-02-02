@@ -584,6 +584,12 @@ p {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.hikuyousya_column {
+    width:35%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .hikuyousya_kaimyo_view {
     width:12%;
 }

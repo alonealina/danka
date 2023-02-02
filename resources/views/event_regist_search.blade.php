@@ -11,6 +11,24 @@
 {{ Form::hidden('danka_count', $danka_count) }}
 {{ Form::hidden('danka_id_list', $danka_id_list) }}
 <div class="danka_search_div">
+    @if($category_id == 5)
+    <div class="danka_form_div">
+
+        <div class="danka_column">
+            <div class="danka_regist_name">フリーワード</div>
+            {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
+        </div>
+    </div>
+
+    <div class="danka_form_div">
+
+        <div class="danka_column">
+            <div class="danka_regist_name">納骨日</div>
+            {{ Form::date('nokotsubi_before', $nokotsubi_before, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
+            {{ Form::date('nokotsubi_after', $nokotsubi_after, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}
+        </div>
+    </div>
+    @else
     <div class="danka_form_div">
 
         @if($category_id == 1)
@@ -133,6 +151,7 @@
         </div>
 
     </div>
+    @endif
     <div class="search_btn_list">
         <a href="#!" onclick="clickSearchButton()" class="search_btn_a">検索</a>
         <a href="#!" onclick="clickClearButton()" class="clear_btn_a">クリア</a>
@@ -193,7 +212,7 @@
             <div class="hikuyousya_date">{{ $danka->payment_date }}</div>
             <div class="hikuyousya_kaimyo">{{ $danka->category_name }}</div>
             <div class="hikuyousya_date">@if($danka->total > 0) {{ number_format($danka->total) }} @endif</div>
-            <div class="hikuyousya_btn"><a href="" class="search_view_btn_a">表示</a></div>
+            <div class="hikuyousya_btn"><a href="{{ route('danka_detail', $danka->id) }}" target="_blank" class="search_view_btn_a">表示</a></div>
         </div>
         @endforeach
     </div>
@@ -204,11 +223,9 @@
         <div class="hikuyousya_name">施主名</div>
         <div class="hikuyousya_zokumyo">俗名</div>
         <div class="hikuyousya_kaimyo">戒名</div>
-        <div class="hikuyousya_date">命日</div>
-        <div class="hikuyousya_kaiki">回忌</div>
-        <div class="hikuyousya_date">支払日</div>
-        <div class="hikuyousya_kaimyo">商品カテゴリー</div>
-        <div class="hikuyousya_date">金額</div>
+        <div class="hikuyousya_date">納骨日</div>
+        <div class="hikuyousya_date">納骨移動日</div>
+        <div class="hikuyousya_column">特記事項</div>
         <div class="hikuyousya_btn"></div>
     </div>
 
@@ -219,12 +236,10 @@
             <div class="hikuyousya_name">{{ $danka->name }}</div>
             <div class="hikuyousya_zokumyo">{{ $danka->common_name }}</div>
             <div class="hikuyousya_kaimyo">{{ $danka->posthumous }}</div>
-            <div class="hikuyousya_date">{{ $danka->meinichi }}</div>
-            <div class="hikuyousya_kaiki">@if($danka->kaiki <= 0) 1 @else {{ $danka->kaiki + 2 }} @endif</div>
-            <div class="hikuyousya_date">{{ $danka->payment_date }}</div>
-            <div class="hikuyousya_kaimyo">{{ $danka->category_name }}</div>
-            <div class="hikuyousya_date">@if($danka->total > 0) {{ number_format($danka->total) }} @endif</div>
-            <div class="hikuyousya_btn"><a href="" class="search_view_btn_a">表示</a></div>
+            <div class="hikuyousya_date">{{ $danka->nokotsubi }}</div>
+            <div class="hikuyousya_date">{{ $danka->nokotsuidobi }}</div>
+            <div class="hikuyousya_column">{{ $danka->column }}</div>
+            <div class="hikuyousya_btn"><a href="{{ route('danka_detail', $danka->id) }}" target="_blank" class="search_view_btn_a">表示</a></div>
         </div>
         @endforeach
     </div>
@@ -253,7 +268,7 @@
             <div class="hikuyousya_date">{{ $danka->payment_date }}</div>
             <div class="hikuyousya_kaimyo">{{ $danka->category_name }}</div>
             <div class="hikuyousya_date">@if($danka->total > 0) {{ number_format($danka->total) }} @endif</div>
-            <div class="hikuyousya_btn"><a href="" class="search_view_btn_a">表示</a></div>
+            <div class="hikuyousya_btn"><a href="{{ route('danka_detail', $danka->id) }}" target="_blank" class="search_view_btn_a">表示</a></div>
         </div>
         @endforeach
     </div>

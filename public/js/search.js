@@ -14,7 +14,7 @@ function clickClearButton() {
         //checkboxまたはradioボタン以外の時
         else if (this.type == 'select' && this.id != 'change_number') {
             this.selected = false;
-        } else if (this.id != 'change_number') {
+        } else if (this.id != 'change_number' && this.type != 'hidden') {
           // val値を空にする
           $(this).val('');
         }

@@ -193,6 +193,67 @@ class EventController extends Controller
                 'danka_list' => $danka_list,
                 'danka_id_list' => $danka_id_list,
             ]);
+        } elseif ($category_id == 5) {
+            $nokotsubi_before = isset($filter_array['nokotsubi_before']) ? $filter_array['nokotsubi_before'] : null;
+            $nokotsubi_after = isset($filter_array['nokotsubi_after']) ? $filter_array['nokotsubi_after'] : null;
+            $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
+
+            $event_name = $filter_array['event_name'];
+            $category_name = TextCategory::find($category_id)->name;
+
+            $query = Danka::select('danka.id as id', 'hikuyousya.id as hikuyousya_id', 'name', 'common_name', 'posthumous', 'nokotsubi', 'nokotsuidobi', 'column')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
+            ->whereNotNull('nokotsubi');
+
+
+            if (!empty($nokotsubi_before)) {
+                $query->whereDate('nokotsubi', '>=', $nokotsubi_before);
+            }
+            if (!empty($nokotsubi_after)) {
+                $query->whereDate('nokotsubi', '<=', $nokotsubi_after);
+            }
+
+            if (!empty($freeword)) {
+                $freeword = mb_convert_kana($freeword, 's');
+                $word_list = explode(" ", $freeword);
+                $query->where(function ($query) use ($word_list) {
+                    foreach ($word_list as $word) {
+                        if (!empty($word)) {
+                            $query->orwhere('pref', 'notices', "%$word%")->orwhere('column', 'like', "%$word%");
+                        }
+                    }
+                });
+            }
+    
+            $hikuyousya_ids = $query->pluck('hikuyousya_id');
+            $hikuyousya_count = count(array_unique($hikuyousya_ids->toArray()));
+
+            $number = \Request::get('number');
+            if (isset($number)) {
+                $danka_list = $query->orderBy('danka_id')->paginate($number)
+                ->appends(["number" => $number]);
+            } else {
+                $danka_list = $query->orderBy('danka_id')->paginate(10);
+            }
+
+            $danka_id_list = Danka::select('danka_id')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
+            ->whereIn('hikuyousya.id', $hikuyousya_ids)->groupBy('danka_id')->get();
+            $danka_count = $danka_id_list->count();
+            $danka_id_list = array_unique($danka_id_list->pluck('danka_id')->toArray());
+            $danka_id_list = implode(",", array_unique($danka_id_list));
+
+            return view('event_regist_search', [
+                'category_id' => $category_id,
+                'event_name' => $event_name,
+                'category_name' => $category_name,
+                'nokotsubi_before' => $nokotsubi_before,
+                'nokotsubi_after' => $nokotsubi_after,
+                'freeword' => $freeword,
+                'hikuyousya_count' => $hikuyousya_count,
+                'danka_count' => $danka_count,
+                'number' => $number,
+                'danka_list' => $danka_list,
+                'danka_id_list' => $danka_id_list,
+            ]);
         } else {
             $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;
             $payment_after = isset($filter_array['payment_after']) ? $filter_array['payment_after'] : null;
