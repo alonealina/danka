@@ -277,7 +277,8 @@ class EventController extends Controller
                 $list_query = Danka::select('danka.id as danka_id')
                     ->leftJoin('deal', 'deal.danka_id', '=', 'danka.id')
                     ->leftJoin('deal_detail', 'deal_detail.deal_id', '=', 'deal.id')
-                    ->where('deal_detail.item_id', 3)->whereDate('deal_detail.created_at', '>=', $list_created_at)
+                    ->leftJoin('item', 'deal_detail.item_id', '=', 'item.id')
+                    ->where('item.category_id', 3)->whereDate('deal_detail.created_at', '>=', $list_created_at)
                     ->whereIn('danka.id', $danka_ids);
                 $payment_danka_ids = array_unique($list_query->get()->pluck('danka_id')->toArray());
 
