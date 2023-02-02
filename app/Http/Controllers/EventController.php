@@ -271,7 +271,8 @@ class EventController extends Controller
                     ->where('event_date.category_id', 3)->where('event_date.id', $event_date_id);
                 $danka_ids = array_unique($list_query->get()->pluck('danka_id')->toArray());
 
-                $list_created_at = EventDate::find($event_date_id)->created_at;
+                $event_date = EventDate::find($event_date_id)->toArray();
+                $list_created_at = substr($event_date['created_at'], 0, 10);
 
                 $list_query = Danka::select('danka.id as danka_id')
                     ->leftJoin('deal', 'deal.danka_id', '=', 'danka.id')
