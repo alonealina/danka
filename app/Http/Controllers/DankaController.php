@@ -570,7 +570,7 @@ class DankaController extends Controller
         }
 
         if (isset($konryu_flg)) {
-            $query->whereNotNull('konryubi');
+            $query->whereNotNull('nokotsubi');
         }
 
         if (isset($kaiki_flg)) {

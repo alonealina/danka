@@ -198,6 +198,37 @@
         @endforeach
     </div>
 
+    @elseif($category_id == 5)
+    <div class="payment_list_header" style="margin:0;">
+        <div class="hikuyousya_id">カルテナンバー</div>
+        <div class="hikuyousya_name">施主名</div>
+        <div class="hikuyousya_zokumyo">俗名</div>
+        <div class="hikuyousya_kaimyo">戒名</div>
+        <div class="hikuyousya_date">命日</div>
+        <div class="hikuyousya_kaiki">回忌</div>
+        <div class="hikuyousya_date">支払日</div>
+        <div class="hikuyousya_kaimyo">商品カテゴリー</div>
+        <div class="hikuyousya_date">金額</div>
+        <div class="hikuyousya_btn"></div>
+    </div>
+
+    <div class="search_result_div" style="height:300px;">
+        @foreach ($danka_list as $danka)
+        <div class="payment_list_column">
+            <div class="hikuyousya_id">{{ $danka->id }}</div>
+            <div class="hikuyousya_name">{{ $danka->name }}</div>
+            <div class="hikuyousya_zokumyo">{{ $danka->common_name }}</div>
+            <div class="hikuyousya_kaimyo">{{ $danka->posthumous }}</div>
+            <div class="hikuyousya_date">{{ $danka->meinichi }}</div>
+            <div class="hikuyousya_kaiki">@if($danka->kaiki <= 0) 1 @else {{ $danka->kaiki + 2 }} @endif</div>
+            <div class="hikuyousya_date">{{ $danka->payment_date }}</div>
+            <div class="hikuyousya_kaimyo">{{ $danka->category_name }}</div>
+            <div class="hikuyousya_date">@if($danka->total > 0) {{ number_format($danka->total) }} @endif</div>
+            <div class="hikuyousya_btn"><a href="" class="search_view_btn_a">表示</a></div>
+        </div>
+        @endforeach
+    </div>
+
     @else
     <div class="payment_list_header" style="margin:0;">
         <div class="hikuyousya_id">カルテナンバー</div>
