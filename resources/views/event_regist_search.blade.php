@@ -169,10 +169,10 @@
         表示件数　
         @if($category_id == 1)
         @include('item.kaiki_regist_number')　　
-        @elseif($category_id == 3)
-
+        @elseif($category_id == 5)
+        @include('item.nokotsu_regist_number')　　
         @else
-
+        @include('item.other_regist_number')　　
         @endif
         {{ $danka_list->total()}}件 （
         @if($category_id == 1) 被供養者{{ $hikuyousya_count }}人　@endif
