@@ -600,12 +600,14 @@ class DankaController extends Controller
         TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
         ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->whereIn('hikuyousya.id', $ids);
 
+        $query->orderBy('danka_id', 'desc');
+
         $number = \Request::get('number');
         if (isset($number)) {
-            $danka_list = $query->orderBy('danka_id')->paginate($number)
+            $danka_list = $query->paginate($number)
             ->appends(["number" => $number]);
         } else {
-            $danka_list = $query->orderBy('danka_id')->paginate(10);
+            $danka_list = $query->paginate(10);
         }
 
 
