@@ -36,11 +36,11 @@
 
             <div class="danka_column">
                 <div class="danka_regist_name">商品</div>
-                <select name="area" class="select_category" style="width: 400px" id="area">
+                <select name="item_category_id" class="select_category" style="width: 400px" id="area">
                     <option value="">----</option>
                     @foreach ($item_list as $item)
                     <option value="{{ $item->id }}"
-                        @if($item_id == $item->id) selected @endif >{{ $item->name }}：{{ $item->detail }}</option>
+                        @if($item_category_id == $item->id) selected @endif >{{ $item->name }}</option>
                     @endforeach
                 </select>
             </div>

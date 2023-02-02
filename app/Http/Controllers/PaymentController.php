@@ -22,7 +22,7 @@ class PaymentController extends Controller
         $name = isset($filter_array['name']) ? $filter_array['name'] : null;
         $name_kana = isset($filter_array['name_kana']) ? $filter_array['name_kana'] : null;
         $tel = isset($filter_array['tel']) ? $filter_array['tel'] : null;
-        $item_id = isset($filter_array['item_id']) ? $filter_array['item_id'] : null;
+        $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
         $created_at_before = isset($filter_array['created_at_before']) ? $filter_array['created_at_before'] : null;
         $created_at_after = isset($filter_array['created_at_after']) ? $filter_array['created_at_after'] : null;
         $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;
@@ -64,8 +64,8 @@ class PaymentController extends Controller
             $query->whereDate('payment_date', '<=', $payment_after);
         }
 
-        if (!empty($item_id)) {
-            $query->where('item_id', $item_id);
+        if (!empty($item_category_id)) {
+            $query->where('category_id', $item_category_id);
         }
 
         if (!empty($type)) {
@@ -90,7 +90,7 @@ class PaymentController extends Controller
             $deal_list = $query->orderBy('deal.id')->paginate(10);
         }
 
-        $item_list = Item::select('item.id as id', 'name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')->orderBy('item_category.id')->get();
+        $item_list = ItemCategory::orderBy('id')->get();
 
         return view('deal_list', [
             'deal_list' => $deal_list,
@@ -99,7 +99,7 @@ class PaymentController extends Controller
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
-            'item_id' => $item_id,
+            'item_category_id' => $item_category_id,
             'created_at_before' => $created_at_before,
             'created_at_after' => $created_at_after,
             'payment_before' => $payment_before,
