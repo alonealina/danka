@@ -77,7 +77,6 @@
         <div class="deal_name">施主名</div>
         <div class="deal_name">フリガナ</div>
         <div class="deal_tel">電話番号</div>
-        <div class="deal_item">取引内容</div>
         <div class="deal_price">金額</div>
         <div class="deal_date">支払い確認</div>
         <div class="deal_date">作成日</div>
@@ -92,17 +91,16 @@
             <div class="deal_name">{{ $deal->name }}</div>
             <div class="deal_name">{{ $deal->name_kana }}</div>
             <div class="deal_tel">{{ $deal->tel }}</div>
-            <div class="deal_item">{{ $deal->detail }}</div>
             <div class="deal_price">{{ number_format($deal->total) }}</div>
             <div class="deal_date">{{ $deal->payment_date }}</div>
             <div class="deal_date">{{ $deal->created_at->format('Y-m-d') }}</div>
             <div class="deal_btn">
                 @if ($deal->state == "未払い")
-                <a href="{{ route('unclaimed_update', $deal->deal_detail_id) }}" class="payment_white_btn_a">送付待ちへ</a>
-                <a href="{{ route('paid_update', $deal->deal_detail_id) }}" class="payment_blue_btn_a">支払済へ</a>
+                <a href="{{ route('unclaimed_update', $deal->id) }}" class="payment_white_btn_a">送付待ちへ</a>
+                <a href="{{ route('paid_update', $deal->id) }}" class="payment_blue_btn_a">支払済へ</a>
                 <a href="{{ route('deal_detail', $deal->id) }}" class="payment_view_btn_a">表示</a>
                 @else
-                <a href="{{ route('unpaid_update', $deal->deal_detail_id) }}" class="payment_red_btn_a">未払いへ</a>
+                <a href="{{ route('unpaid_update', $deal->id) }}" class="payment_red_btn_a">未払いへ</a>
                 <a href="{{ route('deal_detail', $deal->id) }}" class="payment_view_btn_a">表示</a>
                 @endif
             </div>

@@ -31,8 +31,10 @@ class PaymentController extends Controller
         $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
         $type = isset($filter_array['type']) ? $filter_array['type'] : null;
 
-        $query = Deal::select('deal.id as id','deal_detail.id as deal_detail_id', 'name', 'name_kana', 'tel', 'detail', 'total', 'quantity', 'state', 'payment_date', 'deal.created_at as created_at')
-            ->join('danka', 'danka.id', '=', 'deal.danka_id')->join('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id');
+        $query = Deal::select('deal.id as id', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at as created_at')
+            ->selectRaw('SUM(total) AS total')
+            ->join('danka', 'danka.id', '=', 'deal.danka_id')->join('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id')
+            ->groupBy('deal.id', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at');
 
         if (!empty($name)) {
             $query->where('name', 'like', "%$name%");
@@ -66,16 +68,16 @@ class PaymentController extends Controller
             $query->where('item_id', $item_id);
         }
 
+        if (!empty($type)) {
+            $query->where('state', $type);
+        }
+
         if (!empty($price_min)) {
-            $query->where('total', '>=', $price_min);
+            $query->having('total', '>=', $price_min);
         }
 
         if (!empty($price_max)) {
-            $query->where('total', '<=', $price_max);
-        }
-
-        if (!empty($type)) {
-            $query->where('state', $type);
+            $query->having('total', '<=', $price_max);
         }
 
 
@@ -111,7 +113,7 @@ class PaymentController extends Controller
 
     public function unclaimed_update($id)
     {
-        $deal_detail = DealDetail::find($id);
+        $deal = Deal::find($id);
 
         DB::beginTransaction();
         try {
@@ -119,7 +121,7 @@ class PaymentController extends Controller
                 'state' => '送付待ち',
             ];
 
-            $deal_detail->fill($fill_data)->update();
+            $deal->fill($fill_data)->update();
             
             DB::commit();
             return redirect()->route('deal_list')->with('message', 'ステータスを変更しました。');
@@ -131,7 +133,7 @@ class PaymentController extends Controller
 
     public function unpaid_update($id)
     {
-        $deal_detail = DealDetail::find($id);
+        $deal = Deal::find($id);
 
         DB::beginTransaction();
         try {
@@ -140,7 +142,7 @@ class PaymentController extends Controller
                 'payment_date' => null,
             ];
 
-            $deal_detail->fill($fill_data)->update();
+            $deal->fill($fill_data)->update();
             
             DB::commit();
             return redirect()->route('deal_list')->with('message', 'ステータスを変更しました。');
@@ -151,7 +153,7 @@ class PaymentController extends Controller
 
     public function paid_update($id)
     {
-        $deal_detail = DealDetail::find($id);
+        $deal = Deal::find($id);
         $date = date('Y-m-d');
         DB::beginTransaction();
         try {
@@ -160,7 +162,7 @@ class PaymentController extends Controller
                 'payment_date' => $date,
             ];
 
-            $deal_detail->fill($fill_data)->update();
+            $deal->fill($fill_data)->update();
             
             DB::commit();
             return redirect()->route('deal_list')->with('message', 'ステータスを変更しました。');
