@@ -31,7 +31,7 @@ class PaymentController extends Controller
         $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
         $type = isset($filter_array['type']) ? $filter_array['type'] : null;
 
-        $query = Deal::select('deal.id as id', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at as created_at')
+        $query = Deal::select('deal.id as id','deal_detail.id as detail_id', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at as created_at')
             ->selectRaw('SUM(total) AS total')
             ->join('danka', 'danka.id', '=', 'deal.danka_id')->join('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id')
             ->groupBy('deal.id', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at');
