@@ -20,11 +20,13 @@ class CategoryController extends Controller
         $shipment_categories = ShipmentCategory::get();
         $item_categories = ItemCategory::get();
         $text_categories = TextCategory::get();
+        $type = isset($request['type']) ? $request['type'] : null;
 
         return view('category_list', [
             'shipment_categories' => $shipment_categories,
             'item_categories' => $item_categories,
             'text_categories' => $text_categories,
+            'type' => $type,
         ]);
     }
 
@@ -84,7 +86,7 @@ class CategoryController extends Controller
         try {
             ItemCategory::where('id', $id)->delete();
             DB::commit();
-            return redirect()->route('category_list')->with('message', '商品カテゴリを削除しました');
+            return redirect()->route('category_list',['type' => 'item'])->with('message', '商品カテゴリを削除しました');
         } catch (\Exception $e) {
             DB::rollback();
         }
@@ -96,7 +98,7 @@ class CategoryController extends Controller
         try {
             TextCategory::where('id', $id)->delete();
             DB::commit();
-            return redirect()->route('category_list')->with('message', '行事カテゴリを削除しました');
+            return redirect()->route('category_list',['type' => 'text'])->with('message', '行事カテゴリを削除しました');
         } catch (\Exception $e) {
             DB::rollback();
         }

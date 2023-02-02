@@ -21,9 +21,12 @@
         @endif
     </form>
     <div class="payment_btn_list">
-        <a id="shipment_btn" href="#!" onclick="ShipmentButton()" class="category_btn_a current_category">発送物</a>
-        <a id="item_btn" href="#!" onclick="ItemButton()" class="category_btn_a" style="border-left: 1px solid;border-right: 1px solid;">商品</a>
-        <a id="text_btn" href="#!" onclick="TextButton()" class="category_btn_a">行事</a>
+        <a id="shipment_btn" href="#!" onclick="ShipmentButton()" class="category_btn_a
+        @if ($type != 'item' && $type != 'text') current_category @endif">発送物</a>
+        <a id="item_btn" href="#!" onclick="ItemButton()" class="category_btn_a
+        @if ($type == 'item') current_category @endif" style="border-left: 1px solid;border-right: 1px solid;">商品</a>
+        <a id="text_btn" href="#!" onclick="TextButton()" class="category_btn_a
+        @if ($type == 'text') current_category @endif">行事</a>
     </div>
 
     <div class="category_list_message">{{ session('message') }}</div>
@@ -31,27 +34,27 @@
     <div class="category_list_header">カテゴリ名</div>
 
     <div class="category_list">
-        <div id="shipment_div">
+        <div id="shipment_div" @if ($type == 'item' || $type == 'text') hidden @endif>
             @foreach($shipment_categories as $category)
             <div class="text_list_column">
                 <div class="">{{ $category->name }}</div>
-                @if($category->id > 16)
+                @if($category->id > 13)
                 <a href="shipment_category_delete/{{ $category->id }}" onclick="return confirm('本当に削除しますか？')" class="delete_btn_a">削除</a>
                 @endif
             </div>
             @endforeach
         </div>
-        <div id="item_div" hidden>
+        <div id="item_div" @if ($type != 'item') hidden @endif>
             @foreach($item_categories as $category)
             <div class="text_list_column">
                 <div class="">{{ $category->name }}</div>
-                @if($category->id > 11)
+                @if($category->id > 14)
                 <a href="item_category_delete/{{ $category->id }}" onclick="return confirm('本当に削除しますか？')" class="delete_btn_a">削除</a>
                 @endif
             </div>
             @endforeach
         </div>
-        <div id="text_div" hidden>
+        <div id="text_div" @if ($type != 'text') hidden @endif>
             @foreach($text_categories as $category)
             <div class="text_list_column">
                 <div class="">{{ $category->name }}</div>
