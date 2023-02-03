@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content_title">取引確認</div>
+<div class="content_title">取引編集</div>
 <div class="admin_list_message">{{ session('message') }}</div>
 <form id="admin_store_form" name="danka_store_form" action="{{ route('deal_edit_confirm') }}" method="post">
 @csrf

@@ -34,7 +34,7 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">メールアドレス</div>
-                {{ Form::text('mail', $danka->mail, ['class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
+                {{ Form::text('mail', $danka->mail, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">特記事項</div>

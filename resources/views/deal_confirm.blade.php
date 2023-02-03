@@ -70,7 +70,7 @@
                 <div class="deal_item_zokumyo">{{ $item['kaimyo'] }}{{ Form::hidden('remark[]', $item['remark']) }}</div>
                 <div class="deal_item_date">{{ $item['meinichi'] }}</div>
                 <div class="deal_item_kaiki">{{ $item['gyonen'] }}</div>
-                <div class="deal_item_kaiki">@if($item['kaiki'] <= 0) 1 @else {{ $item['kaiki'] + 2 }} @endif</div>
+                <div class="deal_item_kaiki">@if($item['zokumyo'] == 'なし')  @elseif($item['kaiki'] <= 0) 1 @else {{ $item['kaiki'] + 2 }} @endif</div>
             </div>
             <div id="item-1" class="deal_item_column">
                 　備考：{{ $item['remark'] }}

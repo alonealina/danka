@@ -74,7 +74,7 @@ class CategoryController extends Controller
         try {
             ShipmentCategory::where('id', $id)->delete();
             DB::commit();
-            return redirect()->route('category_list')->with('message', '発送物カテゴリを削除しました');
+            return redirect()->route('category_list',['type' => 'shipment'])->with('message', '発送物カテゴリを削除しました');
         } catch (\Exception $e) {
             DB::rollback();
         }
