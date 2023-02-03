@@ -59,20 +59,37 @@
             <a href="#!" onclick="clickClearButton()" class="clear_btn_a">クリア</a>
         </div>
     </div>
-
-    <div class="category_list_message">{{ session('message') }}</div>
-    
-    <div class="paginationWrap">
-        <div class="pagination_div">
-            @include('item.deal_type')
-            表示件数　
-            @include('item.deal_number')　　
-            {{ $deal_list->total() }}件が該当しました
-            {{ $deal_list->appends(request()->query())->links('pagination::default') }}
-            　　合計金額　{{ number_format($sum_price) }} 円
-        </div>
-    </div>
 </form>
+
+<div class="category_list_message">{{ session('message') }}</div>
+
+<div class="paginationWrap">
+    <div class="pagination_div">
+        @include('item.deal_type')
+        表示件数　
+        @include('item.deal_number')　　
+        {{ $deal_list->total() }}件が該当しました
+        {{ $deal_list->appends(request()->query())->links('pagination::default') }}
+        　　合計金額　{{ number_format($sum_price) }} 円
+    </div>
+    <form id="form" name="update_form" action="{{ route('deal_csv_export') }}" method="post">
+        @csrf
+        {{ Form::hidden('type', $type) }}
+        {{ Form::hidden('name', $name) }}
+        {{ Form::hidden('name_kana', $name_kana) }}
+        {{ Form::hidden('tel', $tel) }}
+        {{ Form::hidden('item_category_id', $item_category_id) }}
+        {{ Form::hidden('created_at_before', $created_at_before) }}
+        {{ Form::hidden('created_at_after', $created_at_after) }}
+        {{ Form::hidden('payment_before', $payment_before) }}
+        {{ Form::hidden('payment_after', $payment_after) }}
+        {{ Form::hidden('price_min', $price_min) }}
+        {{ Form::hidden('price_max', $price_max) }}
+        {{ Form::hidden('number', $number) }}
+        <button class="payment_blue_btn_a">CSV出力</button>
+    </form>
+</div>
+
 
 <div class="payment_list_header" style="margin:0;">
     <div class="deal_id">取引番号</div>

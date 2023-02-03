@@ -12,6 +12,7 @@ use App\Models\Item;
 use App\Models\ItemCategory;
 use App\Models\TextCategory;
 use App\Rules\ItemCheck;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use DB;
 
 class PaymentController extends Controller
@@ -598,6 +599,116 @@ class PaymentController extends Controller
         }
     }
 
+    public function deal_csv_export(Request $request)
+    {
+        $filter_array = $request->all();
+        $name = isset($filter_array['name']) ? $filter_array['name'] : null;
+        $name_kana = isset($filter_array['name_kana']) ? $filter_array['name_kana'] : null;
+        $tel = isset($filter_array['tel']) ? $filter_array['tel'] : null;
+        $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
+        $created_at_before = isset($filter_array['created_at_before']) ? $filter_array['created_at_before'] : null;
+        $created_at_after = isset($filter_array['created_at_after']) ? $filter_array['created_at_after'] : null;
+        $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;
+        $payment_after = isset($filter_array['payment_after']) ? $filter_array['payment_after'] : null;
+        $price_min = isset($filter_array['price_min']) ? $filter_array['price_min'] : null;
+        $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
+        $type = isset($filter_array['type']) ? $filter_array['type'] : null;
+
+        $query = Deal::select('deal.id as id', 'deal_no', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at as created_at')
+            ->selectRaw('SUM(total) AS total')
+            ->join('danka', 'danka.id', '=', 'deal.danka_id')->join('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id')
+            ->groupBy('deal.id', 'deal_no', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at');
+
+        if (!empty($name)) {
+            $query->where('name', 'like', "%$name%");
+        }
+
+        if (!empty($name_kana)) {
+            $query->where('name_kana', 'like', "%$name_kana%");
+        }
+    
+        if (!empty($tel)) {
+            $query->where(function ($query) use ($tel) {
+                $query->orwhere('tel', 'like', "%$tel%")->orwhere('mobile', 'like', "%$tel%");
+            });
+        }
+
+        if (!empty($created_at_before)) {
+            $query->whereDate('deal.created_at', '>=', $created_at_before);
+        }
+        if (!empty($created_at_after)) {
+            $query->whereDate('deal.created_at', '<=', $created_at_after);
+        }
+
+        if (!empty($payment_before)) {
+            $query->whereDate('payment_date', '>=', $payment_before);
+        }
+        if (!empty($payment_after)) {
+            $query->whereDate('payment_date', '<=', $payment_after);
+        }
+
+        if (!empty($item_category_id)) {
+            $query->where('category_id', $item_category_id);
+        }
+
+        if (!empty($type)) {
+            if ($type != 'すべて') {
+                $query->where('state', $type);
+            }
+        } else {
+            $type = '未払い';
+            $query->where('state', $type);
+        }
+
+        if (!empty($price_min)) {
+            $query->having('total', '>=', $price_min);
+        }
+
+        if (!empty($price_max)) {
+            $query->having('total', '<=', $price_max);
+        }
+
+        if (!empty($type) && $type == '支払済') {
+            $query->orderBy('payment_date', 'desc');
+        } else {
+            $query->orderBy('deal_no', 'desc');
+        }
+
+        $deal_list = $query->get();
+
+        $cvsList[] = ['メニュー名', '値段', '説明文', '公開・非公開', 'イチオシメニュー', '作成日時', '更新日時', 
+        ];
+        foreach ($deal_list as $deal) {
+            $cvsList[] = $deal->outputCsvContent();
+        }
+
+        $response = new StreamedResponse (function() use ($cvsList){
+            $stream = fopen('php://output', 'w');
+
+            //　文字化け回避
+            stream_filter_prepend($stream,'convert.iconv.utf-8/cp932//TRANSLIT');
+
+            // CSVデータ
+            foreach($cvsList as $key => $value) {
+                fputcsv($stream, $value);
+            }
+            $buffer = str_replace("\n", "\r\n", stream_get_contents($stream));
+            fclose($stream);
+            //出力ストリーム
+            $fp = fopen('php://output', 'w+b');
+            //さっき置換した内容を出力 
+            fwrite($fp, $buffer);
+        
+            fclose($fp);
+        });
+        
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+ 
+        return $response;
+    }
+    
+    
 
 
 

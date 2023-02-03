@@ -330,7 +330,7 @@ class EventController extends Controller
                     ->leftJoin('event_send_list', 'event_send_list.danka_id', '=', 'danka.id')
                     ->leftJoin('event_date', 'event_send_list.event_date_id', '=', 'event_date.id')
                     ->where('event_date.category_id', 3)->where('event_date.id', $event_date_id);
-                $danka_ids = array_unique($list_query->get()->pluck('danka_id')->toArray());
+                $event_date_danka_ids = array_unique($list_query->get()->pluck('danka_id')->toArray());
 
                 $event_date = EventDate::find($event_date_id)->toArray();
                 $list_created_at = substr($event_date['created_at'], 0, 10);
@@ -340,17 +340,18 @@ class EventController extends Controller
                     ->leftJoin('deal_detail', 'deal_detail.deal_id', '=', 'deal.id')
                     ->leftJoin('item', 'deal_detail.item_id', '=', 'item.id')
                     ->where('item.category_id', 3)->whereDate('deal_detail.created_at', '>=', $list_created_at)
-                    ->whereIn('danka.id', $danka_ids);
+                    ->whereIn('danka.id', $event_date_danka_ids);
                 $payment_danka_ids = array_unique($list_query->get()->pluck('danka_id')->toArray());
 
                 if ($event_date_flg == 'off') {
-                    $query->whereNotIn('danka.id', $payment_danka_ids);
-                } else {
-                    $query->whereIn('danka.id', $payment_danka_ids);
+                    $payment_danka_ids = array_diff($event_date_danka_ids, $payment_danka_ids);
                 }
+                $query->whereIn('danka.id', $payment_danka_ids);
+
             }
 
             if (!empty($price_min)) {
+
                 $query->where('total', '>=', $price_min);
             }
             if (!empty($price_max)) {
