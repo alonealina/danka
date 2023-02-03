@@ -47,7 +47,7 @@
                     <div class="danka_column">
                         <div class="danka_regist_name2">命日</div>
                         {{ Form::date('meinichi', $hikuyousya->meinichi, ['class' => 'danka_form_text2', 'id' => 'meinichi', 'placeholder' => '', 'style' => 'width: 110px;']) }}
-                        　<input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1">
+                        　<input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1" @if($hikuyousya->kaiki_flg) checked @endif>
                         {{ Form::text('kaiki', $kaiki, ['class' => 'danka_form_text2', 'id' => 'kaiki_year', 'maxlength' => 2, 'style' => 'width: 30px;', 'disabled']) }}
                         <div class="danka_regist_name2" style="width: 70px;">周忌/回忌</div>
                         <div class="danka_regist_name2" style="margin-left: 50px; width: 40px;">行年</div>
