@@ -130,8 +130,9 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function unclaimed_update($id, $type)
+    public function unclaimed_update(Request $request)
     {
+        $id = $request->id;
         $deal = Deal::find($id);
 
         DB::beginTransaction();
@@ -143,15 +144,29 @@ class PaymentController extends Controller
             $deal->fill($fill_data)->update();
             
             DB::commit();
-            return redirect()->route('deal_list',['type' => $type])->with('message', 'ステータスを変更しました。');
+            return redirect()->route('deal_list',[
+            'name' => $request->name,
+            'name_kana' => $request->name_kana,
+            'tel' => $request->tel,
+            'item_category_id' => $request->item_category_id,
+            'created_at_before' => $request->created_at_before,
+            'created_at_after' => $request->created_at_after,
+            'payment_before' => $request->payment_before,
+            'payment_after' => $request->payment_after,
+            'price_min' => $request->price_min,
+            'price_max' => $request->price_max,
+            'type' => $request->type,
+            'number' => $request->number,
+            ])->with('message', 'ステータスを変更しました。');
         } catch (\Exception $e) {
             DB::rollback();
         }
 
     }
 
-    public function unpaid_update($id, $type)
+    public function unpaid_update(Request $request)
     {
+        $id = $request->id;
         $deal = Deal::find($id);
 
         DB::beginTransaction();
@@ -164,14 +179,28 @@ class PaymentController extends Controller
             $deal->fill($fill_data)->update();
             
             DB::commit();
-            return redirect()->route('deal_list',['type' => $type])->with('message', 'ステータスを変更しました。');
-        } catch (\Exception $e) {
+            return redirect()->route('deal_list',[
+                'name' => $request->name,
+                'name_kana' => $request->name_kana,
+                'tel' => $request->tel,
+                'item_category_id' => $request->item_category_id,
+                'created_at_before' => $request->created_at_before,
+                'created_at_after' => $request->created_at_after,
+                'payment_before' => $request->payment_before,
+                'payment_after' => $request->payment_after,
+                'price_min' => $request->price_min,
+                'price_max' => $request->price_max,
+                'type' => $request->type,
+                'number' => $request->number,
+                ])->with('message', 'ステータスを変更しました。');
+            } catch (\Exception $e) {
             DB::rollback();
         }
     }
 
-    public function paid_update($id, $type)
+    public function paid_update(Request $request)
     {
+        $id = $request->id;
         $deal = Deal::find($id);
         $date = date('Y-m-d');
         DB::beginTransaction();
@@ -184,8 +213,21 @@ class PaymentController extends Controller
             $deal->fill($fill_data)->update();
             
             DB::commit();
-            return redirect()->route('deal_list',['type' => $type])->with('message', 'ステータスを変更しました。');
-        } catch (\Exception $e) {
+            return redirect()->route('deal_list',[
+                'name' => $request->name,
+                'name_kana' => $request->name_kana,
+                'tel' => $request->tel,
+                'item_category_id' => $request->item_category_id,
+                'created_at_before' => $request->created_at_before,
+                'created_at_after' => $request->created_at_after,
+                'payment_before' => $request->payment_before,
+                'payment_after' => $request->payment_after,
+                'price_min' => $request->price_min,
+                'price_max' => $request->price_max,
+                'type' => $request->type,
+                'number' => $request->number,
+                ])->with('message', 'ステータスを変更しました。');
+            } catch (\Exception $e) {
             DB::rollback();
         }
     }
