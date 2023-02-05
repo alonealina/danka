@@ -82,44 +82,62 @@
         </div>
     </div>
 
-    <div class="paginationWrap">
-        <div class="pagination_div">
-            表示件数　
-            @include('item.danka_number')　　
-            {{ $danka_list->total() }}件が該当しました
-            {{ $danka_list->appends(request()->query())->links('pagination::default') }}
-    
-        </div>
-    </div>
-
-    <div class="payment_list_header" style="margin:0;">
-        <div class="payment_id">カルテナンバー</div>
-        <div class="payment_name">施主名</div>
-        <div class="payment_tel">電話番号</div>
-        <div class="hikuyousya_address">住所</div>
-        <div class="payment_btn"></div>
-    </div>
-
-    <div class="search_result_div">
-
-        @foreach ($danka_list as $danka)
-        <div class="payment_list_column">
-            <div class="payment_id">{{ $danka->id }}</div>
-            <div class="payment_name">{{ $danka->name }}</div>
-            <div class="payment_tel">{{ $danka->tel }}</div>
-            <div class="hikuyousya_address">{{ $danka->pref }}</div>
-            <div class="payment_btn"><a href="{{ route('danka_detail', $danka->id) }}" class="search_view_btn_a">表示</a></div>
-        </div>
-
-
-        @endforeach
-        
-    </div>
-
-
-    
-
 </form>
+
+<div class="paginationWrap">
+    <div class="pagination_div">
+        表示件数　
+        @include('item.danka_number')　　
+        {{ $danka_list->total() }}件が該当しました
+        {{ $danka_list->appends(request()->query())->links('pagination::default') }}
+
+    </div>
+    <form id="form" name="update_form" action="{{ route('danka_csv_export') }}" method="post">
+        @csrf
+        {{ Form::hidden('id', $id) }}
+        {{ Form::hidden('name', $name) }}
+        {{ Form::hidden('name_kana', $name_kana) }}
+        {{ Form::hidden('tel', $tel) }}
+        {{ Form::hidden('mail', $mail) }}
+        {{ Form::hidden('freeword', $freeword) }}
+        {{ Form::hidden('area', $area) }}
+        {{ Form::hidden('zip', $zip) }}
+        {{ Form::hidden('pref', $pref) }}
+        {{ Form::hidden('address', $address) }}
+        {{ Form::hidden('segaki_flg', $segaki_flg) }}
+        {{ Form::hidden('star_flg', $star_flg) }}
+        {{ Form::hidden('yakushiji_flg', $yakushiji_flg) }}
+        <button class="payment_blue_btn_a">CSV出力</button>
+    </form>
+</div>
+
+<div class="payment_list_header" style="margin:0;">
+    <div class="payment_id">カルテナンバー</div>
+    <div class="payment_name">施主名</div>
+    <div class="payment_tel">電話番号</div>
+    <div class="hikuyousya_address">住所</div>
+    <div class="payment_btn"></div>
+</div>
+
+<div class="search_result_div" >
+
+    @foreach ($danka_list as $danka)
+    <div class="payment_list_column">
+        <div class="payment_id">{{ $danka->id }}</div>
+        <div class="payment_name">{{ $danka->name }}</div>
+        <div class="payment_tel">{{ $danka->tel }}</div>
+        <div class="hikuyousya_address">{{ $danka->pref }}</div>
+        <div class="payment_btn"><a href="{{ route('danka_detail', $danka->id) }}" class="search_view_btn_a">表示</a></div>
+    </div>
+
+
+    @endforeach
+    
+</div>
+
+
+    
+
 <script src="{{ asset('js/search.js') }}"></script>
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 @endsection

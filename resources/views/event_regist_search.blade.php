@@ -321,7 +321,28 @@
 
     @endif
 </form>
-<a href="#!" onclick="clickEventStoreButton()" class="search_btn_a" style="margin: 10px auto 0;">リスト作成</a>
+<div class="event_regist_btn_list">
+    @if($category_id == 1)
+    <form id="csv_export_form" name="csv_export_form" action="{{ route('nenki_csv_export') }}" method="post">
+    @csrf
+    {{ Form::hidden('hikuyousya_id_list', $hikuyousya_id_list) }}
+    </form>
+    @elseif($category_id == 5)
+    <form id="csv_export_form" name="csv_export_form" action="{{ route('noukotsu_csv_export') }}" method="post">
+    @csrf
+    {{ Form::hidden('hikuyousya_id_list', $hikuyousya_id_list) }}
+    </form>
+    @else
+    <form id="csv_export_form" name="csv_export_form" action="{{ route('star_csv_export') }}" method="post">
+    @csrf
+    {{ Form::hidden('danka_id_list', $danka_id_list) }}
+    </form>
+    @endif
+
+
+    <a href="#!" onclick="clickCsvExportButton()" class="search_btn_a" style="margin: 10px auto 0;">CSV出力</a>
+    <a href="#!" onclick="clickEventStoreButton()" class="search_btn_a" style="margin: 10px auto 0;">リスト作成</a>
+</div>
 
 
 

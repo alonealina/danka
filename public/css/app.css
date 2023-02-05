@@ -489,7 +489,7 @@ p {
     justify-content: center;
 }
 .search_result_div {
-    height: 335px;
+    height: 320px;
     font:normal normal normal 14px/18px sans-serif;
     overflow-y: scroll;
     /*スクロールバー非表示（IE・Edge）*/
@@ -847,6 +847,12 @@ p {
 .item_btn_list {
     width: 200px;
     display: flex;
+}
+.event_regist_btn_list {
+    display: flex;
+    justify-content: space-between;
+    width: 220px;
+    margin: auto;
 }
 .add_btn_a {
     background: #2963AB 0% 0% no-repeat padding-box;

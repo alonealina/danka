@@ -11,6 +11,7 @@ use App\Models\DealDetail;
 use App\Models\DankaDate;
 use App\Models\DankaBook;
 use App\Rules\TextCategoryCheck;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use DB;
 
 class DankaController extends Controller
@@ -611,9 +612,6 @@ class DankaController extends Controller
         }
 
 
-
-
-
         return view('hikuyousya_search', [
             'danka_list' => $danka_list,
 
@@ -658,7 +656,306 @@ class DankaController extends Controller
         ]);
     }
 
+    public function danka_csv_export(Request $request)
+    {
+        $filter_array = $request->all();
+        $id = isset($filter_array['id']) ? $filter_array['id'] : null;
+        $name = isset($filter_array['name']) ? $filter_array['name'] : null;
+        $name_kana = isset($filter_array['name_kana']) ? $filter_array['name_kana'] : null;
+        $tel = isset($filter_array['tel']) ? $filter_array['tel'] : null;
+        $mail = isset($filter_array['mail']) ? $filter_array['mail'] : null;
+        $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
+        $area = isset($filter_array['area']) ? $filter_array['area'] : null;
+        $zip = isset($filter_array['zip']) ? $filter_array['zip'] : null;
+        $pref = isset($filter_array['pref']) ? $filter_array['pref'] : null;
+        $address = isset($filter_array['address']) ? $filter_array['address'] : null;
+        $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
+        $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
+        $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
 
+        $query = Danka::select('*');
+
+        if (!empty($id)) {
+            $query->where('id', 'like', "%$id%");
+        }
+
+        if (!empty($name)) {
+            $query->where('name', 'like', "%$name%");
+        }
+
+        if (!empty($name_kana)) {
+            $query->where('name_kana', 'like', "%$name_kana%");
+        }
+
+        if (!empty($tel)) {
+            $query->where(function ($query) use ($tel) {
+                $query->orwhere('tel', 'like', "%$tel%")->orwhere('mobile', 'like', "%$tel%");
+            });
+        }
+
+        if (!empty($mail)) {
+            $query->where('mail', 'like', "%$mail%");
+        }
+
+        if (!empty($zip)) {
+            $query->where('zip', 'like', "%$zip%");
+        }
+
+        if (!empty($area)) {
+            $query->where(function ($query) use ($area) {
+                if ($area == "北海道") {
+                    $query->orwhere('pref', 'like', "%北海道%");
+                } elseif ($area == "東北") {
+                    $query->orwhere('pref', 'like', "%青森県%")->orwhere('pref', 'like', "%岩手県%")->orwhere('pref', 'like', "%宮城県%")->orwhere('pref', 'like', "%秋田県%")
+                    ->orwhere('pref', 'like', "%山形県%")->orwhere('pref', 'like', "%福島県%");
+                } elseif ($area == "関東") {
+                    $query->orwhere('pref', 'like', "%茨城県%")->orwhere('pref', 'like', "%栃木県%")->orwhere('pref', 'like', "%群馬県%")->orwhere('pref', 'like', "%埼玉県%")
+                    ->orwhere('pref', 'like', "%千葉県%")->orwhere('pref', 'like', "%東京都%")->orwhere('pref', 'like', "%神奈川県%");
+                } elseif ($area == "中部") {
+                    $query->orwhere('pref', 'like', "%新潟県%")->orwhere('pref', 'like', "%富山県%")->orwhere('pref', 'like', "%石川県%")->orwhere('pref', 'like', "%福井県%")
+                    ->orwhere('pref', 'like', "%山梨県%")->orwhere('pref', 'like', "%長野県%")->orwhere('pref', 'like', "%岐阜県%")
+                    ->orwhere('pref', 'like', "%静岡県%")->orwhere('pref', 'like', "%愛知県%");
+                } elseif ($area == "近畿") {
+                    $query->orwhere('pref', 'like', "%三重県%")->orwhere('pref', 'like', "%滋賀県%")->orwhere('pref', 'like', "%京都府%")->orwhere('pref', 'like', "%大阪府%")
+                    ->orwhere('pref', 'like', "%兵庫県%")->orwhere('pref', 'like', "%奈良県%")->orwhere('pref', 'like', "%和歌山県%");
+                } elseif ($area == "中国") {
+                    $query->orwhere('pref', 'like', "%鳥取県%")->orwhere('pref', 'like', "%島根県%")->orwhere('pref', 'like', "%岡山県%")
+                    ->orwhere('pref', 'like', "%広島県%")->orwhere('pref', 'like', "%山口県%");
+                } elseif ($area == "四国") {
+                    $query->orwhere('pref', 'like', "%徳島県%")->orwhere('pref', 'like', "%香川県%")->orwhere('pref', 'like', "%愛媛県%")->orwhere('pref', 'like', "%高知県%");
+                } elseif ($area == "九州") {
+                    $query->orwhere('pref', 'like', "%福岡県%")->orwhere('pref', 'like', "%佐賀県%")->orwhere('pref', 'like', "%長崎県%")->orwhere('pref', 'like', "%熊本県%")
+                    ->orwhere('pref', 'like', "%大分県%")->orwhere('pref', 'like', "%宮崎県%")->orwhere('pref', 'like', "%鹿児島県%")->orwhere('pref', 'like', "%沖縄県%");
+                } 
+            });
+        }
+
+        if (!empty($pref)) {
+            $query->where('pref', 'like', "%$pref%");
+        }
+
+        if (!empty($address)) {
+            $query->where(function ($query) use ($address) {
+                $query->orwhere('city', 'like', "%$address%")->orwhere('address', 'like', "%$address%")->orwhere('building', 'like', "%$address%");
+            });
+        }
+
+        if (!empty($freeword)) {
+            $freeword = mb_convert_kana($freeword, 's');
+            $word_list = explode(" ", $freeword);
+            $query->where(function ($query) use ($word_list) {
+                foreach ($word_list as $word) {
+                    if (!empty($word)) {
+                        $query->orwhere('notices', 'like', "%$word%")->orwhere('pref', 'like', "%$word%");
+                    }
+                }
+            });
+        }
+
+        if (isset($segaki_flg)) {
+            $query->where('segaki_flg', '1');
+        }
+
+        if (isset($star_flg)) {
+            $query->where('star_flg', '1');
+        }
+
+        if (isset($yakushiji_flg)) {
+            $query->where('yakushiji_flg', '1');
+        }
+
+        $danka_list = $query->orderBy('id', 'desc')->get();
+
+        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', 'メールアドレス', '紹介者', '郵便番号', '住所', 
+        '登録日', '星祭', '施餓鬼', '薬師寺霊園', '特記事項', 
+        ];
+        foreach ($danka_list as $danka) {
+            $cvsList[] = $danka->outputCsvContentDanka();
+        }
+
+        $response = new StreamedResponse (function() use ($cvsList){
+            $stream = fopen('php://output', 'w');
+
+            //　文字化け回避
+            stream_filter_prepend($stream,'convert.iconv.utf-8/cp932//TRANSLIT');
+
+            // CSVデータ
+            foreach($cvsList as $key => $value) {
+                fputcsv($stream, $value);
+            }
+            $buffer = str_replace("\n", "\r\n", stream_get_contents($stream));
+            fclose($stream);
+            //出力ストリーム
+            $fp = fopen('php://output', 'w+b');
+            //さっき置換した内容を出力 
+            fwrite($fp, $buffer);
+        
+            fclose($fp);
+        });
+        
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+ 
+        return $response;
+    }
+    
+    public function hikuyousya_csv_export(Request $request)
+    {
+        $filter_array = $request->all();
+        $danka_id = isset($filter_array['danka_id']) ? $filter_array['danka_id'] : null;
+        $name = isset($filter_array['name']) ? $filter_array['name'] : null;
+        $name_kana = isset($filter_array['name_kana']) ? $filter_array['name_kana'] : null;
+        $type = isset($filter_array['type']) ? $filter_array['type'] : null;
+        $common_name = isset($filter_array['common_name']) ? $filter_array['common_name'] : null;
+        $common_kana = isset($filter_array['common_kana']) ? $filter_array['common_kana'] : null;
+        $posthumous = isset($filter_array['posthumous']) ? $filter_array['posthumous'] : null;
+        $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
+        $nokotsubi_before = isset($filter_array['nokotsubi_before']) ? $filter_array['nokotsubi_before'] : null;
+        $nokotsubi_after = isset($filter_array['nokotsubi_after']) ? $filter_array['nokotsubi_after'] : null;
+        $meinichi_before = isset($filter_array['meinichi_before']) ? $filter_array['meinichi_before'] : null;
+        $meinichi_after = isset($filter_array['meinichi_after']) ? $filter_array['meinichi_after'] : null;
+        $kaiki_before = isset($filter_array['kaiki_before']) ? $filter_array['kaiki_before'] : null;
+        $kaiki_after = isset($filter_array['kaiki_after']) ? $filter_array['kaiki_after'] : null;
+        $ihai_no = isset($filter_array['ihai_no']) ? $filter_array['ihai_no'] : null;
+        $ihai_flg = isset($filter_array['ihai_flg']) ? $filter_array['ihai_flg'] : null;
+        $konryu_flg = isset($filter_array['konryu_flg']) ? $filter_array['konryu_flg'] : null;
+        $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
+
+        $query = Danka::select('*')->select('hikuyousya.id as id')->selectRaw("
+        TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
+        ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
+
+        if (!empty($danka_id)) {
+            $query->where('danka_id', 'like', "%$danka_id%");
+        }
+
+        if (!empty($name)) {
+            $query->where('name', 'like', "%$name%");
+        }
+
+        if (!empty($name_kana)) {
+            $query->where('name_kana', 'like', "%$name_kana%");
+        }
+
+        if (!empty($type)) {
+            $query->where('type', $type);
+        }
+
+        if (!empty($common_name)) {
+            $query->where('common_name', 'like', "%$common_name%");
+        }
+
+        if (!empty($common_kana)) {
+            $query->where('common_kana', 'like', "%$common_kana%");
+        }
+
+        if (!empty($posthumous)) {
+            $query->where('posthumous', 'like', "%$posthumous%");
+        }
+
+        if (!empty($pref)) {
+            $query->where('zip', 'like', "%$pref%");
+        }
+
+        if (!empty($address)) {
+            $query->where(function ($query) use ($address) {
+                $query->orwhere('city', 'like', "%$address%")->orwhere('address', 'like', "%$address%")->orwhere('building', 'like', "%$address%");
+            });
+        }
+
+        if (!empty($freeword)) {
+            $freeword = mb_convert_kana($freeword, 's');
+            $word_list = explode(" ", $freeword);
+            $query->where(function ($query) use ($word_list) {
+                foreach ($word_list as $word) {
+                    if (!empty($word)) {
+                        $query->orwhere('column', 'like', "%$word%");
+                    }
+                }
+            });
+        }
+
+        if (!empty($nokotsubi_before)) {
+            $query->whereDate('nokotsubi', '>=', $nokotsubi_before);
+        }
+        if (!empty($nokotsubi_after)) {
+            $query->whereDate('nokotsubi', '<=', $nokotsubi_after);
+        }
+
+        if (!empty($meinichi_before)) {
+            $query->whereDate('meinichi', '>=', $meinichi_before);
+        }
+        if (!empty($meinichi_after)) {
+            $query->whereDate('meinichi', '<=', $meinichi_after);
+        }
+
+        if (isset($ihai_flg)) {
+            $query->where('ihai_no', 'not like', '0000');
+        }
+
+        if (isset($ihai_no)) {
+            $query->where('ihai_no', $ihai_no);
+        }
+
+        if (isset($konryu_flg)) {
+            $query->whereNotNull('nokotsubi');
+        }
+
+        if (isset($kaiki_flg)) {
+            $query->where('kaiki_flg', '1');
+        }
+
+        if (!empty($kaiki_before)) {
+            $kaiki_before_tmp = $kaiki_before == 1 ? 0 : $kaiki_before - 2;
+            $query->having('kaiki', '>=', $kaiki_before_tmp);
+        }
+        if (!empty($kaiki_after)) {
+            $kaiki_after_tmp = $kaiki_after == 1 ? 0 : $kaiki_after - 2;
+            $query->having('kaiki', '<=', $kaiki_after_tmp);
+        }
+
+        $ids = $query->get()->pluck('id');
+        $query = Danka::select('*')->selectRaw("
+        TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
+        ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->whereIn('hikuyousya.id', $ids);
+
+        $danka_list = $query->orderBy('danka_id', 'desc')->get();
+
+        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所',
+        '種別', '俗名', 'フリガナ', '戒名', '性別', '行年', '命日', '周忌/回忌', '年忌チェック', 
+        '位牌番号', '建立日', '納骨番号', '納骨日', '納骨移動日', '特記事項', 
+        ];
+        foreach ($danka_list as $danka) {
+            $cvsList[] = $danka->outputCsvContentNoukotsu();
+        }
+
+        $response = new StreamedResponse (function() use ($cvsList){
+            $stream = fopen('php://output', 'w');
+
+            //　文字化け回避
+            stream_filter_prepend($stream,'convert.iconv.utf-8/cp932//TRANSLIT');
+
+            // CSVデータ
+            foreach($cvsList as $key => $value) {
+                fputcsv($stream, $value);
+            }
+            $buffer = str_replace("\n", "\r\n", stream_get_contents($stream));
+            fclose($stream);
+            //出力ストリーム
+            $fp = fopen('php://output', 'w+b');
+            //さっき置換した内容を出力 
+            fwrite($fp, $buffer);
+        
+            fclose($fp);
+        });
+        
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+ 
+        return $response;
+    }
+    
+    
 
 
 

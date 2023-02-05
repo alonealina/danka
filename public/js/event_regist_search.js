@@ -12,3 +12,7 @@ check_on.addEventListener("change",function(){
 check_off.addEventListener("change",function(){
     check_on.checked = false;
 });
+
+function clickCsvExportButton() {
+    document.forms.csv_export_form.submit();
+}

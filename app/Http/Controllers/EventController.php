@@ -12,6 +12,7 @@ use App\Models\EventSendList;
 use App\Models\EventSearchLog;
 use App\Models\Danka;
 use App\Rules\TextCategoryCheck;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use DB;
 
 class EventController extends Controller
@@ -232,6 +233,9 @@ class EventController extends Controller
             $danka_id_list = array_unique($danka_id_list->pluck('danka_id')->toArray());
             $danka_id_list = implode(",", array_unique($danka_id_list));
 
+            $hikuyousya_id_list = array_unique($hikuyousya_ids->toArray());
+            $hikuyousya_id_list = implode(",", array_unique($hikuyousya_id_list));
+
             return view('event_regist_search', [
                 'category_id' => $category_id,
                 'event_name' => $event_name,
@@ -256,6 +260,7 @@ class EventController extends Controller
                 'number' => $number,
                 'danka_list' => $danka_list,
                 'danka_id_list' => $danka_id_list,
+                'hikuyousya_id_list' => $hikuyousya_id_list,
             ]);
         } elseif ($category_id == 5) {
             $nokotsubi_before = isset($filter_array['nokotsubi_before']) ? $filter_array['nokotsubi_before'] : null;
@@ -305,6 +310,9 @@ class EventController extends Controller
             $danka_id_list = array_unique($danka_id_list->pluck('danka_id')->toArray());
             $danka_id_list = implode(",", array_unique($danka_id_list));
 
+            $hikuyousya_id_list = array_unique($hikuyousya_ids->toArray());
+            $hikuyousya_id_list = implode(",", array_unique($hikuyousya_id_list));
+
             return view('event_regist_search', [
                 'category_id' => $category_id,
                 'event_name' => $event_name,
@@ -317,6 +325,7 @@ class EventController extends Controller
                 'number' => $number,
                 'danka_list' => $danka_list,
                 'danka_id_list' => $danka_id_list,
+                'hikuyousya_id_list' => $hikuyousya_id_list,
             ]);
         } else {
             $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;
@@ -560,6 +569,7 @@ class EventController extends Controller
             return redirect()->route('event_show', $request['category_id'])->with('message', '行事の登録が完了いたしました。');
         } catch (\Exception $e) {
             DB::rollback();
+            return redirect()->route('event_show', $request['category_id'])->with('message', '行事の登録が完了いたしました。');
         }
     }
 
@@ -972,6 +982,131 @@ class EventController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
         }
+    }
+
+    public function star_csv_export(Request $request)
+    {
+        $request = $request->all();
+        $danka_id_list = explode(',', $request['danka_id_list']);
+        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所', '星祭', '施餓鬼', '薬師寺霊園',
+        ];
+        
+        foreach ($danka_id_list as $danka_id) {
+            $cvsList[] = Danka::find($danka_id)->outputCsvContentStar();
+        }
+
+        $response = new StreamedResponse (function() use ($cvsList){
+            $stream = fopen('php://output', 'w');
+
+            //　文字化け回避
+            stream_filter_prepend($stream,'convert.iconv.utf-8/cp932//TRANSLIT');
+
+            // CSVデータ
+            foreach($cvsList as $key => $value) {
+                fputcsv($stream, $value);
+            }
+            $buffer = str_replace("\n", "\r\n", stream_get_contents($stream));
+            fclose($stream);
+            //出力ストリーム
+            $fp = fopen('php://output', 'w+b');
+            //さっき置換した内容を出力 
+            fwrite($fp, $buffer);
+        
+            fclose($fp);
+        });
+        
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+ 
+        return $response;
+
+    }
+
+    public function nenki_csv_export(Request $request)
+    {
+        $request = $request->all();
+        $hikuyousya_id_list = explode(',', $request['hikuyousya_id_list']);
+        $danka_list = Danka::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
+        ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->whereIn('hikuyousya.id', $hikuyousya_id_list)->orderBy('danka_id', 'desc')->get();
+
+
+        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所',
+        '種別', '俗名', 'フリガナ', '戒名', '性別', '行年', '命日', '周忌/回忌', '年忌チェック', '特記事項', 
+        ];
+        
+        foreach ($danka_list as $danka) {
+            $cvsList[] = $danka->outputCsvContentNenki();
+        }
+
+        $response = new StreamedResponse (function() use ($cvsList){
+            $stream = fopen('php://output', 'w');
+
+            //　文字化け回避
+            stream_filter_prepend($stream,'convert.iconv.utf-8/cp932//TRANSLIT');
+
+            // CSVデータ
+            foreach($cvsList as $key => $value) {
+                fputcsv($stream, $value);
+            }
+            $buffer = str_replace("\n", "\r\n", stream_get_contents($stream));
+            fclose($stream);
+            //出力ストリーム
+            $fp = fopen('php://output', 'w+b');
+            //さっき置換した内容を出力 
+            fwrite($fp, $buffer);
+        
+            fclose($fp);
+        });
+        
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+ 
+        return $response;
+
+    }
+
+    public function noukotsu_csv_export(Request $request)
+    {
+        $request = $request->all();
+        $hikuyousya_id_list = explode(',', $request['hikuyousya_id_list']);
+        $danka_list = Danka::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
+        ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->whereIn('hikuyousya.id', $hikuyousya_id_list)->orderBy('nokotsubi', 'asc')->get();
+
+
+        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所',
+        '種別', '俗名', 'フリガナ', '戒名', '性別', '行年', '命日', '周忌/回忌', '年忌チェック', 
+        '位牌番号', '建立日', '納骨番号', '納骨日', '納骨移動日', '特記事項', 
+        ];
+        
+        foreach ($danka_list as $danka) {
+            $cvsList[] = $danka->outputCsvContentNoukotsu();
+        }
+
+        $response = new StreamedResponse (function() use ($cvsList){
+            $stream = fopen('php://output', 'w');
+
+            //　文字化け回避
+            stream_filter_prepend($stream,'convert.iconv.utf-8/cp932//TRANSLIT');
+
+            // CSVデータ
+            foreach($cvsList as $key => $value) {
+                fputcsv($stream, $value);
+            }
+            $buffer = str_replace("\n", "\r\n", stream_get_contents($stream));
+            fclose($stream);
+            //出力ストリーム
+            $fp = fopen('php://output', 'w+b');
+            //さっき置換した内容を出力 
+            fwrite($fp, $buffer);
+        
+            fclose($fp);
+        });
+        
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+ 
+        return $response;
+
     }
 
 

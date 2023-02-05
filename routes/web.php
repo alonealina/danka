@@ -40,6 +40,8 @@ Route::post('family_store', [DankaController::class, 'family_store'])->name('fam
 Route::get('family_edit/{family_id}', [DankaController::class, 'family_edit'])->name('family_edit');
 Route::post('family_update', [DankaController::class, 'family_update'])->name('family_update');
 
+Route::post('danka_csv_export', [DankaController::class, 'danka_csv_export'])->name('danka_csv_export');
+Route::post('hikuyousya_csv_export', [DankaController::class, 'hikuyousya_csv_export'])->name('hikuyousya_csv_export');
 
 Route::get('db_test', [DankaController::class, 'db_test'])->name('db_test');
 
@@ -84,6 +86,10 @@ Route::post('event_book_store', [EventController::class, 'event_book_store'])->n
 Route::get('event_send_update/{id}', [EventController::class, 'event_send_update'])->name('event_send_update');
 Route::get('event_wait_update/{id}', [EventController::class, 'event_wait_update'])->name('event_wait_update');
 Route::get('event_date_delete/{id}', [EventController::class, 'event_date_delete'])->name('event_date_delete');
+
+Route::post('star_csv_export', [EventController::class, 'star_csv_export'])->name('star_csv_export');
+Route::post('nenki_csv_export', [EventController::class, 'nenki_csv_export'])->name('nenki_csv_export');
+Route::post('noukotsu_csv_export', [EventController::class, 'noukotsu_csv_export'])->name('noukotsu_csv_export');
 
 
 Route::get('notice_regist', [NoticeController::class, 'notice_regist'])->name('notice_regist');
