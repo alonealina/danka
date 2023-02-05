@@ -27,7 +27,7 @@ class EventController extends Controller
     public function event_show($category_id)
     {
         $category = TextCategory::find($category_id);
-        $event_dates = DB::select('SELECT event_date.id as id, event_date.created_at as created_at, name, danka_count
+        $event_dates = DB::select('SELECT event_date.id as id, event_date.created_at as created_at, name, send_flg, danka_count
         FROM event_date
         LEFT JOIN (
         SELECT date_id , COUNT(date_id) AS date_id_count
@@ -41,6 +41,60 @@ class EventController extends Controller
             'category' => $category,
             'event_dates' => $event_dates,
         ]);
+    }
+
+    public function event_send_update($id)
+    {
+        $event_date = EventDate::find($id);
+        $category_id = $event_date->category_id;
+
+        DB::beginTransaction();
+        try {
+            $fill_data = [
+                'send_flg' => 1,
+            ];
+
+            $event_date->fill($fill_data)->update();
+            
+            DB::commit();
+            return redirect()->route('event_show', $category_id)->with('message', 'ステータスの変更が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
+    public function event_wait_update($id)
+    {
+        $event_date = EventDate::find($id);
+        $category_id = $event_date->category_id;
+
+        DB::beginTransaction();
+        try {
+            $fill_data = [
+                'send_flg' => 0,
+            ];
+
+            $event_date->fill($fill_data)->update();
+            
+            DB::commit();
+            return redirect()->route('event_show', $category_id)->with('message', 'ステータスの変更が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
+    public function event_date_delete($id)
+    {
+        DB::beginTransaction();
+        try {
+            $event_date = EventDate::find($id);
+            $category_id = $event_date->category_id;
+            $event_date->delete();
+            DB::commit();
+            return redirect()->route('event_show', $category_id)->with('message', '行事リストを削除しました');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
     }
 
     public function event_regist($id)
@@ -59,6 +113,7 @@ class EventController extends Controller
 
         if ($category_id == 1) {
             $meinichi_month = isset($filter_array['meinichi_month']) ? $filter_array['meinichi_month'] : null;
+            $meinichi_day = isset($filter_array['meinichi_day']) ? $filter_array['meinichi_day'] : null;
             $kaiki_before = isset($filter_array['kaiki_before']) ? $filter_array['kaiki_before'] : null;
             $kaiki_after = isset($filter_array['kaiki_after']) ? $filter_array['kaiki_after'] : null;
             $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;
@@ -83,8 +138,15 @@ class EventController extends Controller
 
 
             if (isset($meinichi_month)) {
-                $meinichi_month = str_pad($meinichi_month, 2, 0, STR_PAD_LEFT);
-                $query->whereRaw("DATE_FORMAT(meinichi, '%m') = ?", [$meinichi_month]);
+                $month = str_pad($meinichi_month, 2, 0, STR_PAD_LEFT);
+                if (isset($meinichi_day)) {
+                    $day = str_pad($meinichi_day, 2, 0, STR_PAD_LEFT);
+                    $md = $month . $day;
+                    $query->whereRaw("DATE_FORMAT(meinichi, '%m%d') = ?", [$md]);
+
+                } else {
+                    $query->whereRaw("DATE_FORMAT(meinichi, '%m') = ?", [$month]);
+                }
             }
 
             if (isset($segaki_flg)) {
@@ -174,6 +236,7 @@ class EventController extends Controller
                 'event_name' => $event_name,
                 'category_name' => $category_name,
                 'meinichi_month' => $meinichi_month,
+                'meinichi_day' => $meinichi_day,
                 'kaiki_before' => $kaiki_before,
                 'kaiki_after' => $kaiki_after,
                 'payment_before' => $payment_before,
@@ -276,7 +339,7 @@ class EventController extends Controller
 
             // 檀家情報・取引・商品結合
             $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
-                'pref', 'city', 'address', 'building', 'item_category.name as category_name', 'payment_date', 'total')
+                'pref', 'city', 'address', 'building', 'item_category.name as category_name', 'payment_date', 'total', 'deal.created_at')
             ->join('deal', 'danka.id', '=', 'deal.danka_id')->leftJoin('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')
             ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id');
 

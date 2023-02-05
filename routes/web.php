@@ -81,6 +81,10 @@ Route::get('event_book_show/{id}', [EventController::class, 'event_book_show'])-
 Route::get('event_book_regist/{id}', [EventController::class, 'event_book_regist'])->name('event_book_regist');
 Route::post('event_book_store', [EventController::class, 'event_book_store'])->name('event_book_store');
 
+Route::get('event_send_update/{id}', [EventController::class, 'event_send_update'])->name('event_send_update');
+Route::get('event_wait_update/{id}', [EventController::class, 'event_wait_update'])->name('event_wait_update');
+Route::get('event_date_delete/{id}', [EventController::class, 'event_date_delete'])->name('event_date_delete');
+
 
 Route::get('notice_regist', [NoticeController::class, 'notice_regist'])->name('notice_regist');
 Route::post('notice_store', [NoticeController::class, 'notice_store'])->name('notice_store');

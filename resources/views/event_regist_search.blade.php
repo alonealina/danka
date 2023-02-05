@@ -40,7 +40,14 @@
                 <option value="{{ $i }}" @if($meinichi_month == $i) selected @endif >{{ $i }}</option>
                 @endfor
             </select>
-            <div class="yen_text"> 月</div>
+            <div class="yen_text"> 月　　</div>
+            <select name="meinichi_day" class="select_category" style="width: 50px;">
+                <option value="">----</option>
+                @for ($i = 1; $i <= 31; $i++)
+                <option value="{{ $i }}" @if($meinichi_day == $i) selected @endif >{{ $i }}</option>
+                @endfor
+            </select>
+            <div class="yen_text"> 日</div>
         </div>
 
         <div class="danka_column">
@@ -272,7 +279,7 @@
             <div class="hikuyousya_name">{{ $danka->name }}</div>
             <div class="hikuyousya_zokumyo">{{ $danka->tel }}</div>
             <div class="hikuyousya_address">{{ $danka->pref }}{{ $danka->city }}{{ $danka->address }}{{ $danka->building }}</div>
-            <div class="hikuyousya_date">{{ $danka->meinichi }}</div>
+            <div class="hikuyousya_date">{{ $danka->created_at->format('Y-m-d') }}</div>
             <div class="hikuyousya_date">{{ $danka->payment_date }}</div>
             <div class="hikuyousya_kaimyo">{{ $danka->category_name }}</div>
             <div class="hikuyousya_date">@if($danka->total > 0) {{ number_format($danka->total) }} @endif</div>
