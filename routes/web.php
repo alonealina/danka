@@ -77,7 +77,7 @@ Route::get('event_regist/{id}', [EventController::class, 'event_regist'])->name(
 Route::get('event_regist_search', [EventController::class, 'event_regist_search'])->name('event_regist_search');
 Route::post('event_regist_search', [EventController::class, 'event_regist_search'])->name('event_regist_search');
 Route::post('event_store', [EventController::class, 'event_store'])->name('event_store');
-Route::get('event_book_show/{id}', [EventController::class, 'event_book_show'])->name('event_book_show');
+Route::get('event_date_show/{id}', [EventController::class, 'event_date_show'])->name('event_date_show');
 Route::get('event_book_regist/{id}', [EventController::class, 'event_book_regist'])->name('event_book_regist');
 Route::post('event_book_store', [EventController::class, 'event_book_store'])->name('event_book_store');
 

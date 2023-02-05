@@ -9,6 +9,7 @@ use App\Models\TextCategory;
 use App\Models\EventDate;
 use App\Models\EventBook;
 use App\Models\EventSendList;
+use App\Models\EventSearchLog;
 use App\Models\Danka;
 use App\Rules\TextCategoryCheck;
 use DB;
@@ -326,6 +327,7 @@ class EventController extends Controller
             $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
             $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
             $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
+            $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
             $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
             $event_date_id = isset($filter_array['event_date_id']) ? $filter_array['event_date_id'] : null;
@@ -386,6 +388,10 @@ class EventController extends Controller
 
             if (isset($yakushiji_flg)) {
                 $query->where('yakushiji_flg', '1');
+            }
+
+            if (isset($kaiki_flg)) {
+                $query->where('kaiki_flg', '1');
             }
 
             if (!empty($event_date_id)) {
@@ -461,6 +467,7 @@ class EventController extends Controller
                 'segaki_flg' => $segaki_flg,
                 'star_flg' => $star_flg,
                 'yakushiji_flg' => $yakushiji_flg,
+                'kaiki_flg' => $kaiki_flg,
                 'freeword' => $freeword,
                 'item_categories' => $item_categories,
                 'item_category_id' => $item_category_id,
@@ -481,6 +488,27 @@ class EventController extends Controller
         $event_date = new EventDate;
 
         $request = $request->all();
+
+        $meinichi_month = isset($request['meinichi_month']) ? $request['meinichi_month'] : null;
+        $meinichi_day = isset($request['meinichi_day']) ? $request['meinichi_day'] : null;
+        $kaiki_before = isset($request['kaiki_before']) ? $request['kaiki_before'] : null;
+        $kaiki_after = isset($request['kaiki_after']) ? $request['kaiki_after'] : null;
+        $payment_before = isset($request['payment_before']) ? $request['payment_before'] : null;
+        $payment_after = isset($request['payment_after']) ? $request['payment_after'] : null;
+        $price_min = isset($request['price_min']) ? $request['price_min'] : null;
+        $price_max = isset($request['price_max']) ? $request['price_max'] : null;
+        $segaki_flg = isset($request['segaki_flg']) ? $request['segaki_flg'] : null;
+        $star_flg = isset($request['star_flg']) ? $request['star_flg'] : null;
+        $yakushiji_flg = isset($request['yakushiji_flg']) ? $request['yakushiji_flg'] : null;
+        $kaiki_flg = isset($request['kaiki_flg']) ? $request['kaiki_flg'] : null;
+        $freeword = isset($request['freeword']) ? $request['freeword'] : null;
+        $item_category_id = isset($request['item_category_id']) ? $request['item_category_id'] : null;
+        $nokotsubi_before = isset($request['nokotsubi_before']) ? $request['nokotsubi_before'] : null;
+        $nokotsubi_after = isset($request['nokotsubi_after']) ? $request['nokotsubi_after'] : null;
+        $payment_flg = isset($request['payment_flg']) ? $request['payment_flg'] : null;
+        $star_event_date_id = isset($request['event_date_id']) ? $request['event_date_id'] : null;
+        $event_date_flg = isset($request['event_date_flg']) ? $request['event_date_flg'] : null;
+
         $fill_data = [
             'category_id' => $request['category_id'],
             'name' => $request['event_name'],
@@ -503,6 +531,31 @@ class EventController extends Controller
                 $event_send_list->fill($fill_data)->save();
             }
 
+            $event_search_log = new EventSearchLog();
+            $fill_data = [
+                'event_date_id' => $event_date_id,
+                'meinichi_month' => $meinichi_month,
+                'meinichi_day' => $meinichi_day,
+                'kaiki_before' => $kaiki_before,
+                'kaiki_after' => $kaiki_after,
+                'payment_before' => $payment_before,
+                'payment_after' => $payment_after,
+                'price_min' => $price_min,
+                'price_max' => $price_max,
+                'segaki_flg' => $segaki_flg,
+                'star_flg' => $star_flg,
+                'yakushiji_flg' => $yakushiji_flg,
+                'kaiki_flg' => $kaiki_flg,
+                'freeword' => $freeword,
+                'item_category_id' => $item_category_id,
+                'nokotsubi_before' => $nokotsubi_before,
+                'nokotsubi_after' => $nokotsubi_after,
+                'payment_flg' => $payment_flg,
+                'star_event_date_id' => $star_event_date_id,
+                'event_date_flg' => $event_date_flg,
+            ];
+            $event_search_log->fill($fill_data)->save();
+
             DB::commit();
             return redirect()->route('event_show', $request['category_id'])->with('message', '行事の登録が完了いたしました。');
         } catch (\Exception $e) {
@@ -510,17 +563,380 @@ class EventController extends Controller
         }
     }
 
-    public function event_book_show($date_id)
+    public function event_date_show($date_id)
     {
         $event_date = EventDate::find($date_id);
-        $category = TextCategory::find($event_date->category_id);
-        $event_books = EventBook::where('date_id', $date_id)->get();
+        $category_id = $event_date->category_id;
+        $event_search_log = EventSearchLog::where('event_date_id', $date_id)->get();
+        $filter_array = $event_search_log->toArray();
+        $filter_array = $filter_array[0];
 
-        return view('event_book_show', [
-            'event_date' => $event_date,
-            'category' => $category,
-            'event_books' => $event_books,
-        ]);
+        if ($category_id == 1) {
+            $meinichi_month = isset($filter_array['meinichi_month']) ? $filter_array['meinichi_month'] : null;
+            $meinichi_day = isset($filter_array['meinichi_day']) ? $filter_array['meinichi_day'] : null;
+            $kaiki_before = isset($filter_array['kaiki_before']) ? $filter_array['kaiki_before'] : null;
+            $kaiki_after = isset($filter_array['kaiki_after']) ? $filter_array['kaiki_after'] : null;
+            $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;
+            $payment_after = isset($filter_array['payment_after']) ? $filter_array['payment_after'] : null;
+            $price_min = isset($filter_array['price_min']) ? $filter_array['price_min'] : null;
+            $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
+            $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
+            $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
+            $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
+            $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
+            $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
+            $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
+
+            $event_name = isset($event_date->name) ? $event_date->name : null;
+            $category_name = TextCategory::find($category_id)->name;
+
+            $item_categories = ItemCategory::get();
+
+            $query = Danka::select('*')->select('hikuyousya.id as id')->selectRaw("
+            TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
+            ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
+
+
+            if (isset($meinichi_month)) {
+                $month = str_pad($meinichi_month, 2, 0, STR_PAD_LEFT);
+                if (isset($meinichi_day)) {
+                    $day = str_pad($meinichi_day, 2, 0, STR_PAD_LEFT);
+                    $md = $month . $day;
+                    $query->whereRaw("DATE_FORMAT(meinichi, '%m%d') = ?", [$md]);
+
+                } else {
+                    $query->whereRaw("DATE_FORMAT(meinichi, '%m') = ?", [$month]);
+                }
+            }
+
+            if (isset($segaki_flg)) {
+                $query->where('segaki_flg', '1');
+            }
+
+            if (isset($star_flg)) {
+                $query->where('star_flg', '1');
+            }
+
+            if (isset($yakushiji_flg)) {
+                $query->where('yakushiji_flg', '1');
+            }
+
+            if (isset($kaiki_flg)) {
+                $query->where('kaiki_flg', '1');
+            }
+
+            if (!empty($kaiki_before)) {
+                $kaiki_before_tmp = $kaiki_before == 1 ? 0 : $kaiki_before - 2;
+                $query->having('kaiki', '>=', $kaiki_before_tmp);
+            }
+            if (!empty($kaiki_after)) {
+                $kaiki_after_tmp = $kaiki_after == 1 ? 0 : $kaiki_after - 2;
+                $query->having('kaiki', '<=', $kaiki_after_tmp);
+            }
+
+            $hikuyousya_ids = $query->get()->pluck('id');
+
+            $query = Danka::select('danka.id as id', 'danka.name as name', 'common_name', 
+                'posthumous', 'meinichi', 'item_category.name as category_name', 'hikuyousya.id as hikuyousya_id', 'total', 'payment_date', 'kaiki_flg')
+                ->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
+            ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->leftJoin('deal_detail', 'hikuyousya.id', '=', 'hikuyousya_id')
+            ->leftJoin('deal', 'deal.id', '=', 'deal_detail.deal_id')
+            ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id')
+            ->whereIn('hikuyousya.id', $hikuyousya_ids);
+
+            if (isset($item_category_id)) {
+                $query->where('item.category_id', $item_category_id);
+            }
+
+            if (!empty($payment_before)) {
+                $query->whereDate('payment_date', '>=', $payment_before);
+            }
+            if (!empty($payment_after)) {
+                $query->whereDate('payment_date', '<=', $payment_after);
+            }
+
+            if (!empty($price_min)) {
+                $query->where('total', '>=', $price_min);
+            }
+            if (!empty($price_max)) {
+                $query->where('total', '<=', $price_max);
+            }
+
+            if (!empty($freeword)) {
+                $freeword = mb_convert_kana($freeword, 's');
+                $word_list = explode(" ", $freeword);
+                $query->where(function ($query) use ($word_list) {
+                    foreach ($word_list as $word) {
+                        if (!empty($word)) {
+                            $query->orwhere('pref', 'like', "%$word%");
+                        }
+                    }
+                });
+            }
+    
+            $hikuyousya_ids = $query->pluck('hikuyousya_id');
+            $hikuyousya_count = count(array_unique($hikuyousya_ids->toArray()));
+
+            $number = \Request::get('number');
+            if (isset($number)) {
+                $danka_list = $query->orderBy('danka.id')->paginate($number)
+                ->appends(["number" => $number]);
+            } else {
+                $danka_list = $query->orderBy('danka.id')->get();
+            }
+
+            $danka_id_list = Danka::select('danka_id')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
+            ->whereIn('hikuyousya.id', $hikuyousya_ids)->groupBy('danka_id')->get();
+            $danka_count = $danka_id_list->count();
+            $danka_id_list = array_unique($danka_id_list->pluck('danka_id')->toArray());
+            $danka_id_list = implode(",", array_unique($danka_id_list));
+
+            return view('event_date_show', [
+                'category_id' => $category_id,
+                'event_name' => $event_name,
+                'category_name' => $category_name,
+                'meinichi_month' => $meinichi_month,
+                'meinichi_day' => $meinichi_day,
+                'kaiki_before' => $kaiki_before,
+                'kaiki_after' => $kaiki_after,
+                'payment_before' => $payment_before,
+                'payment_after' => $payment_after,
+                'price_min' => $price_min,
+                'price_max' => $price_max,
+                'segaki_flg' => $segaki_flg,
+                'star_flg' => $star_flg,
+                'yakushiji_flg' => $yakushiji_flg,
+                'kaiki_flg' => $kaiki_flg,
+                'freeword' => $freeword,
+                'item_categories' => $item_categories,
+                'item_category_id' => $item_category_id,
+                'hikuyousya_count' => $hikuyousya_count,
+                'danka_count' => $danka_count,
+                'number' => $number,
+                'danka_list' => $danka_list,
+                'danka_id_list' => $danka_id_list,
+            ]);
+        } elseif ($category_id == 5) {
+            $nokotsubi_before = isset($filter_array['nokotsubi_before']) ? $filter_array['nokotsubi_before'] : null;
+            $nokotsubi_after = isset($filter_array['nokotsubi_after']) ? $filter_array['nokotsubi_after'] : null;
+            $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
+
+            $event_name = $event_date->name;
+            $category_name = TextCategory::find($category_id)->name;
+
+            $query = Danka::select('danka.id as id', 'hikuyousya.id as hikuyousya_id', 'name', 'common_name', 'posthumous', 'nokotsubi', 'nokotsuidobi', 'column')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
+            ->whereNotNull('nokotsubi');
+
+
+            if (!empty($nokotsubi_before)) {
+                $query->whereDate('nokotsubi', '>=', $nokotsubi_before);
+            }
+            if (!empty($nokotsubi_after)) {
+                $query->whereDate('nokotsubi', '<=', $nokotsubi_after);
+            }
+
+            if (!empty($freeword)) {
+                $freeword = mb_convert_kana($freeword, 's');
+                $word_list = explode(" ", $freeword);
+                $query->where(function ($query) use ($word_list) {
+                    foreach ($word_list as $word) {
+                        if (!empty($word)) {
+                            $query->orwhere('pref', 'notices', "%$word%")->orwhere('column', 'like', "%$word%");
+                        }
+                    }
+                });
+            }
+    
+            $hikuyousya_ids = $query->pluck('hikuyousya_id');
+            $hikuyousya_count = count(array_unique($hikuyousya_ids->toArray()));
+
+            $number = \Request::get('number');
+            if (isset($number)) {
+                $danka_list = $query->orderBy('danka_id')->paginate($number)
+                ->appends(["number" => $number]);
+            } else {
+                $danka_list = $query->orderBy('danka_id')->get();
+            }
+
+            $danka_id_list = Danka::select('danka_id')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
+            ->whereIn('hikuyousya.id', $hikuyousya_ids)->groupBy('danka_id')->get();
+            $danka_count = $danka_id_list->count();
+            $danka_id_list = array_unique($danka_id_list->pluck('danka_id')->toArray());
+            $danka_id_list = implode(",", array_unique($danka_id_list));
+
+            return view('event_date_show', [
+                'category_id' => $category_id,
+                'event_name' => $event_name,
+                'category_name' => $category_name,
+                'nokotsubi_before' => $nokotsubi_before,
+                'nokotsubi_after' => $nokotsubi_after,
+                'freeword' => $freeword,
+                'hikuyousya_count' => $hikuyousya_count,
+                'danka_count' => $danka_count,
+                'number' => $number,
+                'danka_list' => $danka_list,
+                'danka_id_list' => $danka_id_list,
+            ]);
+        } else {
+            $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;
+            $payment_after = isset($filter_array['payment_after']) ? $filter_array['payment_after'] : null;
+            $payment_flg = isset($filter_array['payment_flg']) ? $filter_array['payment_flg'] : null;
+            $price_min = isset($filter_array['price_min']) ? $filter_array['price_min'] : null;
+            $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
+            $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
+            $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
+            $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
+            $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
+            $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
+            $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
+            $star_event_date_id = isset($filter_array['star_event_date_id']) ? $filter_array['star_event_date_id'] : null;
+            $event_date_flg = isset($filter_array['event_date_flg']) ? $filter_array['event_date_flg'] : null;
+
+
+            $event_name = $event_date->name;
+            $category_name = TextCategory::find($category_id)->name;
+
+            $item_categories = ItemCategory::get();
+
+            // 檀家情報・取引・商品結合
+            $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
+                'pref', 'city', 'address', 'building', 'item_category.name as category_name', 'payment_date', 'total', 'deal.created_at')
+            ->join('deal', 'danka.id', '=', 'deal.danka_id')->leftJoin('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')
+            ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id');
+
+            if ($category_id != 3 && isset($item_category_id)) {
+                $query->where('item.category_id', $item_category_id);
+            }
+
+            //星祭り処理
+            if (isset($payment_flg) && $payment_flg == 'off') {
+                $query_tmp = Danka::select('danka.id as id')
+                    ->join('deal', 'danka.id', '=', 'deal.danka_id')->leftJoin('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')
+                    ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id');
+                if (!empty($payment_before)) {
+                    $query_tmp->whereDate('payment_date', '>=', $payment_before);
+                    $query->whereDate('payment_date', '>=', $payment_before);
+                }
+                if (!empty($payment_after)) {
+                    $query_tmp->whereDate('payment_date', '<=', $payment_after);
+                    $query->whereDate('payment_date', '<=', $payment_after);
+                }
+                $query_tmp->where('item.category_id', 3);
+                $not_danka_ids = array_unique($query_tmp->get()->pluck('id')->toArray());
+
+                $query->whereNotIn('danka.id', $not_danka_ids);
+            } else {
+                if (!empty($payment_before)) {
+                    $query->whereDate('payment_date', '>=', $payment_before);
+                }
+                if (!empty($payment_after)) {
+                    $query->whereDate('payment_date', '<=', $payment_after);
+                }
+                if ($category_id == 3) {
+                    $query->where('item.category_id', 3);
+                }
+            }
+
+            if (isset($segaki_flg)) {
+                $query->where('segaki_flg', '1');
+            }
+
+            if (isset($star_flg)) {
+                $query->where('star_flg', '1');
+            }
+
+            if (isset($yakushiji_flg)) {
+                $query->where('yakushiji_flg', '1');
+            }
+
+            if (isset($kaiki_flg)) {
+                $query->where('kaiki_flg', '1');
+            }
+
+            if (!empty($star_event_date_id)) {
+                $list_query = Danka::select('danka.id as danka_id')
+                    ->leftJoin('event_send_list', 'event_send_list.danka_id', '=', 'danka.id')
+                    ->leftJoin('event_date', 'event_send_list.event_date_id', '=', 'event_date.id')
+                    ->where('event_date.category_id', 3)->where('event_date.id', $star_event_date_id);
+                $event_date_danka_ids = array_unique($list_query->get()->pluck('danka_id')->toArray());
+
+                $event_date = EventDate::find($star_event_date_id)->toArray();
+                $list_created_at = substr($event_date['created_at'], 0, 10);
+
+                $list_query = Danka::select('danka.id as danka_id')
+                    ->leftJoin('deal', 'deal.danka_id', '=', 'danka.id')
+                    ->leftJoin('deal_detail', 'deal_detail.deal_id', '=', 'deal.id')
+                    ->leftJoin('item', 'deal_detail.item_id', '=', 'item.id')
+                    ->where('item.category_id', 3)->whereDate('deal_detail.created_at', '>=', $list_created_at)
+                    ->whereIn('danka.id', $event_date_danka_ids);
+                $payment_danka_ids = array_unique($list_query->get()->pluck('danka_id')->toArray());
+
+                if ($event_date_flg == 'off') {
+                    $payment_danka_ids = array_diff($event_date_danka_ids, $payment_danka_ids);
+                }
+                $query->whereIn('danka.id', $payment_danka_ids);
+
+            }
+
+            if (!empty($price_min)) {
+
+                $query->where('total', '>=', $price_min);
+            }
+            if (!empty($price_max)) {
+                $query->where('total', '<=', $price_max);
+            }
+
+            if (!empty($freeword)) {
+                $freeword = mb_convert_kana($freeword, 's');
+                $word_list = explode(" ", $freeword);
+                $query->where(function ($query) use ($word_list) {
+                    foreach ($word_list as $word) {
+                        if (!empty($word)) {
+                            $query->orwhere('pref', 'like', "%$word%");
+                        }
+                    }
+                });
+            }
+
+            $danka_id_list = $query->pluck('danka.id');
+            $danka_count = count(array_unique($danka_id_list->toArray()));
+
+            $number = \Request::get('number');
+            if (isset($number)) {
+                $danka_list = $query->orderBy('danka_id')->paginate($number)
+                ->appends(["number" => $number]);
+            } else {
+                $danka_list = $query->orderBy('danka_id')->get();
+            }
+
+            $danka_id_list = implode(",", array_unique($danka_id_list->toArray()));
+            $event_date_list = EventDate::where('category_id', 3)->get();
+
+            return view('event_date_show', [
+                'category_id' => $category_id,
+                'event_name' => $event_name,
+                'category_name' => $category_name,
+                'payment_before' => $payment_before,
+                'payment_after' => $payment_after,
+                'payment_flg' => $payment_flg,
+                'star_event_date_id' => $star_event_date_id,
+                'event_date_flg' => $event_date_flg,
+                'price_min' => $price_min,
+                'price_max' => $price_max,
+                'segaki_flg' => $segaki_flg,
+                'star_flg' => $star_flg,
+                'yakushiji_flg' => $yakushiji_flg,
+                'kaiki_flg' => $kaiki_flg,
+                'freeword' => $freeword,
+                'item_categories' => $item_categories,
+                'item_category_id' => $item_category_id,
+                'danka_count' => $danka_count,
+                'number' => $number,
+                'danka_list' => $danka_list,
+                'danka_id_list' => $danka_id_list,
+                'event_date_list' => $event_date_list,
+            ]);
+        }
     }
 
 

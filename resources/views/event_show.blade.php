@@ -28,7 +28,7 @@
                 @else
                 <a href="{{ route('event_send_update', $event_date->id) }}" class="add_btn_a">発送待ち</a>
                 @endif
-                <a href="{{ route('item_edit', $event_date->id) }}" class="view_btn_100">表示</a>
+                <a href="{{ route('event_date_show', $event_date->id) }}" class="view_btn_100">表示</a>
                 <a href="{{ route('event_date_delete', $event_date->id) }}" onclick="return confirm('本当に削除しますか？')" class="delete_btn_100">削除</a>
             </div>
         </div>

@@ -198,8 +198,23 @@
 {{ Form::hidden('event_name', $event_name) }}
 {{ Form::hidden('danka_count', $danka_count) }}
 {{ Form::hidden('danka_id_list', $danka_id_list) }}
+{{ Form::hidden('freeword', $freeword) }}
 
     @if($category_id == 1)
+    {{ Form::hidden('meinichi_month', $meinichi_month) }}
+    {{ Form::hidden('meinichi_day', $meinichi_day) }}
+    {{ Form::hidden('kaiki_before', $kaiki_before) }}
+    {{ Form::hidden('kaiki_after', $kaiki_after) }}
+    {{ Form::hidden('payment_before', $payment_before) }}
+    {{ Form::hidden('payment_after', $payment_after) }}
+    {{ Form::hidden('price_min', $price_min) }}
+    {{ Form::hidden('price_max', $price_max) }}
+    {{ Form::hidden('segaki_flg', $segaki_flg) }}
+    {{ Form::hidden('star_flg', $star_flg) }}
+    {{ Form::hidden('yakushiji_flg', $yakushiji_flg) }}
+    {{ Form::hidden('kaiki_flg', $kaiki_flg) }}
+    {{ Form::hidden('item_category_id', $item_category_id) }}
+
     <div class="payment_list_header" style="margin:0;">
         <div class="hikuyousya_id">カルテナンバー</div>
         <div class="hikuyousya_name">施主名</div>
@@ -233,6 +248,9 @@
     </div>
 
     @elseif($category_id == 5)
+    {{ Form::hidden('nokotsubi_before', $nokotsubi_before) }}
+    {{ Form::hidden('nokotsubi_after', $nokotsubi_after) }}
+
     <div class="payment_list_header" style="margin:0;">
         <div class="hikuyousya_id">カルテナンバー</div>
         <div class="hikuyousya_name">施主名</div>
@@ -260,6 +278,19 @@
     </div>
 
     @else
+    {{ Form::hidden('payment_before', $payment_before) }}
+    {{ Form::hidden('payment_after', $payment_after) }}
+    {{ Form::hidden('payment_flg', $payment_flg) }}
+    {{ Form::hidden('price_min', $price_min) }}
+    {{ Form::hidden('price_max', $price_max) }}
+    {{ Form::hidden('segaki_flg', $segaki_flg) }}
+    {{ Form::hidden('star_flg', $star_flg) }}
+    {{ Form::hidden('yakushiji_flg', $yakushiji_flg) }}
+    {{ Form::hidden('kaiki_flg', $kaiki_flg) }}
+    {{ Form::hidden('item_category_id', $item_category_id) }}
+    {{ Form::hidden('event_date_id', $event_date_id) }}
+    {{ Form::hidden('event_date_flg', $event_date_flg) }}
+
     <div class="payment_list_header" style="margin:0;">
         <div class="hikuyousya_id">カルテナンバー</div>
         <div class="hikuyousya_name">施主名</div>
