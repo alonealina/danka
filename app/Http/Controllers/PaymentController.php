@@ -614,10 +614,12 @@ class PaymentController extends Controller
         $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
         $type = isset($filter_array['type']) ? $filter_array['type'] : null;
 
-        $query = Deal::select('deal.id as id', 'deal_no', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at as created_at')
-            ->selectRaw('SUM(total) AS total')
+        $query = Deal::select('deal_no', 'payment_date', 'name_kana', 'tel', 'mobile', 'zip', 'pref', 'city', 'address', 'building', 'payment_method', 
+            'state', 'detail', 'quantity', 'deal_detail.price as price', 'total', 'common_name', 'common_kana', 'common_kana', 'posthumous', 'meinichi', 'gyonen', 'column', 
+            'danka.id as danka_id', 'danka.name as danka_name', 'item_category.name as item_category_name', 'deal.created_at as created_at')
+            ->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
             ->join('danka', 'danka.id', '=', 'deal.danka_id')->join('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id')
-            ->groupBy('deal.id', 'deal_no', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at');
+            ->join('item_category', 'item_category.id', '=', 'item.category_id')->leftJoin('hikuyousya', 'deal_detail.hikuyousya_id', '=', 'hikuyousya.id');
 
         if (!empty($name)) {
             $query->where('name', 'like', "%$name%");
@@ -676,7 +678,8 @@ class PaymentController extends Controller
 
         $deal_list = $query->get();
 
-        $cvsList[] = ['メニュー名', '値段', '説明文', '公開・非公開', 'イチオシメニュー', '作成日時', '更新日時', 
+        $cvsList[] = ['取引番号', '作成日', '支払い確認日', 'カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所',
+        '取引方法', 'ステータス', '商品カテゴリー', '詳細', '単価', '数量', '金額', '俗名', 'フリガナ', '戒名', '命日', '周忌/回忌', '行年', '備考',
         ];
         foreach ($deal_list as $deal) {
             $cvsList[] = $deal->outputCsvContent();
