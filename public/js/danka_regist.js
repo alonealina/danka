@@ -64,6 +64,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 function clickTextStoreButton() {
     error_flg = 0;
+    hi_error_flg = 0;
 
     if (danka_store_form.name.value == "") {
         $('#name').css( 'background', '#FAF1F1' );
@@ -78,13 +79,6 @@ function clickTextStoreButton() {
     } else {
         $('#name_kana').css( 'background', '#fff' );
     }
-
-    if (danka_store_form.tel.value == "") {
-        $('#tel').css( 'background', '#FAF1F1' );
-        error_flg = 1;
-    } else {
-        $('#tel').css( 'background', '#fff' );
-    }tel
 
     if (danka_store_form.zip.value == "") {
         $('#zip').css( 'background', '#FAF1F1' );
@@ -117,14 +111,14 @@ function clickTextStoreButton() {
     if (document.getElementById('hikuyousya_flg').checked) {
         if (danka_store_form.common_name.value == "") {
             $('#common_name').css( 'background', '#FAF1F1' );
-            error_flg = 1;
+            hi_error_flg = 1;
         } else {
             $('#common_name').css( 'background', '#fff' );
         }
 
         if (danka_store_form.common_kana.value == "") {
             $('#common_kana').css( 'background', '#FAF1F1' );
-            error_flg = 1;
+            hi_error_flg = 1;
         } else {
             $('#common_kana').css( 'background', '#fff' );
         }
@@ -132,7 +126,7 @@ function clickTextStoreButton() {
         gyonen = danka_store_form.gyonen.value;
         if ((gyonen > 150 || gyonen < 1) && gyonen != "" || isNaN(gyonen)) {
             $('#gyonen').css( 'background', '#FAF1F1' );
-            error_flg = 1;
+            hi_error_flg = 1;
         } else {
             $('#gyonen').css( 'background', '#fff' );
         }
@@ -140,7 +134,20 @@ function clickTextStoreButton() {
         
     }
 
-    if (!error_flg) {
+    if (error_flg) {
+        $('#danka_error').html('檀家情報の必須項目を入力してください');
+    } else {
+        $('#danka_error').html('');
+    }
+
+    if (hi_error_flg) {
+        $('#hikuyousya_error').html('被供養者情報の必須項目を入力してください');
+    } else {
+        $('#hikuyousya_error').html('');
+    }
+
+
+    if (!error_flg && !hi_error_flg) {
         document.forms.danka_store_form.submit();
     }
 

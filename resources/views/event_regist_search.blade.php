@@ -238,7 +238,7 @@
             <div class="hikuyousya_kaimyo">{{ $danka->posthumous }}</div>
             <div class="hikuyousya_date">{{ $danka->meinichi }}</div>
             <div class="hikuyousya_kaiki">@if($danka->kaiki <= 0) 1 @else {{ $danka->kaiki + 2 }} @endif</div>
-            <div class="hikuyousya_kaiki">@if($danka->kaiki_flg) 〇 @endif</div>
+            <div class="hikuyousya_kaiki">@if($danka->kaiki_flg) ✓ @endif</div>
             <div class="hikuyousya_date">{{ $danka->payment_date }}</div>
             <div class="hikuyousya_kaimyo">{{ $danka->category_name }}</div>
             <div class="hikuyousya_date">@if($danka->total > 0) {{ number_format($danka->total) }} @endif</div>
@@ -256,8 +256,10 @@
         <div class="hikuyousya_name">施主名</div>
         <div class="hikuyousya_zokumyo">俗名</div>
         <div class="hikuyousya_kaimyo">戒名</div>
+        <div class="hikuyousya_ihai">位牌番号</div>
         <div class="hikuyousya_date">納骨日</div>
         <div class="hikuyousya_date">納骨移動日</div>
+        <div class="hikuyousya_ihai">納骨番号</div>
         <div class="hikuyousya_column">特記事項</div>
         <div class="hikuyousya_btn"></div>
     </div>
@@ -269,8 +271,10 @@
             <div class="hikuyousya_name">{{ $danka->name }}</div>
             <div class="hikuyousya_zokumyo">{{ $danka->common_name }}</div>
             <div class="hikuyousya_kaimyo">{{ $danka->posthumous }}</div>
+            <div class="hikuyousya_ihai">@if ($danka->ihai_no != 0000) {{ $danka->ihai_no }} @endif</div>
             <div class="hikuyousya_date">{{ $danka->nokotsubi }}</div>
             <div class="hikuyousya_date">{{ $danka->nokotsuidobi }}</div>
+            <div class="hikuyousya_ihai">@if ($danka->nokotsu_no != 000000) {{ $danka->nokotsu_no }} @endif</div>
             <div class="hikuyousya_column">{{ $danka->column }}</div>
             <div class="hikuyousya_btn"><a href="{{ route('danka_detail', $danka->id) }}" target="_blank" class="search_view_btn_a">表示</a></div>
         </div>

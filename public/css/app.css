@@ -585,7 +585,7 @@ p {
     white-space: nowrap;
 }
 .hikuyousya_column {
-    width:35%;
+    width:20%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

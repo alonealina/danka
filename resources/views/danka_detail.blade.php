@@ -118,7 +118,7 @@
                     <div class="hikuyousya_gender">@if($hikuyousya->gender_h == 'm') 男 @elseif($hikuyousya->gender_h == 'f') 女 @else その他 @endif</div>
                     <div class="hikuyousya_date">{{ $hikuyousya->meinichi }}</div>
                     <div class="hikuyousya_kaiki">@if($hikuyousya->kaiki <= 0) 1 @else {{ $hikuyousya->kaiki + 2 }} @endif</div>
-                    <div class="hikuyousya_kaiki">@if($hikuyousya->kaiki_flg) 〇 @endif</div>
+                    <div class="hikuyousya_kaiki">@if($hikuyousya->kaiki_flg) ✓ @endif</div>
                     <div class="hikuyousya_kaiki">{{ $hikuyousya->gyonen }}</div>
                     <div class="hikuyousya_ihai">{{ $hikuyousya->ihai_no }}</div>
                     <div class="hikuyousya_date">{{ $hikuyousya->nokotsubi }}</div>

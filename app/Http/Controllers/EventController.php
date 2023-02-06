@@ -270,7 +270,8 @@ class EventController extends Controller
             $event_name = $filter_array['event_name'];
             $category_name = TextCategory::find($category_id)->name;
 
-            $query = Danka::select('danka.id as id', 'hikuyousya.id as hikuyousya_id', 'name', 'common_name', 'posthumous', 'nokotsubi', 'nokotsuidobi', 'column')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
+            $query = Danka::select('danka.id as id', 'hikuyousya.id as hikuyousya_id', 'name', 'common_name', 'posthumous', 'nokotsubi',
+             'nokotsuidobi', 'column', 'nokotsu_no', 'ihai_no')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
             ->whereNotNull('nokotsubi');
 
 
@@ -738,7 +739,8 @@ class EventController extends Controller
             $event_name = $event_date->name;
             $category_name = TextCategory::find($category_id)->name;
 
-            $query = Danka::select('danka.id as id', 'hikuyousya.id as hikuyousya_id', 'name', 'common_name', 'posthumous', 'nokotsubi', 'nokotsuidobi', 'column')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
+            $query = Danka::select('danka.id as id', 'hikuyousya.id as hikuyousya_id', 'name', 'common_name', 'posthumous', 'nokotsubi',
+             'nokotsuidobi', 'column', 'nokotsu_no', 'ihai_no')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
             ->whereNotNull('nokotsubi');
 
 

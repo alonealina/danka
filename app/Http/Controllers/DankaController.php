@@ -34,7 +34,7 @@ class DankaController extends Controller
     {
         $danka = new Danka;
 
-        $rules = ['name' => [new DankaCheck($request->name, $request->tel)]];
+        $rules = ['name' => [new DankaCheck($request->name, $request->zip)]];
 
 
         Validator::make($request->all(), $rules)->validate();

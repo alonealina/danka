@@ -16,13 +16,6 @@ function clickTextStoreButton() {
         $('#name_kana').css( 'background', '#fff' );
     }
 
-    if (danka_store_form.tel.value == "") {
-        $('#tel').css( 'background', '#FAF1F1' );
-        error_flg = 1;
-    } else {
-        $('#tel').css( 'background', '#fff' );
-    }tel
-
     if (danka_store_form.zip.value == "") {
         $('#zip').css( 'background', '#FAF1F1' );
         error_flg = 1;

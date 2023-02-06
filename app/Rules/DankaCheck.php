@@ -7,17 +7,17 @@ use App\Models\Danka;
 class DankaCheck implements Rule
 {
     private $name;
-    private $tel;
+    private $zip;
 
     public function __construct($name, $tel)
     {
         $this->name = $name;
-        $this->tel = $tel;
+        $this->zip = $zip;
     }
 
     public function passes($attribute, $name)
     {
-        $count = Danka::where('name', $this->name)->where('tel', $this->tel)->count();
+        $count = Danka::where('name', $this->name)->where('zip', $this->zip)->count();
         if ($count > 0) {
             return false;
         }

@@ -10,11 +10,11 @@
         <div class="danka_form_div">
             <div class="danka_column">
                 <div class="danka_regist_name">施主名 <span class="require_mark">※</span></div>
-                {{ Form::text('name', $danka->name, ['id' => 'name', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '姓　名']) }}
+                {{ Form::text('name', $danka->name, ['id' => 'name', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '姓名']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリガナ <span class="require_mark">※</span></div>
-                {{ Form::text('name_kana', $danka->name_kana, ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'セイ　メイ']) }}
+                {{ Form::text('name_kana', $danka->name_kana, ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'セイメイ']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">性別</div>
@@ -25,7 +25,7 @@
                 </select>
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">電話番号 <span class="require_mark">※</span></div>
+                <div class="danka_regist_name">固定番号 </div>
                 {{ Form::text('tel', $danka->tel, ['id' => 'tel', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '半角英数(09011112222)']) }}
             </div>
             <div class="danka_column">

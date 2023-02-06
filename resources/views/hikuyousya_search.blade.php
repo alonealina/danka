@@ -143,7 +143,7 @@
     <div class="hikuyousya_kaimyo">戒名</div>
     <div class="hikuyousya_gender">性別</div>
     <div class="hikuyousya_date">命日</div>
-    <div class="hikuyousya_kaiki">回忌</div>
+    <div class="hikuyousya_kaiki">年忌</div>
     <div class="hikuyousya_kaiki">行年</div>
     <div class="hikuyousya_ihai">位牌番号</div>
     <div class="hikuyousya_date">納骨日</div>

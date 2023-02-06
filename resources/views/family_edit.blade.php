@@ -35,7 +35,7 @@
 
 
     
-    <a href="#!" onclick="clickTextStoreButton()" class="text_store_btn_a">編集</a>
+    <a href="#!" onclick="clickTextStoreButton()" class="text_store_btn_a">更新</a>
 </form>
 <script src="{{ asset('js/family_edit.js') }}"></script>
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>

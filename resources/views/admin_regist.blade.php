@@ -43,7 +43,7 @@
         </div>
 
         <a onclick="clickAdminStoreButton()" class="login_btn_a">
-            <div class="login_btn" style="margin-top:30px;">ログイン</div>
+            <div class="login_btn" style="margin-top:30px;">追加</div>
         </a>
     </form>
 </div>
