@@ -10,7 +10,7 @@ use App\Models\Family;
 use App\Models\DealDetail;
 use App\Models\DankaDate;
 use App\Models\DankaBook;
-use App\Rules\TextCategoryCheck;
+use App\Rules\DankaCheck;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use DB;
 
@@ -33,6 +33,11 @@ class DankaController extends Controller
     public function danka_store(Request $request)
     {
         $danka = new Danka;
+
+        $rules = ['name' => [new DankaCheck($request->name, $request->tel)]];
+
+
+        Validator::make($request->all(), $rules)->validate();
 
         $request = $request->all();
         $fill_data = [
