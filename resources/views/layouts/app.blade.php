@@ -81,13 +81,11 @@
                         <!-- 請求/支払い -->
                         <a href="#!" class="menu_a @if (strpos($now_route,'deal_list') !== false || strpos($now_route,'deal_detail') !== false ||
                             strpos($now_route,'deal_edit') !== false || strpos($now_route,'deal_edit_confirm') !== false || 
-                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false || 
-                            strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif" onclick="clickMenu3();">
+                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false) current @endif" onclick="clickMenu3();">
                             請求/支払い
                             @if (strpos($now_route,'deal_list') !== false || strpos($now_route,'deal_detail') !== false ||
                             strpos($now_route,'deal_edit') !== false || strpos($now_route,'deal_edit_confirm') !== false || 
-                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false || 
-                            strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) 
+                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false) 
                             <img src="{{ asset('img/down.png') }}" id="down3" class="down_r"><img src="{{ asset('img/up.png') }}" id="up3" class="up_r">
                             @else
                             <img src="{{ asset('img/down.png') }}" id="down3" class="down"><img src="{{ asset('img/up.png') }}" id="up3" class="up">
@@ -96,27 +94,18 @@
                         <div 
                         @if (strpos($now_route,'deal_list') === false && strpos($now_route,'deal_detail') === false && 
                         strpos($now_route,'deal_edit') === false && strpos($now_route,'deal_edit_confirm') === false &&
-                        strpos($now_route,'deal_regist') === false && strpos($now_route,'deal_confirm') === false && 
-                        strpos($now_route,'item_list') === false && strpos($now_route,'item_edit') === false)
+                        strpos($now_route,'deal_regist') === false && strpos($now_route,'deal_confirm') === false)
                         class="menu_none" @endif
                         id="menu3">
                         <a href="{{ route('deal_regist') }}" class="menu_a
                         @if (strpos($now_route,'deal_list') !== false || strpos($now_route,'deal_detail') !== false ||
                             strpos($now_route,'deal_edit') !== false || strpos($now_route,'deal_edit_confirm') !== false || 
-                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false || 
-                            strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif">　取引作成</a>
+                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false) current @endif">　取引作成</a>
                         <a href="{{ route('deal_list') }}" class="menu_a
                         @if (strpos($now_route,'deal_list') !== false || strpos($now_route,'deal_detail') !== false ||
                             strpos($now_route,'deal_edit') !== false || strpos($now_route,'deal_edit_confirm') !== false || 
-                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false || 
-                            strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif">　取引一覧</a>
-                        <a href="{{ route('item_list') }}" class="menu_a
-                        @if (strpos($now_route,'deal_list') !== false || strpos($now_route,'deal_detail') !== false ||
-                            strpos($now_route,'deal_edit') !== false || strpos($now_route,'deal_edit_confirm') !== false || 
-                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false || 
-                            strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif">　商品一覧</a>
+                            strpos($now_route,'deal_regist') !== false || strpos($now_route,'deal_confirm') !== false) current @endif">　取引一覧</a>
                         </div>
-
                         <!-- 行事 -->
                         <a href="#!" class="menu_a 
                         @if (strpos($now_route,'event_list') !== false || strpos($now_route,'event_show') !== false || strpos($now_route,'event_regist') !== false || 
@@ -186,6 +175,9 @@
 
                         <a href="{{ route('category_list') }}" class="menu_a 
                         @if (strpos($now_route,'category_list') !== false) current @endif">カテゴリ管理</a>
+
+                        <a href="{{ route('item_list') }}" class="menu_a
+                        @if (strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif">商品一覧</a>
 
                     </div>
                     <div class="@if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false) paid_list_main 
