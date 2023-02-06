@@ -701,6 +701,9 @@ class EventController extends Controller
             $danka_id_list = array_unique($danka_id_list->pluck('danka_id')->toArray());
             $danka_id_list = implode(",", array_unique($danka_id_list));
 
+            $hikuyousya_id_list = array_unique($hikuyousya_ids->toArray());
+            $hikuyousya_id_list = implode(",", array_unique($hikuyousya_id_list));
+
             return view('event_date_show', [
                 'category_id' => $category_id,
                 'event_name' => $event_name,
@@ -725,6 +728,7 @@ class EventController extends Controller
                 'number' => $number,
                 'danka_list' => $danka_list,
                 'danka_id_list' => $danka_id_list,
+                'hikuyousya_id_list' => $hikuyousya_id_list,
             ]);
         } elseif ($category_id == 5) {
             $nokotsubi_before = isset($filter_array['nokotsubi_before']) ? $filter_array['nokotsubi_before'] : null;
@@ -774,6 +778,9 @@ class EventController extends Controller
             $danka_id_list = array_unique($danka_id_list->pluck('danka_id')->toArray());
             $danka_id_list = implode(",", array_unique($danka_id_list));
 
+            $hikuyousya_id_list = array_unique($hikuyousya_ids->toArray());
+            $hikuyousya_id_list = implode(",", array_unique($hikuyousya_id_list));
+
             return view('event_date_show', [
                 'category_id' => $category_id,
                 'event_name' => $event_name,
@@ -786,6 +793,7 @@ class EventController extends Controller
                 'number' => $number,
                 'danka_list' => $danka_list,
                 'danka_id_list' => $danka_id_list,
+                'hikuyousya_id_list' => $hikuyousya_id_list,
             ]);
         } else {
             $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;

@@ -3,23 +3,35 @@
 @section('content')
 <div class="content_title">行事表示</div>
 <div class="text_show_title">{{ $category_name }} - {{ $event_name }}</div>
-<form id="form" name="search_form" action="{{ route('event_regist_search') }}" method="post">
-    @csrf
-    {{ Form::hidden('category_id', $category_id) }}
-    {{ Form::hidden('category_name', $category_name) }}
-    {{ Form::hidden('event_name', $event_name) }}
-    {{ Form::hidden('danka_count', $danka_count) }}
-    {{ Form::hidden('danka_id_list', $danka_id_list) }}
 
-    <div class="paginationWrap">
-        <div class="pagination_div">
-            {{ $danka_list->count()}}件 （
-            @if($category_id == 1) 被供養者{{ $hikuyousya_count }}人　@endif
-            施主{{ $danka_count }}人）が該当しました　
+<div class="paginationWrap">
+    <div class="pagination_div">
+        {{ $danka_list->count()}}件 （
+        @if($category_id == 1) 被供養者{{ $hikuyousya_count }}人　@endif
+        施主{{ $danka_count }}人）が該当しました　
 
-        </div>
     </div>
-</form>
+    @if($category_id == 1)
+    <form id="csv_export_form" name="csv_export_form" action="{{ route('nenki_csv_export') }}" method="post">
+    @csrf
+    {{ Form::hidden('hikuyousya_id_list', $hikuyousya_id_list) }}
+    </form>
+    @elseif($category_id == 5)
+    <form id="csv_export_form" name="csv_export_form" action="{{ route('noukotsu_csv_export') }}" method="post">
+    @csrf
+    {{ Form::hidden('hikuyousya_id_list', $hikuyousya_id_list) }}
+    </form>
+    @else
+    <form id="csv_export_form" name="csv_export_form" action="{{ route('star_csv_export') }}" method="post">
+    @csrf
+    {{ Form::hidden('danka_id_list', $danka_id_list) }}
+    </form>
+    @endif
+
+
+    <a href="#!" onclick="clickCsvExportButton()" class="search_btn_a" style="margin:0 10px;">CSV出力</a>
+</div>
+
 
 
 <form id="regist_form" name="event_store_form" action="{{ route('event_store') }}" method="post">
