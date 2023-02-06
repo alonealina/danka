@@ -86,7 +86,18 @@ function clickAddButton() {
 
 
 function clickTextStoreButton() {
-  document.forms.danka_store_form.submit();
+  error_flg = 0;
+
+  if (danka_store_form.danka_id.value == "") {
+      $('#id_input').css( 'background', '#FAF1F1' );
+      error_flg = 1;
+  } else {
+      $('#id_input').css( 'background', '#fff' );
+  }
+
+  if (!error_flg ) {
+      document.forms.danka_store_form.submit();
+  }
 };
 
 window.addEventListener('DOMContentLoaded', function() {

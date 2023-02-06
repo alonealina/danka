@@ -15,7 +15,7 @@
 
             <div class="danka_column">
                 <div class="danka_regist_name">カルテナンバー</div>
-                {{ Form::text('danka_id', old('danka_id'), ['id' => 'id_input', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
+                {{ Form::text('danka_id', old('danka_id'), ['id' => 'id_input', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '半角数字']) }}
             </div>
 
             <div class="danka_column">
