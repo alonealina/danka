@@ -222,7 +222,7 @@
         <div class="hikuyousya_kaimyo">戒名</div>
         <div class="hikuyousya_date">命日</div>
         <div class="hikuyousya_kaiki">回忌</div>
-        <div class="hikuyousya_kaiki"></div>
+        <div class="hikuyousya_kaiki">発送</div>
         <div class="hikuyousya_date">支払日</div>
         <div class="hikuyousya_kaimyo">商品カテゴリー</div>
         <div class="hikuyousya_date">金額</div>
