@@ -168,7 +168,7 @@
                 {{ Form::hidden('price_min', $price_min) }}
                 {{ Form::hidden('price_max', $price_max) }}
                 {{ Form::hidden('number', $number) }}
-                <button class="payment_red_btn_a" onclick="return confirm('本当に削除しますか？')" >未払いへ</button>
+                <button class="payment_red_btn_a" onclick="return confirm('未払いに変更しますか？')" >未払いへ</button>
             </form>
 
             <a href="{{ route('deal_detail', ['id' => $deal->id, 'type' => $type]) }}" class="payment_view_btn_a">表示</a>
