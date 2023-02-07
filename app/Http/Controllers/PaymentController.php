@@ -203,6 +203,8 @@ class PaymentController extends Controller
     {
         $id = $request->id;
         $deal = Deal::find($id);
+        $danka_id = $deal->danka_id;
+        $danka = Danka::find($danka_id);
         $date = date('Y-m-d');
         DB::beginTransaction();
         try {
@@ -213,6 +215,40 @@ class PaymentController extends Controller
 
             $deal->fill($fill_data)->update();
             
+            $fill_data = [];
+            $star_count = DealDetail::join('item', 'item.id', '=', 'deal_detail.item_id')->where('deal_id', $id)->where('category_id', 3)->count();
+            if ($star_count > 0) {
+                $fill_data['star_flg'] = 1;
+            }
+
+            $segaki_count = DealDetail::join('item', 'item.id', '=', 'deal_detail.item_id')->where('deal_id', $id)->where('category_id', 4)->count();
+            if ($segaki_count > 0) {
+                $fill_data['segaki_flg'] = 1;
+            }
+
+            $yakushiji_count = DealDetail::join('item', 'item.id', '=', 'deal_detail.item_id')->where('deal_id', $id)->where('category_id', 11)->count();
+            if ($yakushiji_count > 0) {
+                $fill_data['yakushiji_flg'] = 1;
+            }
+
+            $danka->fill($fill_data)->update();
+
+            $query = DealDetail::join('item', 'item.id', '=', 'deal_detail.item_id')->where('deal_id', $id)->where('hikuyousya_id', '!=', 0);
+            $query->where(function ($query) {
+                $query->orwhere('category_id', 1)->orwhere('category_id', 2);
+            });
+            $hikuyousya_ids = $query->get()->pluck('hikuyousya_id');
+
+            $fill_data = [
+                'kaiki_flg' => 1,
+            ];
+
+            foreach ($hikuyousya_ids as $hikuyousya_id) {
+                $hikuyousya = Hikuyousya::find($hikuyousya_id);
+                $hikuyousya->fill($fill_data)->update();
+            }
+
+
             DB::commit();
             return redirect()->route('deal_list',[
                 'name' => $request->name,
