@@ -9,7 +9,7 @@ class DankaCheck implements Rule
     private $name;
     private $zip;
 
-    public function __construct($name, $tel)
+    public function __construct($name, $zip)
     {
         $this->name = $name;
         $this->zip = $zip;

@@ -13,6 +13,9 @@ check_off.addEventListener("change",function(){
     check_on.checked = false;
 });
 
-function clickCsvExportButton() {
-    document.forms.csv_export_form.submit();
+function clickCsvExportButton(total) {
+    const v = confirm(total + '件出力しますがよろしいですか？');
+    if(v === true){
+        document.forms.csv_export_form.submit();
+    }
 }

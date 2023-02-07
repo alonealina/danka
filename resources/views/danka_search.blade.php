@@ -107,7 +107,7 @@
         {{ Form::hidden('segaki_flg', $segaki_flg) }}
         {{ Form::hidden('star_flg', $star_flg) }}
         {{ Form::hidden('yakushiji_flg', $yakushiji_flg) }}
-        <button class="payment_blue_btn_a">CSV出力</button>
+        <button class="payment_blue_btn_a" onclick="return confirm('{{ $danka_list->total() }}件出力しますがよろしいですか？')" >CSV出力</button>
     </form>
 </div>
 

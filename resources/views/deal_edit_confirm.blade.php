@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <a href="#!" onclick="clickTextStoreButton()" class="text_store_btn_a">作成</a>
+    <a href="#!" onclick="clickDealUpdateButton()" class="text_store_btn_a">更新</a>
 
 </form>
 <script src="{{ asset('js/deal_regist.js') }}"></script>

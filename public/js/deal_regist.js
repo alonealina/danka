@@ -108,3 +108,6 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+function clickDealUpdateButton() {
+  document.forms.danka_store_form.submit();
+};

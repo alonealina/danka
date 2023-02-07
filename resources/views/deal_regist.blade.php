@@ -43,8 +43,8 @@
             <div class="danka_column">
                 <div class="danka_regist_name">決済方法</div>
                 <select name="payment_method" class="select_category">
-                    <option value="現金書留">現金書留</option>
                     <option value="銀行振込">銀行振込</option>
+                    <option value="現金書留">現金書留</option>
                     <option value="クレジット">クレジット</option>
                     <option value="コード決済">コード決済</option>
                     <option value="電子決済">電子決済</option>

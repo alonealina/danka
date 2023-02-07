@@ -34,11 +34,11 @@ class CategoryController extends Controller
     {
         $type = $request['type'];
 
-        if ($type == "発送物") {
+        if ($type == "shipment") {
             $rules = ['name' => ['required', new ShipmentCategoryCheck()]];
             $category = new ShipmentCategory();
 
-        } elseif ($type == "商品") {
+        } elseif ($type == "item") {
             $rules = ['name' => ['required', new ItemCategoryCheck()]];
             $category = new ItemCategory();
         } else {
@@ -62,7 +62,7 @@ class CategoryController extends Controller
         try {
             $category->fill($fill_data)->save();
             DB::commit();
-            return redirect()->to('category_list')->with('message', 'カテゴリの登録が完了いたしました');
+            return redirect()->route('category_list',['type' => $type])->with('message', 'カテゴリの登録が完了いたしました');
         } catch (\Exception $e) {
             DB::rollback();
         }

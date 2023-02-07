@@ -130,7 +130,7 @@
         {{ Form::hidden('ihai_flg', $ihai_flg) }}
         {{ Form::hidden('konryu_flg', $konryu_flg) }}
         {{ Form::hidden('kaiki_flg', $kaiki_flg) }}
-        <button class="payment_blue_btn_a">CSV出力</button>
+        <button class="payment_blue_btn_a" onclick="return confirm('{{ $danka_list->total() }}件出力しますがよろしいですか？')" >CSV出力</button>
     </form>
 
 </div>

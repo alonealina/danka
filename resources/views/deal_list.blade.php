@@ -86,7 +86,7 @@
         {{ Form::hidden('price_min', $price_min) }}
         {{ Form::hidden('price_max', $price_max) }}
         {{ Form::hidden('number', $number) }}
-        <button class="payment_blue_btn_a">CSV出力</button>
+        <button class="payment_blue_btn_a" onclick="return confirm('{{ $deal_list->total() }}件出力しますがよろしいですか？')" >CSV出力</button>
     </form>
 </div>
 

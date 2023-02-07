@@ -8,9 +8,9 @@
     @csrf
         <div class="flex_column" style="justify-content: end;">
             <select name="type" class="select_category" style="width: 80px; margin-right:10px;">
-                <option value="商品" @if(old('type') == '商品') selected @endif >商品</option>
-                <option value="行事" @if(old('type') == '行事') selected @endif >行事</option>
-                <option value="発送物" @if(old('type') == '発送物') selected @endif >発送物</option>
+                <option value="item" @if(old('type') == 'item') selected @endif >商品</option>
+                <option value="text" @if(old('type') == 'text') selected @endif >行事</option>
+                <option value="shipment" @if(old('type') == 'shipment') selected @endif >発送物</option>
             </select>
             {{ Form::text('name', old('name'), ['class' => 'category_name_text', 'maxlength' => 30, 'placeholder' => 'カテゴリ名を入力してください']) }}
             <a href="#!" onclick="categoryStoreButton()" class="add_btn_a">新規追加</a>

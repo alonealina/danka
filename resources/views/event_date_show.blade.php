@@ -6,8 +6,8 @@
 
 <div class="paginationWrap">
     <div class="pagination_div">
-        {{ $danka_list->count()}}件 （
-        @if($category_id == 1) 被供養者{{ $hikuyousya_count }}人　@endif
+        {{ $danka_list->count() }}件 （
+        @if($category_id == 1 || $category_id == 5) 被供養者{{ $hikuyousya_count }}人　@endif
         施主{{ $danka_count }}人）が該当しました　
 
     </div>
@@ -27,9 +27,13 @@
     {{ Form::hidden('danka_id_list', $danka_id_list) }}
     </form>
     @endif
+    @if($category_id == 1 || $category_id == 5)
+    <a href="#!" onclick="clickCsvExportButton({{ $hikuyousya_count }})" class="search_btn_a" style="margin:0 10px;">CSV出力</a>
+    @else
+    <a href="#!" onclick="clickCsvExportButton({{ $danka_count }})" class="search_btn_a" style="margin:0 10px;">CSV出力</a>
+    @endif
 
 
-    <a href="#!" onclick="clickCsvExportButton()" class="search_btn_a" style="margin:0 10px;">CSV出力</a>
 </div>
 
 

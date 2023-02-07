@@ -182,7 +182,7 @@
         @include('item.other_regist_number')　　
         @endif
         {{ $danka_list->total()}}件 （
-        @if($category_id == 1) 被供養者{{ $hikuyousya_count }}人　@endif
+        @if($category_id == 1 || $category_id == 5) 被供養者{{ $hikuyousya_count }}人　@endif
         施主{{ $danka_count }}人）が該当しました　
         {{ $danka_list->appends(['category_id' => $category_id])->appends(request()->query())->links('pagination::default') }}
 
@@ -343,8 +343,11 @@
     </form>
     @endif
 
-
-    <a href="#!" onclick="clickCsvExportButton()" class="search_btn_a" style="margin: 10px auto 0;">CSV出力</a>
+    @if($category_id == 1 || $category_id == 5)
+    <a href="#!" onclick="clickCsvExportButton({{ $hikuyousya_count }})" class="search_btn_a" style="margin: 10px auto 0;">CSV出力</a>
+    @else
+    <a href="#!" onclick="clickCsvExportButton({{ $danka_count }})" class="search_btn_a" style="margin: 10px auto 0;">CSV出力</a>
+    @endif
     <a href="#!" onclick="clickEventStoreButton()" class="search_btn_a" style="margin: 10px auto 0;">リスト作成</a>
 </div>
 
