@@ -25,8 +25,8 @@
                 </select>
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">固定番号 </div>
-                {{ Form::text('tel', $danka->tel, ['id' => 'tel', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '半角英数(09011112222)']) }}
+                <div class="danka_regist_name">固定番号</div>
+                {{ Form::text('tel', $danka->tel, ['id' => 'tel', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '半角英数(0736562434)']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">携帯番号</div>
