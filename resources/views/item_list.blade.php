@@ -38,7 +38,7 @@
         <div class="item_view_column">
             <div class="family_view_item">{{ $item->name }}</div>
             <div class="family_view_item">{{ $item->detail }}</div>
-            <div class="family_view_item">{{ $item->price }}</div>
+            <div class="family_view_item">{{ number_format($item->price) }}</div>
         </div>
         <div class="item_btn_list">
             <a href="{{ route('item_edit', $item->id) }}" class="edit_btn_a">編集</a>

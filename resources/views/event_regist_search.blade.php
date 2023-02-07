@@ -150,12 +150,12 @@
                 <label for="yakushiji_flg" class="danka_label">薬師寺霊園</label>
                 <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
                 @if(isset($kaiki_flg)) checked @endif>
-                <label for="kaiki_flg" class="danka_label">回忌</label>
+                <label for="kaiki_flg" class="danka_label">年忌</label>
                 @endif
             @elseif($category_id == 1)
             <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
             @if(isset($kaiki_flg)) checked @endif>
-            <label for="kaiki_flg" class="danka_label">回忌</label>
+            <label for="kaiki_flg" class="danka_label">年忌</label>
             @else
             <input type="checkbox" id="star_flg" name="star_flg" class="danka_checkbox" value="1"
             @if(isset($star_flg)) checked @endif>
