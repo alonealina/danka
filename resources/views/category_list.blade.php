@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content_title">カテゴリ一覧</div>
+<div class="content_title">カテゴリ管理</div>
 
 <div class="text_category_list_div">
     <form id="admin_store_form" name="category_store_form" action="{{ route('category_store') }}" method="post">

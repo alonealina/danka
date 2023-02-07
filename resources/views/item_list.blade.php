@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content_title">商品一覧</div>
+<div class="content_title">商品管理</div>
 
 <form id="admin_store_form" name="item_store_form" action="{{ route('item_store') }}" method="post">
 @csrf

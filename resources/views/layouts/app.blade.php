@@ -154,7 +154,7 @@
                         @if (strpos($now_route,'category_list') !== false) current @endif">カテゴリ管理</a>
 
                         <a href="{{ route('item_list') }}" class="menu_a
-                        @if (strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif">商品一覧</a>
+                        @if (strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif">商品管理</a>
 
                     </div>
                     <div class="@if (strpos($now_route,'unclaimed_list') !== false || strpos($now_route,'unpaid_list') !== false || strpos($now_route,'paid_list') !== false) paid_list_main 

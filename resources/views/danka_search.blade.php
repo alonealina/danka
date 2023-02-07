@@ -126,7 +126,7 @@
         <div class="payment_id">{{ $danka->id }}</div>
         <div class="payment_name">{{ $danka->name }}</div>
         <div class="payment_tel">{{ $danka->tel }}</div>
-        <div class="hikuyousya_address">{{ $danka->pref }}</div>
+        <div class="hikuyousya_address">{{ $danka->pref }}{{ $danka->city }}{{ $danka->address }}{{ $danka->building }}</div>
         <div class="payment_btn"><a href="{{ route('danka_detail', $danka->id) }}" class="search_view_btn_a">表示</a></div>
     </div>
 
