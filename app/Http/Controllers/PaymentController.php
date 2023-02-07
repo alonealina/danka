@@ -30,6 +30,8 @@ class PaymentController extends Controller
         $payment_after = isset($filter_array['payment_after']) ? $filter_array['payment_after'] : null;
         $price_min = isset($filter_array['price_min']) ? $filter_array['price_min'] : null;
         $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
+        $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
+        $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;
         $type = isset($filter_array['type']) ? $filter_array['type'] : null;
 
         $query = Deal::select('deal.id as id', 'deal_no', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at as created_at')
@@ -86,6 +88,10 @@ class PaymentController extends Controller
             $query->having('total', '<=', $price_max);
         }
 
+        if (!empty($sort_item)) {
+            $query->orderBy($sort_item, $sort_type);
+        }
+
         if (!empty($type) && $type == '支払済') {
             $query->orderBy('payment_date', 'desc')->orderBy('deal_no', 'desc');
         } else {
@@ -124,6 +130,8 @@ class PaymentController extends Controller
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'sort_item' => $sort_item,
+            'sort_type' => $sort_type,
             'type' => $type,
             'number' => $number,
 
@@ -648,6 +656,8 @@ class PaymentController extends Controller
         $payment_after = isset($filter_array['payment_after']) ? $filter_array['payment_after'] : null;
         $price_min = isset($filter_array['price_min']) ? $filter_array['price_min'] : null;
         $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
+        $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
+        $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;
         $type = isset($filter_array['type']) ? $filter_array['type'] : null;
 
         $query = Deal::select('deal_no', 'payment_date', 'name_kana', 'tel', 'mobile', 'zip', 'pref', 'city', 'address', 'building', 'payment_method', 
@@ -704,6 +714,10 @@ class PaymentController extends Controller
 
         if (!empty($price_max)) {
             $query->having('total', '<=', $price_max);
+        }
+
+        if (!empty($sort_item)) {
+            $query->orderBy($sort_item, $sort_type);
         }
 
         if (!empty($type) && $type == '支払済') {

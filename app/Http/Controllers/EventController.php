@@ -998,6 +998,7 @@ class EventController extends Controller
     {
         $request = $request->all();
         $danka_id_list = explode(',', $request['danka_id_list']);
+        arsort($danka_id_list);
         $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所', '星祭', '施餓鬼', '薬師寺霊園',
         ];
         

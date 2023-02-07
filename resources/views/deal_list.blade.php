@@ -19,6 +19,19 @@
                 <div class="danka_regist_name">電話番号</div>
                 {{ Form::text('tel', $tel, ['id' => 'tel', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
             </div>
+            <div class="danka_column">
+                <div class="danka_regist_name">ソート</div>
+                <select name="sort_item" class="select_category" style="width: 200px">
+                    <option value="">----</option>
+                    <option value="total" @if($sort_item == 'total') selected @endif >金額</option>
+                </select>　　
+                <select name="sort_type" class="select_category" style="width: 70px">
+                    <option value="asc">昇順</option>
+                    <option value="desc" @if($sort_type == 'desc') selected @endif >降順</option>
+                </select>
+
+            </div>
+
         </div>
 
         <div class="danka_form_div">
@@ -85,6 +98,8 @@
         {{ Form::hidden('payment_after', $payment_after) }}
         {{ Form::hidden('price_min', $price_min) }}
         {{ Form::hidden('price_max', $price_max) }}
+        {{ Form::hidden('sort_item', $sort_item) }}
+        {{ Form::hidden('sort_type', $sort_type) }}
         {{ Form::hidden('number', $number) }}
         <button class="payment_blue_btn_a" onclick="return confirm('{{ $deal_list->total() }}件出力しますがよろしいですか？')" >CSV出力</button>
     </form>
@@ -129,6 +144,8 @@
                 {{ Form::hidden('payment_after', $payment_after) }}
                 {{ Form::hidden('price_min', $price_min) }}
                 {{ Form::hidden('price_max', $price_max) }}
+                {{ Form::hidden('sort_item', $sort_item) }}
+                {{ Form::hidden('sort_type', $sort_type) }}
                 {{ Form::hidden('number', $number) }}
                 <button class="payment_white_btn_a">送付待ちへ</button>
             </form>
@@ -147,6 +164,8 @@
                 {{ Form::hidden('payment_after', $payment_after) }}
                 {{ Form::hidden('price_min', $price_min) }}
                 {{ Form::hidden('price_max', $price_max) }}
+                {{ Form::hidden('sort_item', $sort_item) }}
+                {{ Form::hidden('sort_type', $sort_type) }}
                 {{ Form::hidden('number', $number) }}
                 <button class="payment_blue_btn_a">支払済へ</button>
             </form>
@@ -167,6 +186,8 @@
                 {{ Form::hidden('payment_after', $payment_after) }}
                 {{ Form::hidden('price_min', $price_min) }}
                 {{ Form::hidden('price_max', $price_max) }}
+                {{ Form::hidden('sort_item', $sort_item) }}
+                {{ Form::hidden('sort_type', $sort_type) }}
                 {{ Form::hidden('number', $number) }}
                 <button class="payment_red_btn_a" onclick="return confirm('未払いに変更しますか？')" >未払いへ</button>
             </form>
