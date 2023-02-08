@@ -386,14 +386,16 @@ class EventController extends Controller
                     ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id');
                 if (!empty($payment_before)) {
                     $query_tmp->whereDate('payment_date', '>=', $payment_before);
+                    $query->whereDate('payment_date', '>=', $payment_before);
                 }
                 if (!empty($payment_after)) {
                     $query_tmp->whereDate('payment_date', '<=', $payment_after);
+                    $query->whereDate('payment_date', '<=', $payment_after);
                 }
                 $query_tmp->where('item.category_id', 3);
                 $not_danka_ids = array_unique($query_tmp->get()->pluck('id')->toArray());
 
-                $query->whereNotIn('danka.id', $not_danka_ids)->where('item.category_id', 3);
+                $query->whereNotIn('danka.id', $not_danka_ids);
             } else {
                 if (!empty($payment_before)) {
                     $query->whereDate('payment_date', '>=', $payment_before);
