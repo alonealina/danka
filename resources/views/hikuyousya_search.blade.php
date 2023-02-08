@@ -94,6 +94,20 @@
                 @if(isset($kaiki_flg)) checked @endif>
                 <label for="kaiki_flg" class="danka_label">回忌</label>
             </div>
+
+            <div class="danka_column">
+                <div class="danka_regist_name">ソート</div>
+                <select name="sort_item" class="select_category" style="width: 200px">
+                    <option value="">----</option>
+                    <option value="meinichi" @if($sort_item == 'meinichi') selected @endif >命日</option>
+                    <option value="ihai_no" @if($sort_item == 'ihai_no') selected @endif >位牌番号</option>
+                    <option value="nokotsubi" @if($sort_item == 'nokotsubi') selected @endif >納骨日</option>
+                </select>　　
+                <select name="sort_type" class="select_category" style="width: 70px">
+                    <option value="asc">昇順</option>
+                    <option value="desc" @if($sort_type == 'desc') selected @endif >降順</option>
+                </select>
+            </div>
         </div>
         <div class="search_btn_list">
             <a href="#!" onclick="clickSearchButton()" class="search_btn_a">検索</a>
@@ -130,6 +144,8 @@
         {{ Form::hidden('ihai_flg', $ihai_flg) }}
         {{ Form::hidden('konryu_flg', $konryu_flg) }}
         {{ Form::hidden('kaiki_flg', $kaiki_flg) }}
+        {{ Form::hidden('sort_item', $sort_item) }}
+        {{ Form::hidden('sort_type', $sort_type) }}
         <button class="payment_blue_btn_a" onclick="return confirm('{{ $danka_list->total() }}件出力しますがよろしいですか？')" >CSV出力</button>
     </form>
 

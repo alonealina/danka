@@ -89,7 +89,7 @@ class PaymentController extends Controller
         }
 
         if (!empty($sort_item)) {
-            $query->orderBy($sort_item, $sort_type);
+            $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
         }
 
         if (!empty($type) && $type == '支払済') {
@@ -720,7 +720,7 @@ class PaymentController extends Controller
         }
 
         if (!empty($sort_item)) {
-            $query->orderBy($sort_item, $sort_type);
+            $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
         }
 
         if (!empty($type) && $type == '支払済') {
