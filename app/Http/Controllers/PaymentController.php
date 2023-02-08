@@ -724,10 +724,6 @@ class PaymentController extends Controller
         }
 
         if (!empty($sort_item)) {
-            $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
-        }
-
-        if (!empty($sort_item)) {
             if ($sort_item == 'created_at') {
                 $query->orderByRaw('deal.' . $sort_item . ' is null asc')->orderBy('deal.' . $sort_item, $sort_type);
             } else {
