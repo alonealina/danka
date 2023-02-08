@@ -602,7 +602,6 @@ class EventController extends Controller
             return redirect()->route('event_show', $request['category_id'])->with('message', '行事の登録が完了いたしました。');
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->route('event_show', $request['category_id'])->with('message', '行事の登録が完了いたしました。');
         }
     }
 
