@@ -368,9 +368,12 @@ class EventController extends Controller
 
             // 檀家情報・取引・商品結合
             $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
-                'pref', 'city', 'address', 'building', 'item_category.name as category_name', 'payment_date', 'total', 'deal.created_at as created_at')
+                'pref', 'city', 'address', 'building', 'item_category.name as category_name', 'payment_date', 'deal.created_at as created_at')
+                ->selectRaw('SUM(total) AS total')
             ->join('deal', 'danka.id', '=', 'deal.danka_id')->leftJoin('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')
-            ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id');
+            ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id')
+            ->groupBy('danka.id', 'danka.name', 'tel', 
+            'pref', 'city', 'address', 'building', 'item_category.name', 'payment_date', 'deal.created_at');
 
             if ($category_id != 3 && isset($item_category_id)) {
                 $query->where('item.category_id', $item_category_id);

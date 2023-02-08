@@ -350,7 +350,6 @@
         <div class="hikuyousya_address">住所</div>
         <div class="hikuyousya_date">取引作成日</div>
         <div class="hikuyousya_date">支払日</div>
-        <div class="hikuyousya_kaimyo">商品カテゴリー</div>
         <div class="hikuyousya_date">金額</div>
         <div class="hikuyousya_btn"></div>
     </div>
@@ -364,7 +363,6 @@
             <div class="hikuyousya_address">{{ $danka->pref }}{{ $danka->city }}{{ $danka->address }}{{ $danka->building }}</div>
             <div class="hikuyousya_date">{{ $danka->created_at->format('Y-m-d') }}</div>
             <div class="hikuyousya_date">{{ $danka->payment_date }}</div>
-            <div class="hikuyousya_kaimyo">{{ $danka->category_name }}</div>
             <div class="hikuyousya_date">@if($danka->total > 0) {{ number_format($danka->total) }} @endif</div>
             <div class="hikuyousya_btn"><a href="{{ route('danka_detail', $danka->id) }}" target="_blank" class="search_view_btn_a">表示</a></div>
         </div>
