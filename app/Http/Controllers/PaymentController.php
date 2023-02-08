@@ -89,7 +89,11 @@ class PaymentController extends Controller
         }
 
         if (!empty($sort_item)) {
-            $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
+            if ($sort_item == 'created_at') {
+                $query->orderByRaw('deal.' . $sort_item . ' is null asc')->orderBy('deal.' . $sort_item, $sort_type);
+            } else {
+                $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
+            }
         }
 
         if (!empty($type) && $type == '支払済') {
