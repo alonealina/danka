@@ -105,6 +105,8 @@ class PaymentController extends Controller
             $sum_price += $item->total;
         }
 
+        $deal_id_list = $sum_query->pluck('id');
+        $deal_detail_count = DealDetail::whereIn('deal_id', $deal_id_list)->count();
 
         $number = \Request::get('number');
         if (isset($number)) {
@@ -136,6 +138,7 @@ class PaymentController extends Controller
             'number' => $number,
 
             'sum_price' => $sum_price,
+            'deal_detail_count' => $deal_detail_count,
         ]);
     }
 

@@ -12,6 +12,8 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'sort_item' => $sort_item,
+            'sort_type' => $sort_type,
             'type' => $type,
             ]) }}"
         @if($number == "10") selected @endif>10件</option>
@@ -27,6 +29,8 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'sort_item' => $sort_item,
+            'sort_type' => $sort_type,
             'type' => $type,
             ]) }}"
         @if($number == "30") selected @endif>30件</option>
@@ -42,6 +46,8 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'sort_item' => $sort_item,
+            'sort_type' => $sort_type,
             'type' => $type,
             ]) }}"
         @if($number == "50") selected @endif>50件</option>
@@ -57,6 +63,8 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'sort_item' => $sort_item,
+            'sort_type' => $sort_type,
             'type' => $type,
             ]) }}"
         @if($number == "100") selected @endif>100件</option>
@@ -72,6 +80,8 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'sort_item' => $sort_item,
+            'sort_type' => $sort_type,
             'type' => $type,
             ]) }}"
         @if($number == "300") selected @endif>300件</option>
@@ -87,6 +97,8 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'sort_item' => $sort_item,
+            'sort_type' => $sort_type,
             'type' => $type,
             ]) }}"
         @if($number == "500") selected @endif>500件</option>

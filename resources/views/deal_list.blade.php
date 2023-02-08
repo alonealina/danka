@@ -24,6 +24,10 @@
                 <select name="sort_item" class="select_category" style="width: 200px">
                     <option value="">----</option>
                     <option value="total" @if($sort_item == 'total') selected @endif >金額</option>
+                    <option value="created_at" @if($sort_item == 'created_at') selected @endif >作成日</option>
+                    <option value="payment_date" @if($sort_item == 'payment_date') selected @endif >支払確認日</option>
+
+                    
                 </select>　　
                 <select name="sort_type" class="select_category" style="width: 70px">
                     <option value="asc">昇順</option>
@@ -101,7 +105,7 @@
         {{ Form::hidden('sort_item', $sort_item) }}
         {{ Form::hidden('sort_type', $sort_type) }}
         {{ Form::hidden('number', $number) }}
-        <button class="payment_blue_btn_a" onclick="return confirm('{{ $deal_list->total() }}件出力しますがよろしいですか？')" >CSV出力</button>
+        <button class="payment_blue_btn_a" onclick="return confirm('{{ $deal_detail_count }}件出力しますがよろしいですか？')" >CSV出力</button>
     </form>
 </div>
 
@@ -113,7 +117,7 @@
     <div class="deal_tel">電話番号</div>
     <div class="deal_price">金額</div>
     <div class="deal_date">作成日</div>
-    <div class="deal_date">支払い確認日</div>
+    <div class="deal_date">支払確認日</div>
     <div class="deal_btn"></div>
 </div>
 

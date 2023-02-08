@@ -267,7 +267,7 @@ class EventController extends Controller
             $nokotsubi_after = isset($filter_array['nokotsubi_after']) ? $filter_array['nokotsubi_after'] : null;
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
 
-            $event_name = $filter_array['event_name'];
+            $event_name = isset($filter_array['event_name']) ? $filter_array['event_name'] : null;
             $category_name = TextCategory::find($category_id)->name;
 
             $query = Danka::select('danka.id as id', 'hikuyousya.id as hikuyousya_id', 'name', 'common_name', 'posthumous', 'nokotsubi',
@@ -344,7 +344,7 @@ class EventController extends Controller
             $event_date_flg = isset($filter_array['event_date_flg']) ? $filter_array['event_date_flg'] : null;
 
 
-            $event_name = $filter_array['event_name'];
+            $event_name = isset($filter_array['event_name']) ? $filter_array['event_name'] : null;
             $category_name = TextCategory::find($category_id)->name;
 
             $item_categories = ItemCategory::get();
