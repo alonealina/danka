@@ -128,7 +128,9 @@ class EventController extends Controller
             $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
             $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
-
+            $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
+            $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;
+    
             $event_name = isset($filter_array['event_name']) ? $filter_array['event_name'] : null;
             $category_name = TextCategory::find($category_id)->name;
 
@@ -219,6 +221,10 @@ class EventController extends Controller
             $hikuyousya_ids = $query->pluck('hikuyousya_id');
             $hikuyousya_count = count(array_unique($hikuyousya_ids->toArray()));
 
+            if (!empty($sort_item)) {
+                $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
+            }
+        
             $number = \Request::get('number');
             if (isset($number)) {
                 $danka_list = $query->orderBy('danka.id')->paginate($number)
@@ -258,6 +264,8 @@ class EventController extends Controller
                 'hikuyousya_count' => $hikuyousya_count,
                 'danka_count' => $danka_count,
                 'number' => $number,
+                'sort_item' => $sort_item,
+                'sort_type' => $sort_type,
                 'danka_list' => $danka_list,
                 'danka_id_list' => $danka_id_list,
                 'hikuyousya_id_list' => $hikuyousya_id_list,
@@ -266,7 +274,9 @@ class EventController extends Controller
             $nokotsubi_before = isset($filter_array['nokotsubi_before']) ? $filter_array['nokotsubi_before'] : null;
             $nokotsubi_after = isset($filter_array['nokotsubi_after']) ? $filter_array['nokotsubi_after'] : null;
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
-
+            $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
+            $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;
+    
             $event_name = isset($filter_array['event_name']) ? $filter_array['event_name'] : null;
             $category_name = TextCategory::find($category_id)->name;
 
@@ -297,6 +307,10 @@ class EventController extends Controller
             $hikuyousya_ids = $query->pluck('hikuyousya_id');
             $hikuyousya_count = count(array_unique($hikuyousya_ids->toArray()));
 
+            if (!empty($sort_item)) {
+                $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
+            }
+
             $number = \Request::get('number');
             if (isset($number)) {
                 $danka_list = $query->orderBy('danka_id')->paginate($number)
@@ -323,6 +337,8 @@ class EventController extends Controller
                 'freeword' => $freeword,
                 'hikuyousya_count' => $hikuyousya_count,
                 'danka_count' => $danka_count,
+                'sort_item' => $sort_item,
+                'sort_type' => $sort_type,
                 'number' => $number,
                 'danka_list' => $danka_list,
                 'danka_id_list' => $danka_id_list,
@@ -342,7 +358,8 @@ class EventController extends Controller
             $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
             $event_date_id = isset($filter_array['event_date_id']) ? $filter_array['event_date_id'] : null;
             $event_date_flg = isset($filter_array['event_date_flg']) ? $filter_array['event_date_flg'] : null;
-
+            $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
+            $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;    
 
             $event_name = isset($filter_array['event_name']) ? $filter_array['event_name'] : null;
             $category_name = TextCategory::find($category_id)->name;
@@ -351,7 +368,7 @@ class EventController extends Controller
 
             // 檀家情報・取引・商品結合
             $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
-                'pref', 'city', 'address', 'building', 'item_category.name as category_name', 'payment_date', 'total', 'deal.created_at')
+                'pref', 'city', 'address', 'building', 'item_category.name as category_name', 'payment_date', 'total', 'deal.created_at as created_at')
             ->join('deal', 'danka.id', '=', 'deal.danka_id')->leftJoin('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')
             ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id');
 
@@ -452,6 +469,14 @@ class EventController extends Controller
             $danka_id_list = $query->pluck('danka.id');
             $danka_count = count(array_unique($danka_id_list->toArray()));
 
+            if (!empty($sort_item)) {
+                if ($sort_item == 'created_at') {
+                    $query->orderByRaw('deal.' . $sort_item . ' is null asc')->orderBy('deal.' . $sort_item, $sort_type);
+                } else {
+                    $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
+                }
+            }
+    
             $number = \Request::get('number');
             if (isset($number)) {
                 $danka_list = $query->orderBy('danka_id')->paginate($number)
@@ -482,6 +507,8 @@ class EventController extends Controller
                 'item_categories' => $item_categories,
                 'item_category_id' => $item_category_id,
                 'danka_count' => $danka_count,
+                'sort_item' => $sort_item,
+                'sort_type' => $sort_type,
                 'number' => $number,
                 'danka_list' => $danka_list,
                 'danka_id_list' => $danka_id_list,
@@ -518,6 +545,8 @@ class EventController extends Controller
         $payment_flg = isset($request['payment_flg']) ? $request['payment_flg'] : null;
         $star_event_date_id = isset($request['event_date_id']) ? $request['event_date_id'] : null;
         $event_date_flg = isset($request['event_date_flg']) ? $request['event_date_flg'] : null;
+        $sort_item = isset($request['sort_item']) ? $request['sort_item'] : null;
+        $sort_type = isset($request['sort_type']) ? $request['sort_type'] : null;
 
         $fill_data = [
             'category_id' => $request['category_id'],
@@ -563,6 +592,8 @@ class EventController extends Controller
                 'payment_flg' => $payment_flg,
                 'star_event_date_id' => $star_event_date_id,
                 'event_date_flg' => $event_date_flg,
+                'sort_item' => $sort_item,
+                'sort_type' => $sort_type,
             ];
             $event_search_log->fill($fill_data)->save();
 
@@ -597,6 +628,8 @@ class EventController extends Controller
             $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
             $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
+            $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
+            $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;    
 
             $event_name = isset($event_date->name) ? $event_date->name : null;
             $category_name = TextCategory::find($category_id)->name;
@@ -688,6 +721,10 @@ class EventController extends Controller
             $hikuyousya_ids = $query->pluck('hikuyousya_id');
             $hikuyousya_count = count(array_unique($hikuyousya_ids->toArray()));
 
+            if (!empty($sort_item)) {
+                $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
+            }
+        
             $number = \Request::get('number');
             if (isset($number)) {
                 $danka_list = $query->orderBy('danka.id')->paginate($number)
@@ -735,6 +772,8 @@ class EventController extends Controller
             $nokotsubi_before = isset($filter_array['nokotsubi_before']) ? $filter_array['nokotsubi_before'] : null;
             $nokotsubi_after = isset($filter_array['nokotsubi_after']) ? $filter_array['nokotsubi_after'] : null;
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
+            $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
+            $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;    
 
             $event_name = $event_date->name;
             $category_name = TextCategory::find($category_id)->name;
@@ -766,6 +805,10 @@ class EventController extends Controller
             $hikuyousya_ids = $query->pluck('hikuyousya_id');
             $hikuyousya_count = count(array_unique($hikuyousya_ids->toArray()));
 
+            if (!empty($sort_item)) {
+                $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
+            }
+        
             $number = \Request::get('number');
             if (isset($number)) {
                 $danka_list = $query->orderBy('danka_id')->paginate($number)
@@ -811,7 +854,8 @@ class EventController extends Controller
             $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
             $star_event_date_id = isset($filter_array['star_event_date_id']) ? $filter_array['star_event_date_id'] : null;
             $event_date_flg = isset($filter_array['event_date_flg']) ? $filter_array['event_date_flg'] : null;
-
+            $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
+            $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;    
 
             $event_name = $event_date->name;
             $category_name = TextCategory::find($category_id)->name;
@@ -820,7 +864,7 @@ class EventController extends Controller
 
             // 檀家情報・取引・商品結合
             $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
-                'pref', 'city', 'address', 'building', 'item_category.name as category_name', 'payment_date', 'total', 'deal.created_at')
+                'pref', 'city', 'address', 'building', 'item_category.name as category_name', 'payment_date', 'total', 'deal.created_at as created_at')
             ->join('deal', 'danka.id', '=', 'deal.danka_id')->leftJoin('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')
             ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id');
 
@@ -921,6 +965,10 @@ class EventController extends Controller
             $danka_id_list = $query->pluck('danka.id');
             $danka_count = count(array_unique($danka_id_list->toArray()));
 
+            if (!empty($sort_item)) {
+                $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
+            }
+        
             $number = \Request::get('number');
             if (isset($number)) {
                 $danka_list = $query->orderBy('danka_id')->paginate($number)
@@ -1036,10 +1084,18 @@ class EventController extends Controller
     public function nenki_csv_export(Request $request)
     {
         $request = $request->all();
+        $sort_item = isset($request['sort_item']) ? $request['sort_item'] : null;
+        $sort_type = isset($request['sort_type']) ? $request['sort_type'] : null;
         $hikuyousya_id_list = explode(',', $request['hikuyousya_id_list']);
-        $danka_list = Danka::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
-        ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->whereIn('hikuyousya.id', $hikuyousya_id_list)->orderBy('danka_id', 'desc')->get();
 
+        $query = Danka::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
+        ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->whereIn('hikuyousya.id', $hikuyousya_id_list);
+
+        if (!empty($sort_item)) {
+            $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
+        }
+
+        $danka_list = $query->orderBy('danka_id', 'desc')->get();
 
         $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所',
         '種別', '俗名', 'フリガナ', '戒名', '性別', '行年', '命日', '周忌/回忌', '年忌チェック', '特記事項', 
@@ -1079,10 +1135,18 @@ class EventController extends Controller
     public function noukotsu_csv_export(Request $request)
     {
         $request = $request->all();
+        $sort_item = isset($request['sort_item']) ? $request['sort_item'] : null;
+        $sort_type = isset($request['sort_type']) ? $request['sort_type'] : null;
         $hikuyousya_id_list = explode(',', $request['hikuyousya_id_list']);
-        $danka_list = Danka::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
-        ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->whereIn('hikuyousya.id', $hikuyousya_id_list)->orderBy('nokotsubi', 'asc')->get();
 
+        $query = Danka::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
+        ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->whereIn('hikuyousya.id', $hikuyousya_id_list);
+
+        if (!empty($sort_item)) {
+            $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
+        }
+
+        $danka_list = $query->orderBy('nokotsubi', 'asc')->get();
 
         $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所',
         '種別', '俗名', 'フリガナ', '戒名', '性別', '行年', '命日', '周忌/回忌', '年忌チェック', 

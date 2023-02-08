@@ -106,6 +106,37 @@
             <div class="danka_regist_name">フリーワード</div>
             {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
         </div>
+        
+        @if($category_id == 5)
+        <div class="danka_column">
+            <div class="danka_regist_name">ソート</div>
+            <select name="sort_item" class="select_category" style="width: 200px">
+                <option value="">----</option>
+                <option value="ihai_no" @if($sort_item == 'ihai_no') selected @endif >位牌番号</option>
+                <option value="nokotsubi" @if($sort_item == 'nokotsubi') selected @endif >納骨日</option>
+                <option value="nokotsuidobi" @if($sort_item == 'nokotsuidobi') selected @endif >納骨移動日</option>
+                <option value="nokotsu_no" @if($sort_item == 'nokotsu_no') selected @endif >納骨番号</option>
+            </select>　　
+            <select name="sort_type" class="select_category" style="width: 70px">
+                <option value="asc">昇順</option>
+                <option value="desc" @if($sort_type == 'desc') selected @endif >降順</option>
+            </select>
+        </div>
+        @elseif($category_id != 1)
+        <div class="danka_column">
+            <div class="danka_regist_name">ソート</div>
+            <select name="sort_item" class="select_category" style="width: 200px">
+                <option value="">----</option>
+                <option value="created_at" @if($sort_item == 'created_at') selected @endif >取引作成日</option>
+                <option value="payment_date" @if($sort_item == 'payment_date') selected @endif >支払確認日</option>
+                <option value="total" @if($sort_item == 'total') selected @endif >金額</option>
+            </select>　　
+            <select name="sort_type" class="select_category" style="width: 70px">
+                <option value="asc">昇順</option>
+                <option value="desc" @if($sort_type == 'desc') selected @endif >降順</option>
+            </select>
+        </div>
+        @endif
     </div>
 
     <div class="danka_form_div">
@@ -163,6 +194,21 @@
             @endif
         </div>
 
+        @if($category_id == 1)
+        <div class="danka_column">
+            <div class="danka_regist_name">ソート</div>
+            <select name="sort_item" class="select_category" style="width: 200px">
+                <option value="">----</option>
+                <option value="meinichi" @if($sort_item == 'meinichi') selected @endif >命日</option>
+                <option value="payment_date" @if($sort_item == 'payment_date') selected @endif >支払確認日</option>
+                <option value="total" @if($sort_item == 'total') selected @endif >金額</option>
+            </select>　　
+            <select name="sort_type" class="select_category" style="width: 70px">
+                <option value="asc">昇順</option>
+                <option value="desc" @if($sort_type == 'desc') selected @endif >降順</option>
+            </select>
+        </div>
+        @endif
     </div>
     @endif
     <div class="search_btn_list">
@@ -199,6 +245,8 @@
 {{ Form::hidden('danka_count', $danka_count) }}
 {{ Form::hidden('danka_id_list', $danka_id_list) }}
 {{ Form::hidden('freeword', $freeword) }}
+{{ Form::hidden('sort_item', $sort_item) }}
+{{ Form::hidden('sort_type', $sort_type) }}
 
     @if($category_id == 1)
     {{ Form::hidden('meinichi_month', $meinichi_month) }}
@@ -330,16 +378,22 @@
     <form id="csv_export_form" name="csv_export_form" action="{{ route('nenki_csv_export') }}" method="post">
     @csrf
     {{ Form::hidden('hikuyousya_id_list', $hikuyousya_id_list) }}
+    {{ Form::hidden('sort_item', $sort_item) }}
+    {{ Form::hidden('sort_type', $sort_type) }}
     </form>
     @elseif($category_id == 5)
     <form id="csv_export_form" name="csv_export_form" action="{{ route('noukotsu_csv_export') }}" method="post">
     @csrf
     {{ Form::hidden('hikuyousya_id_list', $hikuyousya_id_list) }}
+    {{ Form::hidden('sort_item', $sort_item) }}
+    {{ Form::hidden('sort_type', $sort_type) }}
     </form>
     @else
     <form id="csv_export_form" name="csv_export_form" action="{{ route('star_csv_export') }}" method="post">
     @csrf
     {{ Form::hidden('danka_id_list', $danka_id_list) }}
+    {{ Form::hidden('sort_item', $sort_item) }}
+    {{ Form::hidden('sort_type', $sort_type) }}
     </form>
     @endif
 

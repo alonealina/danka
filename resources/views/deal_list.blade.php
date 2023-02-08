@@ -26,14 +26,11 @@
                     <option value="total" @if($sort_item == 'total') selected @endif >金額</option>
                     <option value="created_at" @if($sort_item == 'created_at') selected @endif >作成日</option>
                     <option value="payment_date" @if($sort_item == 'payment_date') selected @endif >支払確認日</option>
-
-                    
                 </select>　　
                 <select name="sort_type" class="select_category" style="width: 70px">
                     <option value="asc">昇順</option>
                     <option value="desc" @if($sort_type == 'desc') selected @endif >降順</option>
                 </select>
-
             </div>
 
         </div>
