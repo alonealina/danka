@@ -41,11 +41,13 @@ id_input.addEventListener("change",function(){
 });
 
 window.addEventListener('DOMContentLoaded',function(){
-  var select_item = document.getElementsByClassName('select_item'); // ①
+  var select_item = document.getElementsByClassName('select_item');
   
-  for(let i = 0; i < select_item.length; i++){ // ②
-    select_item[i].addEventListener('change',function(){ // ②
-      console.log(`${select_item[i].value}がクリックされました！`); // ③
+  for(let i = 0; i < select_item.length; i++){
+    select_item[i].addEventListener('change',function(){
+      let parent = select_item[i].parentElement.parentElement;
+      $('#' + parent.id).find('input[name="price[]"]').val('');
+      console.log(parent.id);
     });
   }
 });
