@@ -643,6 +643,7 @@ class PaymentController extends Controller
         DB::beginTransaction();
         try {
             Item::where('id', $id)->delete();
+            DealDetail::where('item_id', $id)->delete();
             DB::commit();
             return redirect()->route('item_list')->with('message', '商品を削除しました');
         } catch (\Exception $e) {
