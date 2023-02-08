@@ -644,6 +644,11 @@ class PaymentController extends Controller
         try {
             Item::where('id', $id)->delete();
             DealDetail::where('item_id', $id)->delete();
+
+            $deal_id_list = Deal::select('deal.id as id')->selectRaw('count(deal_detail.id) as count')->leftJoin('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')
+            ->groupBy('deal.id')->having('count', 0)->get()->pluck('id');
+            Deal::whereIn('id', $deal_id_list)->delete();
+
             DB::commit();
             return redirect()->route('item_list')->with('message', '商品を削除しました');
         } catch (\Exception $e) {
