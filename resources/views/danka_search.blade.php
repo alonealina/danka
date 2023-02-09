@@ -12,23 +12,23 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">施主名</div>
-                {{ Form::text('name', $name, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+                {{ Form::text('name', $name, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '姓　名']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリガナ</div>
-                {{ Form::text('name_kana', $name_kana, ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+                {{ Form::text('name_kana', $name_kana, ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'セイ　メイ']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">電話番号</div>
-                {{ Form::text('tel', $tel, ['id' => 'tel', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
+                {{ Form::text('tel', $tel, ['id' => 'tel', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '半角英数(0736562434)']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">メールアドレス</div>
-                {{ Form::text('mail', $mail, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
+                {{ Form::text('mail', $mail, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => 'XXXXXX1234@gmail.com']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリーワード</div>
-                {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
+                {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '絵天井　XX列XX番、灯籠']) }}
             </div>
         </div>
 

@@ -15,11 +15,11 @@
         <div class="danka_form_div">
             <div class="danka_column">
                 <div class="danka_regist_name">施主名 <span class="require_mark">※</span></div>
-                {{ Form::text('name', old('name'), ['id' => 'name', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '姓名']) }}
+                {{ Form::text('name', old('name'), ['id' => 'name', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '姓　名']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリガナ <span class="require_mark">※</span></div>
-                {{ Form::text('name_kana', old('name_kana'), ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'セイメイ']) }}
+                {{ Form::text('name_kana', old('name_kana'), ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'セイ　メイ']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">性別</div>
@@ -35,15 +35,15 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">携帯番号</div>
-                {{ Form::text('mobile', old('mobile'), ['class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
+                {{ Form::text('mobile', old('mobile'), ['class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '09012345678']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">メールアドレス</div>
-                {{ Form::text('mail', old('mail'), ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
+                {{ Form::text('mail', old('mail'), ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => 'XXXXXX1234@gmail.com']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">特記事項</div>
-                {{ Form::text('notices', old('notices'), ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
+                {{ Form::text('notices', old('notices'), ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '絵天井　XX列XX番、灯籠']) }}
             </div>
         </div>
 
@@ -109,11 +109,11 @@
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">俗名 <span class="require_mark">※</span></div>
-                        {{ Form::text('common_name', old('common_name'), ['id' => 'common_name', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => '俗名']) }}
+                        {{ Form::text('common_name', old('common_name'), ['id' => 'common_name', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => '姓　名']) }}
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">フリガナ <span class="require_mark">※</span></div>
-                        {{ Form::text('common_kana', old('common_kana'), ['id' => 'common_kana', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'フリガナ']) }}
+                        {{ Form::text('common_kana', old('common_kana'), ['id' => 'common_kana', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'セイ　メイ']) }}
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">性別</div>
@@ -153,7 +153,7 @@
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">特記事項</div>
-                        {{ Form::text('column', old('column'), ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '']) }}
+                        {{ Form::text('column', old('column'), ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '骨のぼり　遍照閣　紫雲の間15列5A']) }}
                     </div>
 
                 </div>
@@ -193,7 +193,7 @@
                 </div>
                 <div class="family_column">
                     <div class="danka_regist_name2">フリガナ</div>
-                    {{ Form::text('family_kana[]', '', ['id' => 'family_kana', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'フリガナ']) }}
+                    {{ Form::text('family_kana[]', '', ['id' => 'family_kana', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'セイ　メイ']) }}
                 </div>
                 <div class="family_column">
                     <div class="danka_regist_name2" style="width: 50px;">続柄</div>

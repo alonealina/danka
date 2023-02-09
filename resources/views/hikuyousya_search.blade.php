@@ -12,11 +12,11 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">施主名</div>
-                {{ Form::text('name', $name, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+                {{ Form::text('name', $name, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '姓　名']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリガナ(施主名)</div>
-                {{ Form::text('name_kana', $name_kana, ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+                {{ Form::text('name_kana', $name_kana, ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'セイ　メイ']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">種別</div>
@@ -31,11 +31,11 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">俗名</div>
-                {{ Form::text('common_name', $common_name, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+                {{ Form::text('common_name', $common_name, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '姓　名']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリガナ(俗名)</div>
-                {{ Form::text('common_kana', $common_kana, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+                {{ Form::text('common_kana', $common_kana, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'セイ　メイ']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">戒名</div>
@@ -43,7 +43,7 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリーワード</div>
-                {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
+                {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '骨のぼり　遍照閣　紫雲の間15列5A']) }}
             </div>
         </div>
 
