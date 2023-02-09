@@ -90,6 +90,9 @@
             <a href="#!" id="hikuyousya" onclick="clickHikuyousya()" class="danka_tab danka_current">被供養者</a>
             <a href="#!" id="family" onclick="clickFamily()" class="danka_tab">家族情報</a>
             <a href="#!" id="payment" onclick="clickPayment()" class="danka_tab">支払い履歴</a>
+            <a href="#!" id="nenki" onclick="clickNenki()" class="danka_tab">年忌</a>
+            <a href="#!" id="star" onclick="clickStar()" class="danka_tab">星祭り</a>
+            <a href="#!" id="segaki" onclick="clickSegaki()" class="danka_tab">施餓鬼</a>
             <div class="danka_space"></div>
         </div>
         <div class="danka_other_content" style="height: 300px;">
@@ -184,9 +187,107 @@
                     @endforeach
                 </div>
             </div>
-
-
         </div>
+
+        <div class="danka_nenki_view" style="display:none;">
+            <div class="payment_list_header" style="margin:0;">
+                <div class="payment_view_column" style="border:0px;">
+                    <div class="danka_payment_date">作成日</div>
+                    <div class="danka_payment_date">支払い確認</div>
+                    <div class="danka_payment_other">カテゴリ</div>
+                    <div class="danka_payment_other">詳細</div>
+                    <div class="danka_payment_price">金額</div>
+                </div>
+                <div class="payment_view_column" style="border:0px;">
+                    <div class="danka_payment_date">作成日</div>
+                    <div class="danka_payment_date">支払い確認</div>
+                    <div class="danka_payment_other">カテゴリ</div>
+                    <div class="danka_payment_other">詳細</div>
+                    <div class="danka_payment_price">金額</div>
+                </div>
+            </div>
+            <div class="search_result_div" style="height: 223px; padding-left:20px; ">
+                <div class="payment_flex_list">
+                    @foreach ($nenki_list as $nenki)
+                    <div class="payment_view_column">
+                        <div class="danka_payment_date">{{ $nenki->created_at->format('Y-m-d') }}</div>
+                        <div class="danka_payment_date">{{ $nenki->payment_date }}</div>
+                        <div class="danka_payment_other">{{ $nenki->name }}</div>
+                        <div class="danka_payment_other">{{ $nenki->detail }}</div>
+                        <div class="danka_payment_price">{{ number_format($nenki->total) }}</div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <div class="danka_star_view" style="display:none;">
+            <div class="payment_list_header" style="margin:0;">
+                <div class="payment_view_column" style="border:0px;">
+                    <div class="danka_payment_date">作成日</div>
+                    <div class="danka_payment_date">支払い確認</div>
+                    <div class="danka_payment_other">カテゴリ</div>
+                    <div class="danka_payment_other">詳細</div>
+                    <div class="danka_payment_price">金額</div>
+                </div>
+                <div class="payment_view_column" style="border:0px;">
+                    <div class="danka_payment_date">作成日</div>
+                    <div class="danka_payment_date">支払い確認</div>
+                    <div class="danka_payment_other">カテゴリ</div>
+                    <div class="danka_payment_other">詳細</div>
+                    <div class="danka_payment_price">金額</div>
+                </div>
+            </div>
+            <div class="search_result_div" style="height: 223px; padding-left:20px; ">
+                <div class="payment_flex_list">
+                    @foreach ($star_list as $star)
+                    <div class="payment_view_column">
+                        <div class="danka_payment_date">{{ $star->created_at->format('Y-m-d') }}</div>
+                        <div class="danka_payment_date">{{ $star->payment_date }}</div>
+                        <div class="danka_payment_other">{{ $star->name }}</div>
+                        <div class="danka_payment_other">{{ $star->detail }}</div>
+                        <div class="danka_payment_price">{{ number_format($star->total) }}</div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <div class="danka_segaki_view" style="display:none;">
+            <div class="payment_list_header" style="margin:0;">
+                <div class="payment_view_column" style="border:0px;">
+                    <div class="danka_payment_date">作成日</div>
+                    <div class="danka_payment_date">支払い確認</div>
+                    <div class="danka_payment_other">カテゴリ</div>
+                    <div class="danka_payment_other">詳細</div>
+                    <div class="danka_payment_price">金額</div>
+                </div>
+                <div class="payment_view_column" style="border:0px;">
+                    <div class="danka_payment_date">作成日</div>
+                    <div class="danka_payment_date">支払い確認</div>
+                    <div class="danka_payment_other">カテゴリ</div>
+                    <div class="danka_payment_other">詳細</div>
+                    <div class="danka_payment_price">金額</div>
+                </div>
+            </div>
+            <div class="search_result_div" style="height: 223px; padding-left:20px; ">
+                <div class="payment_flex_list">
+                    @foreach ($segaki_list as $segaki)
+                    <div class="payment_view_column">
+                        <div class="danka_payment_date">{{ $segaki->created_at->format('Y-m-d') }}</div>
+                        <div class="danka_payment_date">{{ $segaki->payment_date }}</div>
+                        <div class="danka_payment_other">{{ $segaki->name }}</div>
+                        <div class="danka_payment_other">{{ $segaki->detail }}</div>
+                        <div class="danka_payment_price">{{ number_format($segaki->total) }}</div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+
+
+
     </div>
 
 

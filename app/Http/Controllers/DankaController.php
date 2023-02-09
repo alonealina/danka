@@ -656,16 +656,29 @@ class DankaController extends Controller
         $hikuyousya_list = Hikuyousya::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
         ->where('danka_id', $id)->get();
         $family_list = Family::where('danka_id', $id)->get();
-        $payment_list = DealDetail::select('deal.created_at as created_at', 'payment_date', 'detail', 'item_category.name as name', 'total')
+        $query = DealDetail::select('deal.created_at as created_at', 'payment_date', 'detail', 'item_category.name as name', 'total')
         ->join('deal', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id')
-        ->join('item_category', 'item.category_id', '=', 'item_category.id')->where('danka_id', $id)->where('state', '支払済')->orderBy('payment_date', 'desc')->get();
+        ->join('item_category', 'item.category_id', '=', 'item_category.id')->where('danka_id', $id)->where('state', '支払済')->orderBy('payment_date', 'desc');
 
+        $nenki_query = clone $query;
+        $star_query = clone $query;
+        $segaki_query = clone $query;
+
+        $payment_list = $query->get();
+        $nenki_list = $nenki_query->where(function ($query) {
+            $query->orwhere('item.category_id', 1)->orwhere('item.category_id', 2);
+        })->get();
+        $star_list = $star_query->where('item.category_id', 3)->get();
+        $segaki_list = $segaki_query->where('item.category_id', 4)->get();
 
         return view('danka_detail', [
             'danka' => $danka,
             'hikuyousya_list' => $hikuyousya_list,
             'family_list' => $family_list,
             'payment_list' => $payment_list,
+            'nenki_list' => $nenki_list,
+            'star_list' => $star_list,
+            'segaki_list' => $segaki_list,
         ]);
     }
 
