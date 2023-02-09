@@ -60,9 +60,10 @@
             <div id="item-{{ $deal_detail->id }}" class="deal_item_column">
                 <div class="deal_item_detail">
                     <select name="item_id[]" class="select_category select_item" style="width: 100%;">
-                    @foreach ($item_list as $item)
+                        <option value="">----</option>
+                        @foreach ($item_list as $item)
                         <option value="{{ $item->id }}" @if($item->id == $deal_detail->item_id) selected @endif>{{ $item->name }}：{{ $item->detail }}</option>
-                    @endforeach
+                        @endforeach
                     </select>
                 </div>
 

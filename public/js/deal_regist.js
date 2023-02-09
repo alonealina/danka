@@ -9,7 +9,7 @@ id_input.addEventListener("change",function(){
   console.log(id)
   $.ajax({
     type: "GET",
-    url: "news_list_get.php",
+    url: "user_get.php",
     data: { "id" : id },
     dataType : "json",
   }).done(function(data){
@@ -41,15 +41,7 @@ id_input.addEventListener("change",function(){
 });
 
 window.addEventListener('DOMContentLoaded',function(){
-  var select_item = document.getElementsByClassName('select_item');
-  
-  for(let i = 0; i < select_item.length; i++){
-    select_item[i].addEventListener('change',function(){
-      let parent = select_item[i].parentElement.parentElement;
-      $('#' + parent.id).find('input[name="price[]"]').val('');
-      console.log(parent.id);
-    });
-  }
+  priceChange();
 });
 
 function clickAddButton() {
@@ -68,9 +60,10 @@ function clickAddButton() {
 
   var clone = $('#item-1').clone(true);
   clone.find('input[type="text"]').val('');
-  clone.find('select[name="item_id[]"]').val('1');
+  clone.find('select[name="item_id[]"]').prop("selectedIndex", 0);
   clone.find('select[name="quantity[]"]').val('1');
   clone.find('select[name="zokumyo[]"]').val('');
+  clone.find('select[name="price[]"]').val('');
   clone.find('.dummy_minus_btn_div').remove();
 
   var newElement = document.createElement("a"); // p要素作成
@@ -82,8 +75,9 @@ function clickAddButton() {
 
   clone.attr('id', id_val);
 
-
   clone.appendTo('#item_form');
+  
+  priceChange();
 };
 
 
@@ -113,3 +107,30 @@ window.addEventListener('DOMContentLoaded', function() {
 function clickDealUpdateButton() {
   document.forms.danka_store_form.submit();
 };
+
+function priceChange() {
+  var select_item = document.getElementsByClassName('select_item');
+  
+  for(let i = 0; i < select_item.length; i++){
+    select_item[i].addEventListener('change',function(){
+      let parent = select_item[i].parentElement.parentElement;
+      let id = select_item[i].value;
+      $.ajax({
+        type: "GET",
+        url: "item_price_get.php",
+        data: { "id" : id },
+        dataType : "json",
+      }).done(function(data){
+        if (data) {
+          $('#' + parent.id).find('input[name="price[]"]').val(data[0].price);
+        } else {
+            console.log(data)
+        }
+      }).fail(function(XMLHttpRequest, status, e){
+        alert("aaa");
+        console.log(e)
+      });
+    });
+  }
+
+}

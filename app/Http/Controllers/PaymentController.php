@@ -286,7 +286,8 @@ class PaymentController extends Controller
 
     public function deal_regist(Request $request)
     {
-        $item_list = Item::select('item.id as id', 'name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')->orderBy('item_category.id')->get();
+        $item_list = Item::select('item.id as id', 'name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')
+            ->orderBy('item_category.id')->orderBy('id')->get();
         $current_year = date('Y');
         $max_deal_no = Deal::where('deal_no', 'like', "$current_year%")->max('deal_no');
         if (isset($max_deal_no)) {
@@ -323,20 +324,22 @@ class PaymentController extends Controller
                 TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
                 ")->where('id', $zokumyo_id[$i])->first();
             }
-            $item_list[] = [
-                'item_id' => $item_id[$i],
-                'hikuyousya_id' => $zokumyo_id[$i],
-                'item_name' => $item->name . '：'. $item->detail,
-                'quantity' => $quantity[$i],
-                'price' => isset($price[$i]) ? $price[$i] : $item->price,
-                'total' => isset($price[$i]) ? $price[$i] * $quantity[$i] : $item->price * $quantity[$i],
-                'zokumyo' => isset($zokumyo_id[$i]) ? $hikuyousya->common_name : 'なし',
-                'kaimyo' => isset($zokumyo_id[$i]) ? $hikuyousya->posthumous : 'なし',
-                'meinichi' => isset($zokumyo_id[$i]) ? $hikuyousya->meinichi : 'なし',
-                'gyonen' => isset($zokumyo_id[$i]) ? $hikuyousya->gyonen : 'なし',
-                'kaiki' => isset($zokumyo_id[$i]) ? $hikuyousya->kaiki : 'なし',
-                'remark' => isset($remark[$i]) ? $remark[$i] : '',
-            ];
+            if (isset($item_id[$i])) {
+                $item_list[] = [
+                    'item_id' => $item_id[$i],
+                    'hikuyousya_id' => $zokumyo_id[$i],
+                    'item_name' => $item->name . '：'. $item->detail,
+                    'quantity' => $quantity[$i],
+                    'price' => isset($price[$i]) ? $price[$i] : $item->price,
+                    'total' => isset($price[$i]) ? $price[$i] * $quantity[$i] : $item->price * $quantity[$i],
+                    'zokumyo' => isset($zokumyo_id[$i]) ? $hikuyousya->common_name : 'なし',
+                    'kaimyo' => isset($zokumyo_id[$i]) ? $hikuyousya->posthumous : 'なし',
+                    'meinichi' => isset($zokumyo_id[$i]) ? $hikuyousya->meinichi : 'なし',
+                    'gyonen' => isset($zokumyo_id[$i]) ? $hikuyousya->gyonen : 'なし',
+                    'kaiki' => isset($zokumyo_id[$i]) ? $hikuyousya->kaiki : 'なし',
+                    'remark' => isset($remark[$i]) ? $remark[$i] : '',
+                ];    
+            }
         }
 
         $total = 0;

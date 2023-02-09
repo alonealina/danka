@@ -67,10 +67,10 @@
             <div id="item-1" class="deal_item_column">
                 <div class="deal_item_detail">
                     <select name="item_id[]" class="select_category select_item" style="width: 100%;">
-                    @foreach ($item_list as $item)
+                        <option value="">----</option>
+                        @foreach ($item_list as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}：{{ $item->detail }}</option>
-
-                    @endforeach
+                        @endforeach
                     </select>
                 </div>
 
