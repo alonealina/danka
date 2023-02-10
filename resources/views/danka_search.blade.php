@@ -24,11 +24,7 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">メールアドレス</div>
-                {{ Form::text('mail', $mail, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => 'XXXXXX1234@gmail.com', 'style' => 'width: calc(100% - 250px);']) }}
-                <label for="mail_flg" class="mail_label">あり</label>
-                <input type="checkbox" id="mail_flg" name="mail_flg" class="danka_checkbox" value="1"
-                @if(isset($mail_flg)) checked @endif>
-
+                {{ Form::text('mail', $mail, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => 'XXXXXX1234@gmail.com']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリーワード</div>
