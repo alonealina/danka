@@ -360,6 +360,7 @@ class DankaController extends Controller
         $zip = isset($filter_array['zip']) ? $filter_array['zip'] : null;
         $pref = isset($filter_array['pref']) ? $filter_array['pref'] : null;
         $address = isset($filter_array['address']) ? $filter_array['address'] : null;
+        $mail_flg = isset($filter_array['mail_flg']) ? $filter_array['mail_flg'] : null;
         $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
         $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
         $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
@@ -443,6 +444,10 @@ class DankaController extends Controller
             });
         }
 
+        if (isset($mail_flg)) {
+            $query->whereNotNull('mail');
+        }
+
         if (isset($segaki_flg)) {
             $query->where('segaki_flg', '1');
         }
@@ -479,6 +484,7 @@ class DankaController extends Controller
             'zip' => $zip,
             'pref' => $pref,
             'address' => $address,
+            'mail_flg' => $mail_flg,
             'segaki_flg' => $segaki_flg,
             'star_flg' => $star_flg,
             'yakushiji_flg' => $yakushiji_flg,
