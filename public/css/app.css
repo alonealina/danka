@@ -1213,10 +1213,10 @@ p {
 }
 @media screen and (min-width: 1431px) {
     .admin_user_list {
-        width: 55%;
+        width: 62%;
     }
     .login_log_list_div {
-        width: 40%;
+        width: 33%;
     }
     .login_log_column {
         margin-right: 30px;
@@ -1303,7 +1303,10 @@ p {
     width:20%;
 }
 .admin_user_date {
-    width:16%;
+    width:12%;
+}
+.admin_user_authority {
+    width:15%;
 }
 .admin_user_btn {
     width:70px;

@@ -10,6 +10,7 @@
             <div class="admin_user_name">名前</div>
             <div class="admin_user_date">追加日</div>
             <div class="admin_user_date">最終ログイン</div>
+            <div class="admin_user_authority">権限</div>
             <div class="admin_user_btn"></div>
             <div class="admin_user_btn"></div>
         </div>
@@ -19,6 +20,7 @@
             <div class="admin_user_name">{{ $user->name }}</div>
             <div class="admin_user_date">{{ $user->created_at }}</div>
             <div class="admin_user_date">{{ $user->max_time }}</div>
+            <div class="admin_user_authority">{{ $user->authority }}</div>
             <div class="admin_user_btn">
                 @if ($user === reset($admin_users))
                 <a href="#!" id="log_btn_{{ $user->user_id }}" onclick="clickLogButton({{ $user->user_id }})" class="log_view_btn_a current_log_btn">表示中</a>

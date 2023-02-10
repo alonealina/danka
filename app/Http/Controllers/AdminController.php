@@ -35,6 +35,7 @@ class AdminController extends Controller
             'login_id' => $request['login_id'],
             'password' => $request['password'],
             'name' => $request['name'],
+            'authority' => $request['authority'],
         ];
 
         DB::beginTransaction();
@@ -49,7 +50,7 @@ class AdminController extends Controller
 
     public function admin_list(Request $request)
     {
-        $admin_users = DB::select("SELECT user.id AS user_id, user.login_id AS login_id, name, 
+        $admin_users = DB::select("SELECT user.id AS user_id, user.login_id AS login_id, name, authority, 
         DATE_FORMAT(user.created_at, '%Y/%m/%d') AS created_at, DATE_FORMAT(max_time, '%Y/%m/%d') AS max_time FROM admin_users user
         LEFT JOIN (
           SELECT login_id, MAX(login_time) AS max_time

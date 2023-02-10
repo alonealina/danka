@@ -37,6 +37,14 @@
             {{ Form::text('name', old('name'), ['class' => 'regist_form_text', 'maxlength' => 30, 'placeholder' => '']) }}
         </div>
 
+        <div class="flex_column">
+            <div class="regist_item_name">権限</div>
+            <select name="authority" class="select_category" style="width: auto; padding: 5px;" id="">
+                <option value="管理者">管理者</option>
+                <option value="薬師寺霊園">薬師寺霊園</option>
+            </select>
+        </div>
+
         <div class="flex_column" id="name_error">
             <div class="regist_item_name"></div>
             <div class="error_message" id="name_error_text">名前を入力してください</div>
