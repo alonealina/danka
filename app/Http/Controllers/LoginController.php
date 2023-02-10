@@ -46,7 +46,7 @@ class LoginController extends Controller
             $login_log->fill($fill_data)->save();
             DB::commit();
             session(['login_id' => 1]);
-            return redirect(route('admin_regist'));
+            return redirect(route('danka_search'));
         } catch (\Exception $e) {
             DB::rollback();
         }
