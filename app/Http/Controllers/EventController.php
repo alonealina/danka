@@ -354,6 +354,7 @@ class EventController extends Controller
             $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
             $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
             $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
+            $mail_flg = isset($filter_array['mail_flg']) ? $filter_array['mail_flg'] : null;
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
             $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
             $event_date_id = isset($filter_array['event_date_id']) ? $filter_array['event_date_id'] : null;
@@ -424,6 +425,11 @@ class EventController extends Controller
                 $query->where('kaiki_flg', '1');
             }
 
+            if (isset($mail_flg)) {
+                $query->whereNotNull('mail');
+            }
+    
+    
             if (!empty($event_date_id)) {
                 $list_query = Danka::select('danka.id as danka_id')
                     ->leftJoin('event_send_list', 'event_send_list.danka_id', '=', 'danka.id')
@@ -506,6 +512,7 @@ class EventController extends Controller
                 'star_flg' => $star_flg,
                 'yakushiji_flg' => $yakushiji_flg,
                 'kaiki_flg' => $kaiki_flg,
+                'mail_flg' => $mail_flg,
                 'freeword' => $freeword,
                 'item_categories' => $item_categories,
                 'item_category_id' => $item_category_id,
@@ -541,6 +548,7 @@ class EventController extends Controller
         $star_flg = isset($request['star_flg']) ? $request['star_flg'] : null;
         $yakushiji_flg = isset($request['yakushiji_flg']) ? $request['yakushiji_flg'] : null;
         $kaiki_flg = isset($request['kaiki_flg']) ? $request['kaiki_flg'] : null;
+        $mail_flg = isset($request['mail_flg']) ? $request['mail_flg'] : null;
         $freeword = isset($request['freeword']) ? $request['freeword'] : null;
         $item_category_id = isset($request['item_category_id']) ? $request['item_category_id'] : null;
         $nokotsubi_before = isset($request['nokotsubi_before']) ? $request['nokotsubi_before'] : null;
@@ -588,6 +596,7 @@ class EventController extends Controller
                 'star_flg' => $star_flg,
                 'yakushiji_flg' => $yakushiji_flg,
                 'kaiki_flg' => $kaiki_flg,
+                'mail_flg' => $mail_flg,
                 'freeword' => $freeword,
                 'item_category_id' => $item_category_id,
                 'nokotsubi_before' => $nokotsubi_before,

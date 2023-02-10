@@ -182,6 +182,9 @@
                 <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
                 @if(isset($kaiki_flg)) checked @endif>
                 <label for="kaiki_flg" class="danka_label">年忌</label>
+                <input type="checkbox" id="mail_flg" name="mail_flg" class="danka_checkbox" value="1"
+                @if(isset($mail_flg)) checked @endif>
+                <label for="mail_flg" class="danka_label">メールアドレスあり</label>
                 @endif
             @elseif($category_id == 1)
             <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
@@ -339,6 +342,7 @@
     {{ Form::hidden('star_flg', $star_flg) }}
     {{ Form::hidden('yakushiji_flg', $yakushiji_flg) }}
     {{ Form::hidden('kaiki_flg', $kaiki_flg) }}
+    {{ Form::hidden('mail_flg', $mail_flg) }}
     {{ Form::hidden('item_category_id', $item_category_id) }}
     {{ Form::hidden('event_date_id', $event_date_id) }}
     {{ Form::hidden('event_date_flg', $event_date_flg) }}
