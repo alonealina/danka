@@ -56,7 +56,7 @@ class Deal extends Model
             $this->meinichi,
             $this->kaiki_int,
             $this->gyonen,
-            $this->column,
+            $this->remark,
         ];
     }
 

@@ -677,7 +677,7 @@ class PaymentController extends Controller
         $type = isset($filter_array['type']) ? $filter_array['type'] : null;
 
         $query = Deal::select('deal_no', 'payment_date', 'name_kana', 'tel', 'mobile', 'zip', 'pref', 'city', 'address', 'building', 'payment_method', 
-            'state', 'detail', 'quantity', 'deal_detail.price as price', 'total', 'common_name', 'common_kana', 'common_kana', 'posthumous', 'meinichi', 'gyonen', 'column', 
+            'state', 'detail', 'quantity', 'deal_detail.price as price', 'total', 'common_name', 'common_kana', 'common_kana', 'posthumous', 'meinichi', 'gyonen', 'remark', 
             'danka.id as danka_id', 'danka.name as danka_name', 'item_category.name as item_category_name', 'deal.created_at as created_at')
             ->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
             ->join('danka', 'danka.id', '=', 'deal.danka_id')->join('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id')
@@ -775,8 +775,13 @@ class PaymentController extends Controller
             fclose($fp);
         });
         
+        $item_category_name = '';
+        if (!empty($item_category_id)) {
+            $item_category_name = ItemCategory::find($item_category_id)->name . '_';
+        }
+
         $response->headers->set('Content-Type', 'application/octet-stream');
-        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="取引_'. $item_category_name . $type . date('YmdHis') .'.csv"');
  
         return $response;
     }

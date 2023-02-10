@@ -820,7 +820,7 @@ class DankaController extends Controller
         });
         
         $response->headers->set('Content-Type', 'application/octet-stream');
-        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="檀家'. date('YmdHis') .'.csv"');
  
         return $response;
     }
@@ -982,7 +982,7 @@ class DankaController extends Controller
         });
         
         $response->headers->set('Content-Type', 'application/octet-stream');
-        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="被供養者'. date('YmdHis') .'.csv"');
  
         return $response;
     }
