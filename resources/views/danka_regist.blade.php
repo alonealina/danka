@@ -49,12 +49,12 @@
 
         <div class="danka_form_div">
             <div class="danka_column">
-                <div class="danka_regist_name">郵便番号 <span class="require_mark">※</span></div>
+                <div class="danka_regist_name">郵便番号</div>
                 {{ Form::text('zip', old('zip'), ['id' => 'zip', 'class' => 'danka_form_text', 'maxlength' => 7, 'placeholder' => '0000000', 'style' => 'width: 180px',
                         'onkeyup' => "AjaxZip3.zip2addr(this, '', 'pref', 'city')"]) }}
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">都道府県 <span class="require_mark">※</span></div>
+                <div class="danka_regist_name">都道府県</div>
                 <select name="pref" class="select_category" style="width: 180px" id="pref">
                     <option value="">選択してください</option>
                     @foreach (config('const.Prefs') as $name)
@@ -64,11 +64,11 @@
                 </select>
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">市区町村 <span class="require_mark">※</span></div>
+                <div class="danka_regist_name">市区町村</div>
                 {{ Form::text('city', old('city'), ['id' => 'city', 'class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
-                <div class="danka_regist_name">番地 <span class="require_mark">※</span></div>
+                <div class="danka_regist_name">番地</div>
                 {{ Form::text('address', old('address'), ['id' => 'address', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
