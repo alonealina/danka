@@ -1047,6 +1047,8 @@ class EventController extends Controller
     public function star_csv_export(Request $request)
     {
         $request = $request->all();
+        $category_name = isset($request['category_name']) ? $request['category_name'] : null;
+        $event_name = isset($request['event_name']) ? $request['event_name'] : null;
         $danka_id_list = explode(',', $request['danka_id_list']);
         arsort($danka_id_list);
         $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所', '星祭', '施餓鬼', '薬師寺霊園',
@@ -1077,7 +1079,7 @@ class EventController extends Controller
         });
         
         $response->headers->set('Content-Type', 'application/octet-stream');
-        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $category_name . '_' . $event_name . '.csv"');
  
         return $response;
 
@@ -1088,6 +1090,8 @@ class EventController extends Controller
         $request = $request->all();
         $sort_item = isset($request['sort_item']) ? $request['sort_item'] : null;
         $sort_type = isset($request['sort_type']) ? $request['sort_type'] : null;
+        $category_name = isset($request['category_name']) ? $request['category_name'] : null;
+        $event_name = isset($request['event_name']) ? $request['event_name'] : null;
         $hikuyousya_id_list = explode(',', $request['hikuyousya_id_list']);
 
         $query = Danka::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
@@ -1128,7 +1132,7 @@ class EventController extends Controller
         });
         
         $response->headers->set('Content-Type', 'application/octet-stream');
-        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $category_name . '_' . $event_name . '.csv"');
  
         return $response;
 
@@ -1139,6 +1143,8 @@ class EventController extends Controller
         $request = $request->all();
         $sort_item = isset($request['sort_item']) ? $request['sort_item'] : null;
         $sort_type = isset($request['sort_type']) ? $request['sort_type'] : null;
+        $category_name = isset($request['category_name']) ? $request['category_name'] : null;
+        $event_name = isset($request['event_name']) ? $request['event_name'] : null;
         $hikuyousya_id_list = explode(',', $request['hikuyousya_id_list']);
 
         $query = Danka::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
@@ -1180,7 +1186,7 @@ class EventController extends Controller
         });
         
         $response->headers->set('Content-Type', 'application/octet-stream');
-        $response->headers->set('Content-Disposition', 'attachment; filename="sample.csv"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $category_name . '_' . $event_name . '.csv"');
  
         return $response;
 

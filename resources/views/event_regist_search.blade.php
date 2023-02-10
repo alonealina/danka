@@ -378,6 +378,8 @@
     {{ Form::hidden('hikuyousya_id_list', $hikuyousya_id_list) }}
     {{ Form::hidden('sort_item', $sort_item) }}
     {{ Form::hidden('sort_type', $sort_type) }}
+    {{ Form::hidden('category_name', $category_name) }}
+    {{ Form::hidden('event_name', $event_name) }}
     </form>
     @elseif($category_id == 5)
     <form id="csv_export_form" name="csv_export_form" action="{{ route('noukotsu_csv_export') }}" method="post">
@@ -385,6 +387,8 @@
     {{ Form::hidden('hikuyousya_id_list', $hikuyousya_id_list) }}
     {{ Form::hidden('sort_item', $sort_item) }}
     {{ Form::hidden('sort_type', $sort_type) }}
+    {{ Form::hidden('category_name', $category_name) }}
+    {{ Form::hidden('event_name', $event_name) }}
     </form>
     @else
     <form id="csv_export_form" name="csv_export_form" action="{{ route('star_csv_export') }}" method="post">
@@ -392,6 +396,8 @@
     {{ Form::hidden('danka_id_list', $danka_id_list) }}
     {{ Form::hidden('sort_item', $sort_item) }}
     {{ Form::hidden('sort_type', $sort_type) }}
+    {{ Form::hidden('category_name', $category_name) }}
+    {{ Form::hidden('event_name', $event_name) }}
     </form>
     @endif
 
