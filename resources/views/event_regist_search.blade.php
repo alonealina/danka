@@ -27,6 +27,10 @@
             {{ Form::date('nokotsubi_before', $nokotsubi_before, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
             {{ Form::date('nokotsubi_after', $nokotsubi_after, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}
         </div>
+        <input type="checkbox" id="mail_flg" name="mail_flg" class="danka_checkbox" value="1"
+        @if(isset($mail_flg)) checked @endif>
+        <label for="mail_flg" class="danka_label">メールアドレスあり</label>
+
     </div>
     @else
     <div class="danka_form_div">
