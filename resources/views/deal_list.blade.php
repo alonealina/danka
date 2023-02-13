@@ -50,11 +50,22 @@
 
             <div class="danka_column">
                 <div class="danka_regist_name">商品カテゴリー</div>
-                <select name="item_category_id" class="select_category" style="width: 400px" id="area">
+                <select name="item_category_id" class="select_category" style="width: 400px" id="">
+                    <option value="">----</option>
+                    @foreach ($item_category_list as $item_category)
+                    <option value="{{ $item_category->id }}"
+                        @if($item_category_id == $item_category->id) selected @endif >{{ $item_category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="danka_column">
+                <div class="danka_regist_name">商品詳細</div>
+                <select name="item_id" class="select_category" style="width: 400px" id="">
                     <option value="">----</option>
                     @foreach ($item_list as $item)
                     <option value="{{ $item->id }}"
-                        @if($item_category_id == $item->id) selected @endif >{{ $item->name }}</option>
+                        @if($item_id == $item->id) selected @endif >{{ $item->name }}：{{ $item->detail }}</option>
                     @endforeach
                 </select>
             </div>

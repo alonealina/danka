@@ -126,6 +126,7 @@ class EventController extends Controller
             $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
             $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
             $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
+            $mail_flg = isset($filter_array['mail_flg']) ? $filter_array['mail_flg'] : null;
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
             $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
             $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
@@ -217,7 +218,11 @@ class EventController extends Controller
                     }
                 });
             }
-    
+
+            if (isset($mail_flg)) {
+                $query->whereNotNull('mail');
+            }
+
             $hikuyousya_ids = $query->pluck('hikuyousya_id');
             $hikuyousya_count = count(array_unique($hikuyousya_ids->toArray()));
 
@@ -258,6 +263,7 @@ class EventController extends Controller
                 'star_flg' => $star_flg,
                 'yakushiji_flg' => $yakushiji_flg,
                 'kaiki_flg' => $kaiki_flg,
+                'mail_flg' => $mail_flg,
                 'freeword' => $freeword,
                 'item_categories' => $item_categories,
                 'item_category_id' => $item_category_id,
@@ -276,6 +282,7 @@ class EventController extends Controller
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
             $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
             $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;
+            $mail_flg = isset($filter_array['mail_flg']) ? $filter_array['mail_flg'] : null;
     
             $event_name = isset($filter_array['event_name']) ? $filter_array['event_name'] : null;
             $category_name = TextCategory::find($category_id)->name;
@@ -303,7 +310,11 @@ class EventController extends Controller
                     }
                 });
             }
-    
+
+            if (isset($mail_flg)) {
+                $query->whereNotNull('mail');
+            }
+            
             $hikuyousya_ids = $query->pluck('hikuyousya_id');
             $hikuyousya_count = count(array_unique($hikuyousya_ids->toArray()));
 
@@ -342,6 +353,7 @@ class EventController extends Controller
                 'number' => $number,
                 'danka_list' => $danka_list,
                 'danka_id_list' => $danka_id_list,
+                'mail_flg' => $mail_flg,
                 'hikuyousya_id_list' => $hikuyousya_id_list,
             ]);
         } else {

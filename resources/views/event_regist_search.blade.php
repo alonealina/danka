@@ -182,19 +182,27 @@
                 <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
                 @if(isset($kaiki_flg)) checked @endif>
                 <label for="kaiki_flg" class="danka_label">年忌</label>
+                @endif
                 <input type="checkbox" id="mail_flg" name="mail_flg" class="danka_checkbox" value="1"
                 @if(isset($mail_flg)) checked @endif>
                 <label for="mail_flg" class="danka_label">メールアドレスあり</label>
-                @endif
             @elseif($category_id == 1)
             <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
             @if(isset($kaiki_flg)) checked @endif>
             <label for="kaiki_flg" class="danka_label">年忌</label>
+            <input type="checkbox" id="mail_flg" name="mail_flg" class="danka_checkbox" value="1"
+            @if(isset($mail_flg)) checked @endif>
+            <label for="mail_flg" class="danka_label">メールアドレスあり</label>
             @else
             <input type="checkbox" id="star_flg" name="star_flg" class="danka_checkbox" value="1"
             @if(isset($star_flg)) checked @endif>
             <label for="star_flg" class="danka_label">星祭り</label>
+            <input type="checkbox" id="mail_flg" name="mail_flg" class="danka_checkbox" value="1"
+            @if(isset($mail_flg)) checked @endif>
+            <label for="mail_flg" class="danka_label">メールアドレスあり</label>
             @endif
+
+
         </div>
 
         @if($category_id == 1)
