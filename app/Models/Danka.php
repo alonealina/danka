@@ -13,11 +13,15 @@ class Danka extends Model
     protected $table = 'danka';
 
     protected $appends = [
-        'full_address', 'kaiki_int',
+        'full_address1', 'full_address2', 'kaiki_int',
     ];
 
-    public function getFullAddressAttribute() {
-        return $this->pref . $this->city . $this->address . $this->building;
+    public function getFullAddress1Attribute() {
+        return $this->pref . $this->city;
+    }
+
+    public function getFullAddress2Attribute() {
+        return $this->address . $this->building;
     }
 
     public function getKaikiIntAttribute() {
@@ -38,7 +42,8 @@ class Danka extends Model
             $this->mail,       
             $this->introducer,       
             $this->zip,
-            $this->full_address,
+            $this->full_address1,
+            $this->full_address2,
             $this->created_at,
             $this->star_flg,
             $this->segaki_flg,
@@ -55,7 +60,8 @@ class Danka extends Model
             $this->tel,         
             $this->mobile,       
             $this->zip,
-            $this->full_address,
+            $this->full_address1,
+            $this->full_address2,
             $this->star_flg,
             $this->segaki_flg,
             $this->yakushiji_flg,
@@ -70,7 +76,8 @@ class Danka extends Model
             $this->tel,         
             $this->mobile,       
             $this->zip,
-            $this->full_address,
+            $this->full_address1,
+            $this->full_address2,
             $this->type,
             $this->common_name,
             $this->common_kana,
@@ -92,7 +99,8 @@ class Danka extends Model
             $this->tel,         
             $this->mobile,       
             $this->zip,
-            $this->full_address,
+            $this->full_address1,
+            $this->full_address2,
             $this->type,
             $this->common_name,
             $this->common_kana,
