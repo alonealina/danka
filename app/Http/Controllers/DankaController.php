@@ -82,6 +82,7 @@ class DankaController extends Controller
                     'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
                     'column' => $request['column'],
                     'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
+                    'henjokaku' => isset($request['henjokaku']) ? $request['henjokaku'] : 0,
                 ];
         
                 $hikuyousya = new Hikuyousya();
@@ -197,6 +198,7 @@ class DankaController extends Controller
                 'gyonen' => $request['gyonen'],
                 'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
                 'column' => $request['column'],
+                'henjokaku' => $request['henjokaku'],
                 'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
             ];
 
@@ -259,6 +261,7 @@ class DankaController extends Controller
                 'gyonen' => $request['gyonen'],
                 'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
                 'column' => $request['column'],
+                'henjokaku' => $request['henjokaku'],
                 'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
             ];
 
@@ -558,7 +561,7 @@ class DankaController extends Controller
             $query->where(function ($query) use ($word_list) {
                 foreach ($word_list as $word) {
                     if (!empty($word)) {
-                        $query->orwhere('column', 'like', "%$word%");
+                        $query->orwhere('column', 'like', "%$word%")->orwhere('henjokaku', 'like', "%$word%");
                     }
                 }
             });
@@ -955,7 +958,7 @@ class DankaController extends Controller
 
         $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所1', '住所2', 
         '種別', '俗名', 'フリガナ', '戒名', '性別', '行年', '命日', '周忌/回忌', '年忌チェック', 
-        '位牌番号', '建立日', '納骨番号', '納骨日', '納骨移動日', '特記事項', 
+        '位牌番号', '建立日', '納骨番号', '納骨日', '納骨移動日', '特記事項', '遍照閣', 
         ];
         foreach ($danka_list as $danka) {
             $cvsList[] = $danka->outputCsvContentNoukotsu();

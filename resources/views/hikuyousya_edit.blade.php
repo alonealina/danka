@@ -19,6 +19,12 @@
                             <option value="先祖" @if($hikuyousya->type == '先祖') selected @endif>先祖</option>
                             <option value="生前" @if($hikuyousya->type == '生前') selected @endif>生前</option>
                         </select>
+                        <div class="danka_regist_name2" style="margin-left: 30px; width: 40px;">性別</div>
+                        <select name="gender_h" class="select_category" style="width: 50px;">
+                            <option value="m" @if($hikuyousya->gender_h == 'm') selected @endif>男</option>
+                            <option value="f" @if($hikuyousya->gender_h == 'f') selected @endif>女</option>
+                            <option value="o" @if($hikuyousya->gender_h == 'o') selected @endif>その他</option>
+                        </select>
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">俗名 <span class="require_mark">※</span></div>
@@ -29,21 +35,13 @@
                         {{ Form::text('common_kana', $hikuyousya->common_kana, ['id' => 'common_kana', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'フリガナ']) }}
                     </div>
                     <div class="danka_column">
-                        <div class="danka_regist_name2">性別</div>
-                        <select name="gender_h" class="select_category" style="width: 50px;">
-                            <option value="m" @if($hikuyousya->gender_h == 'm') selected @endif>男</option>
-                            <option value="f" @if($hikuyousya->gender_h == 'f') selected @endif>女</option>
-                            <option value="o" @if($hikuyousya->gender_h == 'o') selected @endif>その他</option>
-                        </select>
+                        <div class="danka_regist_name2">戒名</div>
+                        {{ Form::text('posthumous', $hikuyousya->posthumous, ['class' => 'danka_form_text2', 'maxlength' => 50, 'style' => 'width: 300px;', 'placeholder' => '戒名']) }}
                     </div>
 
                 </div>
 
                 <div class="">
-                    <div class="danka_column">
-                        <div class="danka_regist_name2">戒名</div>
-                        {{ Form::text('posthumous', $hikuyousya->posthumous, ['class' => 'danka_form_text2', 'maxlength' => 50, 'style' => 'width: 300px;', 'placeholder' => '戒名']) }}
-                    </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">命日</div>
                         {{ Form::date('meinichi', $hikuyousya->meinichi, ['class' => 'danka_form_text2', 'id' => 'meinichi', 'placeholder' => '', 'style' => 'width: 110px;']) }}
@@ -67,7 +65,12 @@
 
                     <div class="danka_column">
                         <div class="danka_regist_name2">特記事項</div>
-                        {{ Form::text('column', $hikuyousya->column, ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '']) }}
+                        {{ Form::text('column', $hikuyousya->column, ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '骨のぼり']) }}
+                    </div>
+
+                    <div class="danka_column">
+                        <div class="danka_regist_name2">遍照閣</div>
+                        {{ Form::text('henjokaku', $hikuyousya->henjokaku, ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '紫雲の間15列5A']) }}
                     </div>
 
                 </div>

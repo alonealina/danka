@@ -43,7 +43,7 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリーワード</div>
-                {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '骨のぼり　遍照閣　紫雲の間15列5A']) }}
+                {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '骨のぼり　紫雲の間15列5A']) }}
             </div>
         </div>
 
@@ -163,7 +163,7 @@
     <div class="hikuyousya_kaiki">行年</div>
     <div class="hikuyousya_ihai">位牌番号</div>
     <div class="hikuyousya_date">納骨日</div>
-    <div class="hikuyousya_kaimyo">特記事項</div>
+    <div class="hikuyousya_kaimyo">遍照閣</div>
     <div class="hikuyousya_btn"></div>
 </div>
 
@@ -183,7 +183,7 @@
         <div class="hikuyousya_kaiki">{{ $danka->gyonen }}</div>
         <div class="hikuyousya_ihai">{{ $danka->ihai_no }}</div>
         <div class="hikuyousya_date">{{ $danka->nokotsubi }}</div>
-        <div class="hikuyousya_kaimyo">{{ $danka->column }}</div>
+        <div class="hikuyousya_kaimyo">{{ $danka->henjokaku }}</div>
         <div class="hikuyousya_btn"><a href="{{ route('danka_detail', $danka->danka_id) }}" class="search_view_btn_a">表示</a></div>
     </div>
 
