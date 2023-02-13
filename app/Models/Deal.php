@@ -22,7 +22,9 @@ class Deal extends Model
     }
 
     public function getKaikiIntAttribute() {
-        if($this->kaiki <= 0) {
+        if (empty($this->common_name)) {
+            return '';
+        } elseif($this->kaiki <= 0) {
             return 1;
         } else {
             return $this->kaiki + 2;

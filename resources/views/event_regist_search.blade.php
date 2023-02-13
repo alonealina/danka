@@ -178,7 +178,7 @@
                 <label for="star_flg" class="danka_label">星祭り</label>
                 <input type="checkbox" id="yakushiji_flg" name="yakushiji_flg" class="danka_checkbox" value="1"
                 @if(isset($yakushiji_flg)) checked @endif>
-                <label for="yakushiji_flg" class="danka_label">薬師寺霊園</label>
+                <label for="yakushiji_flg" class="danka_label">薬師寺霊苑</label>
                 <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
                 @if(isset($kaiki_flg)) checked @endif>
                 <label for="kaiki_flg" class="danka_label">年忌</label>

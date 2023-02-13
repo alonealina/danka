@@ -41,7 +41,7 @@
             <div class="regist_item_name">権限</div>
             <select name="authority" class="select_category" style="width: auto; padding: 5px;" id="">
                 <option value="管理者">管理者</option>
-                <option value="薬師寺霊園">薬師寺霊園</option>
+                <option value="薬師寺霊苑">薬師寺霊苑</option>
             </select>
         </div>
 
