@@ -353,14 +353,14 @@ class DankaController extends Controller
     public function danka_search(Request $request)
     {
         $filter_array = $request->all();
-        $id = isset($filter_array['id']) ? $filter_array['id'] : null;
+        $id = isset($filter_array['id']) ? mb_convert_kana($filter_array['id'], "n") : null;
         $name = isset($filter_array['name']) ? $filter_array['name'] : null;
         $name_kana = isset($filter_array['name_kana']) ? $filter_array['name_kana'] : null;
-        $tel = isset($filter_array['tel']) ? $filter_array['tel'] : null;
+        $tel = isset($filter_array['tel']) ? mb_convert_kana($filter_array['tel'], "n") : null;
         $mail = isset($filter_array['mail']) ? $filter_array['mail'] : null;
         $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
         $area = isset($filter_array['area']) ? $filter_array['area'] : null;
-        $zip = isset($filter_array['zip']) ? $filter_array['zip'] : null;
+        $zip = isset($filter_array['zip']) ? mb_convert_kana($filter_array['zip'], "n") : null;
         $pref = isset($filter_array['pref']) ? $filter_array['pref'] : null;
         $address = isset($filter_array['address']) ? $filter_array['address'] : null;
         $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
@@ -492,7 +492,7 @@ class DankaController extends Controller
     public function hikuyousya_search(Request $request)
     {
         $filter_array = $request->all();
-        $danka_id = isset($filter_array['danka_id']) ? $filter_array['danka_id'] : null;
+        $danka_id = isset($filter_array['danka_id']) ? mb_convert_kana($filter_array['danka_id'], "n") : null;
         $name = isset($filter_array['name']) ? $filter_array['name'] : null;
         $name_kana = isset($filter_array['name_kana']) ? $filter_array['name_kana'] : null;
         $type = isset($filter_array['type']) ? $filter_array['type'] : null;
@@ -506,7 +506,7 @@ class DankaController extends Controller
         $meinichi_after = isset($filter_array['meinichi_after']) ? $filter_array['meinichi_after'] : null;
         $kaiki_before = isset($filter_array['kaiki_before']) ? $filter_array['kaiki_before'] : null;
         $kaiki_after = isset($filter_array['kaiki_after']) ? $filter_array['kaiki_after'] : null;
-        $ihai_no = isset($filter_array['ihai_no']) ? $filter_array['ihai_no'] : null;
+        $ihai_no = isset($filter_array['ihai_no']) ? mb_convert_kana($filter_array['ihai_no'], "n") : null;
         $ihai_flg = isset($filter_array['ihai_flg']) ? $filter_array['ihai_flg'] : null;
         $konryu_flg = isset($filter_array['konryu_flg']) ? $filter_array['konryu_flg'] : null;
         $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
