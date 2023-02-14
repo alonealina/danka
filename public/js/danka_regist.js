@@ -65,34 +65,66 @@ window.addEventListener('DOMContentLoaded', function(){
 function clickTextStoreButton() {
     error_flg = 0;
     hi_error_flg = 0;
+    tel_error_flg = 0;
+    mobile_error_flg = 0;
+    zip_error_flg = 0;
+    mail_error_flg = 0;
 
-    if (danka_store_form.name.value == "") {
-        $('#name').css( 'background', '#FAF1F1' );
+    if (danka_store_form.name1.value == "") {
+        $('#name1').css( 'background', '#FAF1F1' );
         error_flg = 1;
     } else {
-        $('#name').css( 'background', '#fff' );
+        $('#name1').css( 'background', '#fff' );
     }
 
-    if (danka_store_form.name_kana.value == "") {
-        $('#name_kana').css( 'background', '#FAF1F1' );
+    if (danka_store_form.name2.value == "") {
+        $('#name2').css( 'background', '#FAF1F1' );
         error_flg = 1;
     } else {
-        $('#name_kana').css( 'background', '#fff' );
+        $('#name2').css( 'background', '#fff' );
+    }
+
+    if (danka_store_form.name_kana1.value == "") {
+        $('#name_kana1').css( 'background', '#FAF1F1' );
+        error_flg = 1;
+    } else {
+        $('#name_kana1').css( 'background', '#fff' );
+    }
+
+    if (danka_store_form.name_kana2.value == "") {
+        $('#name_kana2').css( 'background', '#FAF1F1' );
+        error_flg = 1;
+    } else {
+        $('#name_kana2').css( 'background', '#fff' );
     }
 
     if (document.getElementById('hikuyousya_flg').checked) {
-        if (danka_store_form.common_name.value == "") {
-            $('#common_name').css( 'background', '#FAF1F1' );
+        if (danka_store_form.common_name1.value == "") {
+            $('#common_name1').css( 'background', '#FAF1F1' );
             hi_error_flg = 1;
         } else {
-            $('#common_name').css( 'background', '#fff' );
+            $('#common_name1').css( 'background', '#fff' );
         }
 
-        if (danka_store_form.common_kana.value == "") {
-            $('#common_kana').css( 'background', '#FAF1F1' );
+        if (danka_store_form.common_name2.value == "") {
+            $('#common_name2').css( 'background', '#FAF1F1' );
             hi_error_flg = 1;
         } else {
-            $('#common_kana').css( 'background', '#fff' );
+            $('#common_name2').css( 'background', '#fff' );
+        }
+
+        if (danka_store_form.common_kana1.value == "") {
+            $('#common_kana1').css( 'background', '#FAF1F1' );
+            hi_error_flg = 1;
+        } else {
+            $('#common_kana1').css( 'background', '#fff' );
+        }
+
+        if (danka_store_form.common_kana2.value == "") {
+            $('#common_kana2').css( 'background', '#FAF1F1' );
+            hi_error_flg = 1;
+        } else {
+            $('#common_kana2').css( 'background', '#fff' );
         }
 
         gyonen = danka_store_form.gyonen.value;
@@ -116,8 +148,45 @@ function clickTextStoreButton() {
         $('#hikuyousya_error').html('');
     }
 
+    if (!danka_store_form.tel.value.match(/^[0-9]*$/)) {
+        $('#tel').css( 'background', '#FAF1F1' );
+        $('#danka_tel_error').html('固定番号に半角数字以外が含まれています');
+        tel_error_flg = 1;
+    } else {
+        $('#tel').css( 'background', '#fff' );
+        $('#danka_tel_error').html('');
+    }
 
-    if (!error_flg && !hi_error_flg) {
+    if (!danka_store_form.mobile.value.match(/^[0-9]*$/)) {
+        $('#mobile').css( 'background', '#FAF1F1' );
+        $('#mobile_error').html('携帯番号に半角数字以外が含まれています');
+        mobile_error_flg = 1;
+    } else {
+        $('#mobile').css( 'background', '#fff' );
+        $('#mobile_error').html('');
+    }
+
+    if (!danka_store_form.zip.value.match(/^[0-9]*$/)) {
+        $('#zip').css( 'background', '#FAF1F1' );
+        $('#zip_error').html('郵便番号に半角数字以外が含まれています');
+        zip_error_flg = 1;
+    } else {
+        $('#zip').css( 'background', '#fff' );
+        $('#zip_error').html('');
+    }
+
+    if (!danka_store_form.mail.value.match(/^[a-zA-Z0-9!-/:-@¥[-`{-~]*$/)) {
+        $('#mail').css( 'background', '#FAF1F1' );
+        $('#mail_error').html('メールアドレスに全角文字が含まれています');
+        mail_error_flg = 1;
+    } else {
+        $('#mail').css( 'background', '#fff' );
+        $('#mail_error').html('');
+    }
+
+
+
+    if (!error_flg && !hi_error_flg && !tel_error_flg && !mobile_error_flg && !zip_error_flg && !mail_error_flg) {
         document.forms.danka_store_form.submit();
     }
 

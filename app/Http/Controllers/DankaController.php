@@ -41,8 +41,8 @@ class DankaController extends Controller
 
         $request = $request->all();
         $fill_data = [
-            'name' => $request['name'],
-            'name_kana' => $request['name_kana'],
+            'name' => $request['name1'] . '　' . $request['name2'],
+            'name_kana' => $request['name_kana1'] . '　' . $request['name_kana2'],
             'gender' => $request['gender'],
             'tel' => $request['tel'],
             'mobile' => $request['mobile'],
@@ -69,8 +69,8 @@ class DankaController extends Controller
                 $fill_data = [
                     'danka_id' => $danka_id,
                     'type' => $request['type'],
-                    'common_name' => $request['common_name'],
-                    'common_kana' => $request['common_kana'],
+                    'common_name' => $request['common_name1'] . '　' . $request['common_name2'],
+                    'common_kana' => $request['common_kana1'] . '　' . $request['common_kana2'],
                     'posthumous' => $request['posthumous'],
                     'gender_h' => $request['gender_h'],
                     'meinichi' => $request['meinichi'],

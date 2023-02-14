@@ -6,8 +6,12 @@
 @if($errors->has('name'))
 <div class="error_message check_error">{{ $errors->first('name') }}</div>
 @endif
-<div class="error_message" id="danka_error">{{ $errors->first('name') }}</div>
-<div class="error_message" id="hikuyousya_error">{{ $errors->first('name') }}</div>
+<div class="error_message" id="danka_error"></div>
+<div class="error_message" id="hikuyousya_error"></div>
+<div class="error_message" id="danka_tel_error"></div>
+<div class="error_message" id="mobile_error"></div>
+<div class="error_message" id="mail_error"></div>
+<div class="error_message" id="zip_error"></div>
 
 <form id="admin_store_form" name="danka_store_form" action="{{ route('danka_store') }}" method="post">
 @csrf
@@ -15,11 +19,13 @@
         <div class="danka_form_div">
             <div class="danka_column">
                 <div class="danka_regist_name">施主名 <span class="require_mark">※</span></div>
-                {{ Form::text('name', old('name'), ['id' => 'name', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '姓　名']) }}
+                {{ Form::text('name1', old('name1'), ['id' => 'name1', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '姓', 'style' => 'width:100px']) }}　
+                {{ Form::text('name2', old('name2'), ['id' => 'name2', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '名', 'style' => 'width:100px']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリガナ <span class="require_mark">※</span></div>
-                {{ Form::text('name_kana', old('name_kana'), ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'セイ　メイ']) }}
+                {{ Form::text('name_kana1', old('name_kana1'), ['id' => 'name_kana1', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'セイ', 'style' => 'width:100px']) }}　
+                {{ Form::text('name_kana2', old('name_kana2'), ['id' => 'name_kana2', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'メイ', 'style' => 'width:100px']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">性別</div>
@@ -35,11 +41,11 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">携帯番号</div>
-                {{ Form::text('mobile', old('mobile'), ['class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '09012345678']) }}
+                {{ Form::text('mobile', old('mobile'), ['id' => 'mobile', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '09012345678']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">メールアドレス</div>
-                {{ Form::text('mail', old('mail'), ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => 'XXXXXX1234@gmail.com']) }}
+                {{ Form::text('mail', old('mail'), ['id' => 'mail', 'class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => 'XXXXXX1234@gmail.com']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">特記事項</div>
@@ -115,11 +121,13 @@
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">俗名 <span class="require_mark">※</span></div>
-                        {{ Form::text('common_name', old('common_name'), ['id' => 'common_name', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => '姓　名']) }}
+                        {{ Form::text('common_name1', old('common_name1'), ['id' => 'common_name1', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => '姓', 'style' => 'width:100px']) }}　
+                        {{ Form::text('common_name2', old('common_name2'), ['id' => 'common_name2', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => '名', 'style' => 'width:100px']) }}
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">フリガナ <span class="require_mark">※</span></div>
-                        {{ Form::text('common_kana', old('common_kana'), ['id' => 'common_kana', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'セイ　メイ']) }}
+                        {{ Form::text('common_kana1', old('common_kana1'), ['id' => 'common_kana1', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'セイ', 'style' => 'width:100px']) }}　
+                        {{ Form::text('common_kana2', old('common_kana2'), ['id' => 'common_kana2', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'メイ', 'style' => 'width:100px']) }}
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">戒名</div>
