@@ -108,8 +108,8 @@
                 <div class="hikuyousya_kaiki">行年</div>
                 <div class="hikuyousya_ihai">位牌番号</div>
                 <div class="hikuyousya_date">納骨日</div>
-                <div class="hikuyousya_kaimyo">特記事項</div>
                 <div class="hikuyousya_zokumyo">遍照閣</div>
+                <div class="hikuyousya_kaimyo">特記事項</div>
                 <div class="hikuyousya_btn"></div>
             </div>
             <div class="search_result_div" style="height: 240px;">
@@ -126,8 +126,8 @@
                     <div class="hikuyousya_kaiki">{{ $hikuyousya->gyonen }}</div>
                     <div class="hikuyousya_ihai">{{ $hikuyousya->ihai_no }}</div>
                     <div class="hikuyousya_date">{{ $hikuyousya->nokotsubi }}</div>
-                    <div class="hikuyousya_kaimyo_view">{{ $hikuyousya->column }}</div>
                     <div class="hikuyousya_zokumyo">{{ $hikuyousya->henjokaku }}</div>
+                    <div class="hikuyousya_kaimyo_view">{{ $hikuyousya->column }}</div>
                     <div class="hikuyousya_btn"><a href="{{ route('hikuyousya_edit', $hikuyousya->id) }}" class="search_view_btn_a">編集</a></div>
                 </div>
                 @endforeach

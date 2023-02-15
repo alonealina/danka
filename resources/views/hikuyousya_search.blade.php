@@ -89,7 +89,7 @@
                 <label for="ihai_flg" class="danka_label">位牌</label>
                 <input type="checkbox" id="konryu_flg" name="konryu_flg" class="danka_checkbox" value="1"
                 @if(isset($konryu_flg)) checked @endif>
-                <label for="konryu_flg" class="danka_label">納骨</label>
+                <label for="konryu_flg" class="danka_label">遍照閣</label>
                 <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
                 @if(isset($kaiki_flg)) checked @endif>
                 <label for="kaiki_flg" class="danka_label">回忌</label>

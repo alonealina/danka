@@ -3,6 +3,12 @@
 @section('content')
 <div class="content_title">檀家編集</div>
 <div class="admin_list_message">{{ session('message') }}</div>
+<div class="error_message" id="danka_error"></div>
+<div class="error_message" id="danka_tel_error"></div>
+<div class="error_message" id="mobile_error"></div>
+<div class="error_message" id="mail_error"></div>
+<div class="error_message" id="zip_error"></div>
+
 <form id="admin_store_form" name="danka_store_form" action="{{ route('danka_update') }}" method="post">
 @csrf
 {{ Form::hidden('id', $danka->id) }}
@@ -30,11 +36,11 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">携帯番号</div>
-                {{ Form::text('mobile', $danka->mobile, ['class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
+                {{ Form::text('mobile', $danka->mobile, ['id' => 'mobile', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">メールアドレス</div>
-                {{ Form::text('mail', $danka->mail, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
+                {{ Form::text('mail', $danka->mail, ['id' => 'mail', 'class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">特記事項</div>

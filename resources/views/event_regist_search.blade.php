@@ -183,6 +183,7 @@
                 <input type="checkbox" id="yakushiji_flg" name="yakushiji_flg" class="danka_checkbox" value="1"
                 @if(isset($yakushiji_flg)) checked @endif>
                 <label for="yakushiji_flg" class="danka_label">薬師寺霊苑</label>
+                @endif
                 <input type="checkbox" id="mail_flg" name="mail_flg" class="danka_checkbox" value="1"
                 @if(isset($mail_flg)) checked @endif>
                 <label for="mail_flg" class="danka_label">メールアドレスあり</label>
