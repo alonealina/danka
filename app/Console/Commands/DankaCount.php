@@ -7,6 +7,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 //操作するテーブルを読み込む
 use Danka;
+use App\Models\LoginLog;
+use DB;
 
 class DankaCount extends Command
 {
@@ -42,12 +44,26 @@ class DankaCount extends Command
     public function handle()
     {
       //標準出力&ログに出力するメッセージのフォーマット
-      $message = '[' . date('Y-m-d h:i:s') . ']UserCount:' . ModelsDanka::count();
+    //   $message = '[' . date('Y-m-d h:i:s') . ']UserCount:' . ModelsDanka::count();
 
       //INFOレベルでメッセージを出力
-      $this->info( $message );
+    //   $this->info( $message );
       //ログを書き出す処理はこちら
-      Log::setDefaultDriver('batch');
-      Log::info( $message );
+    //   Log::setDefaultDriver('batch');
+    //   Log::info( $message );
+
+    $login_log = new LoginLog;
+
+
+    $fill_data = [
+        'login_id' => 'aaaaa',
+    ];
+
+    DB::beginTransaction();
+
+    $login_log->fill($fill_data)->save();
+    DB::commit();
+
+
     }
 }
