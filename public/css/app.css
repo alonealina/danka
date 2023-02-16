@@ -1439,6 +1439,9 @@ li {
     display: none;
 }
 
+.sort_a:hover {
+    text-decoration: none;
+}
 
 /*以下ページネーションについて*/
 

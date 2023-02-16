@@ -119,16 +119,8 @@
 </div>
 
 
-<div class="payment_list_header" style="margin:0;">
-    <div class="deal_id">取引番号</div>
-    <div class="deal_name">施主名</div>
-    <div class="deal_name">フリガナ</div>
-    <div class="deal_tel">電話番号</div>
-    <div class="deal_price">金額</div>
-    <div class="deal_date">作成日</div>
-    <div class="deal_date">支払確認日</div>
-    <div class="deal_btn"></div>
-</div>
+@include('item.deal_list_header')
+
 
 <div class="search_result_div">
 
