@@ -18,6 +18,21 @@
             <div class="danka_regist_name">フリーワード</div>
             {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
         </div>
+
+        <div class="danka_column">
+            <div class="danka_regist_name">ソート</div>
+            <select name="sort_item" class="select_category" style="width: 200px">
+                <option value="">----</option>
+                <option value="ihai_no" @if($sort_item == 'ihai_no') selected @endif >位牌番号</option>
+                <option value="nokotsubi" @if($sort_item == 'nokotsubi') selected @endif >納骨日</option>
+                <option value="nokotsuidobi" @if($sort_item == 'nokotsuidobi') selected @endif >納骨移動日</option>
+                <option value="nokotsu_no" @if($sort_item == 'nokotsu_no') selected @endif >納骨番号</option>
+            </select>　　
+            <select name="sort_type" class="select_category" style="width: 70px">
+                <option value="asc">昇順</option>
+                <option value="desc" @if($sort_type == 'desc') selected @endif >降順</option>
+            </select>
+        </div>
     </div>
 
     <div class="danka_form_div">
@@ -111,22 +126,7 @@
             {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
         </div>
         
-        @if($category_id == 5)
-        <div class="danka_column">
-            <div class="danka_regist_name">ソート</div>
-            <select name="sort_item" class="select_category" style="width: 200px">
-                <option value="">----</option>
-                <option value="ihai_no" @if($sort_item == 'ihai_no') selected @endif >位牌番号</option>
-                <option value="nokotsubi" @if($sort_item == 'nokotsubi') selected @endif >納骨日</option>
-                <option value="nokotsuidobi" @if($sort_item == 'nokotsuidobi') selected @endif >納骨移動日</option>
-                <option value="nokotsu_no" @if($sort_item == 'nokotsu_no') selected @endif >納骨番号</option>
-            </select>　　
-            <select name="sort_type" class="select_category" style="width: 70px">
-                <option value="asc">昇順</option>
-                <option value="desc" @if($sort_type == 'desc') selected @endif >降順</option>
-            </select>
-        </div>
-        @elseif($category_id != 1)
+        @if($category_id != 1)
         <div class="danka_column">
             <div class="danka_regist_name">ソート</div>
             <select name="sort_item" class="select_category" style="width: 200px">
@@ -275,19 +275,8 @@
     {{ Form::hidden('kaiki_flg', $kaiki_flg) }}
     {{ Form::hidden('item_category_id', $item_category_id) }}
 
-    <div class="payment_list_header" style="margin:0;">
-        <div class="hikuyousya_id">カルテナンバー</div>
-        <div class="hikuyousya_name">施主名</div>
-        <div class="hikuyousya_zokumyo">俗名</div>
-        <div class="hikuyousya_kaimyo">戒名</div>
-        <div class="hikuyousya_date">命日</div>
-        <div class="hikuyousya_kaiki">回忌</div>
-        <div class="hikuyousya_kaiki">発送</div>
-        <div class="hikuyousya_date">支払日</div>
-        <div class="hikuyousya_kaimyo">商品カテゴリー</div>
-        <div class="hikuyousya_date">金額</div>
-        <div class="hikuyousya_btn"></div>
-    </div>
+
+    @include('item.kaiki_list_header')
 
     <div class="search_result_div" style="height:300px;">
         @foreach ($danka_list as $danka)
@@ -311,18 +300,9 @@
     {{ Form::hidden('nokotsubi_before', $nokotsubi_before) }}
     {{ Form::hidden('nokotsubi_after', $nokotsubi_after) }}
 
-    <div class="payment_list_header" style="margin:0;">
-        <div class="hikuyousya_id">カルテナンバー</div>
-        <div class="hikuyousya_name">施主名</div>
-        <div class="hikuyousya_zokumyo">俗名</div>
-        <div class="hikuyousya_kaimyo">戒名</div>
-        <div class="hikuyousya_ihai">位牌番号</div>
-        <div class="hikuyousya_date">納骨日</div>
-        <div class="hikuyousya_date">納骨移動日</div>
-        <div class="hikuyousya_ihai">納骨番号</div>
-        <div class="hikuyousya_column">特記事項</div>
-        <div class="hikuyousya_btn"></div>
-    </div>
+
+    @include('item.nokotsu_list_header')
+
 
     <div class="search_result_div" style="height:300px;">
         @foreach ($danka_list as $danka)
@@ -356,16 +336,8 @@
     {{ Form::hidden('event_date_id', $event_date_id) }}
     {{ Form::hidden('event_date_flg', $event_date_flg) }}
 
-    <div class="payment_list_header" style="margin:0;">
-        <div class="hikuyousya_id">カルテナンバー</div>
-        <div class="hikuyousya_name">施主名</div>
-        <div class="hikuyousya_zokumyo">電話番号</div>
-        <div class="hikuyousya_address">住所</div>
-        <div class="hikuyousya_date">取引作成日</div>
-        <div class="hikuyousya_date">支払日</div>
-        <div class="hikuyousya_date">金額</div>
-        <div class="hikuyousya_btn"></div>
-    </div>
+    @include('item.other_list_header')
+
 
     <div class="search_result_div" style="height:300px;">
         @foreach ($danka_list as $danka)

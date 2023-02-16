@@ -82,7 +82,6 @@
                 {{ Form::text('ihai_no', $ihai_no, ['class' => 'danka_form_text', 'maxlength' => 4, 'placeholder' => '']) }}
             </div>
 
-
             <div class="danka_column">
                 <input type="checkbox" id="ihai_flg" name="ihai_flg" class="danka_checkbox" value="1"
                 @if(isset($ihai_flg)) checked @endif>
@@ -95,19 +94,6 @@
                 <label for="kaiki_flg" class="danka_label">回忌</label>
             </div>
 
-            <div class="danka_column">
-                <div class="danka_regist_name">ソート</div>
-                <select name="sort_item" class="select_category" style="width: 200px">
-                    <option value="">----</option>
-                    <option value="meinichi" @if($sort_item == 'meinichi') selected @endif >命日</option>
-                    <option value="ihai_no" @if($sort_item == 'ihai_no') selected @endif >位牌番号</option>
-                    <option value="nokotsubi" @if($sort_item == 'nokotsubi') selected @endif >納骨日</option>
-                </select>　　
-                <select name="sort_type" class="select_category" style="width: 70px">
-                    <option value="asc">昇順</option>
-                    <option value="desc" @if($sort_type == 'desc') selected @endif >降順</option>
-                </select>
-            </div>
         </div>
         <div class="search_btn_list">
             <a href="#!" onclick="clickSearchButton()" class="search_btn_a">検索</a>
@@ -148,24 +134,11 @@
         {{ Form::hidden('sort_type', $sort_type) }}
         <button class="payment_blue_btn_a" onclick="return confirm('{{ $danka_list->total() }}件出力しますがよろしいですか？')" >CSV出力</button>
     </form>
+</div>
 
-</div>
-<div class="payment_list_header" style="margin:0;">
-    <div class="hikuyousya_id">カルテナンバー</div>
-    <div class="hikuyousya_name">施主名</div>
-    <div class="hikuyousya_type">種別</div>
-    <div class="hikuyousya_zokumyo">俗名</div>
-    <div class="hikuyousya_zokumyo">フリガナ</div>
-    <div class="hikuyousya_kaimyo">戒名</div>
-    <div class="hikuyousya_gender">性別</div>
-    <div class="hikuyousya_date">命日</div>
-    <div class="hikuyousya_kaiki">年忌</div>
-    <div class="hikuyousya_kaiki">行年</div>
-    <div class="hikuyousya_ihai">位牌番号</div>
-    <div class="hikuyousya_date">納骨日</div>
-    <div class="hikuyousya_kaimyo">遍照閣</div>
-    <div class="hikuyousya_btn"></div>
-</div>
+@include('item.hikuyousya_list_header')
+
+
 
 <div class="search_result_div" style="height: 240px;">
 

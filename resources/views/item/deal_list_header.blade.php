@@ -9,7 +9,7 @@
         <img src="{{ asset('img/up_current.png') }}" class="">
         @else
         <a href="{{ route('deal_list', [
-            'number' => '10',
+            'number' => $number,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
@@ -31,7 +31,7 @@
         <img src="{{ asset('img/down_current.png') }}" class="">
         @else
         <a href="{{ route('deal_list', [
-            'number' => '10',
+            'number' => $number,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
@@ -55,7 +55,7 @@
         <img src="{{ asset('img/up_current.png') }}" class="">
         @else
         <a href="{{ route('deal_list', [
-            'number' => '10',
+            'number' => $number,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
@@ -77,7 +77,7 @@
         <img src="{{ asset('img/down_current.png') }}" class="">
         @else
         <a href="{{ route('deal_list', [
-            'number' => '10',
+            'number' => $number,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
@@ -101,7 +101,7 @@
         <img src="{{ asset('img/up_current.png') }}" class="">
         @else
         <a href="{{ route('deal_list', [
-            'number' => '10',
+            'number' => $number,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
@@ -123,7 +123,7 @@
         <img src="{{ asset('img/down_current.png') }}" class="">
         @else
         <a href="{{ route('deal_list', [
-            'number' => '10',
+            'number' => $number,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
