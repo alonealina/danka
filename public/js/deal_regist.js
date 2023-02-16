@@ -85,13 +85,17 @@ function clickTextStoreButton() {
   error_flg = 0;
 
   if (danka_store_form.danka_id.value == "") {
-      $('#id_input').css( 'background', '#FAF1F1' );
-      error_flg = 1;
+    $('#id_input').css( 'background', '#FAF1F1' );
+    error_flg = 1;
   } else {
       $('#id_input').css( 'background', '#fff' );
   }
 
-  if (!error_flg ) {
+  if (document.getElementById("item_select").value == "") {
+    error_flg = 1;
+  }
+
+if (!error_flg ) {
       document.forms.danka_store_form.submit();
   }
 };

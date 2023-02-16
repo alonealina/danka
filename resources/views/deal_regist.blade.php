@@ -66,7 +66,7 @@
         <div id="item_form" class="danka_family_content" style="height: 300px;">
             <div id="item-1" class="deal_item_column">
                 <div class="deal_item_detail">
-                    <select name="item_id[]" class="select_category select_item" style="width: 100%;">
+                    <select id="item_select" name="item_id[]" class="select_category select_item" style="width: 100%;">
                         <option value="">----</option>
                         @foreach ($item_list as $item)
                         <option value="{{ $item->id }}">{{ $item->name }}：{{ $item->detail }}</option>
