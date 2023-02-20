@@ -100,6 +100,10 @@ if (!error_flg ) {
   }
 };
 
+function clickConfirmRegistButton() {
+  document.forms.danka_store_form.submit();
+};
+
 window.addEventListener('DOMContentLoaded', function() {
   $('#item_form').on('click','.minus_btn',function() {
     let id = $(this).parent().attr('id');

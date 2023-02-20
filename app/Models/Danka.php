@@ -21,7 +21,7 @@ class Danka extends Model
     }
 
     public function getFullAddress2Attribute() {
-        return $this->address . $this->building;
+        return '"'. $this->address . '　' . $this->building . '"';
     }
 
     public function getKaikiIntAttribute() {
@@ -37,11 +37,11 @@ class Danka extends Model
             $this->id,
             $this->name,            
             $this->name_kana,    
-            $this->tel,         
-            $this->mobile,       
+            '"'.$this->tel.'"',         
+            '"'.$this->mobile.'"',         
             $this->mail,       
             $this->introducer,       
-            $this->zip,
+            '"'.$this->zip.'"',         
             $this->full_address1,
             $this->full_address2,
             $this->created_at,
@@ -57,9 +57,9 @@ class Danka extends Model
             $this->id,
             $this->name,            
             $this->name_kana,    
-            $this->tel,         
-            $this->mobile,       
-            $this->zip,
+            '"'.$this->tel.'"',         
+            '"'.$this->mobile.'"',         
+            '"'.$this->zip.'"',         
             $this->full_address1,
             $this->full_address2,
             $this->star_flg,
@@ -73,9 +73,9 @@ class Danka extends Model
             $this->danka_id,
             $this->name,            
             $this->name_kana,    
-            $this->tel,         
-            $this->mobile,       
-            $this->zip,
+            '"'.$this->tel.'"',         
+            '"'.$this->mobile.'"',         
+            '"'.$this->zip.'"',         
             $this->full_address1,
             $this->full_address2,
             $this->type,
@@ -96,9 +96,9 @@ class Danka extends Model
             $this->danka_id,
             $this->name,            
             $this->name_kana,    
-            $this->tel,         
-            $this->mobile,       
-            $this->zip,
+            '"'.$this->tel.'"',         
+            '"'.$this->mobile.'"',         
+            '"'.$this->zip.'"',         
             $this->full_address1,
             $this->full_address2,
             $this->type,
