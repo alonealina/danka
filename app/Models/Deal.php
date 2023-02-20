@@ -47,6 +47,7 @@ class Deal extends Model
             $this->name_kana,
             '"'.$this->tel.'"',         
             '"'.$this->mobile.'"',         
+            $this->mail,       
             '"'.$this->zip.'"',         
             $this->full_address1,
             $this->full_address2,

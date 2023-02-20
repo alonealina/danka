@@ -1072,7 +1072,7 @@ class EventController extends Controller
         $event_name = isset($request['event_name']) ? $request['event_name'] : null;
         $danka_id_list = explode(',', $request['danka_id_list']);
         arsort($danka_id_list);
-        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所1', '住所2',  '星祭', '施餓鬼', '薬師寺霊園',
+        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', 'メールアドレス', '郵便番号', '住所1', '住所2',  '星祭', '施餓鬼', '薬師寺霊園',
         ];
         
         foreach ($danka_id_list as $danka_id) {
@@ -1124,7 +1124,7 @@ class EventController extends Controller
 
         $danka_list = $query->orderBy('danka_id', 'desc')->get();
 
-        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所1', '住所2', 
+        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', 'メールアドレス', '郵便番号', '住所1', '住所2', 
         '種別', '俗名', 'フリガナ', '戒名', '性別', '行年', '命日', '周忌/回忌', '年忌チェック', '特記事項', 
         ];
         
@@ -1177,7 +1177,7 @@ class EventController extends Controller
 
         $danka_list = $query->orderBy('nokotsubi', 'asc')->get();
 
-        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', '郵便番号', '住所1', '住所2', 
+        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', 'メールアドレス', '郵便番号', '住所1', '住所2', 
         '種別', '俗名', 'フリガナ', '戒名', '性別', '行年', '命日', '周忌/回忌', '年忌チェック', 
         '位牌番号', '建立日', '納骨番号', '納骨日', '納骨移動日', '特記事項', 
         ];
