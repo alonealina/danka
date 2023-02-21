@@ -70,8 +70,51 @@
 
                     <div class="danka_column">
                         <div class="danka_regist_name2">遍照閣</div>
-                        {{ Form::text('henjokaku', $hikuyousya->henjokaku, ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '紫雲の間15列5A']) }}
+                        <select name="henjokaku1" class="select_category" style="width: 80px;" id="henjokaku1">
+                            <option value="">----</option>
+                            <option value="紫雲の間" @if($hikuyousya->henjokaku1 == '紫雲の間') selected @endif>紫雲の間</option>
+                            <option value="金剛の間" @if($hikuyousya->henjokaku1 == '金剛の間') selected @endif>金剛の間</option>
+                            <option value="登天の間" @if($hikuyousya->henjokaku1 == '登天の間') selected @endif>登天の間</option>
+                            <option value="萬燈の間" @if($hikuyousya->henjokaku1 == '萬燈の間') selected @endif>萬燈の間</option>
+                            <option value="宝珠の間" @if($hikuyousya->henjokaku1 == '宝珠の間') selected @endif>宝珠の間</option>
+                            <option value="心蓮の間" @if($hikuyousya->henjokaku1 == '心蓮の間') selected @endif>心蓮の間</option>
+                            <option value="精薫の間" @if($hikuyousya->henjokaku1 == '精薫の間') selected @endif>精薫の間</option>
+                        </select>
+
+                        <select name="henjokaku2" class="select_category" style="width: 60px;" id="henjokaku2">
+                            <option value="">----</option>
+                            <option value="円内" @if($hikuyousya->henjokaku2 == '円内') selected @endif>円内</option>
+                            <option value="円外" @if($hikuyousya->henjokaku2 == '円外') selected @endif>円外</option>
+                            <option value="正面" @if($hikuyousya->henjokaku2 == '正面') selected @endif>正面</option>
+                            @for ($i = 2; $i <= 10; $i++)
+                            <option value="{{ $i }}列" @if($hikuyousya->henjokaku2 == $i . '列') selected @endif>{{ $i }}列</option>
+                            @endfor
+                        </select>
+
+                        <select name="henjokaku3" class="select_category" style="width: 50px;" id="henjokaku3">
+                            <option value="">----</option>
+                            @for ($i = 1; $i <= 94; $i++)
+                            <option value="{{ $i }}" @if($hikuyousya->henjokaku3 == $i) selected @endif>{{ $i }}</option>
+                            @endfor
+                        </select>
+
+                        <select name="henjokaku4" class="select_category" style="width: 50px;" id="henjokaku4">
+                            <option value="">----</option>
+                            <option value="A" @if($hikuyousya->henjokaku4 == 'A') selected @endif>A</option>
+                            <option value="B" @if($hikuyousya->henjokaku4 == 'B') selected @endif>B</option>
+                            <option value="C" @if($hikuyousya->henjokaku4 == 'C') selected @endif>C</option>
+                            <option value="D" @if($hikuyousya->henjokaku4 == 'D') selected @endif>D</option>
+                            <option value="E" @if($hikuyousya->henjokaku4 == 'E') selected @endif>E</option>
+                            <option value="F" @if($hikuyousya->henjokaku4 == 'F') selected @endif>F</option>
+                            <option value="G" @if($hikuyousya->henjokaku4 == 'G') selected @endif>G</option>
+                            <option value="H" @if($hikuyousya->henjokaku4 == 'H') selected @endif>H</option>
+                            <option value="I" @if($hikuyousya->henjokaku4 == 'I') selected @endif>I</option>
+                            <option value="J" @if($hikuyousya->henjokaku4 == 'J') selected @endif>J</option>
+                            <option value="K" @if($hikuyousya->henjokaku4 == 'K') selected @endif>K</option>
+                            <option value="L" @if($hikuyousya->henjokaku4 == 'L') selected @endif>L</option>
+                        </select>
                     </div>
+
 
                 </div>
 

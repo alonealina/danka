@@ -126,7 +126,7 @@
                     <div class="hikuyousya_kaiki">{{ $hikuyousya->gyonen }}</div>
                     <div class="hikuyousya_ihai">{{ $hikuyousya->ihai_no }}</div>
                     <div class="hikuyousya_date">{{ $hikuyousya->nokotsubi }}</div>
-                    <div class="hikuyousya_zokumyo">{{ $hikuyousya->henjokaku }}</div>
+                    <div class="hikuyousya_zokumyo">{{ $hikuyousya->henjokaku1 }}{{ $hikuyousya->henjokaku2 }}{{ $hikuyousya->henjokaku3 }}{{ $hikuyousya->henjokaku4 }}</div>
                     <div class="hikuyousya_kaimyo_view">{{ $hikuyousya->column }}</div>
                     <div class="hikuyousya_btn"><a href="{{ route('hikuyousya_edit', $hikuyousya->id) }}" class="search_view_btn_a">編集</a></div>
                 </div>

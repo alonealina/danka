@@ -69,6 +69,7 @@ function clickTextStoreButton() {
     mobile_error_flg = 0;
     zip_error_flg = 0;
     mail_error_flg = 0;
+    hen_error_flg = 0;
 
     if (danka_store_form.name1.value == "") {
         $('#name1').css( 'background', '#FAF1F1' );
@@ -134,6 +135,50 @@ function clickTextStoreButton() {
         } else {
             $('#gyonen').css( 'background', '#fff' );
         }
+
+        henjokaku1 = danka_store_form.henjokaku1.value;
+        henjokaku2 = danka_store_form.henjokaku2.value;
+        henjokaku3 = danka_store_form.henjokaku3.value;
+        henjokaku4 = danka_store_form.henjokaku4.value;
+        if ( !(henjokaku1 == "" && henjokaku2 == "" && henjokaku3 == "" && henjokaku4 == "") && 
+            !(henjokaku1 != "" && henjokaku2 != "" && henjokaku3 != "" && henjokaku4 != "")  ) {
+            hen_error_flg = 1;
+            $('#hen_error').html('遍照閣の項目が一部未入力です');
+
+            if (henjokaku1 == "") {
+                $('#henjokaku1').css( 'background', '#FAF1F1' );
+            } else {
+                $('#henjokaku1').css( 'background', '#fff' );
+            }
+
+            if (henjokaku2 == "") {
+                $('#henjokaku2').css( 'background', '#FAF1F1' );
+            } else {
+                $('#henjokaku2').css( 'background', '#fff' );
+            }
+
+            if (henjokaku3 == "") {
+                $('#henjokaku3').css( 'background', '#FAF1F1' );
+            } else {
+                $('#henjokaku3').css( 'background', '#fff' );
+            }
+
+            if (henjokaku4 == "") {
+                $('#henjokaku4').css( 'background', '#FAF1F1' );
+            } else {
+                $('#henjokaku4').css( 'background', '#fff' );
+            }
+
+        } else {
+            $('#hen_error').html('');
+            $('#henjokaku1').css( 'background', '#fff' );
+            $('#henjokaku2').css( 'background', '#fff' );
+            $('#henjokaku3').css( 'background', '#fff' );
+            $('#henjokaku4').css( 'background', '#fff' );
+        }
+
+
+
     }
 
     if (error_flg) {
@@ -186,7 +231,7 @@ function clickTextStoreButton() {
 
 
 
-    if (!error_flg && !hi_error_flg && !tel_error_flg && !mobile_error_flg && !zip_error_flg && !mail_error_flg) {
+    if (!error_flg && !hi_error_flg && !tel_error_flg && !mobile_error_flg && !zip_error_flg && !mail_error_flg && !hen_error_flg) {
         document.forms.danka_store_form.submit();
     }
 

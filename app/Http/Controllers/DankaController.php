@@ -82,7 +82,10 @@ class DankaController extends Controller
                     'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
                     'column' => $request['column'],
                     'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
-                    'henjokaku' => isset($request['henjokaku']) ? $request['henjokaku'] : 0,
+                    'henjokaku1' => $request['henjokaku1'],
+                    'henjokaku2' => $request['henjokaku2'],
+                    'henjokaku3' => $request['henjokaku3'],
+                    'henjokaku4' => $request['henjokaku4'],
                 ];
         
                 $hikuyousya = new Hikuyousya();
@@ -198,7 +201,10 @@ class DankaController extends Controller
                 'gyonen' => $request['gyonen'],
                 'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
                 'column' => $request['column'],
-                'henjokaku' => $request['henjokaku'],
+                'henjokaku1' => $request['henjokaku1'],
+                'henjokaku2' => $request['henjokaku2'],
+                'henjokaku3' => $request['henjokaku3'],
+                'henjokaku4' => $request['henjokaku4'],
                 'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
             ];
 
@@ -261,7 +267,10 @@ class DankaController extends Controller
                 'gyonen' => $request['gyonen'],
                 'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
                 'column' => $request['column'],
-                'henjokaku' => $request['henjokaku'],
+                'henjokaku1' => $request['henjokaku1'],
+                'henjokaku2' => $request['henjokaku2'],
+                'henjokaku3' => $request['henjokaku3'],
+                'henjokaku4' => $request['henjokaku4'],
                 'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
             ];
 
@@ -561,7 +570,7 @@ class DankaController extends Controller
             $query->where(function ($query) use ($word_list) {
                 foreach ($word_list as $word) {
                     if (!empty($word)) {
-                        $query->orwhere('column', 'like', "%$word%")->orwhere('henjokaku', 'like', "%$word%");
+                        $query->orwhere('column', 'like', "%$word%");
                     }
                 }
             });
@@ -590,7 +599,7 @@ class DankaController extends Controller
         }
 
         if (isset($konryu_flg)) {
-            $query->whereNotNull('henjokaku');
+            $query->whereNotNull('henjokaku1');
         }
 
         if (isset($kaiki_flg)) {

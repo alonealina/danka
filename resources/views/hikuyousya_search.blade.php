@@ -156,7 +156,7 @@
         <div class="hikuyousya_kaiki">{{ $danka->gyonen }}</div>
         <div class="hikuyousya_ihai">{{ $danka->ihai_no }}</div>
         <div class="hikuyousya_date">{{ $danka->nokotsubi }}</div>
-        <div class="hikuyousya_kaimyo">{{ $danka->henjokaku }}</div>
+        <div class="hikuyousya_kaimyo">{{ $danka->henjokaku1 }}{{ $danka->henjokaku2 }}{{ $danka->henjokaku3 }}{{ $danka->henjokaku4 }}</div>
         <div class="hikuyousya_btn"><a href="{{ route('danka_detail', $danka->danka_id) }}" class="search_view_btn_a">表示</a></div>
     </div>
 

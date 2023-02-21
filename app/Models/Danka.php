@@ -119,7 +119,7 @@ class Danka extends Model
             $this->nokotsubi,
             $this->nokotsuidobi,
             $this->column,
-            $this->henjokaku,
+            $this->henjokaku1.$this->henjokaku2.$this->henjokaku3.$this->henjokaku4,
         ];
     }
 

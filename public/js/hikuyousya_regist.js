@@ -70,6 +70,45 @@ function clickTextStoreButton() {
         $('#gyonen').css( 'background', '#fff' );
     }
 
+    henjokaku1 = danka_store_form.henjokaku1.value;
+    henjokaku2 = danka_store_form.henjokaku2.value;
+    henjokaku3 = danka_store_form.henjokaku3.value;
+    henjokaku4 = danka_store_form.henjokaku4.value;
+    if ( !(henjokaku1 == "" && henjokaku2 == "" && henjokaku3 == "" && henjokaku4 == "") && 
+        !(henjokaku1 != "" && henjokaku2 != "" && henjokaku3 != "" && henjokaku4 != "")  ) {
+        error_flg = 1;
+
+        if (henjokaku1 == "") {
+            $('#henjokaku1').css( 'background', '#FAF1F1' );
+        } else {
+            $('#henjokaku1').css( 'background', '#fff' );
+        }
+
+        if (henjokaku2 == "") {
+            $('#henjokaku2').css( 'background', '#FAF1F1' );
+        } else {
+            $('#henjokaku2').css( 'background', '#fff' );
+        }
+
+        if (henjokaku3 == "") {
+            $('#henjokaku3').css( 'background', '#FAF1F1' );
+        } else {
+            $('#henjokaku3').css( 'background', '#fff' );
+        }
+
+        if (henjokaku4 == "") {
+            $('#henjokaku4').css( 'background', '#FAF1F1' );
+        } else {
+            $('#henjokaku4').css( 'background', '#fff' );
+        }
+
+    } else {
+        $('#henjokaku1').css( 'background', '#fff' );
+        $('#henjokaku2').css( 'background', '#fff' );
+        $('#henjokaku3').css( 'background', '#fff' );
+        $('#henjokaku4').css( 'background', '#fff' );
+    }
+
     if (!error_flg) {
         document.forms.danka_store_form.submit();
     }

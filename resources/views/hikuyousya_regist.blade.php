@@ -66,9 +66,50 @@
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">遍照閣</div>
-                        {{ Form::text('henjokaku', old('henjokaku'), ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '紫雲の間15列5A']) }}
-                    </div>
+                        <select name="henjokaku1" class="select_category" style="width: 80px;" id="henjokaku1">
+                            <option value="">----</option>
+                            <option value="紫雲の間">紫雲の間</option>
+                            <option value="金剛の間">金剛の間</option>
+                            <option value="登天の間">登天の間</option>
+                            <option value="萬燈の間">萬燈の間</option>
+                            <option value="宝珠の間">宝珠の間</option>
+                            <option value="心蓮の間">心蓮の間</option>
+                            <option value="精薫の間">精薫の間</option>
+                        </select>
 
+                        <select name="henjokaku2" class="select_category" style="width: 60px;" id="henjokaku2">
+                            <option value="">----</option>
+                            <option value="円内">円内</option>
+                            <option value="円外">円外</option>
+                            <option value="正面">正面</option>
+                            @for ($i = 2; $i <= 10; $i++)
+                            <option value="{{ $i }}列">{{ $i }}列</option>
+                            @endfor
+                        </select>
+
+                        <select name="henjokaku3" class="select_category" style="width: 50px;" id="henjokaku3">
+                            <option value="">----</option>
+                            @for ($i = 1; $i <= 94; $i++)
+                            <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
+                        </select>
+
+                        <select name="henjokaku4" class="select_category" style="width: 50px;" id="henjokaku4">
+                            <option value="">----</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                            <option value="H">H</option>
+                            <option value="I">I</option>
+                            <option value="J">J</option>
+                            <option value="K">K</option>
+                            <option value="L">L</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="">
