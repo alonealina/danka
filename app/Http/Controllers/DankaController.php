@@ -509,6 +509,10 @@ class DankaController extends Controller
         $common_kana = isset($filter_array['common_kana']) ? $filter_array['common_kana'] : null;
         $posthumous = isset($filter_array['posthumous']) ? $filter_array['posthumous'] : null;
         $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
+        $henjokaku1 = isset($filter_array['henjokaku1']) ? $filter_array['henjokaku1'] : null;
+        $henjokaku2 = isset($filter_array['henjokaku2']) ? $filter_array['henjokaku2'] : null;
+        $henjokaku3 = isset($filter_array['henjokaku3']) ? $filter_array['henjokaku3'] : null;
+        $henjokaku4 = isset($filter_array['henjokaku4']) ? $filter_array['henjokaku4'] : null;
         $nokotsubi_before = isset($filter_array['nokotsubi_before']) ? $filter_array['nokotsubi_before'] : null;
         $nokotsubi_after = isset($filter_array['nokotsubi_after']) ? $filter_array['nokotsubi_after'] : null;
         $meinichi_before = isset($filter_array['meinichi_before']) ? $filter_array['meinichi_before'] : null;
@@ -606,6 +610,22 @@ class DankaController extends Controller
             $query->where('kaiki_flg', '1');
         }
 
+        if (isset($henjokaku1)) {
+            $query->where('henjokaku1', $henjokaku1);
+        }
+
+        if (isset($henjokaku2)) {
+            $query->where('henjokaku2', $henjokaku2);
+        }
+
+        if (isset($henjokaku3)) {
+            $query->where('henjokaku3', $henjokaku3);
+        }
+
+        if (isset($henjokaku4)) {
+            $query->where('henjokaku4', $henjokaku4);
+        }
+
         if (!empty($kaiki_before)) {
             $kaiki_before_tmp = $kaiki_before == 1 ? 0 : $kaiki_before - 2;
             $query->having('kaiki', '>=', $kaiki_before_tmp);
@@ -646,6 +666,10 @@ class DankaController extends Controller
             'common_kana' => $common_kana,
             'posthumous' => $posthumous,
             'freeword' => $freeword,
+            'henjokaku1' => $henjokaku1,
+            'henjokaku2' => $henjokaku2,
+            'henjokaku3' => $henjokaku3,
+            'henjokaku4' => $henjokaku4,
             'nokotsubi_before' => $nokotsubi_before,
             'nokotsubi_after' => $nokotsubi_after,
             'meinichi_before' => $meinichi_before,
