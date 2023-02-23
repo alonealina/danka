@@ -63,7 +63,7 @@
         @endif
 
     </div>
-    <div class="hikuyousya_kaiki">年忌</div>
+    <div class="hikuyousya_kaiki">回忌</div>
     <div class="hikuyousya_kaiki">行年</div>
     <div class="hikuyousya_ihai">
         位牌番号

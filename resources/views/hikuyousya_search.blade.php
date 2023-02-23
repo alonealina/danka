@@ -43,7 +43,7 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリーワード</div>
-                {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '骨のぼり　紫雲の間15列5A']) }}
+                {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '骨のぼり']) }}
             </div>
         </div>
 
@@ -60,7 +60,7 @@
             </div>
 
             <div class="danka_column">
-                <div class="danka_regist_name">回忌</div>
+                <div class="danka_regist_name">年忌</div>
                 <select name="kaiki_before" class="select_category" style="width: 80px;">
                     <option value="">----</option>
                     <option value="1" @if($kaiki_before == '1') selected @endif >1</option>
@@ -83,19 +83,7 @@
             </div>
 
             <div class="danka_column">
-                <input type="checkbox" id="ihai_flg" name="ihai_flg" class="danka_checkbox" value="1"
-                @if(isset($ihai_flg)) checked @endif>
-                <label for="ihai_flg" class="danka_label">位牌</label>
-                <input type="checkbox" id="konryu_flg" name="konryu_flg" class="danka_checkbox" value="1"
-                @if(isset($konryu_flg)) checked @endif>
-                <label for="konryu_flg" class="danka_label">遍照閣</label>
-                <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
-                @if(isset($kaiki_flg)) checked @endif>
-                <label for="kaiki_flg" class="danka_label">回忌</label>
-            </div>
-
-            <div class="danka_column">
-                <div class="danka_regist_name2">遍照閣</div>
+                <div class="danka_regist_name">遍照閣</div>
                 <select name="henjokaku1" class="select_category" style="width: 80px;" id="henjokaku1">
                     <option value="">----</option>
                     <option value="紫雲の間" @if($henjokaku1 == '紫雲の間') selected @endif>紫雲の間</option>
@@ -139,6 +127,17 @@
                     <option value="K" @if($henjokaku4 == 'K') selected @endif>K</option>
                     <option value="L" @if($henjokaku4 == 'L') selected @endif>L</option>
                 </select>
+                　<input type="checkbox" id="konryu_flg" name="konryu_flg" class="danka_checkbox" value="1"
+                @if(isset($konryu_flg)) checked @endif>
+            </div>
+
+            <div class="danka_column">
+                <input type="checkbox" id="ihai_flg" name="ihai_flg" class="danka_checkbox" value="1"
+                @if(isset($ihai_flg)) checked @endif>
+                <label for="ihai_flg" class="danka_label">位牌</label>
+                <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
+                @if(isset($kaiki_flg)) checked @endif>
+                <label for="kaiki_flg" class="danka_label">回忌</label>
             </div>
 
         </div>

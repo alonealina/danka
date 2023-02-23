@@ -283,14 +283,41 @@ class EventController extends Controller
             $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
             $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;
             $mail_flg = isset($filter_array['mail_flg']) ? $filter_array['mail_flg'] : null;
-    
+            $henjokaku1 = isset($filter_array['henjokaku1']) ? $filter_array['henjokaku1'] : null;
+            $henjokaku2 = isset($filter_array['henjokaku2']) ? $filter_array['henjokaku2'] : null;
+            $henjokaku3 = isset($filter_array['henjokaku3']) ? $filter_array['henjokaku3'] : null;
+            $henjokaku4 = isset($filter_array['henjokaku4']) ? $filter_array['henjokaku4'] : null;
+            $konryu_flg = isset($filter_array['konryu_flg']) ? $filter_array['konryu_flg'] : null;
+
             $event_name = isset($filter_array['event_name']) ? $filter_array['event_name'] : null;
             $category_name = TextCategory::find($category_id)->name;
 
             $query = Danka::select('danka.id as id', 'hikuyousya.id as hikuyousya_id', 'name', 'common_name', 'posthumous', 'nokotsubi',
-             'nokotsuidobi', 'column', 'nokotsu_no', 'ihai_no')->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
+             'nokotsuidobi', 'column', 'nokotsu_no', 'ihai_no', 'henjokaku1', 'henjokaku2', 'henjokaku3', 'henjokaku4')
+            ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
             ->whereNotNull('nokotsubi');
 
+            if (isset($henjokaku1)) {
+                $query->where('henjokaku1', $henjokaku1);
+            }
+    
+            if (isset($henjokaku2)) {
+                $query->where('henjokaku2', $henjokaku2);
+            }
+    
+            if (isset($henjokaku3)) {
+                $query->where('henjokaku3', $henjokaku3);
+            }
+    
+            if (isset($henjokaku4)) {
+                $query->where('henjokaku4', $henjokaku4);
+            }
+    
+            if (isset($konryu_flg)) {
+                $query->whereNotNull('henjokaku1');
+            }
+    
+        
 
             if (!empty($nokotsubi_before)) {
                 $query->whereDate('nokotsubi', '>=', $nokotsubi_before);
@@ -346,8 +373,13 @@ class EventController extends Controller
                 'nokotsubi_before' => $nokotsubi_before,
                 'nokotsubi_after' => $nokotsubi_after,
                 'freeword' => $freeword,
+                'henjokaku1' => $henjokaku1,
+                'henjokaku2' => $henjokaku2,
+                'henjokaku3' => $henjokaku3,
+                'henjokaku4' => $henjokaku4,
                 'hikuyousya_count' => $hikuyousya_count,
                 'danka_count' => $danka_count,
+                'konryu_flg' => $konryu_flg,
                 'sort_item' => $sort_item,
                 'sort_type' => $sort_type,
                 'number' => $number,
