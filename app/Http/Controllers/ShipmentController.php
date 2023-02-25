@@ -37,16 +37,13 @@ class ShipmentController extends Controller
         ];
 
         DB::beginTransaction();
-        try {
+
             $shipment->fill($fill_data)->save();
             $target_path = public_path('shipment/'. $category_id . '/');
             $file->move($target_path, $file_name);    
 
             DB::commit();
             return redirect()->route('shipment_list', ['id' => $category_id])->with('message', 'ファイルの登録が完了いたしました。');
-        } catch (\Exception $e) {
-            DB::rollback();
-        }
     }
 
     public function shipment_list($category_id)
