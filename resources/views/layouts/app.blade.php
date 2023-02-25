@@ -126,7 +126,7 @@
                         <a href="{{ route('event_list') }}" class="menu_a
                         @if (strpos($now_route,'event_list') !== false || strpos($now_route,'event_show') !== false || strpos($now_route,'event_regist') !== false || 
                         strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false) current @endif">　行事一覧</a>
-                        <a href="{{ route('text_category_list') }}" class="menu_a
+                        <a href="{{ route('shipment_category_list') }}" class="menu_a
                         @if (strpos($now_route,'event_list') !== false || strpos($now_route,'event_show') !== false || strpos($now_route,'event_regist') !== false || 
                         strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false) current @endif">　発送物一覧</a>
                         </div>
