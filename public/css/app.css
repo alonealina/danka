@@ -805,6 +805,9 @@ p {
 .family_view_item {
     width:25%;
 }
+.file_view_item {
+    width:50%;
+}
 .paid_btn_a {
     background: #2963AB;
     border-radius: 4px;

@@ -10,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\DankaController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ShipmentController;
 
 
 Route::get('', [IndexController::class, 'index'])->name('index');
@@ -90,6 +91,19 @@ Route::get('event_date_delete/{id}', [EventController::class, 'event_date_delete
 Route::post('star_csv_export', [EventController::class, 'star_csv_export'])->name('star_csv_export');
 Route::post('nenki_csv_export', [EventController::class, 'nenki_csv_export'])->name('nenki_csv_export');
 Route::post('noukotsu_csv_export', [EventController::class, 'noukotsu_csv_export'])->name('noukotsu_csv_export');
+
+Route::get('shipment_regist', [ShipmentController::class, 'shipment_regist'])->name('shipment_regist');
+Route::post('shipment_store', [ShipmentController::class, 'shipment_store'])->name('shipment_store');
+Route::get('shipment_list/{id}', [ShipmentController::class, 'shipment_list'])->name('shipment_list');
+Route::get('shipment_show/{id}', [ShipmentController::class, 'shipment_show'])->name('shipment_show');
+Route::get('shipment_dl/{id}', [ShipmentController::class, 'shipment_dl'])->name('shipment_dl');
+Route::post('shipment_update', [ShipmentController::class, 'shipment_update'])->name('shipment_update');
+Route::get('shipment_delete/{id}/', [ShipmentController::class, 'shipment_delete'])->name('shipment_delete');
+Route::get('shipment_category_list', [ShipmentController::class, 'shipment_category_list'])->name('shipment_category_list');
+Route::post('shipment_category_store', [ShipmentController::class, 'shipment_category_store'])->name('shipment_category_store');
+
+
+
 
 
 Route::get('notice_regist', [NoticeController::class, 'notice_regist'])->name('notice_regist');
