@@ -22,7 +22,7 @@ class Deal extends Model
     }
 
     public function getFullAddress2Attribute() {
-        return '"'. $this->address . '　' . $this->building . '"';
+        return $this->address . '　' . $this->building;
     }
 
     public function getKaikiIntAttribute() {
@@ -45,7 +45,7 @@ class Deal extends Model
             $this->danka_id,
             $this->danka_name,
             $this->name_kana,
-            $this->tel,         
+            $this->tel,
             $this->mobile,         
             $this->mail,       
             $this->zip,       

@@ -28,7 +28,7 @@
             </div>
             <div class="event_btn_list">
                 <a href="../../shipment/{{ $category->id }}/{{ $shipment->title }}" class="add_btn_a" download>ダウンロード</a>
-                <a href="{{ route('event_date_show', $shipment->id) }}" class="view_btn_100">表示</a>
+                <a href="../../shipment/{{ $category->id }}/{{ $shipment->title }}" class="view_btn_100" target="_blank">表示</a>
                 <a href="{{ route('shipment_delete', $shipment->id) }}" onclick="return confirm('本当に削除しますか？')" class="delete_btn_100">削除</a>
             </div>
         </div>

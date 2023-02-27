@@ -21,7 +21,7 @@ class Danka extends Model
     }
 
     public function getFullAddress2Attribute() {
-        return '"'. $this->address . '　' . $this->building . '"';
+        return $this->address . '　' . $this->building;
     }
 
     public function getKaikiIntAttribute() {
@@ -37,7 +37,7 @@ class Danka extends Model
             $this->id,
             $this->name,            
             $this->name_kana,    
-            $this->tel,         
+            $this->tel,
             $this->mobile,         
             $this->mail,       
             $this->introducer,       
@@ -57,7 +57,7 @@ class Danka extends Model
             $this->id,
             $this->name,            
             $this->name_kana,    
-            $this->tel,         
+            $this->tel,
             $this->mobile,         
             $this->mail,       
             $this->zip,       
@@ -74,7 +74,7 @@ class Danka extends Model
             $this->danka_id,
             $this->name,            
             $this->name_kana,    
-            $this->tel,         
+            $this->tel,
             $this->mobile,         
             $this->mail,       
             $this->zip,       
@@ -98,7 +98,7 @@ class Danka extends Model
             $this->danka_id,
             $this->name,            
             $this->name_kana,    
-            $this->tel,         
+            $this->tel,
             $this->mobile,         
             $this->mail,       
             $this->zip,       
