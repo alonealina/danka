@@ -41,6 +41,8 @@ Route::post('family_store', [DankaController::class, 'family_store'])->name('fam
 Route::get('family_edit/{family_id}', [DankaController::class, 'family_edit'])->name('family_edit');
 Route::post('family_update', [DankaController::class, 'family_update'])->name('family_update');
 
+Route::get('danka_csv_test', [DankaController::class, 'danka_csv_test'])->name('danka_csv_test');
+Route::post('danka_csv_import', [DankaController::class, 'danka_csv_import'])->name('danka_csv_import');
 Route::post('danka_csv_export', [DankaController::class, 'danka_csv_export'])->name('danka_csv_export');
 Route::post('hikuyousya_csv_export', [DankaController::class, 'hikuyousya_csv_export'])->name('hikuyousya_csv_export');
 

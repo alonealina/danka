@@ -9,7 +9,8 @@ class Danka extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id']; 
+    protected $fillable = ['id', 'name', 'name_kana', 'gender', 'tel', 'mobile', 'mail', 'zip', 'pref', 'city', 'address', 'building'
+    , 'introducer', 'notices', 'segaki_flg', 'star_flg', 'yakushiji_flg']; 
     protected $table = 'danka';
 
     protected $appends = [

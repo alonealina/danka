@@ -718,6 +718,69 @@ class DankaController extends Controller
         ]);
     }
 
+    public function danka_csv_test()
+    {
+        return view('danka_csv_test');
+    }
+
+
+
+    public function danka_csv_import(Request $request)
+    {
+        $fp = fopen($request->csv, 'r');
+        
+        DB::beginTransaction();
+        try {
+            while($data = fgetcsv($fp)){
+                mb_convert_variables('UTF-8', 'SJIS-win', $data);
+                if ($data[0] == '施主コード') {
+                    continue;
+                }
+                if (empty($data[1])) {
+                    continue;
+                }
+                $count = Danka::where('id', $data[0])->get()->count();
+                if (Danka::where('id', $data[0])->get()->count() > 0) {
+                    continue;
+                }
+                
+                $pref_tmp = mb_substr($data[6], 0, 4);
+                if ($pref_tmp == '神奈川県' || $pref_tmp == '和歌山県' || $pref_tmp == '鹿児島県') {
+                    $pref = $pref_tmp;
+                } else {
+                    $pref = mb_substr($data[6], 0, 3);
+                }
+                $city = str_replace($pref, '', $data[6]) . $data[7];
+
+
+                $fill_data = [
+                    'id' => $data[0],
+                    'name' => $data[1],
+                    'name_kana' => mb_convert_kana($data[2], "KVa"),
+                    'notices' => $data[3],
+                    'introducer' => $data[4],
+                    'zip' => str_replace('-', '', $data[5]),
+                    'pref' => $pref,
+                    'city' => $city,
+                    'tel' => str_replace('-', '', $data[8]),
+                    'mobile' => str_replace('-', '', $data[9]),
+                ];
+                
+                $danka = new Danka();
+                $danka->fill($fill_data)->save();
+            }
+
+            DB::commit();
+            fclose($fp);
+            return redirect()->route('danka_regist')->with('message', '登録が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }  
+        fclose($fp);
+
+        return;
+    }
+
     public function danka_csv_export(Request $request)
     {
         $filter_array = $request->all();
