@@ -763,7 +763,7 @@ class DankaController extends Controller
                     'pref' => $pref,
                     'city' => $city,
                     'tel' => str_replace('-', '', $data[8]),
-                    'mobile' => str_replace('-', '', $data[9]),
+                    'mobile' => isset($data[9]) ? str_replace('-', '', $data[9]) : '',
                 ];
                 
                 $danka = new Danka();
