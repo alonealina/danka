@@ -775,6 +775,7 @@ class DankaController extends Controller
             return redirect()->route('danka_regist')->with('message', '登録が完了いたしました。');
         } catch (\Exception $e) {
             DB::rollback();
+            var_dump($e);
         }  
         fclose($fp);
 
