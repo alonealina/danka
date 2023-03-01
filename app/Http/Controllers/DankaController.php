@@ -723,6 +723,16 @@ class DankaController extends Controller
         return view('danka_csv_test');
     }
 
+    public function hikuyousya_csv_test()
+    {
+        return view('hikuyousya_csv_test');
+    }
+
+    public function deal_csv_test()
+    {
+        return view('deal_csv_test');
+    }
+
 
 
     public function danka_csv_import(Request $request)
@@ -768,6 +778,46 @@ class DankaController extends Controller
                 
                 $danka = new Danka();
                 $danka->fill($fill_data)->save();
+            }
+
+            DB::commit();
+            fclose($fp);
+            return redirect()->route('danka_regist')->with('message', '登録が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+            var_dump($e);
+        }  
+        fclose($fp);
+
+        return;
+    }
+
+    public function hikuyousya_csv_import(Request $request)
+    {
+        $fp = fopen($request->csv, 'r');
+        
+        DB::beginTransaction();
+        try {
+            while($data = fgetcsv($fp)){
+                mb_convert_variables('UTF-8', 'SJIS-win', $data);
+                if ($data[0] == '施主コード') {
+                    continue;
+                }
+                if (empty($data[1])) {
+                    continue;
+                }
+
+                $fill_data = [
+                    'danka_id' => $data[0],
+                    'ihai_no' => $data[1],
+                    'posthumous' => $data[2],
+                    'common_name' => $data[3],
+                    'gyonen' => empty($data[4]) ? null : $data[4],
+                    'meinichi' => empty($data[5]) ? null : $data[5],
+                ];
+                
+                $hikuyousya = new Hikuyousya();
+                $hikuyousya->fill($fill_data)->save();
             }
 
             DB::commit();
