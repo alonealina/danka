@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Danka;
 use App\Models\Hikuyousya;
 use App\Models\Family;
+use App\Models\Item;
+use App\Models\Deal;
 use App\Models\DealDetail;
 use App\Models\DankaDate;
 use App\Models\DankaBook;
@@ -782,7 +784,7 @@ class DankaController extends Controller
 
             DB::commit();
             fclose($fp);
-            return redirect()->route('danka_regist')->with('message', '登録が完了いたしました。');
+            return redirect()->route('danka_csv_test')->with('message', '登録が完了いたしました。');
         } catch (\Exception $e) {
             DB::rollback();
             var_dump($e);
@@ -822,7 +824,103 @@ class DankaController extends Controller
 
             DB::commit();
             fclose($fp);
-            return redirect()->route('danka_regist')->with('message', '登録が完了いたしました。');
+            return redirect()->route('hikuyousya_csv_test')->with('message', '登録が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+            var_dump($e);
+        }  
+        fclose($fp);
+
+        return;
+    }
+
+    public function deal_csv_import(Request $request)
+    {
+        $fp = fopen($request->csv, 'r');
+        
+        $item_id = [
+            6 =>  Item::where('detail', '位牌')->first()->id,
+            7 =>  Item::where('detail', '年忌')->first()->id,
+            8 =>  Item::where('detail', '星まつり')->first()->id,
+            9 =>  Item::where('detail', '写経')->first()->id,
+            10 => Item::where('detail', '水子')->first()->id,
+            11 => Item::where('detail', '納骨')->first()->id,
+            12 => Item::where('detail', '盆彼')->first()->id,
+            13 => Item::where('detail', '寄付')->first()->id,
+            14 => Item::where('detail', 'お供え')->first()->id,
+            15 => Item::where('detail', '施餓鬼')->first()->id,
+            16 => Item::where('detail', 'お布施')->first()->id,
+            17 => Item::where('detail', '戒名料')->first()->id,
+            18 => Item::where('detail', '絵天井')->first()->id,
+            19 => Item::where('detail', 'その他')->first()->id,
+            20 => Item::where('detail', 'お祝い')->first()->id,
+        ];
+
+
+        DB::beginTransaction();
+        try {
+            while($data = fgetcsv($fp)){
+                mb_convert_variables('UTF-8', 'SJIS-win', $data);
+                if ($data[0] == '対象年度') {
+                    continue;
+                }
+                if (empty($data[1])) {
+                    continue;
+                }
+
+                $deal_year = mb_substr($data[0], 0, 4);
+                $deal_tmp = str_pad($data[1], 6, 0, STR_PAD_LEFT);
+                $deal_no = $deal_year . $deal_tmp;
+
+                $payment_date = str_replace('年', '-', $data[4]);
+                $payment_date = str_replace('月', '-', $payment_date);
+                $payment_date = str_replace('日', '', $payment_date);
+
+                $payment_method = substr_replace($data[5], "", 0,2);
+
+
+                $hikuyousya_id = 0;
+                if (!empty($data[3])) {
+                    $hikuyousya = Hikuyousya::where('danka_id', $data[2])->where('common_name', $data[3])->first();
+                    if (isset($hikuyousya)) {
+                        $hikuyousya_id = $hikuyousya->id;
+                    }
+                }
+
+                $fill_data = [
+                    'deal_no' => $deal_no,
+                    'danka_id' => $data[2],
+                    'payment_method' => $payment_method,
+                    'state' => '支払済',
+                    'payment_date' => $payment_date,
+                ];
+                
+                $deal = new Deal();
+                $deal->fill($fill_data)->save();
+
+
+                for ($i = 6; $i <= 20; $i++) {
+                    if ($data[$i] > 0) {
+                        $fill_data = [
+                            'deal_id' => $deal->id,
+                            'item_id' => $item_id[$i],
+                            'quantity' => 1,
+                            'price' => 1,
+                            'total' => 1,
+                            'hikuyousya_id' => $hikuyousya_id,
+                            'remark' => $data[21],
+                        ];
+    
+                        $deal_detail = new DealDetail();
+                        $deal_detail->fill($fill_data)->save();
+                    }
+                }
+
+            }
+
+            DB::commit();
+            fclose($fp);
+            return redirect()->route('deal_csv_test')->with('message', '登録が完了いたしました。');
         } catch (\Exception $e) {
             DB::rollback();
             var_dump($e);

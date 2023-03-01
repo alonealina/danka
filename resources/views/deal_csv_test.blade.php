@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="admin_list_message">{{ session('message') }}</div>
-<div class="content_title">檀家CSVテスト</div>
+<div class="content_title">取引CSVテスト</div>
 
-<form id="form" name="regist_form" action="{{ route('danka_csv_import') }}" method="post" enctype="multipart/form-data">
+<form id="form" name="regist_form" action="{{ route('deal_csv_import') }}" method="post" enctype="multipart/form-data">
 @csrf
     <input type="file" id="file_btn_main" onclick="fileCheckMain();" name="csv">
     <a href="#!" onclick="ShipmentStoreButton()" class="add_btn_a">アップロード</a>

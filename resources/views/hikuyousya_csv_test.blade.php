@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="admin_list_message">{{ session('message') }}</div>
 <div class="content_title">被供養者CSVテスト</div>
 
 <form id="form" name="regist_form" action="{{ route('hikuyousya_csv_import') }}" method="post" enctype="multipart/form-data">
