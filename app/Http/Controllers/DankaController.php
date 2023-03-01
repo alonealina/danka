@@ -905,8 +905,8 @@ class DankaController extends Controller
                             'deal_id' => $deal->id,
                             'item_id' => $item_id[$i],
                             'quantity' => 1,
-                            'price' => 1,
-                            'total' => 1,
+                            'price' => $data[$i],
+                            'total' => $data[$i],
                             'hikuyousya_id' => $hikuyousya_id,
                             'remark' => $data[21],
                         ];
