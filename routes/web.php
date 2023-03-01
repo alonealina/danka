@@ -45,6 +45,8 @@ Route::get('danka_csv_test', [DankaController::class, 'danka_csv_test'])->name('
 Route::post('danka_csv_import', [DankaController::class, 'danka_csv_import'])->name('danka_csv_import');
 Route::get('hikuyousya_csv_test', [DankaController::class, 'hikuyousya_csv_test'])->name('hikuyousya_csv_test');
 Route::post('hikuyousya_csv_import', [DankaController::class, 'hikuyousya_csv_import'])->name('hikuyousya_csv_import');
+Route::get('family_csv_test', [DankaController::class, 'family_csv_test'])->name('family_csv_test');
+Route::post('family_csv_import', [DankaController::class, 'family_csv_import'])->name('family_csv_import');
 Route::get('deal_csv_test', [DankaController::class, 'deal_csv_test'])->name('deal_csv_test');
 Route::post('deal_csv_import', [DankaController::class, 'deal_csv_import'])->name('deal_csv_import');
 

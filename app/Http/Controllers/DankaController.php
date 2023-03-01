@@ -735,6 +735,11 @@ class DankaController extends Controller
         return view('deal_csv_test');
     }
 
+    public function family_csv_test()
+    {
+        return view('family_csv_test');
+    }
+
 
 
     public function danka_csv_import(Request $request)
@@ -825,6 +830,42 @@ class DankaController extends Controller
             DB::commit();
             fclose($fp);
             return redirect()->route('hikuyousya_csv_test')->with('message', '登録が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+            var_dump($e);
+        }  
+        fclose($fp);
+
+        return;
+    }
+
+    public function family_csv_import(Request $request)
+    {
+        $fp = fopen($request->csv, 'r');
+        
+        DB::beginTransaction();
+        try {
+            while($data = fgetcsv($fp)){
+                mb_convert_variables('UTF-8', 'SJIS-win', $data);
+                if ($data[0] == '施主コード') {
+                    continue;
+                }
+                if (empty($data[1])) {
+                    continue;
+                }
+
+                $fill_data = [
+                    'danka_id' => $data[0],
+                    'name' => $data[1],
+                ];
+                
+                $hikuyousya = new Family();
+                $hikuyousya->fill($fill_data)->save();
+            }
+
+            DB::commit();
+            fclose($fp);
+            return redirect()->route('family_csv_test')->with('message', '登録が完了いたしました。');
         } catch (\Exception $e) {
             DB::rollback();
             var_dump($e);
