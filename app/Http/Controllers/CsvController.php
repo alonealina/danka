@@ -115,6 +115,8 @@ class CsvController extends Controller
                     continue;
                 }
 
+                $nokotsu_no = str_pad($data[6], 6, 0, STR_PAD_LEFT);
+
                 $fill_data = [
                     'danka_id' => $data[0],
                     'ihai_no' => $data[1],
@@ -122,6 +124,9 @@ class CsvController extends Controller
                     'common_name' => $data[3],
                     'gyonen' => empty($data[4]) ? null : $data[4],
                     'meinichi' => empty($data[5]) ? null : $data[5],
+                    'nokotsu_no' => $nokotsu_no,
+                    'nokotsubi' => $data[7],
+                    'nokotsuidobi' => $data[8],
                 ];
                 
                 $hikuyousya = new Hikuyousya();
