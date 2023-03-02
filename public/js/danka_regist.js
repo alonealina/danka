@@ -100,33 +100,6 @@ function clickTextStoreButton() {
     }
 
     if (document.getElementById('hikuyousya_flg').checked) {
-        if (danka_store_form.common_name1.value == "") {
-            $('#common_name1').css( 'background', '#FAF1F1' );
-            hi_error_flg = 1;
-        } else {
-            $('#common_name1').css( 'background', '#fff' );
-        }
-
-        if (danka_store_form.common_name2.value == "") {
-            $('#common_name2').css( 'background', '#FAF1F1' );
-            hi_error_flg = 1;
-        } else {
-            $('#common_name2').css( 'background', '#fff' );
-        }
-
-        if (danka_store_form.common_kana1.value == "") {
-            $('#common_kana1').css( 'background', '#FAF1F1' );
-            hi_error_flg = 1;
-        } else {
-            $('#common_kana1').css( 'background', '#fff' );
-        }
-
-        if (danka_store_form.common_kana2.value == "") {
-            $('#common_kana2').css( 'background', '#FAF1F1' );
-            hi_error_flg = 1;
-        } else {
-            $('#common_kana2').css( 'background', '#fff' );
-        }
 
         gyonen = danka_store_form.gyonen.value;
         if ((gyonen > 150 || gyonen < 1) && gyonen != "" || isNaN(gyonen)) {
@@ -188,7 +161,7 @@ function clickTextStoreButton() {
     }
 
     if (hi_error_flg) {
-        $('#hikuyousya_error').html('被供養者情報の必須項目を入力してください');
+        $('#hikuyousya_error').html('行年は1～150の数値を入力してください');
     } else {
         $('#hikuyousya_error').html('');
     }

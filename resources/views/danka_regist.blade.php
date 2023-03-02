@@ -121,12 +121,12 @@
                         </select>
                     </div>
                     <div class="danka_column">
-                        <div class="danka_regist_name2">俗名 <span class="require_mark">※</span></div>
+                        <div class="danka_regist_name2">俗名</div>
                         {{ Form::text('common_name1', old('common_name1'), ['id' => 'common_name1', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => '姓', 'style' => 'width:100px']) }}　
                         {{ Form::text('common_name2', old('common_name2'), ['id' => 'common_name2', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => '名', 'style' => 'width:100px']) }}
                     </div>
                     <div class="danka_column">
-                        <div class="danka_regist_name2">フリガナ <span class="require_mark">※</span></div>
+                        <div class="danka_regist_name2">フリガナ</div>
                         {{ Form::text('common_kana1', old('common_kana1'), ['id' => 'common_kana1', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'セイ', 'style' => 'width:100px']) }}　
                         {{ Form::text('common_kana2', old('common_kana2'), ['id' => 'common_kana2', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'メイ', 'style' => 'width:100px']) }}
                     </div>

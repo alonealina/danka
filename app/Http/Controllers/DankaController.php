@@ -757,7 +757,7 @@ class DankaController extends Controller
                     continue;
                 }
                 $count = Danka::where('id', $data[0])->get()->count();
-                if (Danka::where('id', $data[0])->get()->count() > 0) {
+                if ($count > 0) {
                     continue;
                 }
                 
@@ -774,7 +774,7 @@ class DankaController extends Controller
                     'id' => $data[0],
                     'name' => $data[1],
                     'name_kana' => mb_convert_kana($data[2], "KVa"),
-                    'notices' => $data[3],
+                    'notices' => $data[3] . '　' . $data[10],
                     'introducer' => $data[4],
                     'zip' => str_replace('-', '', $data[5]),
                     'pref' => $pref,
@@ -1242,8 +1242,8 @@ class DankaController extends Controller
 
         $danka_list = $query->orderBy('danka_id', 'desc')->get();
 
-        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ', '電話番号', '携帯番号', 'メールアドレス', '郵便番号', '住所1', '住所2', 
-        '種別', '俗名', 'フリガナ', '戒名', '性別', '行年', '命日', '周忌/回忌', '年忌チェック', 
+        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ（施主｝', '電話番号', '携帯番号', 'メールアドレス', '郵便番号', '住所1', '住所2', 
+        '種別', '俗名', 'フリガナ（被供養者｝', '戒名', '性別', '行年', '命日', '周忌/回忌', '年忌チェック', 
         '位牌番号', '建立日', '納骨番号', '納骨日', '納骨移動日', '特記事項', '遍照閣', 
         ];
         foreach ($danka_list as $danka) {

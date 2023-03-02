@@ -26,11 +26,11 @@
                         </select>
                     </div>
                     <div class="danka_column">
-                        <div class="danka_regist_name2">俗名 <span class="require_mark">※</span></div>
+                        <div class="danka_regist_name2">俗名</div>
                         {{ Form::text('common_name', old('common_name'), ['id' => 'common_name', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => '俗名']) }}
                     </div>
                     <div class="danka_column">
-                        <div class="danka_regist_name2">フリガナ <span class="require_mark">※</span></div>
+                        <div class="danka_regist_name2">フリガナ</div>
                         {{ Form::text('common_kana', old('common_kana'), ['id' => 'common_kana', 'class' => 'danka_form_text2', 'maxlength' => 20, 'placeholder' => 'フリガナ']) }}
                     </div>
                     <div class="danka_column">
