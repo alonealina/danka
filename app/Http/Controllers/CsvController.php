@@ -66,20 +66,22 @@ class CsvController extends Controller
                 } else {
                     $pref = mb_substr($data[6], 0, 3);
                 }
-                $city = str_replace($pref, '', $data[6]) . $data[7];
-
+                $city = str_replace($pref, '', $data[6]);
 
                 $fill_data = [
                     'id' => $data[0],
                     'name' => $data[1],
                     'name_kana' => mb_convert_kana($data[2], "KVa"),
-                    'notices' => $data[3] . '　' . $data[10],
+                    'notices' => $data[3] . '　' . $data[12],
                     'introducer' => $data[4],
                     'zip' => str_replace('-', '', $data[5]),
                     'pref' => $pref,
                     'city' => $city,
+                    'address' => $data[7],
                     'tel' => str_replace('-', '', $data[8]),
                     'mobile' => isset($data[9]) ? str_replace('-', '', $data[9]) : '',
+                    'star_flg' => $data[10] ? 0 : 1,
+                    'segaki_flg' => $data[11] ? 0 : 1,
                 ];
                 
                 $danka = new Danka();
