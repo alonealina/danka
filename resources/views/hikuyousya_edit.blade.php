@@ -60,7 +60,7 @@
                             <label for="ihai_flg" class="danka_label" style="margin-right: 0;">位牌番号</label>
                         </div>
 
-                        {{ Form::text('ihai_no', $ihai_no, ['class' => 'danka_form_text2', 'maxlength' => 4, 'style' => 'width: 70px;', 'readonly' => 'readonly']) }}
+                        {{ Form::text('ihai_no', $ihai_no, ['class' => 'danka_form_text2', 'maxlength' => 6, 'style' => 'width: 70px;']) }}
                     </div>
 
                     <div class="danka_column">
