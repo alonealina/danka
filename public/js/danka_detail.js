@@ -1,12 +1,14 @@
 function clickHikuyousya() {
     $('#hikuyousya').addClass('danka_current');
     $('#family').removeClass('danka_current');
+    $('#gojikaihi').removeClass('danka_current');
     $('#payment').removeClass('danka_current');
     $('#nenki').removeClass('danka_current');
     $('#star').removeClass('danka_current');
     $('#segaki').removeClass('danka_current');
     $('.danka_other_content').show();
     $('.danka_family_content_view').hide();
+    $('.danka_gojikaihi_content').hide();
     $('.danka_payment_view').hide();
     $('.danka_nenki_view').hide();
     $('.danka_star_view').hide();
@@ -16,12 +18,31 @@ function clickHikuyousya() {
 function clickFamily() {
     $('#hikuyousya').removeClass('danka_current');
     $('#family').addClass('danka_current');
+    $('#gojikaihi').removeClass('danka_current');
     $('#payment').removeClass('danka_current');
     $('#nenki').removeClass('danka_current');
     $('#star').removeClass('danka_current');
     $('#segaki').removeClass('danka_current');
     $('.danka_other_content').hide();
     $('.danka_family_content_view').show();
+    $('.danka_gojikaihi_content').hide();
+    $('.danka_payment_view').hide();
+    $('.danka_nenki_view').hide();
+    $('.danka_star_view').hide();
+    $('.danka_segaki_view').hide();
+}
+
+function clickGojikaihi() {
+    $('#hikuyousya').removeClass('danka_current');
+    $('#family').removeClass('danka_current');
+    $('#gojikaihi').addClass('danka_current');
+    $('#payment').removeClass('danka_current');
+    $('#nenki').removeClass('danka_current');
+    $('#star').removeClass('danka_current');
+    $('#segaki').removeClass('danka_current');
+    $('.danka_other_content').hide();
+    $('.danka_family_content_view').hide();
+    $('.danka_gojikaihi_content').show();
     $('.danka_payment_view').hide();
     $('.danka_nenki_view').hide();
     $('.danka_star_view').hide();
@@ -31,12 +52,14 @@ function clickFamily() {
 function clickPayment() {
     $('#hikuyousya').removeClass('danka_current');
     $('#family').removeClass('danka_current');
+    $('#gojikaihi').removeClass('danka_current');
     $('#payment').addClass('danka_current');
     $('#nenki').removeClass('danka_current');
     $('#star').removeClass('danka_current');
     $('#segaki').removeClass('danka_current');
     $('.danka_other_content').hide();
     $('.danka_family_content_view').hide();
+    $('.danka_gojikaihi_content').hide();
     $('.danka_payment_view').show();
     $('.danka_nenki_view').hide();
     $('.danka_star_view').hide();
@@ -46,6 +69,7 @@ function clickPayment() {
 function clickNenki() {
     $('#hikuyousya').removeClass('danka_current');
     $('#family').removeClass('danka_current');
+    $('#gojikaihi').removeClass('danka_current');
     $('#payment').removeClass('danka_current');
     $('#nenki').addClass('danka_current');
     $('#star').removeClass('danka_current');
@@ -61,12 +85,14 @@ function clickNenki() {
 function clickStar() {
     $('#hikuyousya').removeClass('danka_current');
     $('#family').removeClass('danka_current');
+    $('#gojikaihi').removeClass('danka_current');
     $('#payment').removeClass('danka_current');
     $('#nenki').removeClass('danka_current');
     $('#star').addClass('danka_current');
     $('#segaki').removeClass('danka_current');
     $('.danka_other_content').hide();
     $('.danka_family_content_view').hide();
+    $('.danka_gojikaihi_content').hide();
     $('.danka_payment_view').hide();
     $('.danka_nenki_view').hide();
     $('.danka_star_view').show();
@@ -76,12 +102,14 @@ function clickStar() {
 function clickSegaki() {
     $('#hikuyousya').removeClass('danka_current');
     $('#family').removeClass('danka_current');
+    $('#gojikaihi').removeClass('danka_current');
     $('#payment').removeClass('danka_current');
     $('#nenki').removeClass('danka_current');
     $('#star').removeClass('danka_current');
     $('#segaki').addClass('danka_current');
     $('.danka_other_content').hide();
     $('.danka_family_content_view').hide();
+    $('.danka_gojikaihi_content').hide();
     $('.danka_payment_view').hide();
     $('.danka_nenki_view').hide();
     $('.danka_star_view').hide();
@@ -134,5 +162,7 @@ window.addEventListener('DOMContentLoaded', function(){
 });
 
 
-
+function clickGojikaihiUpdateButton() {
+    document.forms.gojikaihi_form.submit();
+};
 

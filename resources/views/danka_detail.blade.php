@@ -89,6 +89,7 @@
         <div class="danka_other_tab">
             <a href="#!" id="hikuyousya" onclick="clickHikuyousya()" class="danka_tab danka_current">被供養者</a>
             <a href="#!" id="family" onclick="clickFamily()" class="danka_tab">家族情報</a>
+            <a href="#!" id="gojikaihi" onclick="clickGojikaihi()" class="danka_tab">護持会費</a>
             <a href="#!" id="payment" onclick="clickPayment()" class="danka_tab">支払い履歴</a>
             <a href="#!" id="nenki" onclick="clickNenki()" class="danka_tab">年忌</a>
             <a href="#!" id="star" onclick="clickStar()" class="danka_tab">星祭り</a>
@@ -157,6 +158,31 @@
                 </div>
                 @endforeach
             </div>
+        </div>
+
+        <div class="danka_gojikaihi_content" style="height: 300px; display:none;">
+            <form id="admin_store_form" name="gojikaihi_form" action="{{ route('gojikaihi_update') }}" method="post">
+            {{ Form::hidden('danka_id', $danka->id) }}
+            @csrf
+                <div class="payment_list_header" style="margin:0; justify-content: unset;">
+                    <div style="width:40px"></div>
+                    <div class="hikuyousya_zokumyo">俗名</div>
+                    <div class="hikuyousya_zokumyo">遍照閣</div>
+                    <div class="hikuyousya_zokumyo">金額</div>
+                </div>
+                <div class="search_result_div" style="height: 220px;">
+                    @foreach ($gojikaihi_list as $gojikaihi)
+                    <div class="payment_list_column" style="justify-content: unset;">
+                        <input type="hidden" name="gojikaihi_flg[{{ $gojikaihi->id }}]" value="0">    
+                        <div style="width:40px"><input type="checkbox" id="segaki_flg" name="gojikaihi_flg[{{ $gojikaihi->id }}]" class="danka_checkbox" value="1" @if($gojikaihi->gojikaihi_flg) checked @endif></div>
+                        <div class="hikuyousya_zokumyo">{{ $gojikaihi->common_name }}</div>
+                        <div class="hikuyousya_zokumyo">{{ $gojikaihi->henjokaku1 }}{{ $gojikaihi->henjokaku2 }}{{ $gojikaihi->henjokaku3 }}{{ $gojikaihi->henjokaku4 }}</div>
+                        <div class="hikuyousya_zokumyo">@if($gojikaihi->henjokaku1 != '精薫の間') 30,000 @else 33,000 @endif</div>
+                    </div>
+                    @endforeach
+                </div>
+                <a href="#!" onclick="clickGojikaihiUpdateButton()" class="text_store_btn_a">更新</a>
+            </form>
         </div>
 
         <div class="danka_payment_view" style="display:none;">

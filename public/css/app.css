@@ -349,7 +349,7 @@ p {
 .danka_family_content::-webkit-scrollbar-thumb{
     background-color: #17585d;
 }
-.danka_family_content_view, .danka_payment_view, .danka_nenki_view, .danka_star_view, .danka_segaki_view {
+.danka_family_content_view, .danka_gojikaihi_content, .danka_payment_view, .danka_nenki_view, .danka_star_view, .danka_segaki_view {
     padding: 15px;
     height: 300px;
 }

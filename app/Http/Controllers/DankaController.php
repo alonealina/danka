@@ -290,6 +290,24 @@ class DankaController extends Controller
         }
     }
 
+    public function gojikaihi_update(Request $request)
+    {
+        $request = $request->all();
+        $gojikaihi_flg_array = $request['gojikaihi_flg'];
+
+        DB::beginTransaction();
+        try {
+            foreach ($gojikaihi_flg_array as $id => $value) {
+                $gojikaihi_flg = $value ? 1 : 0;
+                Hikuyousya::where('id', $id)->update(['gojikaihi_flg' => $gojikaihi_flg]);
+            }            
+            DB::commit();
+            return redirect()->route('danka_detail', $request['danka_id'])->with('message', '護持会費の編集が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
 
     public function family_regist($danka_id)
     {
@@ -706,9 +724,14 @@ class DankaController extends Controller
     public function danka_detail($id)
     {
         $danka = Danka::find($id);
+
         $hikuyousya_list = Hikuyousya::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
         ->where('danka_id', $id)->get();
+
         $family_list = Family::where('danka_id', $id)->get();
+
+        $gojikaihi_list = Hikuyousya::select('*')->where('danka_id', $id)->whereNotNull('henjokaku1')->get();
+
         $query = DealDetail::select('deal.created_at as created_at', 'payment_date', 'detail', 'item_category.name as name', 'total')
         ->join('deal', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id')
         ->join('item_category', 'item.category_id', '=', 'item_category.id')->where('danka_id', $id)->where('state', '支払済')->orderBy('payment_date', 'desc');
@@ -728,6 +751,7 @@ class DankaController extends Controller
             'danka' => $danka,
             'hikuyousya_list' => $hikuyousya_list,
             'family_list' => $family_list,
+            'gojikaihi_list' => $gojikaihi_list,
             'payment_list' => $payment_list,
             'nenki_list' => $nenki_list,
             'star_list' => $star_list,
