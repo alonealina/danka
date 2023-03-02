@@ -2,7 +2,8 @@
     <select class="" name="sort" id="change_number">
         <option value="{{ route('hikuyousya_search', [
             'number' => '10',
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,
@@ -22,7 +23,8 @@
         @if($number == "10") selected @endif>10件</option>
         <option value="{{ route('hikuyousya_search',  [
             'number' => '30',
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,
@@ -42,7 +44,8 @@
         @if($number == "30") selected @endif>30件</option>
         <option value="{{ route('hikuyousya_search',  [
             'number' => '50',
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,
@@ -62,7 +65,8 @@
         @if($number == "50") selected @endif>50件</option>
         <option value="{{ route('hikuyousya_search',  [
             'number' => '100',
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,
@@ -82,7 +86,8 @@
         @if($number == "100") selected @endif>100件</option>
         <option value="{{ route('hikuyousya_search',  [
             'number' => '300',
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,
@@ -102,7 +107,8 @@
         @if($number == "300") selected @endif>300件</option>
         <option value="{{ route('hikuyousya_search',  [
             'number' => '500',
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,

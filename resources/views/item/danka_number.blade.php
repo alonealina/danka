@@ -2,7 +2,8 @@
     <select class="" name="sort" id="change_number">
         <option value="{{ route('danka_search', [
             'number' => '10',
-            'id' => $id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
@@ -18,7 +19,8 @@
         @if($number == "10") selected @endif>10件</option>
         <option value="{{ route('danka_search',  [
             'number' => '30',
-            'id' => $id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
@@ -34,7 +36,8 @@
         @if($number == "30") selected @endif>30件</option>
         <option value="{{ route('danka_search',  [
             'number' => '50',
-            'id' => $id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
@@ -50,7 +53,8 @@
         @if($number == "50") selected @endif>50件</option>
         <option value="{{ route('danka_search',  [
             'number' => '100',
-            'id' => $id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
@@ -66,7 +70,8 @@
         @if($number == "100") selected @endif>100件</option>
         <option value="{{ route('danka_search',  [
             'number' => '300',
-            'id' => $id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,
@@ -82,7 +87,8 @@
         @if($number == "300") selected @endif>300件</option>
         <option value="{{ route('danka_search',  [
             'number' => '500',
-            'id' => $id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'tel' => $tel,

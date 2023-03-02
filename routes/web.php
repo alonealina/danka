@@ -11,6 +11,7 @@ use App\Http\Controllers\DankaController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ShipmentController;
+use App\Http\Controllers\CsvController;
 
 
 Route::get('', [IndexController::class, 'index'])->name('index');
@@ -41,14 +42,14 @@ Route::post('family_store', [DankaController::class, 'family_store'])->name('fam
 Route::get('family_edit/{family_id}', [DankaController::class, 'family_edit'])->name('family_edit');
 Route::post('family_update', [DankaController::class, 'family_update'])->name('family_update');
 
-Route::get('danka_csv_test', [DankaController::class, 'danka_csv_test'])->name('danka_csv_test');
-Route::post('danka_csv_import', [DankaController::class, 'danka_csv_import'])->name('danka_csv_import');
-Route::get('hikuyousya_csv_test', [DankaController::class, 'hikuyousya_csv_test'])->name('hikuyousya_csv_test');
-Route::post('hikuyousya_csv_import', [DankaController::class, 'hikuyousya_csv_import'])->name('hikuyousya_csv_import');
-Route::get('family_csv_test', [DankaController::class, 'family_csv_test'])->name('family_csv_test');
-Route::post('family_csv_import', [DankaController::class, 'family_csv_import'])->name('family_csv_import');
-Route::get('deal_csv_test', [DankaController::class, 'deal_csv_test'])->name('deal_csv_test');
-Route::post('deal_csv_import', [DankaController::class, 'deal_csv_import'])->name('deal_csv_import');
+Route::get('danka_csv_test', [CsvController::class, 'danka_csv_test'])->name('danka_csv_test');
+Route::post('danka_csv_import', [CsvController::class, 'danka_csv_import'])->name('danka_csv_import');
+Route::get('hikuyousya_csv_test', [CsvController::class, 'hikuyousya_csv_test'])->name('hikuyousya_csv_test');
+Route::post('hikuyousya_csv_import', [CsvController::class, 'hikuyousya_csv_import'])->name('hikuyousya_csv_import');
+Route::get('family_csv_test', [CsvController::class, 'family_csv_test'])->name('family_csv_test');
+Route::post('family_csv_import', [CsvController::class, 'family_csv_import'])->name('family_csv_import');
+Route::get('deal_csv_test', [CsvController::class, 'deal_csv_test'])->name('deal_csv_test');
+Route::post('deal_csv_import', [CsvController::class, 'deal_csv_import'])->name('deal_csv_import');
 
 
 

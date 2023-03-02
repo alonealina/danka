@@ -13,7 +13,8 @@
         @else
         <a href="{{ route('hikuyousya_search', [
             'number' => $number,
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,
@@ -40,7 +41,8 @@
         @else
         <a href="{{ route('hikuyousya_search', [
             'number' => $number,
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,
@@ -72,7 +74,8 @@
         @else
         <a href="{{ route('hikuyousya_search', [
             'number' => $number,
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,
@@ -99,7 +102,8 @@
         @else
         <a href="{{ route('hikuyousya_search', [
             'number' => $number,
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,
@@ -129,7 +133,8 @@
         @else
         <a href="{{ route('hikuyousya_search', [
             'number' => $number,
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,
@@ -156,7 +161,8 @@
         @else
         <a href="{{ route('hikuyousya_search', [
             'number' => $number,
-            'danka_id' => $danka_id,
+            'id_before' => $id_before,
+            'id_after' => $id_after,
             'name' => $name,
             'name_kana' => $name_kana,
             'type' => $type,

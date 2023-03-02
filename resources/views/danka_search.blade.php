@@ -8,7 +8,8 @@
         <div class="danka_form_div">
             <div class="danka_column">
                 <div class="danka_regist_name">カルテナンバー</div>
-                {{ Form::text('id', $id, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+                {{ Form::text('id_before', $id_before, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
+                {{ Form::text('id_after', $id_after, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '', 'style' => 'width: 110px;']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">施主名</div>
@@ -94,7 +95,8 @@
     </div>
     <form id="form" name="update_form" action="{{ route('danka_csv_export') }}" method="post">
         @csrf
-        {{ Form::hidden('id', $id) }}
+        {{ Form::hidden('id_before', $id_before) }}
+        {{ Form::hidden('id_after', $id_after) }}
         {{ Form::hidden('name', $name) }}
         {{ Form::hidden('name_kana', $name_kana) }}
         {{ Form::hidden('tel', $tel) }}
