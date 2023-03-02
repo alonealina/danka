@@ -20,8 +20,9 @@ class DankaController extends Controller
 {
     public function danka_regist()
     {
-        $ihai_max = intval(Hikuyousya::max('ihai_no'));
-        $ihai_next = str_pad($ihai_max + 1, 4, 0, STR_PAD_LEFT);
+        $ihai_max = intval(Hikuyousya::where('ihai_no', '>', 100000)->where('ihai_no', '<', 900000)->max('ihai_no'));
+        $ihai_max = empty($ihai_max) ? 100000 : $ihai_max;
+        $ihai_next = str_pad($ihai_max + 1, 6, 0, STR_PAD_LEFT);
 
         $nokotsu_max = intval(Hikuyousya::max('nokotsu_no'));
         $nokotsu_next = str_pad($nokotsu_max + 1, 6, 0, STR_PAD_LEFT);
@@ -81,7 +82,7 @@ class DankaController extends Controller
                     'nokotsu_no' => isset($request['nokotsu_flg']) ? $request['nokotsu_no'] : "000000",
                     'konryubi' => $request['konryubi'],
                     'gyonen' => $request['gyonen'],
-                    'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
+                    'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "000000",
                     'column' => $request['column'],
                     'kaiki_flg' => isset($request['kaiki_flg']) ? $request['kaiki_flg'] : 0,
                     'henjokaku1' => $request['henjokaku1'],
@@ -169,8 +170,9 @@ class DankaController extends Controller
 
     public function hikuyousya_regist($danka_id)
     {
-        $ihai_max = intval(Hikuyousya::max('ihai_no'));
-        $ihai_next = str_pad($ihai_max + 1, 4, 0, STR_PAD_LEFT);
+        $ihai_max = intval(Hikuyousya::where('ihai_no', '>', 100000)->where('ihai_no', '<', 900000)->max('ihai_no'));
+        $ihai_max = empty($ihai_max) ? 100000 : $ihai_max;
+        $ihai_next = str_pad($ihai_max + 1, 6, 0, STR_PAD_LEFT);
 
         $nokotsu_max = intval(Hikuyousya::max('nokotsu_no'));
         $nokotsu_next = str_pad($nokotsu_max + 1, 6, 0, STR_PAD_LEFT);
@@ -201,7 +203,7 @@ class DankaController extends Controller
                 'nokotsu_no' => isset($request['nokotsu_flg']) ? $request['nokotsu_no'] : "000000",
                 'konryubi' => $request['konryubi'],
                 'gyonen' => $request['gyonen'],
-                'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
+                'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "000000",
                 'column' => $request['column'],
                 'henjokaku1' => $request['henjokaku1'],
                 'henjokaku2' => $request['henjokaku2'],
@@ -226,10 +228,11 @@ class DankaController extends Controller
         $ihai_no = $hikuyousya->ihai_no;
         $nokotsu_no = $hikuyousya->nokotsu_no;
 
-        if ($ihai_no == "0000") {
-            $ihai_max = intval(Hikuyousya::max('ihai_no'));
-            $ihai_no = str_pad($ihai_max + 1, 4, 0, STR_PAD_LEFT);
-        }
+        if ($ihai_no == "000000") {
+            $ihai_max = intval(Hikuyousya::where('ihai_no', '>', 100000)->where('ihai_no', '<', 900000)->max('ihai_no'));
+            $ihai_max = empty($ihai_max) ? 100000 : $ihai_max;
+            $ihai_no = str_pad($ihai_max + 1, 6, 0, STR_PAD_LEFT);
+            }
 
         if ($nokotsu_no == "000000" || empty($nokotsu_no)) {
             $nokotsu_max = intval(Hikuyousya::max('nokotsu_no'));
@@ -267,7 +270,7 @@ class DankaController extends Controller
                 'nokotsu_no' => isset($request['nokotsu_flg']) ? $request['nokotsu_no'] : "000000",
                 'konryubi' => $request['konryubi'],
                 'gyonen' => $request['gyonen'],
-                'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "0000",
+                'ihai_no' => isset($request['ihai_flg']) ? $request['ihai_no'] : "000000",
                 'column' => $request['column'],
                 'henjokaku1' => $request['henjokaku1'],
                 'henjokaku2' => $request['henjokaku2'],
@@ -608,7 +611,7 @@ class DankaController extends Controller
         }
 
         if (isset($ihai_flg)) {
-            $query->where('ihai_no', 'not like', '0000');
+            $query->where('ihai_no', 'not like', '000000');
         }
 
         if (isset($ihai_no)) {
@@ -978,7 +981,7 @@ class DankaController extends Controller
         }
 
         if (isset($ihai_flg)) {
-            $query->where('ihai_no', 'not like', '0000');
+            $query->where('ihai_no', 'not like', '000000');
         }
 
         if (isset($ihai_no)) {
