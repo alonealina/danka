@@ -39,6 +39,16 @@ class CsvController extends Controller
         return view('family_csv_test');
     }
 
+    public function nenki_csv_test()
+    {
+        return view('nenki_csv_test');
+    }
+
+    public function konryu_csv_test()
+    {
+        return view('konryu_csv_test');
+    }
+
 
 
     public function danka_csv_import(Request $request)
@@ -282,5 +292,60 @@ class CsvController extends Controller
 
         return;
     }
+
+    public function nenki_csv_import(Request $request)
+    {
+        $fp = fopen($request->csv, 'r');
+        
+        DB::beginTransaction();
+        try {
+            while($data = fgetcsv($fp)){
+                mb_convert_variables('UTF-8', 'SJIS-win', $data);
+                if ($data[0] == '施主コード') {
+                    continue;
+                }
+
+                Hikuyousya::where('danka_id', $data[0])->update(['kaiki_flg' => 1]);
+            }
+
+            DB::commit();
+            fclose($fp);
+            return redirect()->route('nenki_csv_test')->with('message', '登録が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+            var_dump($e);
+        }  
+        fclose($fp);
+
+        return;
+    }
+
+    public function konryu_csv_import(Request $request)
+    {
+        $fp = fopen($request->csv, 'r');
+        
+        DB::beginTransaction();
+        try {
+            while($data = fgetcsv($fp)){
+                mb_convert_variables('UTF-8', 'SJIS-win', $data);
+                if ($data[0] == '施主コード') {
+                    continue;
+                }
+
+                Hikuyousya::where('danka_id', $data[0])->update(['konryubi' => $data[1]]);
+            }
+
+            DB::commit();
+            fclose($fp);
+            return redirect()->route('konryu_csv_test')->with('message', '登録が完了いたしました。');
+        } catch (\Exception $e) {
+            DB::rollback();
+            var_dump($e);
+        }  
+        fclose($fp);
+
+        return;
+    }
+
 
 }

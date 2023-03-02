@@ -50,6 +50,10 @@ Route::get('family_csv_test', [CsvController::class, 'family_csv_test'])->name('
 Route::post('family_csv_import', [CsvController::class, 'family_csv_import'])->name('family_csv_import');
 Route::get('deal_csv_test', [CsvController::class, 'deal_csv_test'])->name('deal_csv_test');
 Route::post('deal_csv_import', [CsvController::class, 'deal_csv_import'])->name('deal_csv_import');
+Route::get('nenki_csv_test', [CsvController::class, 'nenki_csv_test'])->name('nenki_csv_test');
+Route::post('nenki_csv_import', [CsvController::class, 'nenki_csv_import'])->name('nenki_csv_import');
+Route::get('konryu_csv_test', [CsvController::class, 'konryu_csv_test'])->name('konryu_csv_test');
+Route::post('konryu_csv_import', [CsvController::class, 'konryu_csv_import'])->name('konryu_csv_import');
 
 
 
