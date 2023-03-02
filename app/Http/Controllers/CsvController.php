@@ -223,7 +223,13 @@ class CsvController extends Controller
                 $payment_date = str_replace('月', '-', $payment_date);
                 $payment_date = str_replace('日', '', $payment_date);
 
-                $payment_method = substr_replace($data[5], "", 0,2);
+                $payment_tmp = substr($data[5], 0, 1);
+
+                if ($payment_tmp == 4 || $payment_tmp == 5) {
+                    $payment_method = '銀行振込';
+                } else {
+                    $payment_method = substr_replace($data[5], "", 0,2);
+                }
 
 
                 $hikuyousya_id = 0;
