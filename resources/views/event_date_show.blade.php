@@ -51,7 +51,9 @@
 {{ Form::hidden('event_name', $event_name) }}
 {{ Form::hidden('danka_count', $danka_count) }}
 {{ Form::hidden('danka_id_list', $danka_id_list) }}
+@if($category_id != 10)
 {{ Form::hidden('freeword', $freeword) }}
+@endif
 
     @if($category_id == 1)
     <div class="payment_list_header" style="margin:0;">

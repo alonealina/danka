@@ -903,6 +903,51 @@ class EventController extends Controller
                 'danka_id_list' => $danka_id_list,
                 'hikuyousya_id_list' => $hikuyousya_id_list,
             ]);
+        } elseif ($category_id == 10) {
+            $event_name = $event_date->name;
+            $category_name = TextCategory::find($category_id)->name;
+
+            $item_categories = ItemCategory::get();
+            $gojikaihi_item_id = Item::where('detail', '護持会費')->where('category_id', 8)->first()->id;
+
+            // 檀家情報・取引・商品結合
+            $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
+                'pref', 'city', 'address', 'building', 'payment_date', 'deal.created_at as created_at')
+                ->selectRaw('SUM(total) AS total')
+            ->join('deal', 'danka.id', '=', 'deal.danka_id')->leftJoin('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')
+            ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id')
+            ->groupBy('danka.id', 'danka.name', 'tel', 
+            'pref', 'city', 'address', 'building', 'payment_date', 'deal.created_at', 'deal.id');
+
+            //護持会費処理
+            if ($category_id == 10) {
+                $query->where('item_id', $gojikaihi_item_id)->where('state', '未払い');
+            }
+
+            $danka_id_list = $query->pluck('danka.id');
+            $danka_count = count(array_unique($danka_id_list->toArray()));
+        
+            $number = \Request::get('number');
+            if (isset($number)) {
+                $danka_list = $query->orderBy('danka_id')->paginate($number)
+                ->appends(["number" => $number]);
+            } else {
+                $danka_list = $query->orderBy('danka_id')->get();
+            }
+
+            $danka_id_list = implode(",", array_unique($danka_id_list->toArray()));
+            $event_date_list = EventDate::where('category_id', 3)->get();
+
+            return view('event_date_show', [
+                'category_id' => $category_id,
+                'event_name' => $event_name,
+                'category_name' => $category_name,
+                'danka_count' => $danka_count,
+                'number' => $number,
+                'danka_list' => $danka_list,
+                'danka_id_list' => $danka_id_list,
+                'event_date_list' => $event_date_list,
+            ]);
         } else {
             $payment_before = isset($filter_array['payment_before']) ? $filter_array['payment_before'] : null;
             $payment_after = isset($filter_array['payment_after']) ? $filter_array['payment_after'] : null;
