@@ -19,6 +19,12 @@
                 <div class="danka_regist_name">電話番号</div>
                 {{ Form::text('tel', $tel, ['id' => 'tel', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
             </div>
+            <div class="danka_column">
+                <input type="checkbox" id="gojikaihi_out_flg" name="gojikaihi_out_flg" class="danka_checkbox" value="1"
+                @if(isset($gojikaihi_out_flg)) checked @endif>
+                <label for="gojikaihi_out_flg" class="danka_label">護持会費を除く</label>
+            </div>
+
         </div>
 
         <div class="danka_form_div">

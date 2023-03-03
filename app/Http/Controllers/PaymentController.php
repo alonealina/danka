@@ -34,6 +34,8 @@ class PaymentController extends Controller
         $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
         $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;
         $type = isset($filter_array['type']) ? $filter_array['type'] : null;
+        $gojikaihi_out_flg = isset($filter_array['gojikaihi_out_flg']) ? $filter_array['gojikaihi_out_flg'] : null;
+        $gojikaihi_item_id = Item::where('detail', '護持会費')->first()->id;
 
         $query = Deal::select('deal.id as id', 'deal_no', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at as created_at')
             ->selectRaw('SUM(total) AS total')
@@ -74,6 +76,10 @@ class PaymentController extends Controller
 
         if (!empty($item_id)) {
             $query->where('item.id', $item_id);
+        }
+
+        if (!empty($gojikaihi_out_flg)) {
+            $query->where('item.id', '!=', $gojikaihi_item_id);
         }
 
         if (!empty($type)) {
@@ -150,6 +156,7 @@ class PaymentController extends Controller
             'sort_type' => $sort_type,
             'type' => $type,
             'number' => $number,
+            'gojikaihi_out_flg' => $gojikaihi_out_flg,
 
             'sum_price' => $sum_price,
             'deal_detail_count' => $deal_detail_count,
