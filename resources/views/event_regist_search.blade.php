@@ -10,6 +10,8 @@
 {{ Form::hidden('event_name', $event_name) }}
 {{ Form::hidden('danka_count', $danka_count) }}
 {{ Form::hidden('danka_id_list', $danka_id_list) }}
+
+@if($category_id != 10)
 <div class="danka_search_div">
     @if($category_id == 5)
     <div class="danka_form_div">
@@ -232,6 +234,7 @@
         <a href="#!" onclick="clickClearButton()" class="clear_btn_a">クリア</a>
     </div>
 </div>
+@endif
 
 <div class="paginationWrap">
     <div class="pagination_div">
@@ -392,6 +395,8 @@
 
     @if($category_id == 1 || $category_id == 5)
     <a href="#!" onclick="clickCsvExportButton({{ $hikuyousya_count }})" class="search_btn_a" style="margin: 10px auto 0;">CSV出力</a>
+    @elseif($category_id == 10)
+    <a href="{{ route('gojikaihi_csv_export') }}" onclick="clickCsvExportButton({{ $danka_count }})" class="search_btn_a" style="margin: 10px auto 0;">CSV出力</a>
     @else
     <a href="#!" onclick="clickCsvExportButton({{ $danka_count }})" class="search_btn_a" style="margin: 10px auto 0;">CSV出力</a>
     @endif

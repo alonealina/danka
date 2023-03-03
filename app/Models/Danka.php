@@ -124,4 +124,30 @@ class Danka extends Model
         ];
     }
 
+    public function outputCsvContentGojikaihi() {
+        return [
+            $this->danka_id,
+            $this->name,            
+            $this->name_kana,    
+            $this->tel,
+            $this->mobile,         
+            $this->mail,       
+            $this->zip,       
+            $this->full_address1,
+            $this->full_address2,
+            $this->henjokaku1.$this->henjokaku2.$this->henjokaku3.$this->henjokaku4,
+            $this->price,
+            $this->count,
+            $this->total,
+            $this->common_name,
+            $this->common_kana,
+            $this->posthumous,
+            $this->gyonen,
+            $this->meinichi,
+            $this->kaiki_int,
+            $this->kaiki_flg,
+            $this->column,
+        ];
+    }
+
 }

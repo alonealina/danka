@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Item;
 use App\Models\ItemCategory;
 use App\Models\TextCategory;
 use App\Models\EventDate;
@@ -410,6 +411,7 @@ class EventController extends Controller
             $category_name = TextCategory::find($category_id)->name;
 
             $item_categories = ItemCategory::get();
+            $gojikaihi_item_id = Item::where('detail', '護持会費')->first()->id;
 
             // 檀家情報・取引・商品結合
             $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
@@ -423,6 +425,12 @@ class EventController extends Controller
             if ($category_id != 3 && isset($item_category_id)) {
                 $query->where('item.category_id', $item_category_id);
             }
+
+            //護持会費処理
+            if ($category_id == 10) {
+                $query->where('item_id', $gojikaihi_item_id)->where('state', '未払い');
+            }
+
 
             //星祭り処理
             if (isset($payment_flg) && $payment_flg == 'off') {
@@ -916,6 +924,7 @@ class EventController extends Controller
             $category_name = TextCategory::find($category_id)->name;
 
             $item_categories = ItemCategory::get();
+            $gojikaihi_item_id = Item::where('detail', '護持会費')->first()->id;
 
             // 檀家情報・取引・商品結合
             $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
@@ -925,6 +934,11 @@ class EventController extends Controller
 
             if ($category_id != 3 && isset($item_category_id)) {
                 $query->where('item.category_id', $item_category_id);
+            }
+
+            //護持会費処理
+            if ($category_id == 10) {
+                $query->where('item_id', $gojikaihi_item_id)->where('state', '未払い');
             }
 
             //星祭り処理
@@ -1240,6 +1254,55 @@ class EventController extends Controller
         
         $response->headers->set('Content-Type', 'application/octet-stream');
         $response->headers->set('Content-Disposition', 'attachment; filename="' . $category_name . '_' . $event_name . '.csv"');
+ 
+        return $response;
+
+    }
+
+
+    public function gojikaihi_csv_export(Request $request)
+    {
+        $gojikaihi_item_id = Item::where('detail', '護持会費')->first()->id;
+
+        $query = Danka::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
+        ->selectRaw("count(hikuyousya.id) as count")->selectRaw('SUM(total) AS total')
+        ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
+        ->join('deal_detail', 'deal_detail.hikuyousya_id', '=', 'hikuyousya.id')
+        ->where('gojikaihi_flg', 1)->where('item_id', $gojikaihi_item_id)->whereNotNull('henjokaku1')
+        ->groupBy('hikuyousya.id');
+
+        $deal_list = $query->orderBy('danka_id', 'asc')->get();
+
+        $cvsList[] = ['カルテナンバー', '施主名', 'フリガナ（施主｝', '電話番号', '携帯番号', 'メールアドレス', '郵便番号', '住所1', '住所2', 
+        '遍照閣', '単価', '数', '金額', '俗名', 'フリガナ（被供養者｝', '戒名', '行年', '命日', '周忌/回忌', '特記事項', 
+        ];
+        
+        foreach ($deal_list as $deal) {
+            $cvsList[] = $deal->outputCsvContentGojikaihi();
+        }
+
+        $response = new StreamedResponse (function() use ($cvsList){
+            $stream = fopen('php://output', 'w');
+
+            //　文字化け回避
+            stream_filter_prepend($stream,'convert.iconv.utf-8/cp932//TRANSLIT');
+
+            // CSVデータ
+            foreach($cvsList as $key => $value) {
+                fputcsv($stream, $value);
+            }
+            $buffer = str_replace("\n", "\r\n", stream_get_contents($stream));
+            fclose($stream);
+            //出力ストリーム
+            $fp = fopen('php://output', 'w+b');
+            //さっき置換した内容を出力 
+            fwrite($fp, $buffer);
+        
+            fclose($fp);
+        });
+        
+        $response->headers->set('Content-Type', 'application/octet-stream');
+        $response->headers->set('Content-Disposition', 'attachment; filename="護持会費.csv"');
  
         return $response;
 

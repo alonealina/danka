@@ -110,6 +110,7 @@ Route::get('event_date_delete/{id}', [EventController::class, 'event_date_delete
 Route::post('star_csv_export', [EventController::class, 'star_csv_export'])->name('star_csv_export');
 Route::post('nenki_csv_export', [EventController::class, 'nenki_csv_export'])->name('nenki_csv_export');
 Route::post('noukotsu_csv_export', [EventController::class, 'noukotsu_csv_export'])->name('noukotsu_csv_export');
+Route::get('gojikaihi_csv_export', [EventController::class, 'gojikaihi_csv_export'])->name('gojikaihi_csv_export');
 
 Route::get('shipment_regist', [ShipmentController::class, 'shipment_regist'])->name('shipment_regist');
 Route::post('shipment_store', [ShipmentController::class, 'shipment_store'])->name('shipment_store');
