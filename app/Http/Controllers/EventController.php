@@ -411,7 +411,7 @@ class EventController extends Controller
             $category_name = TextCategory::find($category_id)->name;
 
             $item_categories = ItemCategory::get();
-            $gojikaihi_item_id = Item::where('detail', '護持会費')->first()->id;
+            $gojikaihi_item_id = Item::where('detail', '護持会費')->where('category_id', 8)->first()->id;
 
             // 檀家情報・取引・商品結合
             $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
@@ -924,7 +924,7 @@ class EventController extends Controller
             $category_name = TextCategory::find($category_id)->name;
 
             $item_categories = ItemCategory::get();
-            $gojikaihi_item_id = Item::where('detail', '護持会費')->first()->id;
+            $gojikaihi_item_id = Item::where('detail', '護持会費')->where('category_id', 8)->first()->id;
 
             // 檀家情報・取引・商品結合
             $query = Danka::select('danka.id as id', 'danka.name as name', 'tel', 
@@ -1262,7 +1262,7 @@ class EventController extends Controller
 
     public function gojikaihi_csv_export(Request $request)
     {
-        $gojikaihi_item_id = Item::where('detail', '護持会費')->first()->id;
+        $gojikaihi_item_id = Item::where('detail', '護持会費')->where('category_id', 8)->first()->id;
 
         $query = Danka::select('*')->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
         ->selectRaw("count(hikuyousya.id) as count")->selectRaw('SUM(total) AS total')
