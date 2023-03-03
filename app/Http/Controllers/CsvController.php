@@ -226,7 +226,11 @@ class CsvController extends Controller
                 }
 
                 $deal_year = mb_substr($data[0], 0, 4);
-                $deal_tmp = str_pad($data[1], 6, 0, STR_PAD_LEFT);
+                if (strlen($data[1]) > 6) {
+                    $deal_tmp = str_pad(substr($data[1], -6), 6, 0, STR_PAD_LEFT);
+                } else {
+                    $deal_tmp = str_pad($data[1], 6, 0, STR_PAD_LEFT);
+                }
                 $deal_no = $deal_year . $deal_tmp;
 
                 $payment_date = str_replace('年', '-', $data[4]);
