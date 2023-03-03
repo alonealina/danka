@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content_title">取引作成</div>
+<form id="admin_store_form" name="gojikaihi_store_form" action="{{ route('gojikaihi_deal_store') }}" method="post">
+    @csrf
+    {{ Form::hidden('next_deal_no', $next_deal_no) }}
+    <div class="content_title">取引作成</div>
+    <a href="#!" onclick="clickGojikaihiButton({{ $gojikaihi_count }})" class="text_store_btn_a" style="margin:15px 0 0;">護持会費作成</a>
+</form>
 <div class="admin_list_message">{{ session('message') }}</div>
 <form id="admin_store_form" name="danka_store_form" action="{{ route('deal_confirm') }}" method="post">
 @csrf

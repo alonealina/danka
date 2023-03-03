@@ -81,6 +81,8 @@ Route::get('deal_regist', [PaymentController::class, 'deal_regist'])->name('deal
 Route::post('deal_confirm', [PaymentController::class, 'deal_confirm'])->name('deal_confirm');
 Route::post('deal_store', [PaymentController::class, 'deal_store'])->name('deal_store');
 
+Route::post('gojikaihi_deal_store', [PaymentController::class, 'gojikaihi_deal_store'])->name('gojikaihi_deal_store');
+
 Route::post('deal_csv_export', [PaymentController::class, 'deal_csv_export'])->name('deal_csv_export');
 
 

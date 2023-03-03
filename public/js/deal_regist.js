@@ -142,3 +142,11 @@ function priceChange() {
   }
 
 }
+
+
+function clickGojikaihiButton(total) {
+  const v = confirm(total + '件出力しますがよろしいですか？');
+  if(v === true){
+      document.forms.gojikaihi_store_form.submit();
+  }
+}

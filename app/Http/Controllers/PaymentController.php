@@ -306,11 +306,58 @@ class PaymentController extends Controller
             $next_deal_no = $current_year . '000001';
         }
 
-
+        $gojikaihi_count = Hikuyousya::where('gojikaihi_flg', 1)->whereNotNull('henjokaku1')->groupBy('danka_id')->get()->pluck('danka_id')->count();
         return view('deal_regist', [
             'item_list' => $item_list,
             'next_deal_no' => $next_deal_no,
+            'gojikaihi_count' => $gojikaihi_count,
         ]);
+    }
+
+    public function gojikaihi_deal_store(Request $request)
+    {
+        $request = $request->all();
+        $next_deal_no = $request['next_deal_no'];
+        $item_id = Item::where('detail', '護持会費')->first()->id;
+
+        DB::beginTransaction();
+        try {
+
+            $danka_ids = Hikuyousya::where('gojikaihi_flg', 1)->whereNotNull('henjokaku1')->groupBy('danka_id')->get()->pluck('danka_id');
+
+            foreach ($danka_ids as $danka_id) {
+                $deal = new Deal();
+                $fill_data = [
+                    'deal_no' => $next_deal_no,
+                    'danka_id' => $danka_id,
+                    'payment_method' => '銀行振込',
+                ];
+                $deal->fill($fill_data)->save();
+                $deal_id = $deal->id;
+
+                $hikuyousya_list = Hikuyousya::where('danka_id', $danka_id)->where('gojikaihi_flg', 1)->whereNotNull('henjokaku1')->get();
+                foreach ($hikuyousya_list as $hikuyousya) {
+                    $deal_detail = new DealDetail();
+                    $price = $hikuyousya->henjokaku1 == '精薫の間' ? 33000 : 30000;
+                    $fill_data = [
+                        'deal_id' => $deal_id,
+                        'item_id' => $item_id,
+                        'quantity' => 1,
+                        'price' => $price,
+                        'total' => $price,
+                        'hikuyousya_id' => $hikuyousya->id,
+                        'remark' => $hikuyousya->henjokaku1 . $hikuyousya->henjokaku2 . $hikuyousya->henjokaku3 . $hikuyousya->henjokaku4,
+                    ];
+                    $deal_detail->fill($fill_data)->save();
+                }
+                $next_deal_no++;
+            }
+
+            DB::commit();
+            return redirect()->to('deal_list')->with('message', '護持会費取引を作成いたしました');
+        } catch (\Exception $e) {
+            DB::rollback();
+        }
     }
 
     public function deal_confirm(Request $request)
