@@ -137,6 +137,7 @@ class CsvController extends Controller
                     'nokotsu_no' => $nokotsu_no,
                     'nokotsubi' => $data[7],
                     'nokotsuidobi' => $data[8],
+                    'column' => $data[9],
                 ];
                 
                 $hikuyousya = new Hikuyousya();
@@ -336,7 +337,7 @@ class CsvController extends Controller
                     continue;
                 }
 
-                Hikuyousya::where('danka_id', $data[0])->update(['konryubi' => $data[1]]);
+                Hikuyousya::where('danka_id', $data[0])->where('ihai_no', $data[1])->update(['konryubi' => $data[2]]);
             }
 
             DB::commit();
