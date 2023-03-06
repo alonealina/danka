@@ -404,10 +404,16 @@ class DankaController extends Controller
 
         if (!empty($id_before)) {
             $query->where('id', '>=', $id_before);
+            if (empty($id_after)) {
+                $query->where('id', $id_before);
+            }
         }
 
         if (!empty($id_after)) {
             $query->where('id', '<=', $id_after);
+            if (empty($id_before)) {
+                $query->where('id', $id_after);
+            }
         }
 
         if (!empty($name)) {
@@ -561,11 +567,17 @@ class DankaController extends Controller
         ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
         if (!empty($id_before)) {
-            $query->where('danka_id', '>=', $id_before);
+            $query->where('id', '>=', $id_before);
+            if (empty($id_after)) {
+                $query->where('id', $id_before);
+            }
         }
 
         if (!empty($id_after)) {
-            $query->where('danka_id', '<=', $id_after);
+            $query->where('id', '<=', $id_after);
+            if (empty($id_before)) {
+                $query->where('id', $id_after);
+            }
         }
 
         if (!empty($name)) {
@@ -781,10 +793,16 @@ class DankaController extends Controller
 
         if (!empty($id_before)) {
             $query->where('id', '>=', $id_before);
+            if (empty($id_after)) {
+                $query->where('id', $id_before);
+            }
         }
 
         if (!empty($id_after)) {
             $query->where('id', '<=', $id_after);
+            if (empty($id_before)) {
+                $query->where('id', $id_after);
+            }
         }
 
         if (!empty($name)) {
@@ -937,11 +955,17 @@ class DankaController extends Controller
         ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
         if (!empty($id_before)) {
-            $query->where('danka_id', '>=', $id_before);
+            $query->where('id', '>=', $id_before);
+            if (empty($id_after)) {
+                $query->where('id', $id_before);
+            }
         }
 
         if (!empty($id_after)) {
-            $query->where('danka_id', '<=', $id_after);
+            $query->where('id', '<=', $id_after);
+            if (empty($id_before)) {
+                $query->where('id', $id_after);
+            }
         }
 
         if (!empty($name)) {

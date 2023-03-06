@@ -20,8 +20,9 @@
                 {{ Form::text('tel', $tel, ['id' => 'tel', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
+                {{ Form::hidden('gojikaihi_out_flg', 0) }}
                 <input type="checkbox" id="gojikaihi_out_flg" name="gojikaihi_out_flg" class="danka_checkbox" value="1"
-                @if(isset($gojikaihi_out_flg)) checked @endif>
+                @if($gojikaihi_out_flg == 1) checked @endif>
                 <label for="gojikaihi_out_flg" class="danka_label">護持会費を除く</label>
             </div>
 
