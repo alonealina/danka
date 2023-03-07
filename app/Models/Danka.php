@@ -145,8 +145,6 @@ class Danka extends Model
             $this->gyonen,
             $this->meinichi,
             $this->kaiki_int,
-            $this->kaiki_flg,
-            $this->column,
         ];
     }
 

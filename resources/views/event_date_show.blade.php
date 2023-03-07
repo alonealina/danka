@@ -35,6 +35,8 @@
     @endif
     @if($category_id == 1 || $category_id == 5)
     <a href="#!" onclick="clickCsvExportButton({{ $hikuyousya_count }})" class="search_btn_a" style="margin:0 10px;">CSV出力</a>
+    @elseif($category_id == 10)
+    <a href="{{ route('gojikaihi_csv_export') }}" onclick="clickCsvExportButton({{ $danka_count }})" class="search_btn_a" style="margin:0 10px;">CSV出力</a>
     @else
     <a href="#!" onclick="clickCsvExportButton({{ $danka_count }})" class="search_btn_a" style="margin:0 10px;">CSV出力</a>
     @endif
