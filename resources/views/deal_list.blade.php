@@ -104,6 +104,7 @@
         {{ Form::hidden('payment_after', $payment_after) }}
         {{ Form::hidden('price_min', $price_min) }}
         {{ Form::hidden('price_max', $price_max) }}
+        {{ Form::hidden('gojikaihi_out_flg', $gojikaihi_out_flg) }}
         {{ Form::hidden('sort_item', $sort_item) }}
         {{ Form::hidden('sort_type', $sort_type) }}
         {{ Form::hidden('number', $number) }}
@@ -143,6 +144,7 @@
                 {{ Form::hidden('payment_after', $payment_after) }}
                 {{ Form::hidden('price_min', $price_min) }}
                 {{ Form::hidden('price_max', $price_max) }}
+                {{ Form::hidden('gojikaihi_out_flg', $gojikaihi_out_flg) }}
                 {{ Form::hidden('sort_item', $sort_item) }}
                 {{ Form::hidden('sort_type', $sort_type) }}
                 {{ Form::hidden('number', $number) }}
@@ -164,13 +166,14 @@
                 {{ Form::hidden('payment_after', $payment_after) }}
                 {{ Form::hidden('price_min', $price_min) }}
                 {{ Form::hidden('price_max', $price_max) }}
+                {{ Form::hidden('gojikaihi_out_flg', $gojikaihi_out_flg) }}
                 {{ Form::hidden('sort_item', $sort_item) }}
                 {{ Form::hidden('sort_type', $sort_type) }}
                 {{ Form::hidden('number', $number) }}
                 <button class="payment_blue_btn_a">支払済へ</button>
             </form>
 
-            <a href="{{ route('deal_detail', ['id' => $deal->id, 'type' => $type]) }}" class="payment_view_btn_a">表示</a>
+            <a href="{{ route('deal_detail', ['id' => $deal->id, 'type' => $type]) }}" class="payment_view_btn_a" target="_blank">表示</a>
             @else
             <form id="form" name="update_form" action="{{ route('unpaid_update') }}" method="post">
                 @csrf
@@ -187,6 +190,7 @@
                 {{ Form::hidden('payment_after', $payment_after) }}
                 {{ Form::hidden('price_min', $price_min) }}
                 {{ Form::hidden('price_max', $price_max) }}
+                {{ Form::hidden('gojikaihi_out_flg', $gojikaihi_out_flg) }}
                 {{ Form::hidden('sort_item', $sort_item) }}
                 {{ Form::hidden('sort_type', $sort_type) }}
                 {{ Form::hidden('number', $number) }}

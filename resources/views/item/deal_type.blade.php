@@ -15,6 +15,7 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'gojikaihi_out_flg' => $gojikaihi_out_flg,
             'type' => 'すべて',
             ]) }}"
             class="payment_btn_a">すべて</a>
@@ -36,6 +37,7 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'gojikaihi_out_flg' => $gojikaihi_out_flg,
             'type' => '送付待ち',
             ]) }}"
             class="payment_btn_a" style="border-left: 1px solid;">送付待ち</a>
@@ -57,6 +59,7 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'gojikaihi_out_flg' => $gojikaihi_out_flg,
             'type' => '未払い',
             ]) }}"
             class="payment_btn_a" style="border-left: 1px solid;border-right: 1px solid;">未払い</a>
@@ -78,6 +81,7 @@
             'payment_after' => $payment_after,
             'price_min' => $price_min,
             'price_max' => $price_max,
+            'gojikaihi_out_flg' => $gojikaihi_out_flg,
             'type' => '支払済',
             ]) }}"
             class="payment_btn_a">支払済</a>

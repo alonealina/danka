@@ -64,11 +64,6 @@
                     </div>
 
                     <div class="danka_column">
-                        <div class="danka_regist_name2">特記事項</div>
-                        {{ Form::text('column', $hikuyousya->column, ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '骨のぼり']) }}
-                    </div>
-
-                    <div class="danka_column">
                         <div class="danka_regist_name2">遍照閣</div>
                         <select name="henjokaku1" class="select_category" style="width: 80px;" id="henjokaku1">
                             <option value="">----</option>
@@ -115,6 +110,10 @@
                         </select>
                     </div>
 
+                    <div class="danka_column">
+                        <div class="danka_regist_name2">特記事項</div>
+                        {{ Form::text('column', $hikuyousya->column, ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '骨のぼり']) }}
+                    </div>
 
                 </div>
 
