@@ -303,29 +303,27 @@ class EventController extends Controller
             $query = Danka::select('danka.id as id', 'hikuyousya.id as hikuyousya_id', 'name', 'common_name', 'posthumous', 'nokotsubi',
              'nokotsuidobi', 'column', 'nokotsu_no', 'ihai_no', 'henjokaku1', 'henjokaku2', 'henjokaku3', 'henjokaku4')
             ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')
-            ->whereNotNull('nokotsubi')->whereNull('nokotsuidobi');
+            ->whereNotNull('nokotsubi');
 
             if (isset($henjokaku1)) {
                 $query->where('henjokaku1', $henjokaku1);
             }
-    
+
             if (isset($henjokaku2)) {
                 $query->where('henjokaku2', $henjokaku2);
             }
-    
+
             if (isset($henjokaku3)) {
                 $query->where('henjokaku3', $henjokaku3);
             }
-    
+
             if (isset($henjokaku4)) {
                 $query->where('henjokaku4', $henjokaku4);
             }
-    
+
             if (isset($konryu_flg)) {
                 $query->whereNotNull('henjokaku1');
             }
-    
-        
 
             if (!empty($nokotsubi_before)) {
                 $query->whereDate('nokotsubi', '>=', $nokotsubi_before);
