@@ -578,6 +578,9 @@ class DankaController extends Controller
             if (empty($id_before)) {
                 $query->where('hikuyousya.id', $id_after);
             }
+        } else {
+            $query->where('hikuyousya.id', '<=', 50000);
+
         }
 
         if (!empty($name)) {
