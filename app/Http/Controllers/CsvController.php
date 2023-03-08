@@ -261,6 +261,7 @@ class CsvController extends Controller
                     'payment_method' => $payment_method,
                     'state' => '支払済',
                     'payment_date' => $payment_date,
+                    'created_at' => $payment_date,
                 ];
                 
                 $deal = new Deal();
