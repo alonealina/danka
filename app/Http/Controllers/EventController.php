@@ -178,7 +178,7 @@ class EventController extends Controller
                 $query->having('kaiki', '<=', $kaiki_after_tmp);
             }
             if (empty($kaiki_before) && empty($kaiki_after)) {
-                $query->having('kaiki', 0);
+                $query->having('kaiki', '<=', 0);
             }
 
             $hikuyousya_ids = $query->get()->pluck('id');
