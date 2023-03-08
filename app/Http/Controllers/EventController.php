@@ -177,6 +177,9 @@ class EventController extends Controller
                 $kaiki_after_tmp = $kaiki_after == 1 ? 0 : $kaiki_after - 2;
                 $query->having('kaiki', '<=', $kaiki_after_tmp);
             }
+            if (empty($kaiki_before) && empty($kaiki_after)) {
+                $query->having('kaiki', 0);
+            }
 
             $hikuyousya_ids = $query->get()->pluck('id');
 
@@ -197,6 +200,9 @@ class EventController extends Controller
             }
             if (!empty($payment_after)) {
                 $query->whereDate('payment_date', '<=', $payment_after);
+            }
+            if (empty($payment_before) && empty($payment_after)) {
+                $query->whereDate('payment_date', '>=', 2023-01-01);
             }
 
             $query->whereNotNull('payment_date');
