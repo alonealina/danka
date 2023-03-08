@@ -167,9 +167,7 @@ class EventController extends Controller
                 $query->where('yakushiji_flg', '1');
             }
 
-            if (isset($kaiki_flg)) {
-                $query->where('kaiki_flg', '1');
-            }
+            $query->where('kaiki_flg', '1');
 
             if (!empty($kaiki_before)) {
                 $kaiki_before_tmp = $kaiki_before == 1 ? 0 : $kaiki_before - 2;
@@ -199,10 +197,6 @@ class EventController extends Controller
             }
             if (!empty($payment_after)) {
                 $query->whereDate('payment_date', '<=', $payment_after);
-            }
-
-            if (empty($payment_before) && empty($payment_after)) {
-                $query->whereDate('payment_date', '>=', '2021-01-01');
             }
 
             $query->whereNotNull('payment_date');
