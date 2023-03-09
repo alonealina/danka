@@ -144,6 +144,7 @@ class EventController extends Controller
 
             $query->whereNotNull('meinichi');
             $query->where('kaiki_flg', '1');
+            $query->whereDate('meinichi', '>=', '1');
 
             if (isset($meinichi_month)) {
                 $month = str_pad($meinichi_month, 2, 0, STR_PAD_LEFT);
@@ -184,12 +185,12 @@ class EventController extends Controller
             $hikuyousya_ids = $query->get()->pluck('id');
 
             $query = Danka::select('danka.id as id', 'danka.name as name', 'common_name', 
-                'posthumous', 'meinichi', 'item_category.name as category_name', 'hikuyousya.id as hikuyousya_id', 'total', 'payment_date', 'kaiki_flg')
+                'posthumous', 'meinichi', 'item_category.name as category_name', 'hikuyousya_id', 'total', 'payment_date', 'kaiki_flg')
                 ->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
             ->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->leftJoin('deal_detail', 'hikuyousya.id', '=', 'hikuyousya_id')
             ->leftJoin('deal', 'deal.id', '=', 'deal_detail.deal_id')
             ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id')
-            ->whereIn('hikuyousya.id', $hikuyousya_ids);
+            ->whereIn('hikuyousya_id', $hikuyousya_ids);
 
             if (isset($item_category_id)) {
                 $query->where('item.category_id', $item_category_id);
