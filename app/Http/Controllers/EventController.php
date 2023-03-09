@@ -447,6 +447,10 @@ class EventController extends Controller
                     $query_tmp->whereDate('payment_date', '<=', $payment_after);
                     $query->whereDate('payment_date', '<=', $payment_after);
                 }
+                if (empty($payment_before) && empty($payment_after)) {
+                    $query->whereDate('payment_date', '>=', '2222-01-01');
+                }
+
                 $query_tmp->where('item.category_id', 3);
                 $not_danka_ids = array_unique($query_tmp->get()->pluck('id')->toArray());
 
@@ -457,6 +461,9 @@ class EventController extends Controller
                 }
                 if (!empty($payment_after)) {
                     $query->whereDate('payment_date', '<=', $payment_after);
+                }
+                if (empty($payment_before) && empty($payment_after)) {
+                    $query->whereDate('payment_date', '>=', '2222-01-01');
                 }
                 if ($category_id == 3) {
                     $query->where('item.category_id', 3);
