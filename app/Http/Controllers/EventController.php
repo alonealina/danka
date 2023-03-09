@@ -144,7 +144,6 @@ class EventController extends Controller
 
             $query->whereNotNull('meinichi');
             $query->where('kaiki_flg', '1');
-            $query->whereDate('meinichi', '>=', '1');
 
             if (isset($meinichi_month)) {
                 $month = str_pad($meinichi_month, 2, 0, STR_PAD_LEFT);
