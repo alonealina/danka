@@ -142,6 +142,8 @@ class EventController extends Controller
             TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
             ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
+            $query->whereNotNull('meinichi');
+            $query->where('kaiki_flg', '1');
 
             if (isset($meinichi_month)) {
                 $month = str_pad($meinichi_month, 2, 0, STR_PAD_LEFT);
@@ -167,8 +169,6 @@ class EventController extends Controller
                 $query->where('yakushiji_flg', '1');
             }
 
-            $query->where('kaiki_flg', '1');
-
             if (!empty($kaiki_before)) {
                 $kaiki_before_tmp = $kaiki_before == 1 ? 0 : $kaiki_before - 2;
                 $query->having('kaiki', '>=', $kaiki_before_tmp);
@@ -180,7 +180,6 @@ class EventController extends Controller
             if (empty($kaiki_after)) {
                 $query->having('kaiki', '<=', 48);
             }
-            $query->whereNotNull('meinichi');
 
             $hikuyousya_ids = $query->get()->pluck('id');
 
