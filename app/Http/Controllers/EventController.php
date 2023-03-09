@@ -201,9 +201,6 @@ class EventController extends Controller
             if (!empty($payment_after)) {
                 $query->whereDate('payment_date', '<=', $payment_after);
             }
-            if (empty($payment_before) && empty($payment_after)) {
-                $query->whereDate('payment_date', '>=', '2023-01-01');
-            }
             $query->whereNotNull('payment_date');
 
             if (!empty($price_min)) {
