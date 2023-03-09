@@ -218,7 +218,6 @@ class CsvController extends Controller
         DB::beginTransaction();
         try {
             while($data = fgetcsv($fp)){
-                var_dump($data);
                 if ($data[0] == '対象年度') {
                     continue;
                 }
