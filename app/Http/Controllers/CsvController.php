@@ -199,19 +199,19 @@ class CsvController extends Controller
         $item_id = [
             6 =>  Item::where('detail', '位牌')->first()->id,
             7 =>  Item::where('detail', '年忌')->first()->id,
-            8 =>  Item::where('detail', '星まつり')->first()->id,
+            8 =>  Item::where('detail', '星ま')->first()->id,
             9 =>  Item::where('detail', '写経')->first()->id,
             10 => Item::where('detail', '水子')->first()->id,
             11 => Item::where('detail', '納骨')->first()->id,
             12 => Item::where('detail', '盆彼')->first()->id,
             13 => Item::where('detail', '寄付')->first()->id,
-            14 => Item::where('detail', 'お供え')->first()->id,
-            15 => Item::where('detail', '施餓鬼')->first()->id,
-            16 => Item::where('detail', 'お布施')->first()->id,
-            17 => Item::where('detail', '戒名料')->first()->id,
-            18 => Item::where('detail', '絵天井')->first()->id,
-            19 => Item::where('detail', 'その他')->first()->id,
-            20 => Item::where('detail', 'お祝い')->first()->id,
+            14 => Item::where('detail', 'お供')->first()->id,
+            15 => Item::where('detail', '施餓')->first()->id,
+            16 => Item::where('detail', 'お布')->first()->id,
+            17 => Item::where('detail', '戒名')->first()->id,
+            18 => Item::where('detail', '絵天')->first()->id,
+            19 => Item::where('detail', 'その')->first()->id,
+            20 => Item::where('detail', 'お祝')->first()->id,
         ];
 
 
@@ -219,6 +219,7 @@ class CsvController extends Controller
         try {
             while($data = fgetcsv($fp)){
                 mb_convert_variables('UTF-8', 'SJIS-win', $data);
+                var_dump($data);
                 if ($data[0] == '対象年度') {
                     continue;
                 }
