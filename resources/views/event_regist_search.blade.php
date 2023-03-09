@@ -90,7 +90,6 @@
         <div class="danka_column">
             <div class="danka_regist_name">命日</div>
             <select name="meinichi_month" class="select_category" style="width: 50px;">
-                <option value="">----</option>
                 @for ($i = 1; $i <= 12; $i++)
                 <option value="{{ $i }}" @if($meinichi_month == $i) selected @endif >{{ $i }}</option>
                 @endfor

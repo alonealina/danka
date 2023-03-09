@@ -144,17 +144,19 @@ class EventController extends Controller
 
             $query->where('kaiki_flg', '1');
 
-            if (isset($meinichi_month)) {
-                $month = str_pad($meinichi_month, 2, 0, STR_PAD_LEFT);
-                if (isset($meinichi_day)) {
-                    $day = str_pad($meinichi_day, 2, 0, STR_PAD_LEFT);
-                    $md = $month . $day;
-                    $query->whereRaw("DATE_FORMAT(meinichi, '%m%d') = ?", [$md]);
-
-                } else {
-                    $query->whereRaw("DATE_FORMAT(meinichi, '%m') = ?", [$month]);
-                }
+            if (!isset($meinichi_month)) {
+                $meinichi_month = 1;
             }
+            $month = str_pad($meinichi_month, 2, 0, STR_PAD_LEFT);
+            if (isset($meinichi_day)) {
+                $day = str_pad($meinichi_day, 2, 0, STR_PAD_LEFT);
+                $md = $month . $day;
+                $query->whereRaw("DATE_FORMAT(meinichi, '%m%d') = ?", [$md]);
+
+            } else {
+                $query->whereRaw("DATE_FORMAT(meinichi, '%m') = ?", [$month]);
+            }
+
 
             if (isset($segaki_flg)) {
                 $query->where('segaki_flg', '1');
@@ -176,8 +178,8 @@ class EventController extends Controller
                 $kaiki_after_tmp = $kaiki_after == 1 ? 0 : $kaiki_after - 2;
                 $query->having('kaiki', '<=', $kaiki_after_tmp);
             }
-            if (empty($kaiki_before) && empty($kaiki_after)) {
-                $query->whereDate('meinichi', '>=', date('Y-m-d', strtotime('-1 year')));
+            if (empty($kaiki_after)) {
+                $query->whereDate('meinichi', '>=', date('Y-m-d', strtotime('-50 year')));
             }
 
             $hikuyousya_ids = $query->get()->pluck('id');
