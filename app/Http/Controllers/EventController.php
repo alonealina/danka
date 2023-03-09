@@ -142,7 +142,7 @@ class EventController extends Controller
             TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
             ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
-            $query->whereDate('meinichi', '>=', date('Y-m-d', strtotime('-50 year')));
+            $query->whereDate('meinichi', '>=', date('Y-m-d', strtotime('-1 year')));
             $query->where('kaiki_flg', '1');
 
             if (isset($meinichi_month)) {
