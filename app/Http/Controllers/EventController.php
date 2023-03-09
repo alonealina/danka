@@ -142,7 +142,6 @@ class EventController extends Controller
             TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
             ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
-            $query->whereDate('meinichi', '>=', date('Y-m-d', strtotime('-50 year')));
             $query->where('kaiki_flg', '1');
 
             if (isset($meinichi_month)) {
@@ -177,11 +176,13 @@ class EventController extends Controller
                 $kaiki_after_tmp = $kaiki_after == 1 ? 0 : $kaiki_after - 2;
                 $query->having('kaiki', '<=', $kaiki_after_tmp);
             }
+            if (empty($kaiki_before) && empty($kaiki_after)) {
+                $query->whereDate('meinichi', '>=', date('Y-m-d', strtotime('-1 year')));
+            }
 
             $hikuyousya_ids = $query->get()->pluck('id');
 
-            var_dump($hikuyousya_ids);
-            exit;
+
             $query = Danka::select('danka.id as id', 'danka.name as name', 'common_name', 
                 'posthumous', 'meinichi', 'item_category.name as category_name', 'hikuyousya_id', 'total', 'payment_date', 'kaiki_flg')
                 ->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
@@ -203,7 +204,7 @@ class EventController extends Controller
             if (empty($payment_before) && empty($payment_after)) {
                 $query->whereDate('payment_date', '>=', '2023-01-01');
             }
-            // $query->whereNotNull('payment_date');
+            $query->whereNotNull('payment_date');
 
             if (!empty($price_min)) {
                 $query->where('total', '>=', $price_min);
