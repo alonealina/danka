@@ -581,7 +581,7 @@ class DankaController extends Controller
         }
 
         if (empty($id_before) && empty($id_after)) {
-            $query->where('hikuyousya.id', '>=', 74000);
+            $query->where('hikuyousya.id', '>=', Hikuyousya::max('id') - 100);
         }
 
         if (!empty($name)) {
