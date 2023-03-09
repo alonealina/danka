@@ -218,7 +218,6 @@ class CsvController extends Controller
         DB::beginTransaction();
         try {
             while($data = fgetcsv($fp)){
-                mb_convert_variables('UTF-8', 'SJIS-win', $data);
                 var_dump($data);
                 if ($data[0] == '対象年度') {
                     continue;
