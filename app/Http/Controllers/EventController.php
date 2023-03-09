@@ -142,7 +142,7 @@ class EventController extends Controller
             TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
             ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
-            $query->whereDate('meinichi', '>=', date('Y-m-d', strtotime('-1 year')));
+            $query->whereDate('meinichi', '>=', date('Y-m-d', strtotime('-50 year')));
             $query->where('kaiki_flg', '1');
 
             if (isset($meinichi_month)) {
@@ -180,6 +180,8 @@ class EventController extends Controller
 
             $hikuyousya_ids = $query->get()->pluck('id');
 
+            var_dump($hikuyousya_ids);
+            exit;
             $query = Danka::select('danka.id as id', 'danka.name as name', 'common_name', 
                 'posthumous', 'meinichi', 'item_category.name as category_name', 'hikuyousya_id', 'total', 'payment_date', 'kaiki_flg')
                 ->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
