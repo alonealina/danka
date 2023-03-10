@@ -567,16 +567,16 @@ class DankaController extends Controller
         ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
         if (!empty($id_before)) {
-            $query->where('hikuyousya.id', '>=', $id_before);
+            $query->where('danka_id', '>=', $id_before);
             if (empty($id_after)) {
-                $query->where('hikuyousya.id', $id_before);
+                $query->where('danka_id', $id_before);
             }
         }
 
         if (!empty($id_after)) {
-            $query->where('hikuyousya.id', '<=', $id_after);
+            $query->where('danka_id', '<=', $id_after);
             if (empty($id_before)) {
-                $query->where('hikuyousya.id', $id_after);
+                $query->where('danka_id', $id_after);
             }
         }
 
