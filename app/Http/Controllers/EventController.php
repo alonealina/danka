@@ -93,6 +93,8 @@ class EventController extends Controller
             $event_date = EventDate::find($id);
             $category_id = $event_date->category_id;
             $event_date->delete();
+            EventSendList::where('event_date_id', $id)->delete();
+            EventSearchLog::where('event_date_id', $id)->delete();
             DB::commit();
             return redirect()->route('event_show', $category_id)->with('message', '行事リストを削除しました');
         } catch (\Exception $e) {
