@@ -3,7 +3,7 @@
 @section('content')
 <div class="content_title">行事新規追加</div>
 <div class="text_show_title">{{ $category_name }} - {{ $event_name }}</div>
-<form id="form" name="search_form" action="{{ route('event_regist_search') }}" method="post">
+<form id="form" name="search_form" action="{{ route('event_regist_search') }}" method="get">
 @csrf
 {{ Form::hidden('category_id', $category_id) }}
 {{ Form::hidden('category_name', $category_name) }}
