@@ -208,9 +208,6 @@
                 @if(isset($mail_flg)) checked @endif>
                 <label for="mail_flg" class="danka_label">メールアドレスあり</label>
             @elseif($category_id == 1)
-            <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
-            @if(isset($kaiki_flg)) checked @endif>
-            <label for="kaiki_flg" class="danka_label">年忌</label>
             <input type="checkbox" id="mail_flg" name="mail_flg" class="danka_checkbox" value="1"
             @if(isset($mail_flg)) checked @endif>
             <label for="mail_flg" class="danka_label">メールアドレスあり</label>
