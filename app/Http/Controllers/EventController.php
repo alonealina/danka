@@ -172,6 +172,12 @@ class EventController extends Controller
                 $query->where('yakushiji_flg', '1');
             }
 
+            //両方空欄の場合、強制的に1～33
+            if (empty($kaiki_before) && empty($kaiki_after)) {
+                $kaiki_before = 1;
+                $kaiki_after = 33;
+            }
+
             if (!empty($kaiki_before)) {
                 $kaiki_before_tmp = $kaiki_before == 1 ? 0 : $kaiki_before - 2;
                 $query->having('kaiki', '>=', $kaiki_before_tmp);
