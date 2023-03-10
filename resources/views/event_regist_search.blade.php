@@ -125,8 +125,8 @@
 
         <div class="danka_column">
             <div class="danka_regist_name">支払い履歴</div>
-            {{ Form::date('payment_before', $payment_before, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
-            {{ Form::date('payment_after', $payment_after, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}
+            {{ Form::date('payment_before', $payment_before, ['id' => 'payment_before', 'class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
+            {{ Form::date('payment_after', $payment_after, ['id' => 'payment_after', 'class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}
             <div class="danka_regist_name" style="width: 200px;">　取引実績　
             @if($category_id == 3)
                 <input type="radio" name="payment_flg" value="on" checked>　有　
@@ -142,7 +142,7 @@
         @if($category_id == 3)
         <div class="danka_column">
             <div class="danka_regist_name">リスト名</div>
-            <select name="event_date_id" class="select_category" style="width: 261px" id="">
+            <select name="event_date_id" class="select_category" style="width: 261px" id="event_date_id">
                 <option value="">----</option>
                 @foreach ($event_date_list as $event_date)
                 <option value="{{ $event_date->id }}"
@@ -406,6 +406,7 @@
 
 <script src="{{ asset('js/search.js') }}"></script>
 <script src="{{ asset('js/event_regist_search.js') }}"></script>
+<script src="{{ asset('js/event_regist_search_star.js') }}"></script>
 
 @endsection
 
