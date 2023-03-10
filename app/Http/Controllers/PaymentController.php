@@ -63,15 +63,15 @@ class PaymentController extends Controller
         if (!empty($created_at_after)) {
             $query->whereDate('deal.created_at', '<=', $created_at_after);
         }
-        if (empty($created_at_before) && empty($created_at_after)) {
-            $query->whereDate('deal.created_at', '>=', '2023-01-01');
-        }
 
         if (!empty($payment_before)) {
             $query->whereDate('payment_date', '>=', $payment_before);
         }
         if (!empty($payment_after)) {
             $query->whereDate('payment_date', '<=', $payment_after);
+        }
+        if (empty($created_at_before) && empty($created_at_after) && empty($payment_before) && empty($payment_after)) {
+            $query->whereDate('deal.created_at', '>=', '2023-01-01');
         }
 
         if (!empty($item_category_id)) {
