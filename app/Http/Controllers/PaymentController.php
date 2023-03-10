@@ -33,6 +33,7 @@ class PaymentController extends Controller
         $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
         $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
         $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;
+        $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
         $type = isset($filter_array['type']) ? $filter_array['type'] : null;
         $gojikaihi_out_flg = isset($filter_array['gojikaihi_out_flg']) ? $filter_array['gojikaihi_out_flg'] : 1;
         $gojikaihi_item_id = Item::where('detail', '護持会費')->where('category_id', 8)->first()->id;
@@ -79,6 +80,18 @@ class PaymentController extends Controller
 
         if (!empty($item_id)) {
             $query->where('item.id', $item_id);
+        }
+
+        if (!empty($freeword)) {
+            $freeword = mb_convert_kana($freeword, 's');
+            $word_list = explode(" ", $freeword);
+            $query->where(function ($query) use ($word_list) {
+                foreach ($word_list as $word) {
+                    if (!empty($word)) {
+                        $query->orwhere('remark', 'like', "%$word%");
+                    }
+                }
+            });
         }
 
         if (!empty($gojikaihi_out_flg)) {
@@ -157,6 +170,7 @@ class PaymentController extends Controller
             'price_max' => $price_max,
             'sort_item' => $sort_item,
             'sort_type' => $sort_type,
+            'freeword' => $freeword,
             'type' => $type,
             'number' => $number,
             'gojikaihi_out_flg' => $gojikaihi_out_flg,
@@ -181,9 +195,11 @@ class PaymentController extends Controller
             
             DB::commit();
             return redirect()->route('deal_list',[
+            'type' => $request->type,
             'name' => $request->name,
             'name_kana' => $request->name_kana,
             'tel' => $request->tel,
+            'item_id' => $request->item_id,
             'item_category_id' => $request->item_category_id,
             'created_at_before' => $request->created_at_before,
             'created_at_after' => $request->created_at_after,
@@ -191,7 +207,10 @@ class PaymentController extends Controller
             'payment_after' => $request->payment_after,
             'price_min' => $request->price_min,
             'price_max' => $request->price_max,
-            'type' => $request->type,
+            'gojikaihi_out_flg' => $request->gojikaihi_out_flg,
+            'sort_item' => $request->sort_item,
+            'sort_type' => $request->sort_type,
+            'freeword' => $request->freeword,
             'number' => $request->number,
             ])->with('message', 'ステータスを変更しました。');
         } catch (\Exception $e) {
@@ -216,9 +235,11 @@ class PaymentController extends Controller
             
             DB::commit();
             return redirect()->route('deal_list',[
+                'type' => $request->type,
                 'name' => $request->name,
                 'name_kana' => $request->name_kana,
                 'tel' => $request->tel,
+                'item_id' => $request->item_id,
                 'item_category_id' => $request->item_category_id,
                 'created_at_before' => $request->created_at_before,
                 'created_at_after' => $request->created_at_after,
@@ -226,7 +247,10 @@ class PaymentController extends Controller
                 'payment_after' => $request->payment_after,
                 'price_min' => $request->price_min,
                 'price_max' => $request->price_max,
-                'type' => $request->type,
+                'gojikaihi_out_flg' => $request->gojikaihi_out_flg,
+                'sort_item' => $request->sort_item,
+                'sort_type' => $request->sort_type,
+                'freeword' => $request->freeword,
                 'number' => $request->number,
                 ])->with('message', 'ステータスを変更しました。');
             } catch (\Exception $e) {
@@ -286,9 +310,11 @@ class PaymentController extends Controller
 
             DB::commit();
             return redirect()->route('deal_list',[
+                'type' => $request->type,
                 'name' => $request->name,
                 'name_kana' => $request->name_kana,
                 'tel' => $request->tel,
+                'item_id' => $request->item_id,
                 'item_category_id' => $request->item_category_id,
                 'created_at_before' => $request->created_at_before,
                 'created_at_after' => $request->created_at_after,
@@ -296,7 +322,10 @@ class PaymentController extends Controller
                 'payment_after' => $request->payment_after,
                 'price_min' => $request->price_min,
                 'price_max' => $request->price_max,
-                'type' => $request->type,
+                'gojikaihi_out_flg' => $request->gojikaihi_out_flg,
+                'sort_item' => $request->sort_item,
+                'sort_type' => $request->sort_type,
+                'freeword' => $request->freeword,
                 'number' => $request->number,
                 ])->with('message', 'ステータスを変更しました。');
             } catch (\Exception $e) {
@@ -732,6 +761,7 @@ class PaymentController extends Controller
         $name = isset($filter_array['name']) ? $filter_array['name'] : null;
         $name_kana = isset($filter_array['name_kana']) ? $filter_array['name_kana'] : null;
         $tel = isset($filter_array['tel']) ? $filter_array['tel'] : null;
+        $item_id = isset($filter_array['item_id']) ? $filter_array['item_id'] : null;
         $item_category_id = isset($filter_array['item_category_id']) ? $filter_array['item_category_id'] : null;
         $created_at_before = isset($filter_array['created_at_before']) ? $filter_array['created_at_before'] : null;
         $created_at_after = isset($filter_array['created_at_after']) ? $filter_array['created_at_after'] : null;
@@ -741,7 +771,10 @@ class PaymentController extends Controller
         $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
         $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
         $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;
+        $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
         $type = isset($filter_array['type']) ? $filter_array['type'] : null;
+        $gojikaihi_out_flg = isset($filter_array['gojikaihi_out_flg']) ? $filter_array['gojikaihi_out_flg'] : 1;
+        $gojikaihi_item_id = Item::where('detail', '護持会費')->where('category_id', 8)->first()->id;
 
         $query = Deal::select('deal_no', 'payment_date', 'name_kana', 'tel', 'mobile', 'zip', 'pref', 'city', 'address', 'building', 'payment_method', 
             'state', 'detail', 'quantity', 'deal_detail.price as price', 'total', 'common_name', 'common_kana', 'common_kana', 'posthumous', 'meinichi', 'gyonen', 'remark', 
@@ -780,6 +813,26 @@ class PaymentController extends Controller
 
         if (!empty($item_category_id)) {
             $query->where('category_id', $item_category_id);
+        }
+
+        if (!empty($item_id)) {
+            $query->where('item.id', $item_id);
+        }
+
+        if (!empty($freeword)) {
+            $freeword = mb_convert_kana($freeword, 's');
+            $word_list = explode(" ", $freeword);
+            $query->where(function ($query) use ($word_list) {
+                foreach ($word_list as $word) {
+                    if (!empty($word)) {
+                        $query->orwhere('remark', 'like', "%$word%");
+                    }
+                }
+            });
+        }
+
+        if (!empty($gojikaihi_out_flg)) {
+            $query->where('item.id', '!=', $gojikaihi_item_id);
         }
 
         if (!empty($type)) {

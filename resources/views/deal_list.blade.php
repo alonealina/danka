@@ -20,6 +20,10 @@
                 {{ Form::text('tel', $tel, ['id' => 'tel', 'class' => 'danka_form_text', 'maxlength' => 15, 'placeholder' => '']) }}
             </div>
             <div class="danka_column">
+                <div class="danka_regist_name">フリーワード</div>
+                {{ Form::text('freeword', $freeword, ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
+            </div>
+            <div class="danka_column">
                 {{ Form::hidden('gojikaihi_out_flg', 0) }}
                 <input type="checkbox" id="gojikaihi_out_flg" name="gojikaihi_out_flg" class="danka_checkbox" value="1"
                 @if($gojikaihi_out_flg == 1) checked @endif>
@@ -107,6 +111,7 @@
         {{ Form::hidden('gojikaihi_out_flg', $gojikaihi_out_flg) }}
         {{ Form::hidden('sort_item', $sort_item) }}
         {{ Form::hidden('sort_type', $sort_type) }}
+        {{ Form::hidden('freeword', $freeword) }}
         {{ Form::hidden('number', $number) }}
         <button class="payment_blue_btn_a" onclick="return confirm('{{ $deal_detail_count }}件出力しますがよろしいですか？')" >CSV出力</button>
     </form>
@@ -147,6 +152,7 @@
                 {{ Form::hidden('gojikaihi_out_flg', $gojikaihi_out_flg) }}
                 {{ Form::hidden('sort_item', $sort_item) }}
                 {{ Form::hidden('sort_type', $sort_type) }}
+                {{ Form::hidden('freeword', $freeword) }}
                 {{ Form::hidden('number', $number) }}
                 <button class="payment_white_btn_a">送付待ちへ</button>
             </form>
@@ -169,6 +175,7 @@
                 {{ Form::hidden('gojikaihi_out_flg', $gojikaihi_out_flg) }}
                 {{ Form::hidden('sort_item', $sort_item) }}
                 {{ Form::hidden('sort_type', $sort_type) }}
+                {{ Form::hidden('freeword', $freeword) }}
                 {{ Form::hidden('number', $number) }}
                 <button class="payment_blue_btn_a">支払済へ</button>
             </form>
@@ -193,6 +200,7 @@
                 {{ Form::hidden('gojikaihi_out_flg', $gojikaihi_out_flg) }}
                 {{ Form::hidden('sort_item', $sort_item) }}
                 {{ Form::hidden('sort_type', $sort_type) }}
+                {{ Form::hidden('freeword', $freeword) }}
                 {{ Form::hidden('number', $number) }}
                 <button class="payment_red_btn_a" onclick="return confirm('未払いに変更しますか？')" >未払いへ</button>
             </form>

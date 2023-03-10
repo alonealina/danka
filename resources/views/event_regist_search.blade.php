@@ -318,7 +318,7 @@
             <div class="hikuyousya_date">{{ $danka->nokotsubi }}</div>
             <div class="hikuyousya_date">{{ $danka->nokotsuidobi }}</div>
             <div class="hikuyousya_ihai">@if ($danka->nokotsu_no != 000000) {{ $danka->nokotsu_no }} @endif</div>
-            <div class="hikuyousya_column">{{ $danka->column }}</div>
+            <div class="hikuyousya_column">{{ $danka->henjokaku1 }}{{ $danka->henjokaku2 }}{{ $danka->henjokaku3 }}{{ $danka->henjokaku4 }}</div>
             <div class="hikuyousya_btn"><a href="{{ route('danka_detail', $danka->id) }}" target="_blank" class="search_view_btn_a">表示</a></div>
         </div>
         @endforeach
