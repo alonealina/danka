@@ -566,6 +566,14 @@ class DankaController extends Controller
         TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
         ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
+        //全て空欄の場合100件に限定
+        if (empty($id_before) && empty($id_after) && empty($name) && empty($name_kana) && empty($type) && empty($common_name) && empty($common_kana) && empty($posthumous)
+            && empty($freeword) && empty($henjokaku1) && empty($henjokaku2) && empty($henjokaku3) && empty($henjokaku4) && empty($nokotsubi_before) && empty($nokotsubi_after)
+            && empty($meinichi_before) && empty($meinichi_after) && empty($kaiki_before) && empty($kaiki_after) && empty($ihai_no) && empty($ihai_flg)
+            && empty($konryu_flg) && empty($kaiki_flg)) {
+            $query->where('hikuyousya.id', '>=', Hikuyousya::max('id') - 99);
+        }
+
         if (!empty($id_before)) {
             $query->where('danka_id', '>=', $id_before);
             if (empty($id_after)) {
@@ -578,10 +586,6 @@ class DankaController extends Controller
             if (empty($id_before)) {
                 $query->where('danka_id', $id_after);
             }
-        }
-
-        if (empty($id_before) && empty($id_after)) {
-            $query->where('hikuyousya.id', '>=', Hikuyousya::max('id') - 99);
         }
 
         if (!empty($name)) {
