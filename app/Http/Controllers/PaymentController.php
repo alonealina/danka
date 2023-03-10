@@ -124,7 +124,7 @@ class PaymentController extends Controller
         }
 
         if (!empty($type) && $type == '支払済') {
-            $query->orderBy('deal_no', 'desc');
+            $query->orderBy('payment_date', 'desc')->orderBy('deal_no', 'desc');
         } else {
             $query->orderBy('deal_no', 'desc');
         }
