@@ -462,11 +462,15 @@ class EventController extends Controller
                 if (!empty($payment_after)) {
                     $query->whereDate('payment_date', '<=', $payment_after);
                 }
-                if (empty($payment_before) && empty($payment_after)) {
-                    $query->whereDate('payment_date', '>=', '2222-01-01');
-                }
                 if ($category_id == 3) {
+                    if (empty($payment_before) && empty($payment_after) && empty($event_date_id)) {
+                        $query->whereDate('payment_date', '>=', '2222-01-01');
+                    }
                     $query->where('item.category_id', 3);
+                } else {
+                    if (empty($payment_before) && empty($payment_after)) {
+                        $query->whereDate('payment_date', '>=', '2222-01-01');
+                    }
                 }
             }
 
