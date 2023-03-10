@@ -194,9 +194,11 @@
         <div class="danka_column">
             @if($category_id != 3 && $category_id != 1)
                 @if($category_id != 1 && $category_id != 2 && $category_id != 6)
+                {{ Form::hidden('segaki_flg', 0) }}
                 <input type="checkbox" id="segaki_flg" name="segaki_flg" class="danka_checkbox" value="1"
                 @if(isset($segaki_flg)) checked @endif>
                 <label for="segaki_flg" class="danka_label">施餓鬼</label>
+                {{ Form::hidden('star_flg', 0) }}
                 <input type="checkbox" id="star_flg" name="star_flg" class="danka_checkbox" value="1"
                 @if(isset($star_flg)) checked @endif>
                 <label for="star_flg" class="danka_label">星祭り</label>
@@ -212,6 +214,7 @@
             @if(isset($mail_flg)) checked @endif>
             <label for="mail_flg" class="danka_label">メールアドレスあり</label>
             @else
+            {{ Form::hidden('star_flg', 0) }}
             <input type="checkbox" id="star_flg" name="star_flg" class="danka_checkbox" value="1"
             @if(isset($star_flg)) checked @endif>
             <label for="star_flg" class="danka_label">星祭り</label>

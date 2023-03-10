@@ -405,8 +405,8 @@ class EventController extends Controller
             $payment_flg = isset($filter_array['payment_flg']) ? $filter_array['payment_flg'] : null;
             $price_min = isset($filter_array['price_min']) ? $filter_array['price_min'] : null;
             $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
-            $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
-            $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
+            $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : 1;
+            $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : 1;
             $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
             $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
             $mail_flg = isset($filter_array['mail_flg']) ? $filter_array['mail_flg'] : null;
@@ -482,11 +482,11 @@ class EventController extends Controller
                 }
             }
 
-            if (isset($segaki_flg)) {
+            if (!empty($segaki_flg)) {
                 $query->where('segaki_flg', '1');
             }
 
-            if (isset($star_flg)) {
+            if (!empty($star_flg)) {
                 $query->where('star_flg', '1');
             }
 
@@ -975,8 +975,8 @@ class EventController extends Controller
             $payment_flg = isset($filter_array['payment_flg']) ? $filter_array['payment_flg'] : null;
             $price_min = isset($filter_array['price_min']) ? $filter_array['price_min'] : null;
             $price_max = isset($filter_array['price_max']) ? $filter_array['price_max'] : null;
-            $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : null;
-            $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : null;
+            $segaki_flg = isset($filter_array['segaki_flg']) ? $filter_array['segaki_flg'] : 1;
+            $star_flg = isset($filter_array['star_flg']) ? $filter_array['star_flg'] : 1;
             $yakushiji_flg = isset($filter_array['yakushiji_flg']) ? $filter_array['yakushiji_flg'] : null;
             $kaiki_flg = isset($filter_array['kaiki_flg']) ? $filter_array['kaiki_flg'] : null;
             $freeword = isset($filter_array['freeword']) ? $filter_array['freeword'] : null;
@@ -1036,11 +1036,11 @@ class EventController extends Controller
                 }
             }
 
-            if (isset($segaki_flg)) {
+            if (!empty($segaki_flg)) {
                 $query->where('segaki_flg', '1');
             }
 
-            if (isset($star_flg)) {
+            if (!empty($star_flg)) {
                 $query->where('star_flg', '1');
             }
 
