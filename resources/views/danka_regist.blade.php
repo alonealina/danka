@@ -50,7 +50,7 @@
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">特記事項</div>
-                {{ Form::text('notices', old('notices'), ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '絵天井　XX列XX番、灯籠']) }}
+                {{ Form::text('notices', old('notices'), ['class' => 'danka_form_text', 'maxlength' => 100, 'placeholder' => '']) }}
             </div>
         </div>
 
@@ -85,10 +85,6 @@
             <div class="danka_column">
                 <div class="danka_regist_name">紹介者</div>
                 {{ Form::text('introducer', old('introducer'), ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
-            </div>
-            <div class="danka_column">
-                <input type="checkbox" id="yakushiji_flg" name="yakushiji_flg" class="danka_checkbox" value="1">
-                <label for="yakushiji_flg" class="danka_label">薬師寺霊園</label>
             </div>
         </div>
     </div>
@@ -208,7 +204,7 @@
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">特記事項</div>
-                        {{ Form::text('column', old('column'), ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '骨のぼり']) }}
+                        {{ Form::text('column', old('column'), ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '骨のぼり、絵天井　XX列XX番、灯籠']) }}
                     </div>
 
                 </div>

@@ -9,10 +9,12 @@
     <div class="category_list_message">{{ session('message') }}</div>
     <div class="category_list" style="height: calc(100vh - 350px);">
         @foreach($text_categories as $category)
+        @if($category->id != 6 && $category->id != 7)
         <div class="text_list_column">
             <div class="">{{ $category->name }}</div>
             <a href="{{ route('event_show', $category->id) }}" class="view_btn_a">表示</a>
         </div>
+        @endif
         @endforeach
     </div>
 

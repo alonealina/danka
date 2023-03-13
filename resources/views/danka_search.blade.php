@@ -72,9 +72,6 @@
                 <input type="checkbox" id="star_flg" name="star_flg" class="danka_checkbox" value="1"
                 @if(isset($star_flg)) checked @endif>
                 <label for="star_flg" class="danka_label">星祭り</label>
-                <input type="checkbox" id="yakushiji_flg" name="yakushiji_flg" class="danka_checkbox" value="1"
-                @if(isset($yakushiji_flg)) checked @endif>
-                <label for="yakushiji_flg" class="danka_label">薬師寺霊園</label>
             </div>
         </div>
         <div class="search_btn_list">
