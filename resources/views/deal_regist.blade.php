@@ -82,7 +82,7 @@
 
                 <div class="deal_item_num">
                     <select name="quantity[]" class="select_category" style="width: 100%;">
-                        @for ($i = 1; $i <= 20; $i++)
+                        @for ($i = 1; $i <= 40; $i++)
                         <option value="{{ $i }}">{{ $i }}</option>
                         @endfor
                     </select>
