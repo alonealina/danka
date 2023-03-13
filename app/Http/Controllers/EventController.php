@@ -487,7 +487,7 @@ class EventController extends Controller
                 }
             }
 
-            if ($category_id != 3) {
+            if ($category_id != 3 && $category_id != 10) {
                 if (!empty($segaki_flg)) {
                     $query->where('segaki_flg', '1');
                 }
