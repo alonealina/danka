@@ -61,7 +61,7 @@
             </div>
 
             <div class="danka_column">
-                <div class="danka_regist_name">年忌</div>
+                <div class="danka_regist_name">回忌</div>
                 <select name="kaiki_before" class="select_category" style="width: 80px;">
                     <option value="">----</option>
                     <option value="1" @if($kaiki_before == '1') selected @endif >1</option>
@@ -138,7 +138,7 @@
                 <label for="ihai_flg" class="danka_label">位牌</label>
                 <input type="checkbox" id="kaiki_flg" name="kaiki_flg" class="danka_checkbox" value="1"
                 @if(isset($kaiki_flg)) checked @endif>
-                <label for="kaiki_flg" class="danka_label">回忌</label>
+                <label for="kaiki_flg" class="danka_label">年忌</label>
             </div>
 
         </div>
@@ -174,6 +174,10 @@
         {{ Form::hidden('meinichi_after', $meinichi_after) }}
         {{ Form::hidden('kaiki_before', $kaiki_before) }}
         {{ Form::hidden('kaiki_after', $kaiki_after) }}
+        {{ Form::hidden('henjokaku1', $henjokaku1) }}
+        {{ Form::hidden('henjokaku2', $henjokaku2) }}
+        {{ Form::hidden('henjokaku3', $henjokaku3) }}
+        {{ Form::hidden('henjokaku4', $henjokaku4) }}
         {{ Form::hidden('ihai_no', $ihai_no) }}
         {{ Form::hidden('ihai_flg', $ihai_flg) }}
         {{ Form::hidden('konryu_flg', $konryu_flg) }}
