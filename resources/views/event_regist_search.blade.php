@@ -61,6 +61,8 @@
                 <option value="K" @if($henjokaku4 == 'K') selected @endif>K</option>
                 <option value="L" @if($henjokaku4 == 'L') selected @endif>L</option>
             </select>
+            　<input type="checkbox" id="konryu_flg" name="konryu_flg" class="danka_checkbox" value="1"
+            @if(isset($konryu_flg)) checked @endif>
         </div>
 
         <div class="danka_column">
