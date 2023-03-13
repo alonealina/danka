@@ -7,6 +7,10 @@
             'category_name' => $category_name,
             'nokotsubi_before' => $nokotsubi_before,
             'nokotsubi_after' => $nokotsubi_after,
+            'henjokaku1' => $henjokaku1,
+            'henjokaku2' => $henjokaku2,
+            'henjokaku3' => $henjokaku3,
+            'henjokaku4' => $henjokaku4,
             'freeword' => $freeword,
             ]) }}"
         @if($number == "10") selected @endif>10件</option>
@@ -17,6 +21,10 @@
             'category_name' => $category_name,
             'nokotsubi_before' => $nokotsubi_before,
             'nokotsubi_after' => $nokotsubi_after,
+            'henjokaku1' => $henjokaku1,
+            'henjokaku2' => $henjokaku2,
+            'henjokaku3' => $henjokaku3,
+            'henjokaku4' => $henjokaku4,
             'freeword' => $freeword,
             ]) }}"
         @if($number == "30") selected @endif>30件</option>
@@ -27,6 +35,10 @@
             'category_name' => $category_name,
             'nokotsubi_before' => $nokotsubi_before,
             'nokotsubi_after' => $nokotsubi_after,
+            'henjokaku1' => $henjokaku1,
+            'henjokaku2' => $henjokaku2,
+            'henjokaku3' => $henjokaku3,
+            'henjokaku4' => $henjokaku4,
             'freeword' => $freeword,
             ]) }}"
         @if($number == "50") selected @endif>50件</option>
@@ -37,6 +49,10 @@
             'category_name' => $category_name,
             'nokotsubi_before' => $nokotsubi_before,
             'nokotsubi_after' => $nokotsubi_after,
+            'henjokaku1' => $henjokaku1,
+            'henjokaku2' => $henjokaku2,
+            'henjokaku3' => $henjokaku3,
+            'henjokaku4' => $henjokaku4,
             'freeword' => $freeword,
             ]) }}"
         @if($number == "100") selected @endif>100件</option>
@@ -47,6 +63,10 @@
             'category_name' => $category_name,
             'nokotsubi_before' => $nokotsubi_before,
             'nokotsubi_after' => $nokotsubi_after,
+            'henjokaku1' => $henjokaku1,
+            'henjokaku2' => $henjokaku2,
+            'henjokaku3' => $henjokaku3,
+            'henjokaku4' => $henjokaku4,
             'freeword' => $freeword,
             ]) }}"
         @if($number == "300") selected @endif>300件</option>
@@ -57,6 +77,10 @@
             'category_name' => $category_name,
             'nokotsubi_before' => $nokotsubi_before,
             'nokotsubi_after' => $nokotsubi_after,
+            'henjokaku1' => $henjokaku1,
+            'henjokaku2' => $henjokaku2,
+            'henjokaku3' => $henjokaku3,
+            'henjokaku4' => $henjokaku4,
             'freeword' => $freeword,
             ]) }}"
         @if($number == "500") selected @endif>500件</option>

@@ -43,6 +43,11 @@ class PaymentController extends Controller
             ->join('danka', 'danka.id', '=', 'deal.danka_id')->join('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id')
             ->groupBy('deal.id', 'deal_no', 'name', 'name_kana', 'tel', 'state', 'payment_date', 'deal.created_at');
 
+        if (empty($created_at_before) && empty($created_at_after) && empty($payment_before) && empty($payment_after)
+            && empty($name) && empty($name_kana) && empty($freeword)) {
+            $query->whereDate('deal.created_at', '>=', '2023-01-01');
+        }
+
         if (!empty($name)) {
             $query->where('name', 'like', "%$name%");
         }
@@ -69,9 +74,6 @@ class PaymentController extends Controller
         }
         if (!empty($payment_after)) {
             $query->whereDate('payment_date', '<=', $payment_after);
-        }
-        if (empty($created_at_before) && empty($created_at_after) && empty($payment_before) && empty($payment_after)) {
-            $query->whereDate('deal.created_at', '>=', '2023-01-01');
         }
 
         if (!empty($item_category_id)) {
@@ -782,6 +784,11 @@ class PaymentController extends Controller
             ->selectRaw("TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki")
             ->join('danka', 'danka.id', '=', 'deal.danka_id')->join('deal_detail', 'deal.id', '=', 'deal_detail.deal_id')->join('item', 'item.id', '=', 'deal_detail.item_id')
             ->join('item_category', 'item_category.id', '=', 'item.category_id')->leftJoin('hikuyousya', 'deal_detail.hikuyousya_id', '=', 'hikuyousya.id');
+
+        if (empty($created_at_before) && empty($created_at_after) && empty($payment_before) && empty($payment_after)
+            && empty($name) && empty($name_kana) && empty($freeword)) {
+            $query->whereDate('deal.created_at', '>=', '2023-01-01');
+        }
 
         if (!empty($name)) {
             $query->where('name', 'like', "%$name%");
