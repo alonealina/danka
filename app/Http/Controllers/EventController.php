@@ -201,7 +201,7 @@ class EventController extends Controller
             ->leftJoin('item', 'item.id', '=', 'deal_detail.item_id')->leftJoin('item_category', 'item_category.id', '=', 'item.category_id')
             ->whereIn('hikuyousya_id', $hikuyousya_ids);
 
-            if (isset($item_category_id)) {
+            if (!empty($item_category_id)) {
                 $query->where('item.category_id', $item_category_id);
             }
 
@@ -432,7 +432,12 @@ class EventController extends Controller
             ->groupBy('danka.id', 'danka.name', 'tel', 
             'pref', 'city', 'address', 'building', 'payment_date', 'deal.created_at', 'deal.id');
 
-            if ($category_id != 3 && isset($item_category_id)) {
+            if ($category_id != 3 && !empty($item_category_id)) {
+                $query->where('item.category_id', $item_category_id);
+            }
+
+            if ($category_id == 2 && !isset($item_category_id)) {
+                $item_category_id = 4;
                 $query->where('item.category_id', $item_category_id);
             }
 

@@ -172,7 +172,7 @@
 
             @if($category_id != 3)
             <select name="item_category_id" class="select_category" style="width: 400px" id="">
-                <option value="">----</option>
+                <option value="0">----</option>
                 @foreach ($item_categories as $item_category)
                 <option value="{{ $item_category->id }}"
                     @if($item_category_id == $item_category->id) selected @endif >{{ $item_category->name }}</option>
