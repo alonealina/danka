@@ -653,10 +653,12 @@ class PaymentController extends Controller
     {
         $item_list = Item::select('item.id as id', 'name', 'detail', 'price')->join('item_category', 'item_category.id', '=', 'item.category_id')->orderBy('item_category.id')->get();
         $item_categories = ItemCategory::get();
+        $gojikaihi_item_id = Item::where('detail', '護持会費')->where('category_id', 8)->first()->id;
 
         return view('item_list', [
             'item_list' => $item_list,
             'item_categories' => $item_categories,
+            'gojikaihi_item_id' => $gojikaihi_item_id,
         ]);
     }
 

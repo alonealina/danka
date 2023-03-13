@@ -42,7 +42,7 @@
         </div>
         <div class="item_btn_list">
             <a href="{{ route('item_edit', $item->id) }}" class="edit_btn_a">編集</a>
-            @if($item->price > 0)
+            @if($item->price > 0 && $item->id != $gojikaihi_item_id)
             <a href="{{ route('item_delete', $item->id) }}" onclick="return confirm('本当に削除しますか？')" class="delete_btn_a">削除</a>
             @else
             <div class="dummy_btn_div"></div>
