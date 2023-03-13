@@ -23,6 +23,9 @@
             <header class="header_pc">
                 <a class="logo_a" href="">遍照尊院檀家<br>管理システム</a>
                 <div class="header_menu_user">
+                    <a href="https://locrian-walker-e2e.notion.site/cacd6b4d0686434f955a2203e38017e0" class="header_a header_btn1" target="_blank">
+                        <p class="menu_name" style="width: 90px;">Help</p>
+                    </a>
                     <a href="{{ route('logout') }}" class="header_a header_btn1">
                         <p class="menu_name" style="width: 90px;">Logout</p>
                     </a>
