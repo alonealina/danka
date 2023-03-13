@@ -78,6 +78,9 @@
             <div class="danka_regist_name">納骨日</div>
             {{ Form::date('nokotsubi_before', $nokotsubi_before, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
             {{ Form::date('nokotsubi_after', $nokotsubi_after, ['class' => 'danka_form_text2', 'placeholder' => '', 'style' => 'width: 110px;']) }}
+            　<input type="checkbox" id="nokotsu_flg" name="nokotsu_flg" class="danka_checkbox" value="1"
+            @if(isset($nokotsu_flg)) checked @endif>
+
         </div>
         <input type="checkbox" id="mail_flg" name="mail_flg" class="danka_checkbox" value="1"
         @if(isset($mail_flg)) checked @endif>

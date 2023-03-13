@@ -301,6 +301,7 @@ class EventController extends Controller
             $henjokaku3 = isset($filter_array['henjokaku3']) ? $filter_array['henjokaku3'] : null;
             $henjokaku4 = isset($filter_array['henjokaku4']) ? $filter_array['henjokaku4'] : null;
             $konryu_flg = isset($filter_array['konryu_flg']) ? $filter_array['konryu_flg'] : null;
+            $nokotsu_flg = isset($filter_array['nokotsu_flg']) ? $filter_array['nokotsu_flg'] : null;
 
             $event_name = isset($filter_array['event_name']) ? $filter_array['event_name'] : null;
             $category_name = TextCategory::find($category_id)->name;
@@ -331,6 +332,10 @@ class EventController extends Controller
 
             if (isset($konryu_flg)) {
                 $query->whereNotNull('henjokaku1');
+            }
+
+            if (isset($nokotsu_flg)) {
+                $query->whereNotNull('nokotsubi');
             }
 
             if (!empty($nokotsubi_before)) {
@@ -394,6 +399,7 @@ class EventController extends Controller
                 'hikuyousya_count' => $hikuyousya_count,
                 'danka_count' => $danka_count,
                 'konryu_flg' => $konryu_flg,
+                'nokotsu_flg' => $nokotsu_flg,
                 'sort_item' => $sort_item,
                 'sort_type' => $sort_type,
                 'number' => $number,
