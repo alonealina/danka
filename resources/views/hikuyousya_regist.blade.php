@@ -108,7 +108,7 @@
                     </div>
                     <div class="danka_column">
                         <div class="danka_regist_name2">特記事項</div>
-                        {{ Form::text('column', old('column'), ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '骨のぼり']) }}
+                        {{ Form::text('column', old('column'), ['class' => 'danka_form_text2', 'maxlength' => 100, 'style' => 'width: 500px;', 'placeholder' => '骨のぼり、絵天井　XX列XX番、灯籠']) }}
                     </div>
                 </div>
 

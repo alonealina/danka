@@ -160,11 +160,11 @@ class EventController extends Controller
             }
 
 
-            if (isset($segaki_flg)) {
+            if (!empty($segaki_flg)) {
                 $query->where('segaki_flg', '1');
             }
 
-            if (isset($star_flg)) {
+            if (!empty($star_flg)) {
                 $query->where('star_flg', '1');
             }
 
@@ -482,8 +482,10 @@ class EventController extends Controller
                 }
             }
 
-            if (!empty($segaki_flg)) {
-                $query->where('segaki_flg', '1');
+            if ($category_id != 3) {
+                if (!empty($segaki_flg)) {
+                    $query->where('segaki_flg', '1');
+                }
             }
 
             if (!empty($star_flg)) {

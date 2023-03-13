@@ -197,11 +197,11 @@
                 @if($category_id != 1 && $category_id != 2 && $category_id != 6)
                 {{ Form::hidden('segaki_flg', 0) }}
                 <input type="checkbox" id="segaki_flg" name="segaki_flg" class="danka_checkbox" value="1"
-                @if(isset($segaki_flg)) checked @endif>
+                @if($segaki_flg == 1) checked @endif>
                 <label for="segaki_flg" class="danka_label">施餓鬼</label>
                 {{ Form::hidden('star_flg', 0) }}
                 <input type="checkbox" id="star_flg" name="star_flg" class="danka_checkbox" value="1"
-                @if(isset($star_flg)) checked @endif>
+                @if($star_flg == 1) checked @endif>
                 <label for="star_flg" class="danka_label">星祭り</label>
                 <input type="checkbox" id="yakushiji_flg" name="yakushiji_flg" class="danka_checkbox" value="1"
                 @if(isset($yakushiji_flg)) checked @endif>
