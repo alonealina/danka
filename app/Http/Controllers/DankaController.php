@@ -562,7 +562,8 @@ class DankaController extends Controller
         $sort_item = isset($filter_array['sort_item']) ? $filter_array['sort_item'] : null;
         $sort_type = isset($filter_array['sort_type']) ? $filter_array['sort_type'] : null;
 
-        $query = Danka::select('*')->select('hikuyousya.id as id')->selectRaw("
+        $query = Danka::select('hikuyousya.id as id', 'danka_id', 'name', 'type', 'common_name', 'common_kana', 'posthumous', 'gender_h', 
+        'meinichi', 'gyonen', 'ihai_no', 'nokotsubi', 'henjokaku1', 'henjokaku2', 'henjokaku3', 'henjokaku4' )->selectRaw("
         TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
         ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id');
 
@@ -688,11 +689,6 @@ class DankaController extends Controller
             $kaiki_after_tmp = $kaiki_after == 1 ? 0 : $kaiki_after - 2;
             $query->having('kaiki', '<=', $kaiki_after_tmp);
         }
-
-        $ids = $query->get()->pluck('id');
-        $query = Danka::select('*')->selectRaw("
-        TIMESTAMPDIFF(YEAR, `meinichi`, CURDATE()) AS kaiki
-        ")->join('hikuyousya', 'danka.id', '=', 'hikuyousya.danka_id')->whereIn('hikuyousya.id', $ids);
 
         if (!empty($sort_item)) {
             $query->orderByRaw($sort_item . ' is null asc')->orderBy($sort_item, $sort_type);
