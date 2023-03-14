@@ -9,11 +9,11 @@
         <div class="danka_form_div">
             <div class="danka_column">
                 <div class="danka_regist_name">施主名</div>
-                {{ Form::text('name', $name, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+                {{ Form::text('name', $name, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '姓　名']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">フリガナ</div>
-                {{ Form::text('name_kana', $name_kana, ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '']) }}
+                {{ Form::text('name_kana', $name_kana, ['id' => 'name_kana', 'class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => 'セイ　メイ']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">電話番号</div>

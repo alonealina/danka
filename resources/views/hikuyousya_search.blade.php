@@ -80,7 +80,7 @@
 
             <div class="danka_column">
                 <div class="danka_regist_name">位牌番号</div>
-                {{ Form::text('ihai_no', $ihai_no, ['class' => 'danka_form_text', 'maxlength' => 6, 'placeholder' => '']) }}
+                {{ Form::text('ihai_no', $ihai_no, ['class' => 'danka_form_text', 'maxlength' => 6, 'placeholder' => '001234']) }}
             </div>
 
             <div class="danka_column">
