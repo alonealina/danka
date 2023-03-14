@@ -185,6 +185,7 @@
 
 
     </div>
-    <div class="hikuyousya_column">遍照閣</div>
+    <div class="hikuyousya_zokumyo">遍照閣</div>
+    <div class="hikuyousya_kaimyo">特記事項</div>
     <div class="hikuyousya_btn"></div>
 </div>

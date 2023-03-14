@@ -8,8 +8,8 @@
         <div class="danka_form_div">
             <div class="danka_column">
                 <div class="danka_regist_name">カルテナンバー</div>
-                {{ Form::text('id_before', $id_before, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '', 'style' => 'width: 110px;']) }}　～　
-                {{ Form::text('id_after', $id_after, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '', 'style' => 'width: 110px;']) }}
+                {{ Form::text('id_before', $id_before, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '半角数字', 'style' => 'width: 110px;']) }}　～　
+                {{ Form::text('id_after', $id_after, ['class' => 'danka_form_text', 'maxlength' => 20, 'placeholder' => '半角数字', 'style' => 'width: 110px;']) }}
             </div>
             <div class="danka_column">
                 <div class="danka_regist_name">施主名</div>

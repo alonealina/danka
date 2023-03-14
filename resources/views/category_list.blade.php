@@ -36,12 +36,14 @@
     <div class="category_list">
         <div id="item_div" @if ($type == 'text' || $type == 'shipment') hidden @endif>
             @foreach($item_categories as $category)
+            @if($category->id != 11 && $category->id != 12)
             <div class="text_list_column">
                 <div class="">{{ $category->name }}</div>
                 @if($category->id > 14)
                 <a href="item_category_delete/{{ $category->id }}" onclick="return confirm('本当に削除しますか？')" class="delete_btn_a">削除</a>
                 @endif
             </div>
+            @endif
             @endforeach
         </div>
         <div id="text_div" @if ($type != 'text') hidden @endif>
