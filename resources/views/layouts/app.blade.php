@@ -113,10 +113,11 @@
                         <!-- 行事 -->
                         <a href="#!" class="menu_a 
                         @if (strpos($now_route,'event_list') !== false || strpos($now_route,'event_show') !== false || strpos($now_route,'event_regist') !== false || 
-                        strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false) current @endif" onclick="clickMenu2();">
+                        strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false || 
+                        strpos($now_route,'shipment_category_list') !== false) current @endif" onclick="clickMenu2();">
                             行事
                             @if (strpos($now_route,'event_list') !== false || strpos($now_route,'event_show') !== false || strpos($now_route,'event_regist') !== false || 
-                            strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false)
+                            strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false || strpos($now_route,'shipment_category_list') !== false)
                             <img src="{{ asset('img/down.png') }}" id="down2" class="down_r"><img src="{{ asset('img/up.png') }}" id="up2" class="up_r">
                             @else
                             <img src="{{ asset('img/down.png') }}" id="down2" class="down"><img src="{{ asset('img/up.png') }}" id="up2" class="up">
@@ -124,14 +125,17 @@
                         </a>
                         <div
                         @if (strpos($now_route,'event_list') === false && strpos($now_route,'event_show') === false && strpos($now_route,'event_regist') === false &&
-                        strpos($now_route,'event_book_show') === false && strpos($now_route,'event_book_regist') === false) class="menu_none" @endif
+                        strpos($now_route,'event_book_show') === false && strpos($now_route,'event_book_regist') === false && 
+                        strpos($now_route,'shipment_category_list') === false) class="menu_none" @endif
                         id="menu2">
                         <a href="{{ route('event_list') }}" class="menu_a
                         @if (strpos($now_route,'event_list') !== false || strpos($now_route,'event_show') !== false || strpos($now_route,'event_regist') !== false || 
-                        strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false) current @endif">　行事一覧</a>
+                        strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false || 
+                        strpos($now_route,'shipment_category_list') !== false) current @endif">　行事一覧</a>
                         <a href="{{ route('shipment_category_list') }}" class="menu_a
                         @if (strpos($now_route,'event_list') !== false || strpos($now_route,'event_show') !== false || strpos($now_route,'event_regist') !== false || 
-                        strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false) current @endif">　発送物一覧</a>
+                        strpos($now_route,'event_book_show') !== false || strpos($now_route,'event_book_regist') !== false || 
+                        strpos($now_route,'shipment_category_list') !== false) current @endif">　発送物一覧</a>
                         </div>
 
                         <!-- 管理者管理 -->
@@ -154,7 +158,7 @@
                         </div>
 
                         <a href="{{ route('category_list') }}" class="menu_a 
-                        @if (strpos($now_route,'category_list') !== false) current @endif">カテゴリ管理</a>
+                        @if ($now_route == 'category_list') current @endif">カテゴリ管理</a>
 
                         <a href="{{ route('item_list') }}" class="menu_a
                         @if (strpos($now_route,'item_list') !== false || strpos($now_route,'item_edit') !== false) current @endif">商品管理</a>
